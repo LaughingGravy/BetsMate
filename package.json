@@ -8,14 +8,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
     "//": "webpack-dev-server --open --mode development --config webpack/webpack.dev.config.js",
-    "start": "cross-env NODE_ENV=development node src/server-dev.js --mode development",
-    "server": "cross-env NODE_ENV=production node src/server.js --mode production",
+    "start": "cross-env NODE_ENV=development node src/server/server-dev.js --mode development",
+    "server": "cross-env NODE_ENV=production node src/server/server-prod.js --mode production",
     "build": "cross-env NODE_ENV=production webpack --mode production --config webpack/webpack.prod.config.js"
   },
   "keywords": [],
   "author": "Ronald Paul",
   "license": "ISC",
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.44",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "axios": "0.18.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
     "body-parser": "^1.18.2",

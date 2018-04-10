@@ -16,6 +16,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const PATHS = require('../utilities/paths');
 
 module.exports = merge(common, {
+  entry: {
+      vendor: [
+          'lodash', 'react','react-dom'
+      ],
+      app: PATHS.client + '/index.js'
+   },
    mode: 'production',
    devtool: 'source-map',
    plugins: [
@@ -70,6 +76,7 @@ module.exports = merge(common, {
       new CopyWebpackPlugin([
         {
           from: PATHS.static,
+          to: PATHS.dist,
           force: true, // This flag forces overwrites between versions
         },
       ]),

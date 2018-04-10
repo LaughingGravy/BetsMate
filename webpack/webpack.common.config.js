@@ -4,21 +4,16 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const PATHS = require('../utilities/paths');
 
 module.exports = {
-    entry: {
-        vendor: [
-            'lodash', 'react','react-dom'
-        ],
-        app: './src/index.js'
-    },
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             title: 'Bets Mate',
-            template: "./src/index.html",
+            template: path.join(PATHS.client, "index.html"),
             filename: "index.html",
-            favicon: "./static/favicon.ico",
+            favicon: path.join(PATHS.static, "favicon.ico"),
             inject: true
         }),
         new MiniCssExtractPlugin({
@@ -28,16 +23,25 @@ module.exports = {
     ],
     output: {
         filename: '[name].[hash].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: PATHS.dist,
         publicPath: '/'
     },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(js|jsx)$/,  
                 exclude: /node_modules/,
-                include: path.resolve(__dirname, './src'),
-                use: ['babel-loader']
+                include: PATHS.client,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            ['env', { modules: false, targets: { browsers: ['last 2 versions'] } }],
+                            'react', 'stage-2'
+                        ],
+                        cacheDirectory: true
+                    }
+                }
             },
             {
                 test: /\.css$/,

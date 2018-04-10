@@ -4,7 +4,7 @@ import React from 'react';
 // <Helmet> component for setting the page title/meta tags
 import Helmet from 'react-helmet';
 
-import App from './components/App';
+import App from '../client/components/App';
 import { Container } from 'semantic-ui-react';
 
 // Styles

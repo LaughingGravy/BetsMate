@@ -10,6 +10,12 @@ module.exports = {
     // Source path; where we'll put our application files
     src: path.join(root, 'src'),
 
+    // Cient path; where we'll put our client application files
+    client: path.join(root, 'src', 'client'),
+
+    // Cient path; where we'll put our client application files
+    server: path.join(root, 'src', 'server'),
+
     // Static files.  HTML, images, etc that can be processed by Webpack
     // before being moved into the final `dist` folder
     static: path.join(root, 'static'),

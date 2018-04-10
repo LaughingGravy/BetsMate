@@ -1,13 +1,13 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const Config = require('../utilities/Config');
+const Config = require('../../utilities/Config');
 const chalk = require('chalk'); 
 const path = require('path');
 const helmet = require('helmet');
 const compression = require('compression');
 const favicon = require('serve-favicon');
-const createTransporter = require('../Utilities/mailer');
+const createTransporter = require('../../Utilities/mailer');
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
@@ -48,7 +48,7 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(compression());
 
-app.use(favicon(path.resolve(__dirname, '../dist') + '/favicon.ico'));
+app.use(favicon(path.resolve(__dirname, '../../dist') + '/favicon.ico'));
 
 // check to see is server is up
 app.get('/ping',(req, res) => {
@@ -57,7 +57,7 @@ app.get('/ping',(req, res) => {
 
 // return the site index page
 app.get('/',function(req, res){//
-   res.sendFile(path.resolve(__dirname, '../dist') + '/index.html');
+   res.sendFile(path.resolve(__dirname, '../../dist') + '/index.html');
  });
 
 

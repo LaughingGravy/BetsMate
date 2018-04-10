@@ -11,10 +11,11 @@ const HOST = process.env.BROWSER_HOST || Config.host;
 const PORT = process.env.BROWSER_PORT || Config.port;
 const LOCAL = `http://${HOST}:${PORT}/`;
 
+
  module.exports = merge(common, {
     mode: 'development',
     entry: {
-        app: './src/index.js'
+        app: path.join(PATHS.client, 'index.js')
     },
     devtool: 'cheap-module-eval-source-map',
     plugins: [
