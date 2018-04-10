@@ -1,0 +1,14 @@
+{
+    "locale-id": "en-GB",
+    "locale-language": "English",
+    "home-menu-header": "Home",
+    "about-menu-header": "About",
+    "admin-menu-header": "Administration",
+    "register-menu-header": "Register",
+    "login-menu-header": "Login",
+    "home-page-title": "Home",
+    "about-page-title": "About",
+    "admin-page-title": "Administration",
+    "login-page-title": "Login",
+    "register-page-title": "Registration"
+}
