@@ -75,7 +75,7 @@ class Layout extends React.Component {
         }
 
         axios
-          .get(`./static/locales/${currentLocale}.json`, { headers: {'Accept': 'application/json'}} )
+          .get(`static/locales/${currentLocale}.json`, { headers: {'Accept': 'application/json'}} )
           .then(res => {
             // init method will load CLDR locale data according to currentLocale
             return intl.init({

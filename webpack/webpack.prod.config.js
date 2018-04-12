@@ -18,7 +18,7 @@ const PATHS = require('../utilities/paths');
 module.exports = merge(common, {
   entry: {
       vendor: [
-          'lodash', 'react','react-dom'
+        'lodash', 'react','react-dom','react-router-dom','react-helmet','react-intl-universal','prop-types','axios','react-hot-loader','semantic-ui-react'
       ],
       app: PATHS.client + '/index.js'
    },

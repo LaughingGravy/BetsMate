@@ -1,6 +1,6 @@
 const path = require('path');
 const merge = require('webpack-merge');
-const common = require('../webpack/webpack.dev.config');
+const common = require('../webpack/webpack.common.config');
 const webpack = require('webpack');
 
 const Config = require('../utilities/Config');
@@ -15,8 +15,11 @@ const LOCAL = `http://${HOST}:${PORT}/`;
  module.exports = merge(common, {
     mode: 'development',
     entry: {
-        app: path.join(PATHS.client, 'index.js')
-    },
+        vendor: [
+          'lodash', 'react','react-dom','react-router-dom','react-helmet','react-intl-universal','prop-types','axios','react-hot-loader','semantic-ui-react'
+        ],
+        app: PATHS.client + '/index.js'
+     },
     devtool: 'cheap-module-eval-source-map',
     plugins: [
         new webpack.HotModuleReplacementPlugin()

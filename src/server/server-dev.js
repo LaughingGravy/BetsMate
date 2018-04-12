@@ -1,13 +1,17 @@
 //const webpackDevServer = require('webpack-dev-server');
+const PATHS = require('../../utilities/paths');
+const path = require('path');
 const webpack = require('webpack');
 const opn = require('opn');
 const chalk = require('chalk');
 const Config = require('../../utilities/Config');
 const webpackConfig = require('../../webpack/webpack.dev.config');
+const favicon = require('serve-favicon');
 const express = require('express');
 
 const webpackMiddleware = require ('webpack-dev-middleware');
 const app = express();
+
 
 const options = {
   contentBase: './dist',
@@ -19,6 +23,10 @@ const options = {
 const compiler = webpack(webpackConfig);
 
 app.use(webpackMiddleware(compiler, options));
+
+//app.use(webpackMiddleware(compiler));
+
+app.use(favicon(path.resolve(PATHS.static, 'favicon.ico')));
 
 // Serve the files on port 3000.
 app.listen(Config.port, () => {

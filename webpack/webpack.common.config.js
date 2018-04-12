@@ -12,9 +12,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Bets Mate',
             template: path.join(PATHS.client, "index.html"),
-            filename: "index.html",
-            favicon: path.join(PATHS.static, "favicon.ico"),
-            inject: true
+            filename: "index.html"
         }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
@@ -31,7 +29,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,  
                 exclude: /node_modules/,
-                include: PATHS.client,
+                include: PATHS.src,
                 use: {
                     loader: 'babel-loader',
                     options: {
