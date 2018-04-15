@@ -1,5 +1,8 @@
 // React
 import React from 'react';
+import { Router } from 'react-router-dom';
+// Get the custom `history` that we'll use to feed down to our `<Router>`
+import { history } from '../../library/routing';
 
 // <Helmet> component for setting the page title/meta tags
 import Helmet from 'react-helmet';
@@ -19,7 +22,9 @@ const Main = () => (
     </Helmet>
 
     <Container fluid inverted='true'>
-      <App />
+      <Router history={history}>
+        <App />
+      </Router>
     </Container>
 
   </div>

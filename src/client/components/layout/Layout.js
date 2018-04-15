@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { history } from '../../routing';
+import { history } from '../../../../library/routing';
 
 import intl from 'react-intl-universal';
 import axios from 'axios';

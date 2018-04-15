@@ -29,7 +29,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,  
                 exclude: /node_modules/,
-                include: PATHS.src,
+                include: [PATHS.src, PATHS.lib],
                 use: {
                     loader: 'babel-loader',
                     options: {

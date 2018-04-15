@@ -8,6 +8,8 @@ const Config = require('../../utilities/Config');
 const webpackConfig = require('../../webpack/webpack.dev.config');
 const favicon = require('serve-favicon');
 const express = require('express');
+const enGB = require('../../static/locales/en-GB.json');
+const jaJP = require('../../static/locales/ja-JP.json')  
 
 const webpackMiddleware = require ('webpack-dev-middleware');
 const app = express();
@@ -25,6 +27,18 @@ const compiler = webpack(webpackConfig);
 app.use(webpackMiddleware(compiler, options));
 
 //app.use(webpackMiddleware(compiler));
+
+app.get('/ping',(req, res) => {
+  res.send('pong');
+})
+
+app.get('/static/locales/en-GB.json',(req, res) => {
+  res.send(enGB);
+})
+
+app.get('/static/locales/ja-JP.json',(req, res) => {
+  res.send(jaJP);
+})
 
 app.use(favicon(path.resolve(PATHS.static, 'favicon.ico')));
 

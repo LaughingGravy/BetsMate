@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { Redirect } from '../../routing';
+import { Redirect } from '../../../../library/routing';
 
 import AdministrationPage from '../administration/AdministrationPage';
 import RegistrationPage from '../authentication/RegistrationPage';

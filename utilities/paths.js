@@ -10,6 +10,9 @@ module.exports = {
     // Source path; where we'll put our application files
     src: path.join(root, 'src'),
 
+    // Library path; where we'll reusable application files
+    lib: path.join(root, 'library'),
+
     // Cient path; where we'll put our client application files
     client: path.join(root, 'src', 'client'),
 
