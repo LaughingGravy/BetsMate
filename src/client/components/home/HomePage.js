@@ -10,7 +10,7 @@ class HomePage extends React.Component {
       return (
         <div>
           <h1>{intl.get("home-page-title")}</h1>
-          <p>The home should appear here.</p>
+          <p>The home should appear here..hhh.</p>
         </div>
       );
     }

@@ -16,12 +16,14 @@ const LOCAL = `http://${HOST}:${PORT}/`;
     mode: 'development',
     entry: {
         vendor: [
-          'lodash', 'react','react-dom','react-router-dom','react-helmet','react-intl-universal','prop-types','axios','react-hot-loader','semantic-ui-react'
+          'axios','prop-types','react','react-apollo','react-dom','react-helmet','react-intl-universal','react-router-dom',
+          'semantic-ui-react','webpack-hot-middleware/client'
         ],
-        app: PATHS.client + '/index.js'
+        app: [ PATHS.client + '/index.js', 'webpack-hot-middleware/client' ]
      },
     devtool: 'cheap-module-eval-source-map',
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
     ]
 });

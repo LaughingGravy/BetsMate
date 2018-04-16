@@ -1,13 +1,11 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const Config = require('../../utilities/Config');
 const chalk = require('chalk'); 
-const path = require('path');
-const helmet = require('helmet');
 const compression = require('compression');
-const favicon = require('serve-favicon');
+const path = require('path');
+
+const Config = require('../../utilities/Config');
 const createTransporter = require('../../Utilities/mailer');
+const server = require('./server');
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
@@ -28,7 +26,6 @@ process.on('uncaughtException', function (er) {
   })
 });
 
-
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
 // user agent is not known.
@@ -36,30 +33,18 @@ process.on('uncaughtException', function (er) {
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'all';
 
-const app = express();
+const app = server;
 
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
 app.use(express.static(path.resolve(__dirname, '../dist')));
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(helmet());
 app.use(compression());
-
-app.use(favicon(path.resolve(__dirname, '../../dist') + '/favicon.ico'));
-
-// check to see is server is up
-app.get('/ping',(req, res) => {
-  res.send('pong');
-})
 
 // return the site index page
 app.get('/',function(req, res){//
    res.sendFile(path.resolve(__dirname, '../../dist') + '/index.html');
  });
-
 
 // Serve the files on port 3000.
 app.listen(Config.port, () => {

@@ -17,10 +17,11 @@ const PATHS = require('../utilities/paths');
 
 module.exports = merge(common, {
   entry: {
-      vendor: [
-        'lodash', 'react','react-dom','react-router-dom','react-helmet','react-intl-universal','prop-types','axios','react-hot-loader','semantic-ui-react'
-      ],
-      app: PATHS.client + '/index.js'
+    vendor: [
+      'axios','prop-types','react','react-apollo','react-dom','react-helmet','react-intl-universal','react-router-dom',
+      'semantic-ui-react'
+    ],
+    app: [PATHS.client + '/index.js']
    },
    mode: 'production',
    devtool: 'source-map',
