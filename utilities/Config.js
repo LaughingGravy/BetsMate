@@ -8,6 +8,7 @@ class Common {
         this.port = process.env.PORT || 3000,
         
         this.mongoURL = null,
+        this.secret = '@0m0r1 Blu3 Forest Prefecture',
         
         this.mailerUser = "gmail.user@gmail.com",
         this.mailerPassword = "password";
