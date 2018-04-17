@@ -4,27 +4,13 @@ import { history } from '../../../../library/routing';
 
 import intl from 'react-intl-universal';
 import axios from 'axios';
-import { Responsive, Segment, Flag } from 'semantic-ui-react'
 
 import TopNavBar from './TopNavBar';
 import SideNavBar from './SideNavBar';
 
 //import allUser from 'src/graphql/queries/all_user.gql';
 
-const SUPPOER_LOCALES = [
-{
-    text: <span>English <Flag name="gb"/></span>,
-    value: "en-GB",
-    name: "English",
-    flagid: "gb"
-},
-{
-    text: <span>日本語 <Flag name="jp"/></span>,
-    value: "ja-JP",
-    name: "日本語",
-    flagid: "jp"
-}
-];
+import SUPPOER_LOCALES from './locales';
 
 //@graphql(allUser)
 class Layout extends React.Component {
