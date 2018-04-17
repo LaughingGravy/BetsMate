@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const compression = require('compression');
 const path = require('path');
 
-const Config = require('../../utilities/Config');
+import Config from '../../utilities/Config';
 const createTransporter = require('../../Utilities/mailer');
 const server = require('./server');
 

@@ -1,11 +1,11 @@
-const chalk = require('chalk');
-const Config = require('../../utilities/Config');
-const opn = require('opn');
-const server = require('./server');
+import chalk from 'chalk';
+import opn from 'opn';
+import server from './server';
 
-const webpack = require('webpack');
-const webpackConfig = require('../../webpack/webpack.dev.config');
-const webpackMiddleware = require ('webpack-dev-middleware');
+import Config from '../../utilities/Config';
+import webpack from 'webpack';
+import webpackConfig from '../../webpack/webpack.dev.config';
+import webpackMiddleware from'webpack-dev-middleware';
 
 const app = server;
 

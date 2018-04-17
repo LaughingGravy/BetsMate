@@ -1,36 +1,30 @@
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const express = require('express');
-const session = require('express-session');
-const helmet = require('helmet');
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import express from 'express';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import helmet from 'helmet';
 
-const models = require('../database/models')
-const mongoose = require('mongoose');
-const passport = require('passport');
-const passportConfig = require('../services/auth');
-const session = require('express-session');
+import models from '../database/models';
+import passport from 'passport';
+import passportConfig from '../services/auth';
+import session from 'express-session';
+import { connectMongoDB } from '../database/mongoDB';
 const MongoStore = require('connect-mongo')(session);
-const schema = require('../graphql/schema');
+import schema from '../graphql/schema';
 
-const path = require('path');
-const favicon = require('serve-favicon');
+import path from 'path';
+import favicon from 'serve-favicon';
 
-const Config = require('../../utilities/Config');
-const PATHS = require('../../utilities/paths');
+import Config from '../../utilities/Config';
+import PATHS from '../../utilities/paths';
 
-const enGB = require('../../static/locales/en-GB.json');
-const jaJP = require('../../static/locales/ja-JP.json')  
+import enGB from '../../static/locales/en-GB.json';
+import jaJP from '../../static/locales/ja-JP.json';
 
 const app = express();
 
-//Mongoose's built in promise has been deprecated, replace it with ES2015 Promise
-mongoose.Promise = global.Promise;
-
-// Connect to the mongoDB instance and log success/failure message
-mongoose.connect(Config.mongoURL);
-mongoose.connection
-    .once('open', () => console.log(chalk.green('Connected to MongoDB instance.'))
-    .on('error', error => console.log(chalk.red(`Error connecting to MongoDB instance: ${error}`)));
+// Connect to the database
+connectMongoDB(Config.mongoURL, Config.apolloClientOpt);
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -43,15 +37,14 @@ app.use(favicon(path.resolve(PATHS.static, 'favicon.ico')));
 // the cookie and modifies the request object to indicate which user made the request
 // The cookie itself only contains the id of a session; more data about the session
 // is stored inside of MongoDB.
-
 app.use(session({
     resave: true,
     saveUninitialized: true,
     secret: Config.secret,
     store: new MongoStore({
-    url: Config.mongoURL,
-    autoReconnect: true
-    })
+        url: Config.mongoURL,
+        autoReconnect: true
+        })
 }));
 
 // Passport is wired into express as a middleware. When a request comes in,
@@ -60,16 +53,21 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Instruct Express to pass on any request made to the '/graphql' route
+// bodyParser is needed just for POST.
+app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
+
+// Instruct Express to pass on any request made to the '/graphiql' route
+app.use('/graphiql', graphiqlExpress({
+                        endpointURL: '/graphql',
+                    }),
+);
+
 // test server is up
 app.get('/ping',(req, res) => {
     res.send('pong');
 });
 
-app.get('/graphql', expressGraphQL({
-    schema,
-    graphiql: true
-}));
-  
 app.get('/static/locales/en-GB.json',(req, res) => {
     res.send(enGB);
 });

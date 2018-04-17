@@ -1,16 +1,9 @@
-const path = require('path');
-const merge = require('webpack-merge');
-const common = require('../webpack/webpack.common.config');
-const webpack = require('webpack');
+import path from 'path';
+import merge from 'webpack-merge';
+import common from '../webpack/webpack.common.config';
+import webpack from 'webpack';
 
-const Config = require('../utilities/Config');
-const PATHS = require('../utilities/paths');
-
-// Host and port settings to spawn the dev server on
-const HOST = process.env.BROWSER_HOST || Config.host;
-const PORT = process.env.BROWSER_PORT || Config.port;
-const LOCAL = `http://${HOST}:${PORT}/`;
-
+import PATHS from '../utilities/paths';
 
  module.exports = merge(common, {
     mode: 'development',

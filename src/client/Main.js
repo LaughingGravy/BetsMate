@@ -7,9 +7,9 @@ import Config from '../../utilities/Config';
 // <Helmet> component for setting the page title/meta tags
 import Helmet from 'react-helmet';
 
-// apollo client for graphql
-import { ApolloProvider } from "react-apollo";
-import { browserClient } from '../../library/apollo';
+// apollo graphql client
+import { ApolloProvider } from 'react-apollo';
+import { getBrowserClient } from '../../library/apollo';
 
 // Get the custom `history` that we'll use to feed down to our `<Router>`
 import { history } from '../../library/routing';
@@ -17,9 +17,8 @@ import { history } from '../../library/routing';
 import App from '../client/components/App';
 import { Container } from 'semantic-ui-react';
 
-const client = browserClient({
-  opt: Config.apolloClientOpt
-});
+// get apollo client 
+const client = getBrowserClient();
 
 // Styles
 //import css from './main.scss';

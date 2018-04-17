@@ -4,12 +4,11 @@ import {
     GraphQLSchema
 } from 'graphql';
 
-import UserType from './user_type';
+const UserType  = require('./user_type');
 
 const RootQueryType = new GraphQLObjectType({
-    name: 'Query',
-    description: 'Root query object',
-    fields() {
+    name: 'RootQueryType',
+    fields: {
         user: {
             type: UserType,
             resolve(parentValue, args, req) {

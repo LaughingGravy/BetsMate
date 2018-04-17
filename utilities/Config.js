@@ -8,6 +8,7 @@ class Common {
         this.port = process.env.PORT || 3000,
         
         this.mongoURL = null,
+        this.connectOpt = {},
         this.secret = '@0m0r1 Blu3 Forest Prefecture',
         
         this.mailerUser = "gmail.user@gmail.com",
@@ -20,7 +21,7 @@ class Common {
 
 let Config;
 
-if (process.env === 'development')
+if (process.env.NODE_ENV === 'development')
 {
     Config = class DevConfig extends Common {
         constructor() {
@@ -28,8 +29,10 @@ if (process.env === 'development')
 
             this.port = 3000;
             this.host = 'localhost';
-            this.appTitle = 'Bets Mate - Development';
             this.mongoURL = 'mongodb://admin:k0mbanwa@ds159866.mlab.com:59866/betsmate';
+            this.connectOpt = {
+                keepAlive: true
+            };
         }
     }
 }
@@ -41,6 +44,10 @@ else
 
             this.port = 3000;
             this.host = 'localhost';
+            this.mongoURL = 'mongodb://admin:k0mbanwa@ds159866.mlab.com:59866/betsmate';
+            this.connectOpt = {
+                keepAlive: true
+            };
         }
     }
 };
