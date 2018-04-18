@@ -55,7 +55,19 @@ app.use(passport.session());
 
 // Instruct Express to pass on any request made to the '/graphql' route
 // bodyParser is needed just for POST.
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
+//app.use('/graphql', bodyParser.json(), graphqlExpress({ schema: schema }));
+app.use(
+    '/graphql',
+    bodyParser.json(),
+    graphqlExpress(req => {
+      return {
+        schema: schema,
+        context: {
+            req: req
+        }
+      };
+    }),
+  );
 
 // Instruct Express to pass on any request made to the '/graphiql' route
 app.use('/graphiql', graphiqlExpress({
