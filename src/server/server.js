@@ -63,7 +63,9 @@ app.use(
         schema: schema,
         context: {
             req: req
-        }
+        },
+        tracing: true,
+        cacheControl: true
       };
     }),
   );
