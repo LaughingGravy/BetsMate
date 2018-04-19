@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import { Menu, Icon, Flag, Segment, Dropdown, Button, Responsive, Popup, MenuItem, MenuMenu } from 'semantic-ui-react';
 import intl from 'react-intl-universal';
 
-const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisibility}) => {
- // console.log("TopNavBar", user)
+const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisibility, user}) => {
   return (
     <Menu>
       <Menu.Menu position="left">
@@ -71,6 +70,7 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisi
             <Icon name="sidebar" circular size="small" inverted />
           </Menu.Item> 
         </Responsive>    
+
       </Menu.Menu>
     </Menu>
   );

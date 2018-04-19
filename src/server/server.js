@@ -15,6 +15,9 @@ import schema from '../graphql/schema';
 import path from 'path';
 import favicon from 'serve-favicon';
 
+import cors from 'cors';
+import { getServerUrl } from '../../utilities/env';
+
 import Config from '../../utilities/Config';
 import PATHS from '../../utilities/paths';
 
@@ -26,6 +29,13 @@ const app = express();
 // Connect to the database
 connectMongoDB(Config.mongoURL, Config.apolloClientOpt);
 
+// enable cors
+var corsOptions = {
+    origin: getServerUrl(Config.host, Config.port),
+    credentials: true // <-- REQUIRED backend setting
+  };
+  
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

@@ -25,15 +25,29 @@ app.use(require("webpack-hot-middleware")(compiler));
 // set the ENGINE_API_KEY environment variable when you
 // run your program.
 const engine = new ApolloEngine({
-  apiKey: Config.apolloEngineServiceId
+  apiKey: Config.apolloEngineServiceId,
+  sessionAuth: {
+    // Use the value of the 'session-id' cookie to isolate responses
+    // in the private full query cache from those from other sessions.
+    cookie: 'session-id',
+  }
 });
 
+// Handle error on Engine startup
+engine.on('error', err => {
+  console.log(chalk.red.bold('There was an error starting the server or Engine.'));
+  console.error(err);
+
+  // The app failed to start, we probably want to kill the server
+  process.exit(1);
+});
+
+// start your engine!
 engine.listen({
   port: Config.port,
   expressApp: server
 }, () => {
-  console.log(chalk.green(`Application listening on port ${Config.port}!\n`));
-  console.log(chalk.green(`Apollo Engine running!\n`));
+  console.log(chalk.green.bold(`Application listening on port ${Config.port}!\n`));
 });
 
 // Serve the files on port 3000.

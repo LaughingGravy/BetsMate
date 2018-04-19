@@ -6,6 +6,7 @@ class Common {
     constructor() {
         this.host = process.env.HOST || 'localhost',
         this.port = process.env.PORT || 3000,
+        this.corsOptions = {},
         
         this.mongoURL = null,
         this.connectOpt = {},
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === 'development')
 
             this.port = 3000;
             this.host = 'localhost';
+
             this.mongoURL = 'mongodb://admin:k0mbanwa@ds159866.mlab.com:59866/betsmate';
             this.connectOpt = {
                 keepAlive: true

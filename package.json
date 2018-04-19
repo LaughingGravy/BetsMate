@@ -55,6 +55,7 @@
     "connect-mongo": "^2.0.1",
     "cookie-parser": "^1.4.3",
     "copy-webpack-plugin": "^4.5.1",
+    "cors": "^2.8.4",
     "cross-env": "^5.1.4",
     "express-graphql": "^0.6.12",
     "express-session": "^1.15.6",

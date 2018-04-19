@@ -8,7 +8,8 @@ import axios from 'axios';
 import TopNavBar from './TopNavBar';
 import SideNavBar from './SideNavBar';
 
-//import allUser from 'src/graphql/queries/all_user.gql';
+import CurrentUser from '../../../graphql/queries/CurrentUser';
+import { Query } from 'react-apollo';
 
 import SUPPOER_LOCALES from './locales';
 
@@ -20,7 +21,8 @@ class Layout extends React.Component {
         this.state = { 
             initDone: false,
             currentLocale: "",
-            toggleSideBarVisibility: false
+            toggleSideBarVisibility: false,
+            user: {}
         };
 
         this.onSelectLocale = this.onSelectLocale.bind(this);
@@ -82,21 +84,37 @@ class Layout extends React.Component {
     }
     
     render() {   
-        console.log("this.state.user", this.props.data)
         return (
-            this.state.initDone &&                 
-                <SideNavBar visible={this.state.toggleSideBarVisibility} 
-                            onToggleSideBarVisibility={this.onToggleSideBarVisibility}
-                            >
-                    <TopNavBar locales={SUPPOER_LOCALES} 
-                            defaultLocale={this.state.currentLocale}
-                            onSelectLocale={this.onSelectLocale} 
-                            onToggleSideBarVisibility={this.onToggleSideBarVisibility}
-                            />
-                        {React.Children.map(this.props.children, 
-                        child => React.cloneElement(child, {currentLocale: this.state.currentLocale}))}
-                </SideNavBar>
-        );
+            <Query query={CurrentUser}>
+            {({ loading, error, data: { user }}) => {
+                 if (loading) {
+                    return 'loading...';
+                }
+        
+                if (error) {
+                    return `Error: ${error}`;
+                }
+
+                return (
+                    this.state.initDone &&                 
+                        <SideNavBar visible={this.state.toggleSideBarVisibility} 
+                                    onToggleSideBarVisibility={this.onToggleSideBarVisibility}
+                                    user={user}
+                                    >
+                            <TopNavBar locales={SUPPOER_LOCALES} 
+                                    defaultLocale={this.state.currentLocale}
+                                    onSelectLocale={this.onSelectLocale} 
+                                    onToggleSideBarVisibility={this.onToggleSideBarVisibility}
+                                    user={user}
+                                    />
+                                {React.Children.map(this.props.children, 
+                                child => React.cloneElement(child, {currentLocale: this.state.currentLocale}))}
+                        </SideNavBar>
+                );
+
+            }}
+            </Query>
+        );     
     }
 }
 
