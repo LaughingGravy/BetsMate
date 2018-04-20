@@ -36,23 +36,27 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisi
                       key="locales" value={defaultLocale} />
         </Menu.Item>
 
-        <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        {user == null &&  <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item as={NavLink}  to="/register" key="register"
                        activeClassName="active">
              {intl.get("register-menu-header")}
           </Menu.Item>
-        </Responsive>
 
-        <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item as={NavLink} to="/login" key="login"
                       activeClassName="active" >
             {intl.get("login-menu-header")}
           </Menu.Item>
-        </Responsive>
+        </Responsive>}
 
-        <MenuItem as={Responsive} maxWidth={Responsive.onlyComputer.minWidth}>
+        {user != null && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+          <Menu.Item as={NavLink} to="/home" key="logout" activeClassName="active">
+            {intl.get("logout-menu-header")}
+          </Menu.Item>
+        </Responsive>}
+
+        {user == null && <MenuItem as={Responsive} maxWidth={Responsive.onlyComputer.minWidth}>
           <Popup position="bottom center" style={{"padding": "0px"}} hoverable basic trigger={<Icon name="user circle" size="large" />}>
-            <Menu vertical compact>
+          < Menu vertical compact>
               <MenuItem as={NavLink} to="/register" key="register" activeClassName="active"
                          compact="true">
                 {intl.get("register-menu-header")}
@@ -61,9 +65,15 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisi
                          compact="true">
                 {intl.get("login-menu-header")}
               </MenuItem>
-            </Menu>
+            </Menu>   
           </Popup>
-        </MenuItem>
+        </MenuItem>}
+
+        {user != null && <Responsive basic="true" maxWidth={Responsive.onlyComputer.minWidth}>
+          <Menu.Item fluid as={Button} onClick={onToggleSideBarVisibility}>
+            <Icon name="log out" circular size="small" />
+          </Menu.Item> 
+        </Responsive>}
 
         <Responsive basic="true" maxWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item fluid as={Button} onClick={onToggleSideBarVisibility}>
@@ -80,7 +90,8 @@ TopNavBar.propTypes = {
   locales: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSelectLocale: PropTypes.func.isRequired,
   defaultLocale: PropTypes.string,
-  onToggleSideBarVisibility: PropTypes.func.isRequired
+  onToggleSideBarVisibility: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 
 export default TopNavBar;

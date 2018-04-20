@@ -1,3 +1,5 @@
+const yn = require('yn');
+
 // Simple class to act as a singleton for app-wide configuration.
 
 // We'll start with a common config that can be extended separately by the
@@ -16,8 +18,8 @@ class Common {
         this.mailerPassword = "password";
         
         this.apolloClientOpt = {};
+        this.isRunEngine = yn(process.env.RUN_ENGINE);
         this.apolloEngineServiceId = 'service:Betsmate:NXBwHRWuwnGryOWVgBF8lQ'; // default env variable will use ENGINE_API_KEY
-
     }   
 }
 

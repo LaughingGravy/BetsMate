@@ -21,8 +21,7 @@ class Layout extends React.Component {
         this.state = { 
             initDone: false,
             currentLocale: "",
-            toggleSideBarVisibility: false,
-            user: {}
+            toggleSideBarVisibility: false
         };
 
         this.onSelectLocale = this.onSelectLocale.bind(this);

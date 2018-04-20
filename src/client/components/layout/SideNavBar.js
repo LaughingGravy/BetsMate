@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import { Sidebar, Menu, Button, Icon, Segment, Grid, Divider } from 'semantic-ui-react'
 
-const SideNavBar = ({ visible, onToggleSideBarVisibility, children }) => {
+const SideNavBar = ({ visible, onToggleSideBarVisibility, user, children }) => {
   return (
     <Sidebar.Pushable>
       
@@ -23,17 +23,27 @@ const SideNavBar = ({ visible, onToggleSideBarVisibility, children }) => {
           
           <Segment basic compact>
             <Divider />
-            <Grid columns="two" padded divided>
+            <Grid columns={2} padded divided>
+            {user == null && <Grid.Row>
               <Grid.Column textAlign="right">
-                <Link to="/register" key="register" onClick={onToggleSideBarVisibility}>
-                  {intl.get("register-menu-header")}
-                </Link>
+                  <Link to="/register" key="register" onClick={onToggleSideBarVisibility}>
+                    {intl.get("register-menu-header")}
+                  </Link>
+                </Grid.Column>
+                <Grid.Column textAlign="left">
+                  <Link to="/login" key="login" onClick={onToggleSideBarVisibility}>
+                    {intl.get("login-menu-header")}
+                  </Link>
               </Grid.Column>
-              <Grid.Column textAlign="left">
-                <Link to="/login" key="login" onClick={onToggleSideBarVisibility}>
-                  {intl.get("login-menu-header")}
-                </Link>
-              </Grid.Column>
+            </Grid.Row>}
+
+            {user != null && <Grid.Row columns={1}>
+               <Grid.Column textAlign="center">
+                    <Link to="/home" key="logout" onClick={onToggleSideBarVisibility}>
+                      {intl.get("logout-menu-header")}
+                    </Link>
+                </Grid.Column>
+              </Grid.Row>}
             </Grid>
           </Segment>
         </Segment.Group>
@@ -48,7 +58,8 @@ const SideNavBar = ({ visible, onToggleSideBarVisibility, children }) => {
 
 SideNavBar.propTypes = {
   visible: PropTypes.bool.isRequired,
-  onToggleSideBarVisibility: PropTypes.func.isRequired
+  onToggleSideBarVisibility: PropTypes.func.isRequired,
+  user: PropTypes.object
 };
 
 export default SideNavBar;

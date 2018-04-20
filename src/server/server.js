@@ -74,11 +74,14 @@ app.use(
         context: {
             req: req
         },
-        tracing: true,
-        cacheControl: true
+        tracing: Config.isRunEngine,
+        cacheControl: Config.isRunEngine
       };
     }),
-  );
+);
+
+console.log('Config.isRunEngine ',Config.isRunEngine);
+
 
 // Instruct Express to pass on any request made to the '/graphiql' route
 app.use('/graphiql', graphiqlExpress({

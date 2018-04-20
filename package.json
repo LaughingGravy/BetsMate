@@ -8,9 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
     "//": "webpack-dev-server --open --mode development --config webpack/webpack.dev.config.js",
-    "start": "cross-env NODE_ENV=development node src/server/index.js --mode development",
-    "server": "cross-env NODE_ENV=production node src/server/index.js --mode production",
-    "build": "cross-env NODE_ENV=production webpack --mode production --config webpack/webpack.prod.config.js"
+    "start": "cross-env NODE_ENV=development RUN_ENGINE=false node src/server/index.js --mode development",
+    "server": "cross-env NODE_ENV=production RUN_ENGINE=true node src/server/index.js --mode production",
+    "build": "cross-env NODE_ENV=production' webpack --mode production --config webpack/webpack.prod.config.js"
   },
   "keywords": [],
   "author": "Ronald Paul",
@@ -47,6 +47,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
+    "babel-runtime": "^6.26.0",
     "body-parser": "^1.18.2",
     "brotli-webpack-plugin": "^0.5.0",
     "chunk-manifest-webpack-plugin": "^1.1.2",
@@ -83,6 +84,7 @@
     "serve-favicon": "^2.5.0",
     "webpack-dev-server": "^3.1.1",
     "webpack-manifest-plugin": "^2.0.0",
-    "whatwg-fetch": "^2.0.4"
+    "whatwg-fetch": "^2.0.4",
+    "yn": "^2.0.0"
   }
 }

@@ -1,4 +1,4 @@
-const Config = require('../webpack/Config')
+const Config = require('../utilities/Config');
 const nodemailer = require('nodemailer')
 
 function createTransporter()
