@@ -36,12 +36,14 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisi
                       key="locales" value={defaultLocale} />
         </Menu.Item>
 
-        {user == null &&  <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        {user == null && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item as={NavLink}  to="/register" key="register"
                        activeClassName="active">
              {intl.get("register-menu-header")}
           </Menu.Item>
+        </Responsive>}
 
+        {user == null && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item as={NavLink} to="/login" key="login"
                       activeClassName="active" >
             {intl.get("login-menu-header")}
