@@ -50,6 +50,10 @@ class Layout extends React.Component {
             toggleSideBarVisibility: !this.state.toggleSideBarVisibility 
         })
     }
+
+    onLogoutRequested(e, data) {
+        alert('logout requested');
+    }
     
     loadLocales() {   
         let currentLocale = intl.determineLocale({
@@ -99,12 +103,14 @@ class Layout extends React.Component {
                         <SideNavBar visible={this.state.toggleSideBarVisibility} 
                                     onToggleSideBarVisibility={this.onToggleSideBarVisibility}
                                     user={user}
+                                    onLogoutRequested={this.onLogoutRequested}
                                     >
                             <TopNavBar locales={SUPPOER_LOCALES} 
                                     defaultLocale={this.state.currentLocale}
                                     onSelectLocale={this.onSelectLocale} 
                                     onToggleSideBarVisibility={this.onToggleSideBarVisibility}
                                     user={user}
+                                    onLogoutRequested={this.onLogoutRequested}
                                     />
                                 {React.Children.map(this.props.children, 
                                 child => React.cloneElement(child, {currentLocale: this.state.currentLocale}))}

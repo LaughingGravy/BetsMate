@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Menu, Icon, Flag, Segment, Dropdown, Button, Responsive, Popup, MenuItem, MenuMenu } from 'semantic-ui-react';
 import intl from 'react-intl-universal';
 
-const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisibility, user}) => {
+const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisibility, user, onLogoutRequested}) => {
   return (
     <Menu>
       <Menu.Menu position="left">
@@ -93,7 +93,8 @@ TopNavBar.propTypes = {
   onSelectLocale: PropTypes.func.isRequired,
   defaultLocale: PropTypes.string,
   onToggleSideBarVisibility: PropTypes.func.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  onLogoutRequested: PropTypes.func.isRequired
 };
 
 export default TopNavBar;

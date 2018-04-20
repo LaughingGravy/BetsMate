@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import { Sidebar, Menu, Button, Icon, Segment, Grid, Divider } from 'semantic-ui-react'
 
-const SideNavBar = ({ visible, onToggleSideBarVisibility, user, children }) => {
+const SideNavBar = ({ visible, onToggleSideBarVisibility, user, onLogoutRequested, children }) => {
   return (
     <Sidebar.Pushable>
       
@@ -59,7 +59,8 @@ const SideNavBar = ({ visible, onToggleSideBarVisibility, user, children }) => {
 SideNavBar.propTypes = {
   visible: PropTypes.bool.isRequired,
   onToggleSideBarVisibility: PropTypes.func.isRequired,
-  user: PropTypes.object
+  user: PropTypes.object,
+  onLogoutRequested: PropTypes.func.isRequired
 };
 
 export default SideNavBar;
