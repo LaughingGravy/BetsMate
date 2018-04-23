@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
     "//": "webpack-dev-server --open --mode development --config webpack/webpack.dev.config.js",
-    "start": "cross-env NODE_ENV=development RUN_ENGINE=false node src/server/index.js --mode development",
+    "start": "cross-env NODE_ENV=development RUN_ENGINE=true node src/server/index.js --mode development",
     "server": "cross-env NODE_ENV=production RUN_ENGINE=true node src/server/index.js --mode production",
     "build": "cross-env NODE_ENV=production' webpack --mode production --config webpack/webpack.prod.config.js"
   },

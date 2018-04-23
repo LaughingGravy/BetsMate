@@ -4,13 +4,13 @@ import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import helmet from 'helmet';
 
-import models from '../database/models';
+import models from './database/models';
 import passport from 'passport';
-import passportConfig from '../services/auth';
+import passportConfig from './services/auth';
 import session from 'express-session';
-import { connectMongoDB } from '../database/mongoDB';
+import { connectMongoDB } from './database/mongoDB';
 const MongoStore = require('connect-mongo')(session);
-import schema from '../graphql/schema';
+import schema from './graphql/schema';
 
 import path from 'path';
 import favicon from 'serve-favicon';

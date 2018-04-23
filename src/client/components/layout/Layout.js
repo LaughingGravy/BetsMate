@@ -8,7 +8,7 @@ import axios from 'axios';
 import TopNavBar from './TopNavBar';
 import SideNavBar from './SideNavBar';
 
-import CurrentUser from '../../../graphql/queries/CurrentUser';
+import currentUser from '../../graphql/queries/currentUser';
 import { Query } from 'react-apollo';
 
 import SUPPOER_LOCALES from './locales';
@@ -88,7 +88,7 @@ class Layout extends React.Component {
     
     render() {   
         return (
-            <Query query={CurrentUser}>
+            <Query query={currentUser}>
             {({ loading, error, data: { user }}) => {
                  if (loading) {
                     return 'loading...';
