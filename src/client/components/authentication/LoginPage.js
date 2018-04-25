@@ -1,50 +1,72 @@
-import React from 'react';
-import intl from 'react-intl-universal';
-import { Mutation } from 'react-apollo';
-import { Form } from 'semantic-ui-react';
-import login from '../../graphql/mutations/login';
+import React from 'react'
+import intl from 'react-intl-universal'
+import { Mutation } from 'react-apollo'
+import { Form, Loader, Grid, Container, GridColumn } from 'semantic-ui-react'
+import LOGIN from '../../graphql/mutations/login'
+import CURRENT_USER from '../../graphql/queries/currentUser'
+import { history } from '../../../../library/routing'
+import './auth.css';
 
-class LoginPage extends React.Component {
+class LoginPage extends React.PureComponent {
   constructor(props) {
     super(props);
+
+    this.state = { 
+      email: "",
+      password: ""
+    }
   }
 
-  onSubmitRequested(e, data) {
-    alert('logout requested');
+  handleChange = (e, { name, value }) => this.setState({ [name]: value })
+
+  onLoginSuccessful(data) {
+    history.goBack()
   }
 
   render() {
+    const { password, email } = this.state
+
     return (
-      <Mutation mutation={login}>
-        {(login, { data }) => (
-          <div>
-            <div>
+      <Mutation mutation={LOGIN} 
+                onCompleted={this.onLoginSuccessful}
+                refetchQueries={[CURRENT_USER]}>
+        {(login, { loading, error, data }) => (
+          <Container>
+            <Grid columns={1} centered>
+              <Grid.Row centered>
               <h1>{intl.get("login-page-title")}</h1>
-              <p>The Login page should appear here.</p>
-            </div>
-            <Form onSubmit= >
-              <Form.Group  inline>
-                <Form.Field required>
-                  <Form.Input fluid label='Email' placeholder='example@domain.com' />
-                </Form.Field>
-                <Form.Field required>
-                  <Form.Input type='password' fluid label='Password' placeholder='Password...' />
-                </Form.Field>
-              </Form.Group>
-              <Form.Button>Login</Form.Button>
-            </Form>
-          </div>
+              </Grid.Row>
+                 <Grid.Row centered>
+                  <GridColumn mobile={16} tablet={8} computer={4}>
+                    <Form onSubmit={e => {
+                      e.preventDefault;
+                      login({ variables: { email, password } })
+                    }}>    
+                      <Form.Field required>
+                        <Form.Input name='email' label='Email' placeholder='example@domain.com' onChange={this.handleChange} />
+                      </Form.Field>
+
+                      <Form.Field required>
+                        <Form.Input name='password' type='password' label='Password' placeholder='Password...' onChange={this.handleChange} />
+                      </Form.Field>
+
+                      <Container textAlign='center'>
+                        {!loading && <Form.Button primary>Login</Form.Button>}
+                        {loading && <Form.Button primary loading type='basic'>Login</Form.Button>}
+                      </Container>
+               </Form>
+               {error && <Message attached='bottom' negative>
+                           <Icon name='warning' />
+                           An error occurred. Please try again.
+                         </Message>}
+               </GridColumn>
+             </Grid.Row>
+           </Grid>
+          </Container>       
         )}
       </Mutation>
-    );
-    
-    // return (
-    //   <div>
-    //     <h1>{intl.get("login-page-title")}</h1>
-    //     <p>The Login page should appear here.</p>
-    //   </div>
-    // );
+    )
   }
 }
   
-  export default LoginPage;
+export default LoginPage

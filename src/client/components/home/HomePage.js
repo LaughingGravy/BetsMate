@@ -3,10 +3,10 @@ import intl from 'react-intl-universal';
 
 const HomePage = () => {
   return (
-    <div>
+    <React.Fragment>
       <h1>{intl.get("home-page-title")}</h1>
       <p>The home should appear here..hhh.</p>
-    </div> 
+    </React.Fragment> 
   );    
 };
 

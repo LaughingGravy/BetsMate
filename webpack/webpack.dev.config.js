@@ -7,6 +7,7 @@ import PATHS from '../utilities/paths';
 
  module.exports = merge(common, {
     mode: 'development',
+    watch: true,
     entry: {
         vendor: [
           'axios','prop-types','react','react-apollo','react-dom','react-helmet','react-intl-universal','react-router-dom',

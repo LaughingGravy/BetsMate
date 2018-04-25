@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { history } from '../../../../library/routing';
 
+import { Segment } from 'semantic-ui-react'
 import intl from 'react-intl-universal';
 import axios from 'axios';
 
 import TopNavBar from './TopNavBar';
 import SideNavBar from './SideNavBar';
 
-import currentUser from '../../graphql/queries/currentUser';
+import CURRENT_USER from '../../graphql/queries/currentUser';
 import { Query } from 'react-apollo';
 
 import SUPPOER_LOCALES from './locales';
@@ -88,7 +89,7 @@ class Layout extends React.Component {
     
     render() {   
         return (
-            <Query query={currentUser}>
+            <Query query={CURRENT_USER}>
             {({ loading, error, data: { user }}) => {
                  if (loading) {
                     return 'loading...';
@@ -112,11 +113,12 @@ class Layout extends React.Component {
                                     user={user}
                                     onLogoutRequested={this.onLogoutRequested}
                                     />
-                                {React.Children.map(this.props.children, 
-                                child => React.cloneElement(child, {currentLocale: this.state.currentLocale}))}
+                                <Segment basic padded>
+                                    {React.Children.map(this.props.children, 
+                                    child => React.cloneElement(child, {currentLocale: this.state.currentLocale}))}
+                                </Segment>
                         </SideNavBar>
                 );
-
             }}
             </Query>
         );     
