@@ -8,4 +8,4 @@ mutation Login($email: String, $password: String)
     email
   }
 }
-`;
+`

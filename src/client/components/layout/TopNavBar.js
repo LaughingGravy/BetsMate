@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Menu, Icon, Flag, Segment, Dropdown, Button, Responsive, Popup, MenuItem, MenuMenu } from 'semantic-ui-react';
+import { Menu, Icon, Flag, Segment, Dropdown, Button, Responsive, Popup, MenuItem, MenuMenu, FormButton } from 'semantic-ui-react';
 import intl from 'react-intl-universal';
+
+import Logout from '../authentication/Logout'
 
 const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisibility, user, onLogoutRequested}) => {
   return (
@@ -51,9 +53,11 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisi
         </Responsive>}
 
         {user != null && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
-          <Menu.Item as={NavLink} to="/home" key="logout" activeClassName="active">
-            {intl.get("logout-menu-header")}
-          </Menu.Item>
+          <Logout>
+            <Menu.Item as={FormButton} as={NavLink}  to="/home" key="logout" activeClassName="active">
+              {intl.get("logout-menu-header")}
+            </Menu.Item>
+          </Logout>
         </Responsive>}
 
         {user == null && <MenuItem as={Responsive} maxWidth={Responsive.onlyComputer.minWidth}>

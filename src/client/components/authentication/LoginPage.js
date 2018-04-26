@@ -5,7 +5,6 @@ import { Form, Loader, Grid, Container, GridColumn } from 'semantic-ui-react'
 import LOGIN from '../../graphql/mutations/login'
 import CURRENT_USER from '../../graphql/queries/currentUser'
 import { history } from '../../../../library/routing'
-import './auth.css';
 
 class LoginPage extends React.PureComponent {
   constructor(props) {
@@ -29,7 +28,7 @@ class LoginPage extends React.PureComponent {
     return (
       <Mutation mutation={LOGIN} 
                 onCompleted={this.onLoginSuccessful}
-                refetchQueries={[CURRENT_USER]}>
+                refetchQueries={[ {query: CURRENT_USER}]}>
         {(login, { loading, error, data }) => (
           <Container>
             <Grid columns={1} centered>
