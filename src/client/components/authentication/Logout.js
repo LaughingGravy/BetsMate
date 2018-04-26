@@ -38,8 +38,8 @@ class Logout extends React.Component {
                     }}> 
                         { React.Children.map(this.props.children, child => {
                             return <span onClick={this.onSubmit.bind(this)}>{child}</span>
-                        } 
-                        )}
+              
+                        })} 
                     </Form>
                 )}
             </Mutation>
