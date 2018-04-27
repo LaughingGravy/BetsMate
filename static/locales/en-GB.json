@@ -13,12 +13,12 @@
     "home-page-title": "Home",
     "about-page-title": "About",
     "admin-page-title": "Administration",
-
     "login-page-title": "Login",
-    "login-page-email-label": "Email",
-    "login-page-password-label": "Password",
-
     "register-page-title": "Registration",
+    "reset-page-title": "Forgot Password",
 
-    "reset-page-title": "Forgot Password"
+    "email-label": "Email",
+    "password-label": "Password",
+    "login-button-label": "Login",
+    "register-button-label": "Sign up"
 }

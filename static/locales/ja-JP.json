@@ -13,12 +13,12 @@
     "home-page-title": "ホーム",
     "about-page-title": "アボウト",
     "admin-page-title": "アドミン",
-
     "login-page-title": "ログイン",
-    "login-page-email-label": "Eメール",
-    "login-page-password-label": "パスワード",
-
     "register-page-title": "レジスター",
+    "reset-page-title": "パスワード忘れた",
 
-    "reset-page-title": "パスワード忘れた"
+    "email-label": "Eメール",
+    "password-label": "パスワード",
+    "login-button-label": "ログイン",
+    "register-button-label": "新規登録"
 }

@@ -10,7 +10,7 @@ const RoleType = new GraphQLObjectType({
     name: 'RoleType',
     fields: {
         id: { type: GraphQLID },
-        email: { type: GraphQLString }
+        name: { type: GraphQLString }
     }
 })
 

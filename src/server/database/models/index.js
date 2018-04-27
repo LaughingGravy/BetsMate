@@ -1,2 +1,2 @@
-require('./user');
 require('./role');
+require('./user');

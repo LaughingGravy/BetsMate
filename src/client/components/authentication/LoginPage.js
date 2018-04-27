@@ -52,8 +52,8 @@ class LoginPage extends React.PureComponent {
                       </Form.Field>
 
                       <Container textAlign='center'>
-                        {!loading && <Form.Button primary>Login</Form.Button>}
-                        {loading && <Form.Button primary loading type='basic'>Login</Form.Button>}
+                        {!loading && <Form.Button primary>{intl.get("login-button-label")}</Form.Button>}
+                        {loading && <Form.Button primary loading>{intl.get("login-button-label")}</Form.Button>}
                       </Container>
                   </Form>
                   {error && <Message attached='bottom' negative>
