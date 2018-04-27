@@ -6,6 +6,7 @@ import { Redirect } from '../../../../library/routing';
 import AdministrationPage from '../administration/AdministrationPage';
 import RegistrationPage from '../authentication/RegistrationPage';
 import LoginPage from '../authentication/LoginPage';
+import ResetPage from '../authentication/ResetPage';
 import HomePage from '../home/HomePage';
 import AboutPage from '../about/AboutPage';
 
@@ -17,6 +18,7 @@ const Routes = () => {
             <Route path="/administration" component={AdministrationPage} />
             <Route path="/register" component={RegistrationPage} />
             <Route from="/login" component={LoginPage} />
+            <Route from="/reset" component={ResetPage} />
             <Route path="/about" component={AboutPage} />
             <Redirect exact from="about-us" to="about" />
             <Redirect to="/" />

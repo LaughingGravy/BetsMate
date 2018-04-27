@@ -1,15 +1,24 @@
 {
     "locale-id": "ja-JP",
     "locale-language": "日本語",
+
     "home-menu-header": "ホーム",
     "about-menu-header": "ヘルプ",
     "admin-menu-header": "アドミン",
     "register-menu-header": "レジスター",
     "logout-menu-header": "ログアウト",
     "login-menu-header": "ログイン",
+    "reset-menu-header": "パスワードのリセット",
+
     "home-page-title": "ホーム",
     "about-page-title": "アボウト",
     "admin-page-title": "アドミン",
+
     "login-page-title": "ログイン",
-    "register-page-title": "レジスター"
+    "login-page-email-label": "Eメール",
+    "login-page-password-label": "パスワード",
+
+    "register-page-title": "レジスター",
+
+    "reset-page-title": "パスワード忘れた"
 }

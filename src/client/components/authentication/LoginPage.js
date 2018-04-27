@@ -1,6 +1,7 @@
 import React from 'react'
 import intl from 'react-intl-universal'
 import { Mutation } from 'react-apollo'
+import { NavLink, Link } from 'react-router-dom';
 import { Form, Loader, Grid, Container, GridColumn } from 'semantic-ui-react'
 import LOGIN from '../../graphql/mutations/login'
 import CURRENT_USER from '../../graphql/queries/currentUser'
@@ -35,31 +36,46 @@ class LoginPage extends React.PureComponent {
               <Grid.Row centered>
               <h1>{intl.get("login-page-title")}</h1>
               </Grid.Row>
-                 <Grid.Row centered>
-                  <GridColumn mobile={16} tablet={8} computer={4}>
-                    <Form onSubmit={e => {
+
+              <Grid.Row centered>
+                <GridColumn mobile={16} tablet={8} computer={4}>
+                  <Form onSubmit={e => {
                       e.preventDefault;
                       login({ variables: { email, password } })
                     }}>    
                       <Form.Field required>
-                        <Form.Input name='email' label='Email' placeholder='example@domain.com' onChange={this.handleChange} />
+                        <Form.Input name='email' label={intl.get("login-page-email-label")} placeholder='example@domain.com' onChange={this.handleChange} />
                       </Form.Field>
 
                       <Form.Field required>
-                        <Form.Input name='password' type='password' label='Password' placeholder='Password...' onChange={this.handleChange} />
+                        <Form.Input name='password' type='password' label={intl.get("login-page-password-label")} placeholder='Password...' onChange={this.handleChange} />
                       </Form.Field>
 
                       <Container textAlign='center'>
                         {!loading && <Form.Button primary>Login</Form.Button>}
                         {loading && <Form.Button primary loading type='basic'>Login</Form.Button>}
                       </Container>
-               </Form>
-               {error && <Message attached='bottom' negative>
+                  </Form>
+                  {error && <Message attached='bottom' negative>
                            <Icon name='warning' />
                            An error occurred. Please try again.
-                         </Message>}
+                  </Message>}
                </GridColumn>
              </Grid.Row>
+
+             <Grid.Row centered columns={2} padded divided>
+              <GridColumn textAlign='right'>
+                <NavLink to="/register" key="register">
+                  {intl.get("register-menu-header")}
+                </NavLink>
+              </GridColumn>
+              <GridColumn textAlign='left'>
+                <NavLink to="/reset" key="reset">
+                  {intl.get("reset-menu-header")}
+                </NavLink>
+              </GridColumn>
+             </Grid.Row>
+
            </Grid>
           </Container>       
         )}
