@@ -7,7 +7,9 @@ import intl from 'react-intl-universal';
 
 import Logout from '../authentication/Logout'
 
-const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisibility, user, onLogoutRequested}) => {
+import { withUser } from '../contexts/withUserContext'
+
+const TopNavBar = ({ locales, onSelectLocale, defaultLocale, userCtx, onToggleSideBarVisibility }) => {
   return (
     <Menu>
       <Menu.Menu position="left">
@@ -38,21 +40,21 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisi
                       key="locales" value={defaultLocale} />
         </Menu.Item>
 
-        {user == null && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        {!userCtx.user.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item as={NavLink}  to="/register" key="register"
                        activeClassName="active">
              {intl.get("register-menu-header")}
           </Menu.Item>
         </Responsive>}
 
-        {user == null && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        {!userCtx.user.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item as={NavLink} to="/login" key="login"
                       activeClassName="active" >
             {intl.get("login-menu-header")}
           </Menu.Item>
         </Responsive>}
 
-        {user != null && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        {userCtx.user.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Logout>
             <Menu.Item as={NavLink}  to="/home" key="logout" activeClassName="active">
               {intl.get("logout-menu-header")}
@@ -60,7 +62,7 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisi
           </Logout>
         </Responsive>}
 
-        {user == null && <MenuItem as={Responsive} maxWidth={Responsive.onlyComputer.minWidth}>
+        {!userCtx.user.isAuthenticated && <MenuItem as={Responsive} maxWidth={Responsive.onlyComputer.minWidth}>
           <Popup position="bottom center" style={{"padding": "0px"}} hoverable basic trigger={<Icon name="user circle" size="large" />}>
           < Menu vertical compact>
               <MenuItem as={NavLink} to="/register" key="register" activeClassName="active"
@@ -75,7 +77,7 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisi
           </Popup>
         </MenuItem>}
 
-        {user != null && <Responsive basic="true" maxWidth={Responsive.onlyComputer.minWidth}>
+        {userCtx.isAuthenticated && <Responsive basic="true" maxWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item fluid as={Button} onClick={onToggleSideBarVisibility}>
             <Icon name="log out" circular size="small" />
           </Menu.Item> 
@@ -96,9 +98,8 @@ TopNavBar.propTypes = {
   locales: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSelectLocale: PropTypes.func.isRequired,
   defaultLocale: PropTypes.string,
-  onToggleSideBarVisibility: PropTypes.func.isRequired,
-  user: PropTypes.object,
-  onLogoutRequested: PropTypes.func.isRequired
+  userCtx: PropTypes.object,
+  onToggleSideBarVisibility: PropTypes.func.isRequired
 };
 
-export default TopNavBar;
+export default withUser(TopNavBar);

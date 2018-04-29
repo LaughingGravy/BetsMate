@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import { Sidebar, Menu, Button, Icon, Segment, Grid, Divider } from 'semantic-ui-react'
 
-const SideNavBar = ({ visible, onToggleSideBarVisibility, user, onLogoutRequested, children }) => {
+import { withUser } from '../contexts/withUserContext'
+
+const SideNavBar = ({ visible, onToggleSideBarVisibility, userCtx, children }) => {
   return (
     <Sidebar.Pushable>
       
@@ -24,7 +26,7 @@ const SideNavBar = ({ visible, onToggleSideBarVisibility, user, onLogoutRequeste
           <Segment basic compact>
             <Divider />
             <Grid columns={2} padded divided>
-            {user == null && <Grid.Row>
+            {!userCtx.user.isAuthenticated && <Grid.Row>
               <Grid.Column textAlign="right">
                   <Link to="/register" key="register" onClick={onToggleSideBarVisibility}>
                     {intl.get("register-menu-header")}
@@ -37,7 +39,7 @@ const SideNavBar = ({ visible, onToggleSideBarVisibility, user, onLogoutRequeste
               </Grid.Column>
             </Grid.Row>}
 
-            {user != null && <Grid.Row columns={1}>
+            {userCtx.user.isAuthenticated && <Grid.Row columns={1}>
                <Grid.Column textAlign="center">
                     <Link to="/home" key="logout" onClick={onToggleSideBarVisibility}>
                       {intl.get("logout-menu-header")}
@@ -59,8 +61,7 @@ const SideNavBar = ({ visible, onToggleSideBarVisibility, user, onLogoutRequeste
 SideNavBar.propTypes = {
   visible: PropTypes.bool.isRequired,
   onToggleSideBarVisibility: PropTypes.func.isRequired,
-  user: PropTypes.object,
-  onLogoutRequested: PropTypes.func.isRequired
+  userCtx: PropTypes.object
 };
 
-export default SideNavBar;
+export default withUser(SideNavBar);

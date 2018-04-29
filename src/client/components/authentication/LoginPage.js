@@ -44,11 +44,11 @@ class LoginPage extends React.PureComponent {
                       login({ variables: { email, password } })
                     }}>    
                       <Form.Field required>
-                        <Form.Input name='email' label={intl.get("login-page-email-label")} placeholder='example@domain.com' onChange={this.handleChange} />
+                        <Form.Input name='email' label={intl.get("email-label")} placeholder='example@domain.com' onChange={this.handleChange} />
                       </Form.Field>
 
                       <Form.Field required>
-                        <Form.Input name='password' type='password' label={intl.get("login-page-password-label")} placeholder='Password...' onChange={this.handleChange} />
+                        <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder='Password...' onChange={this.handleChange} />
                       </Form.Field>
 
                       <Container textAlign='center'>
@@ -63,7 +63,7 @@ class LoginPage extends React.PureComponent {
                </GridColumn>
              </Grid.Row>
 
-             <Grid.Row centered columns={2} padded divided>
+             <Grid.Row centered columns={2} divided>
               <GridColumn textAlign='right'>
                 <NavLink to="/register" key="register">
                   {intl.get("register-menu-header")}

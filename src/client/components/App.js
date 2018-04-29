@@ -1,19 +1,45 @@
 
 import React from 'react'
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom'
 import { hot } from 'react-hot-loader'
-import { Segment } from 'semantic-ui-react';
-import Layout from './layout/Layout';
-import Routes from './layout/Routes';
+import { Segment } from 'semantic-ui-react'
+import Layout from './layout/Layout'
+import Routes from './layout/Routes'
 
-const App = () => {
-  return (
+import { UserContext, DefaultUser } from './contexts/userContext'
+import { withUser } from './contexts/withUserContext'
+
+class App extends React.Component{
+  constructor(props) {
+      super(props);
+
+      this.setUser = (user) => {
+        this.setState = ({
+          userCtx: { user: user }
+        })
+      }
+
+      this.state = {
+        userCtx: {
+          user: DefaultUser,
+          setUser: this.setUser
+        }
+      }
+  }
+  
+  render() {
+
+    return (          
       <Segment basic>
+        <UserContext.Provider value={this.state.userCtx}> 
           <Layout>  
             <Routes />
           </Layout>
-      </Segment>
-  );
+          </UserContext.Provider> 
+      </Segment>         
+    )
+          
+  }
 };
 
 export default hot(module)(App)
