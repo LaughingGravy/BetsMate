@@ -70,12 +70,15 @@ class LoginPage extends React.PureComponent {
                         </Grid>
                       </Container>                     
                   </Form>
-                  {error && <Message attached='bottom' error>
-                           <Icon name='warning' />
-                           {error.graphQLErrors.map(({ message }, i) => {
-                             <span key={i}>{message}</span>
-                           })}
-                      </Message>}
+                  {error && <Message attached='bottom' error icon>
+                              <Icon name='warning' />
+                              <Message.Header>There was an error.</Message.Header>
+                                <Message.List>
+                                  {error.graphQLErrors.map(({ message }, i) => {
+                                   return <Message.Item key={i}>{message}</Message.Item>
+                                  })}
+                                </Message.List>
+                        </Message>}
                </GridColumn>
              </Grid.Row>
 
