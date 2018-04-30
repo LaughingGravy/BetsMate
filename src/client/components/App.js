@@ -12,22 +12,26 @@ class App extends React.Component{
   constructor(props) {
       super(props);
 
+      this.setUser = this.setUser.bind(this);
+
       this.state = {
         userCtx: {
           user: DefaultUser,
           isAuthenticated: false,
-
-          setUser: (user) => {
-            let isAutheticated = user.email.trim().length > 0
-            this.setState({
-              userCtx: { 
-                user: user,
-                isAuthenticated: isAutheticated
-              }            
-            })
-          }
+          setUser: this.setUser
         }
       }
+  }
+
+  setUser (user) {
+    let isAutheticated = user.email.trim().length > 0
+    this.setState({
+      userCtx: { 
+        user: user,
+        isAuthenticated: isAutheticated,
+        setUser: this.setUser
+      }            
+    })
   }
   
   render() {

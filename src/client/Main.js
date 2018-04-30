@@ -9,7 +9,7 @@ import Helmet from 'react-helmet';
 
 // apollo graphql client
 import { ApolloProvider } from 'react-apollo';
-import { getBrowserClient } from '../../library/apollo';
+import { getBrowserClient } from '../../library/apolloClient/apollo';
 
 // Get the custom `history` that we'll use to feed down to our `<Router>`
 import { history } from '../../library/routing';

@@ -4,14 +4,18 @@ import { withUser } from './withUserContext'
 class UserContextUpdater extends React.PureComponent {
     constructor(props) {
         super(props);
+
+        this.state = {}
     }
 
-    UNSAFE_componentWillUpdate(nextProps, nextState) {
+    static getDerivedStateFromProps(nextProps, prevState) {
         const { userCtx, input } = nextProps
 
-        if (userCtx.user != input) {
+        if (userCtx.user != input) {         
             userCtx.setUser(input)
         }
+
+        return null
     }
    
     render() {

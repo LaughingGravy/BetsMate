@@ -1,7 +1,7 @@
-import ApolloClient from "apollo-boost";
-import { ApolloLink } from 'apollo-link';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import ApolloClient from "apollo-boost"
+import { concat } from 'apollo-link'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import { ErrorHandlerLink, httpLink } from './links'
 
 const defaultOptions = {
     watchQuery: {
@@ -14,13 +14,8 @@ const defaultOptions = {
     }
 };
 
-const httpLink = createHttpLink({
-    uri: '/graphql',
-    credentials: 'same-origin'
-});
-
 const opt = {
-    link: httpLink,
+    link: concat(ErrorHandlerLink, httpLink),
     cache: new InMemoryCache({
         dataIdFromObject: object => object.id || null
       }),

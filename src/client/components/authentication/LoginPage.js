@@ -2,10 +2,12 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Mutation } from 'react-apollo'
 import { NavLink, Link } from 'react-router-dom';
-import { Form, Loader, Grid, Container, GridColumn, Icon, Message } from 'semantic-ui-react'
+import { Form, Loader, Grid, Container, GridColumn } from 'semantic-ui-react'
 import LOGIN from '../../graphql/mutations/login'
 import CURRENT_USER from '../../graphql/queries/currentUser'
 import { history } from '../../../../library/routing'
+
+import AuthErrorDisplay from './AuthErrorDisplay'
 
 class LoginPage extends React.PureComponent {
   constructor(props) {
@@ -27,16 +29,16 @@ class LoginPage extends React.PureComponent {
     const { password, email } = this.state
 
     return (
-      <Mutation mutation={LOGIN} 
-                onCompleted={this.onLoginSuccessful}
-                refetchQueries={[ {query: CURRENT_USER}]}>
-        {(login, { loading, error, data }) => (
-          <Container>
-            <Grid columns={1} centered>
-              <Grid.Row centered>
-              <h1>{intl.get("login-page-title")}</h1>
-              </Grid.Row>
+      <Container>
+        <Grid columns={1} centered>
+          <Grid.Row centered>
+          <h1>{intl.get("login-page-title")}</h1>
+          </Grid.Row>
 
+            <Mutation mutation={LOGIN} 
+                      onCompleted={this.onLoginSuccessful}
+                      refetchQueries={[ {query: CURRENT_USER}]}>
+              {(login, { loading, error, data }) => (
               <Grid.Row centered>
                 <GridColumn mobile={16} tablet={8} computer={4}>
                   <Form className='segment' onSubmit={e => {
@@ -70,22 +72,14 @@ class LoginPage extends React.PureComponent {
                         </Grid>
                       </Container>                     
                   </Form>
-                  {error && <Message attached='bottom' error icon>
-                              <Icon name='warning' />
-                              <Message.Header>There was an error.</Message.Header>
-                                <Message.List>
-                                  {error.graphQLErrors.map(({ message }, i) => {
-                                   return <Message.Item key={i}>{message}</Message.Item>
-                                  })}
-                                </Message.List>
-                        </Message>}
-               </GridColumn>
-             </Grid.Row>
+                  {error && <AuthErrorDisplay error={error} />}
+                </GridColumn>
+              </Grid.Row>
+              )}
+            </Mutation>
 
-           </Grid>
-          </Container>       
-        )}
-      </Mutation>
+        </Grid>
+      </Container>            
     )
   }
 }
