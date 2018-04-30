@@ -40,29 +40,29 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, userCtx, onToggleSi
                       key="locales" value={defaultLocale} />
         </Menu.Item>
 
-        {!userCtx.user.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        {!userCtx.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item as={NavLink}  to="/register" key="register"
                        activeClassName="active">
              {intl.get("register-menu-header")}
           </Menu.Item>
-        </Responsive>}
+        </Responsive>} 
 
-        {!userCtx.user.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        {!userCtx.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item as={NavLink} to="/login" key="login"
                       activeClassName="active" >
             {intl.get("login-menu-header")}
           </Menu.Item>
         </Responsive>}
 
-        {userCtx.user.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        {userCtx.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Logout>
             <Menu.Item as={NavLink}  to="/home" key="logout" activeClassName="active">
               {intl.get("logout-menu-header")}
             </Menu.Item>
           </Logout>
-        </Responsive>}
+        </Responsive>} 
 
-        {!userCtx.user.isAuthenticated && <MenuItem as={Responsive} maxWidth={Responsive.onlyComputer.minWidth}>
+        {!userCtx.isAuthenticated && <MenuItem as={Responsive} maxWidth={Responsive.onlyComputer.minWidth}>
           <Popup position="bottom center" style={{"padding": "0px"}} hoverable basic trigger={<Icon name="user circle" size="large" />}>
           < Menu vertical compact>
               <MenuItem as={NavLink} to="/register" key="register" activeClassName="active"
@@ -81,7 +81,7 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, userCtx, onToggleSi
           <Menu.Item fluid as={Button} onClick={onToggleSideBarVisibility}>
             <Icon name="log out" circular size="small" />
           </Menu.Item> 
-        </Responsive>}
+        </Responsive>} 
 
         <Responsive basic="true" maxWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item fluid as={Button} onClick={onToggleSideBarVisibility}>

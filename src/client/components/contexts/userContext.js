@@ -4,12 +4,12 @@ const DefaultUser = {
     name: 'Guest', 
     email: '',
     role: 'guest',
-    password: '',
-    isAuthenticated: false
+    password: ''
 }
 
 const UserContext = React.createContext({
     user: DefaultUser,
+    isAuthenticated: false,
     setUser: () => {}
 })
 

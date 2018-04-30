@@ -11,12 +11,12 @@ import SideNavBar from './SideNavBar';
 
 import SUPPOER_LOCALES from './locales';
 
+import UserContextUpdater from '../contexts/UserContextUpdater'
+import { DefaultUser } from '../contexts/userContext'
+
 import CURRENT_USER from '../../graphql/queries/currentUser';
 import { Query } from 'react-apollo';
 
-import { withUser } from '../contexts/withUserContext'
-
-//@graphql(allUser)
 class Layout extends React.Component {
     constructor(props) {
         super(props);
@@ -32,7 +32,7 @@ class Layout extends React.Component {
     }
  
     componentDidMount() {
-    this.loadLocales();
+        this.loadLocales();
     }
     
     componentDidUpdate(prevProps, prevState) {
@@ -85,9 +85,8 @@ class Layout extends React.Component {
         });
     }
     
-    render() {    
-        const { userCtx } = this.props
-        
+    render() { 
+
         return (
             <Query query={CURRENT_USER}>
             {({ loading, error, data: { user }}) => {
@@ -99,32 +98,34 @@ class Layout extends React.Component {
                     return `Error: ${error}`;
                 }
 
-                if (user != null) {
-                    userCtx.setUser(user)
+                if (user == null) {
+                    user = DefaultUser
                 }
-
+               
                 return (
-                    this.state.initDone &&                 
-                        <SideNavBar visible={this.state.toggleSideBarVisibility} 
-                                    onToggleSideBarVisibility={this.onToggleSideBarVisibility}
-                                    onLogoutRequested={this.onLogoutRequested}
-                                    >
-                            <TopNavBar locales={SUPPOER_LOCALES} 
-                                    defaultLocale={this.state.currentLocale}
-                                    onSelectLocale={this.onSelectLocale} 
-                                    onToggleSideBarVisibility={this.onToggleSideBarVisibility}
-                                    onLogoutRequested={this.onLogoutRequested}
-                                    />
-                                <Segment basic padded>
-                                    {React.Children.map(this.props.children, 
-                                    child => React.cloneElement(child, {currentLocale: this.state.currentLocale}))}
-                                </Segment>
-                        </SideNavBar>
-                )
+                    this.state.initDone && 
+                        <UserContextUpdater input={user}>             
+                            <SideNavBar visible={this.state.toggleSideBarVisibility} 
+                                        onToggleSideBarVisibility={this.onToggleSideBarVisibility}
+                                        onLogoutRequested={this.onLogoutRequested}
+                                        >
+                                <TopNavBar locales={SUPPOER_LOCALES} 
+                                        defaultLocale={this.state.currentLocale}
+                                        onSelectLocale={this.onSelectLocale} 
+                                        onToggleSideBarVisibility={this.onToggleSideBarVisibility}
+                                        onLogoutRequested={this.onLogoutRequested}
+                                        />
+                                    <Segment basic padded>
+                                        {React.Children.map(this.props.children, 
+                                        child => React.cloneElement(child, {currentLocale: this.state.currentLocale}))}
+                                    </Segment>
+                            </SideNavBar>
+                        </UserContextUpdater>
+                )   
             }}
-            </Query>  
+            </Query>         
         )        
     }
 }
 
-export default withUser(Layout);
+export default Layout;

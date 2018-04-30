@@ -7,28 +7,30 @@ import Layout from './layout/Layout'
 import Routes from './layout/Routes'
 
 import { UserContext, DefaultUser } from './contexts/userContext'
-import { withUser } from './contexts/withUserContext'
 
 class App extends React.Component{
   constructor(props) {
       super(props);
 
-      this.setUser = (user) => {
-        this.setState = ({
-          userCtx: { user: user }
-        })
-      }
-
       this.state = {
         userCtx: {
           user: DefaultUser,
-          setUser: this.setUser
+          isAuthenticated: false,
+
+          setUser: (user) => {
+            let isAutheticated = user.email.trim().length > 0
+            this.setState({
+              userCtx: { 
+                user: user,
+                isAuthenticated: isAutheticated
+              }            
+            })
+          }
         }
       }
   }
   
   render() {
-
     return (          
       <Segment basic>
         <UserContext.Provider value={this.state.userCtx}> 
@@ -37,8 +39,7 @@ class App extends React.Component{
           </Layout>
           </UserContext.Provider> 
       </Segment>         
-    )
-          
+    )      
   }
 };
 

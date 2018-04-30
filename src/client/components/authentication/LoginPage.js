@@ -2,7 +2,7 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Mutation } from 'react-apollo'
 import { NavLink, Link } from 'react-router-dom';
-import { Form, Loader, Grid, Container, GridColumn } from 'semantic-ui-react'
+import { Form, Loader, Grid, Container, GridColumn, Icon, Message } from 'semantic-ui-react'
 import LOGIN from '../../graphql/mutations/login'
 import CURRENT_USER from '../../graphql/queries/currentUser'
 import { history } from '../../../../library/routing'
@@ -39,7 +39,7 @@ class LoginPage extends React.PureComponent {
 
               <Grid.Row centered>
                 <GridColumn mobile={16} tablet={8} computer={4}>
-                  <Form onSubmit={e => {
+                  <Form className='segment' onSubmit={e => {
                       e.preventDefault;
                       login({ variables: { email, password } })
                     }}>    
@@ -54,26 +54,29 @@ class LoginPage extends React.PureComponent {
                       <Container textAlign='center'>
                         {!loading && <Form.Button primary>{intl.get("login-button-label")}</Form.Button>}
                         {loading && <Form.Button primary loading>{intl.get("login-button-label")}</Form.Button>}
-                      </Container>
+                        <Grid centered>
+                          <Grid.Row centered columns={2} divided>
+                            <GridColumn textAlign='right'>
+                              <NavLink to="/register" key="register">
+                                {intl.get("register-menu-header")}
+                              </NavLink>
+                            </GridColumn>
+                            <GridColumn textAlign='left'>
+                              <NavLink to="/reset" key="reset">
+                                {intl.get("reset-menu-header")}
+                              </NavLink>
+                            </GridColumn>
+                          </Grid.Row> 
+                        </Grid>
+                      </Container>                     
                   </Form>
-                  {error && <Message attached='bottom' negative>
+                  {error && <Message attached='bottom' error>
                            <Icon name='warning' />
-                           An error occurred. Please try again.
-                  </Message>}
+                           {error.graphQLErrors.map(({ message }, i) => {
+                             <span key={i}>{message}</span>
+                           })}
+                      </Message>}
                </GridColumn>
-             </Grid.Row>
-
-             <Grid.Row centered columns={2} divided>
-              <GridColumn textAlign='right'>
-                <NavLink to="/register" key="register">
-                  {intl.get("register-menu-header")}
-                </NavLink>
-              </GridColumn>
-              <GridColumn textAlign='left'>
-                <NavLink to="/reset" key="reset">
-                  {intl.get("reset-menu-header")}
-                </NavLink>
-              </GridColumn>
              </Grid.Row>
 
            </Grid>

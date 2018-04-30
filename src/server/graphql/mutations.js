@@ -21,7 +21,7 @@ const mutation = new GraphQLObjectType({
             },
             resolve(parentValue, { email, password }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthService.signup({ email, password,  req});
+                return AuthService.signup({ email, password, req});
             }
         },
         logout: {

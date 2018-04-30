@@ -6,11 +6,10 @@ import { history } from '../../../../library/routing';
 import LOGOUT from '../../graphql/mutations/logout'
 import CURRENT_USER from '../../graphql/queries/currentUser'
 
-// const Logout = ({ children }) => {
-
-class Logout extends React.Component {
+ 
+class Logout extends React.PureComponent {
     constructor(props) {
-        super(props);
+       super(props);
     }
 
     onLogoutSuccessful() {
@@ -25,7 +24,6 @@ class Logout extends React.Component {
                 {(logout, { loading, error, data }) => (
                     <Form ref={this.logoutForm} id='logoutForm' method='post' onSubmit={e => {
                         e.preventDefault
-                        console.log('logging out')
                         logout()                                                         
                     }}> 
                         { React.Children.map(this.props.children, child => {

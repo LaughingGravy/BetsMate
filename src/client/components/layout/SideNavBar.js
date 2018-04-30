@@ -26,7 +26,7 @@ const SideNavBar = ({ visible, onToggleSideBarVisibility, userCtx, children }) =
           <Segment basic compact>
             <Divider />
             <Grid columns={2} padded divided>
-            {!userCtx.user.isAuthenticated && <Grid.Row>
+            {!userCtx.isAuthenticated && <Grid.Row>
               <Grid.Column textAlign="right">
                   <Link to="/register" key="register" onClick={onToggleSideBarVisibility}>
                     {intl.get("register-menu-header")}
@@ -39,7 +39,7 @@ const SideNavBar = ({ visible, onToggleSideBarVisibility, userCtx, children }) =
               </Grid.Column>
             </Grid.Row>}
 
-            {userCtx.user.isAuthenticated && <Grid.Row columns={1}>
+            {userCtx.isAuthenticated && <Grid.Row columns={1}>
                <Grid.Column textAlign="center">
                     <Link to="/home" key="logout" onClick={onToggleSideBarVisibility}>
                       {intl.get("logout-menu-header")}
