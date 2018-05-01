@@ -54,8 +54,7 @@ class LoginPage extends React.PureComponent {
                       </Form.Field>
 
                       <Container textAlign='center'>
-                        {!loading && <Form.Button primary>{intl.get("login-button-label")}</Form.Button>}
-                        {loading && <Form.Button primary loading>{intl.get("login-button-label")}</Form.Button>}
+                        <Form.Button primary loading={loading}>{intl.get("login-button-label")}</Form.Button>}
                         <Grid centered>
                           <Grid.Row centered columns={2} divided>
                             <GridColumn textAlign='right'>
