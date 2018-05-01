@@ -6,7 +6,6 @@ import { Menu, Icon, Flag, Segment, Dropdown, Button, Responsive, Popup, MenuIte
 import intl from 'react-intl-universal';
 
 import Logout from '../authentication/Logout'
-
 import { withUser } from '../contexts/withUserContext'
 
 const TopNavBar = ({ locales, onSelectLocale, defaultLocale, userCtx, onToggleSideBarVisibility }) => {

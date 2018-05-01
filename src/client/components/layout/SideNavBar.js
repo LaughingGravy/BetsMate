@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import { Sidebar, Menu, Button, Icon, Segment, Grid, Divider } from 'semantic-ui-react'
 
+import Logout from '../authentication/Logout'
 import { withUser } from '../contexts/withUserContext'
 
 const SideNavBar = ({ visible, onToggleSideBarVisibility, userCtx, children }) => {
@@ -41,9 +42,11 @@ const SideNavBar = ({ visible, onToggleSideBarVisibility, userCtx, children }) =
 
             {userCtx.isAuthenticated && <Grid.Row columns={1}>
                <Grid.Column textAlign="center">
+                  <Logout>
                     <Link to="/home" key="logout" onClick={onToggleSideBarVisibility}>
                       {intl.get("logout-menu-header")}
                     </Link>
+                  </Logout>
                 </Grid.Column>
               </Grid.Row>}
             </Grid>
