@@ -13,7 +13,7 @@ import webpackMiddleware from'webpack-dev-middleware'
 const app = server;
 
 const options = {
-  contentBase: './dist',
+  contentBase: '../../src/client',
   host: Config.host,
   stats: { colors: true }
 };
