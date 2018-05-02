@@ -1,8 +1,14 @@
 const path = require('path');
 const merge = require('webpack-merge');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const common = require('./webpack.common.config.js');
 const webpack = require('webpack');
+
+// Our local path configuration, so webpack knows where everything is/goes
+const PATHS = require('../utilities/paths');
+
+// Plugins
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 // Compression plugin for generating `.gz` static files
 const CompressionPlugin = require("compression-webpack-plugin")
 // Generate .br files, using the Brotli compression algorithm
@@ -12,8 +18,8 @@ const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 // Copy files from `PATH.static` to `PATHS.public`
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// Our local path configuration, so webpack knows where everything is/goes
-const PATHS = require('../utilities/paths');
+
+
 
 module.exports = merge(common, {
   entry: {
@@ -26,6 +32,12 @@ module.exports = merge(common, {
    mode: 'production',
    devtool: 'source-map',
    plugins: [
+    new CleanWebpackPlugin( ['dist'], { 
+                                        root: PATHS.root, 
+                                        dry: false, 
+                                        verbose: true
+                                      } ),
+
      new UglifyJSPlugin({
         test: /\.js($|\?)/i,
         include: /\/src/,

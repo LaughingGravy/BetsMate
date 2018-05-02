@@ -2,9 +2,9 @@ const express = require('express');
 const chalk = require('chalk'); 
 const compression = require('compression');
 const path = require('path');
+const { ApolloEngine } = require('apollo-engine');
 
 import Config from '../../utilities/Config';
-const createTransporter = require('../../Utilities/mailer');
 const server = require('./server');
 
 process.on('unhandledRejection', (reason, p) => {
@@ -13,18 +13,18 @@ process.on('unhandledRejection', (reason, p) => {
   process.exit(1);
 });
 
-process.on('uncaughtException', function (er) {
-  console.error(er.stack) 
-  createTransporter().sendMail({
-    from: 'r_l_paul@hotmail.com',
-    to: 'r_l_paul@hotmail.com',
-    subject: er.message,
-    text: er.stack
-  }, function (er) {
-     if (er) console.error(er)
-     process.exit(1) 
-  })
-});
+// process.on('uncaughtException', function (er) {
+//   console.error(er.stack) 
+//   createTransporter().sendMail({
+//     from: 'r_l_paul@hotmail.com',
+//     to: 'r_l_paul@hotmail.com',
+//     subject: er.message,
+//     text: er.stack
+//   }, function (er) {
+//      if (er) console.error(er)
+//      process.exit(1) 
+//   })
+// });
 
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
@@ -38,7 +38,7 @@ const app = server;
 //
 // Register Node.js middleware
 // -----------------------------------------------------------------------------
-app.use(express.static(path.resolve(__dirname, '../dist')));
+app.use(express.static(path.resolve(__dirname, '../../dist')));
 app.use(compression());
 
 // return the site index page

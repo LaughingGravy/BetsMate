@@ -22,20 +22,11 @@
             }
         },
         {
-            "name": "Attach",
+            "name": "Attach to Process",
             "type": "node",
             "request": "attach",
-            "protocol": "inspector",
-            "sourceMaps": true,
-            "address": "localhost",
             "port": 3000,
-            "timeout": 20000,
-            "skipFiles": [
-                "node_modules/**"
-            ],
-            "sourceMapPathOverrides": {
-                "webpack:///*": "${webRoot}/*"
-            }
+            "protocol": "inspector"
         },
         {
             "name": "Attach to Picked Process",

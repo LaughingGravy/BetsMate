@@ -17,12 +17,12 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, userCtx, onToggleSi
           <Icon name="home" size="large"  />
         </Menu.Item>
 
-        <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        {(userCtx.user.role == 'admin') && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item as={NavLink} to="/administration" key="administration" 
                     activeClassName="active">
             {intl.get("admin-menu-header")}
           </Menu.Item>
-        </Responsive>
+        </Responsive>}
 
         <Responsive minWidth={Responsive.onlyComputer.minWidth}>
           <Menu.Item as={NavLink} to="/about" key="about" activeClassName="active">

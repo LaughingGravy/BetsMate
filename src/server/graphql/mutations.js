@@ -17,11 +17,12 @@ const mutation = new GraphQLObjectType({
             type: UserType,
             args: {
                 email: { type: GraphQLString },
-                password: { type: GraphQLString }
+                password: { type: GraphQLString },
+                role: { type: GraphQLString }
             },
-            resolve(parentValue, { email, password }, ctx ) { //request is request object from express
+            resolve(parentValue, { email, password, role }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthService.signup({ email, password, req});
+                return AuthService.signup({ email, password, role, req});
             }
         },
         logout: {
