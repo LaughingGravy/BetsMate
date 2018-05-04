@@ -14,15 +14,16 @@ const defaultOptions = {
     }
 };
 
-const opt = {
-    link: concat(ErrorHandlerLink, httpLink),
-    cache: new InMemoryCache({
-        dataIdFromObject: object => object.id || null
-      }),
-    defaultOptions: defaultOptions
-};
-
-export function getBrowserClient()
+export function getBrowserClient(ssrMode = false)
 {
+    let opt = {
+        ssrMode: ssrMode,
+        link: concat(ErrorHandlerLink, httpLink),
+        cache: new InMemoryCache({
+            dataIdFromObject: object => object.id || null
+          }),
+        defaultOptions: defaultOptions
+    };
+
     return new ApolloClient(opt);
 };

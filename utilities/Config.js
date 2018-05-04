@@ -9,10 +9,11 @@ class Common {
         this.host = process.env.HOST || 'localhost',
         this.port = process.env.PORT || 3000,
         this.corsOptions = {},
+        this.enableHTTP = false,
         
         this.mongoURL = null,
         this.connectOpt = {},
-        this.secret = '@0m0r1 Blu3 Forest Prefecture',
+        this.secret = '@0m0r1 Blu3 F0rest Pr3f3cture',
         
         this.mailerUser = "gmail.user@gmail.com",
         this.mailerPassword = "password";
@@ -56,5 +57,26 @@ else
         }
     }
 };
+
+if (SERVER)
+    Config = class ServerConfig extends Common {
+    constructor() {
+        super();
+    }
+
+    handler404(ctx) {
+        return () => {
+            const stateDump = JSON.stringify(ctx.store.getState());
+
+            // Explicitly set the return status to 404.  This is done for us by
+            // default if we don't have a custom 404 handler, but left to the function
+            // otherwise (since we might not always want to return a 404)
+            ctx.status = 404;
+
+            // Set the body
+            ctx.body = `This route does not exist on the server - Redux dump: ${stateDump}`;
+        }
+    }    
+}
 
 module.exports = new Config();

@@ -19,8 +19,6 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 // Copy files from `PATH.static` to `PATHS.public`
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-
-
 module.exports = merge(common, {
   entry: {
     vendor: [
