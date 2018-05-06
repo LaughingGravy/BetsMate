@@ -1,5 +1,10 @@
 import WebpackConfig from 'webpack-config';
 
+// Plugin to allow us to exclude `node_modules` packages from the final
+// bundle.  Since we'll be running `server.js` from Node, we'll have access
+// to those modules locally and they don't need to wind up in the bundle file
+import nodeModules from 'webpack-node-externals';
+
 import { regex, css } from './common';
 
 // Helper function to recursively filter through loaders, and apply the

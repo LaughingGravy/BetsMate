@@ -49,7 +49,7 @@ export default new WebpackConfig().merge({
                 }
             ],
           },
-        },
+    ]},
 
     // Output settings.  Where our files will wind up, and what we consider
     // to be the root public path for dev-server.

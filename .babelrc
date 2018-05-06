@@ -1,6 +1,6 @@
 {
     "presets": ["env","react","stage-2"],
-    "plugins": ["transform-runtime"],
+    "plugins": ["babel-plugin-transform-runtime"],
     "env": {
         "development": {
             "plugins": [
@@ -9,11 +9,9 @@
         },
         "production": {
             "plugins": [
-                "@babel/plugin-transform-react-constant-elements", 
-                "transform-react-remove-prop-types", {
-                    "mode": "wrap",
-                    "ignoreFilenames": ["node_modules"]
-                }
+                "transform-react-constant-elements", 
+                "transform-runtime", 
+                "transform-react-remove-prop-types"
             ]
         }
     }

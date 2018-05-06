@@ -4,7 +4,7 @@ import WebpackConfig from 'webpack-config';
 import chalk from 'chalk';
 
 import { webpackProgress } from './common';
-import PATHS from '../../config/paths';
+import PATHS from '../../utilities/paths';
 
 export default new WebpackConfig().extend({
     '[root]/server.js': conf => {

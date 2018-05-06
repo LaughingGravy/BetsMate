@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import WebpackConfig from 'webpack-config';
 import chalk from 'chalk';
+import path from 'path';
 
 // Plugins
 import CleanWebpackPlugin from 'clean-webpack-plugin'
@@ -15,16 +16,18 @@ import ChunkManifestPlugin from 'chunk-manifest-webpack-plugin'
 import ManifestPlugin from 'webpack-manifest-plugin'
 // Copy files from `PATH.static` to `PATHS.public`
 import CopyWebpackPlugin from 'copy-webpack-plugin'
+// css extractor
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 // Bundle Analyzer plugin for viewing interactive treemap of bundle
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 import { regex, css, webpackProgress } from './common';
 import PATHS from '../../utilities/paths';
 
-const extractCSS = new MiniCssExtractPlugin({
-    filename: "assets/css/[name].css",
-    chunkFilename: "assets/css/[id].css"
-})
+const extractCSS = new ExtractTextPlugin({
+    filename: 'assets/css/style.[contenthash].css',
+    allChunks: true,
+  });
 
 export default new WebpackConfig().extend('[root]/browser.js').merge({
     mode: 'product',
@@ -96,7 +99,7 @@ export default new WebpackConfig().extend('[root]/browser.js').merge({
         // Output interactive bundle report
         new BundleAnalyzerPlugin({
             analyzerMode: 'static',
-            reportFilename: join(PATHS.dist, 'report.html'),
+            reportFilename: path.join(PATHS.dist, 'report.html'),
             openAnalyzer: !!process.env.BUNDLE_ANALYZER,
         }),
   

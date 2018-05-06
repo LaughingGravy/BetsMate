@@ -3,6 +3,11 @@ import PATHS from '../../utilities/paths';
 // Show a nice little progress bar (for Webpack)
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 
+// css extractor
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+
 import chalk from 'chalk';
 
 // RegExp for file types
@@ -24,7 +29,90 @@ export const css = {
                 use: ['css-loader', 'sass-loader']
             })
         },
-    ]
+    ],
+
+    // Defaults to use with `css-loader` in all environments
+  loaderDefaults: {
+    // No need to minimize-- CSSNano already did it for us
+    minimize: false,
+
+    // Format for 'localised' CSS modules
+    localIdentName: '[local]-[hash:base64]',
+
+    // Retain the loader pipeline
+    importLoaders: 1,
+  },
+
+  // Return an array containing the module RegExp and css-loader config,
+  // based on the original file extension
+  getModuleRegExp(ext) {
+    return [
+      [`^(?!.*\\.global\\.${ext}$).*\\.${ext}$`, { modules: true }],
+      [`\\.global\\.${ext}$`, { modules: false }],
+    ];
+  },
+
+  getDevLoaders() {
+    return (function* loadCss() {
+      for (const loader of css.rules) {
+        // Iterate over CSS/SASS/LESS and yield local and global mod configs
+        for (const mod of css.getModuleRegExp(loader.ext)) {
+          yield {
+            test: new RegExp(mod[0]),
+            use: [
+              'style-loader',
+              {
+                loader: 'css-loader',
+                query: Object.assign({}, css.loaderDefaults, {
+                  // Use sourcemaps in development
+                  sourceMap: true,
+                }, mod[1]),
+              },
+              {
+                loader: 'postcss-loader',
+                options: {
+                  sourceMap: true,
+                },
+              },
+              ...loader.use,
+            ],
+          };
+        }
+      }
+    }());
+  },
+
+  getExtractCSSLoaders(extractCSS, sourceMap = false) {
+    return (function* loadCss() {
+      for (const loader of css.rules) {
+        // Iterate over CSS/SASS/LESS and yield local and global mod configs
+        for (const mod of css.getModuleRegExp(loader.ext)) {
+          yield {
+            test: new RegExp(mod[0]),
+            loader: extractCSS.extract({
+              use: [
+                {
+                  loader: 'css-loader',
+                  query: Object.assign({}, css.loaderDefaults, {
+                    sourceMap,
+                  }, mod[1]),
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap,
+                  },
+                },
+                ...loader.use,
+              ],
+              fallback: 'style-loader',
+              publicPath: '../../',
+            }),
+          };
+        }
+      }
+    }());
+  },
 }
 
 export const stats = {
