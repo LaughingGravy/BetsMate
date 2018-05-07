@@ -25,7 +25,7 @@ import { regex, css, webpackProgress } from './common';
 import PATHS from '../utilities/paths';
 
 const extractCSS = new ExtractTextPlugin({
-    filename: 'assets/css/style.[name].css',
+    filename: 'assets/css/style.[chunkhash].css',
     allChunks: true,
   });
 
@@ -65,11 +65,11 @@ export default new WebpackConfig().extend({
 
         new webpack.NoEmitOnErrorsPlugin(),
 
-        // new UglifyJSPlugin({
-        //     parallel: true,
-        //     sourceMap: true,
-        //     exclude: [/\.min\.js$/gi], // skip pre-minified libs
-        // }),
+        new UglifyJSPlugin({
+            parallel: true,
+            sourceMap: true,
+            exclude: [/\.min\.js$/gi], // skip pre-minified libs
+        }),
 
         // A plugin for a more aggressive chunk merging strategy
         new webpack.optimize.AggressiveMergingPlugin(),
@@ -102,19 +102,19 @@ export default new WebpackConfig().extend({
         new webpack.HashedModuleIdsPlugin(),
 
         // Compute chunk hash
-        //new WebpackChunkHash(),
+        new WebpackChunkHash(),
 
         // Generate chunk manifest
         new ChunkManifestPlugin({
             // Put this in `dist` rather than `dist/public`
-            filename: './chunk-manifest.json',
+            filename: '../chunk-manifest.json',
             manifestVariable: 'webpackManifest',
         }),
 
         // Generate assets manifest
         new ManifestPlugin({
             // Put this in `dist` rather than `dist/public`
-            fileName: './manifest.json',
+            fileName: '../manifest.json',
             // Prefix assets with '/' so that they can be referenced from any route
             publicPath: '',
             inlineManifest: true,
@@ -151,7 +151,6 @@ export default new WebpackConfig().extend({
         }),
     ],
     optimization: {
-        runtimeChunk: false,
         splitChunks: {
             chunks: "async",
             minSize: 30000,
