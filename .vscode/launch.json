@@ -22,11 +22,25 @@
             }
         },
         {
-            "name": "Attach to Process",
+            "name": "Launch via NPM",
             "type": "node",
-            "request": "attach",
-            "port": 3000,
-            "protocol": "inspector"
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "npm",
+            "protocol": "inspector",
+            "stopOnEntry": true,
+            "console": "integratedTerminal",
+            "runtimeArgs": [
+                "run-script", "debugSSRBuild", "--nolazy", "--inspect-brk=3000"                       
+            ],
+            "args": [],
+            "env": {
+                "NODE_ENV": "production",
+            },
+            "skipFiles": [
+                "node_modules/**"
+            ],
+            "port": 3000
         },
         {
             "name": "Attach to Picked Process",
@@ -41,7 +55,7 @@
     "compounds": [
         {
             "name": "Chrome Client and Server",
-            "configurations": ["Chrome Debug", "Attach"]
+            "configurations": ["Chrome Debug", "Attach to Picked Process"]
         }
     ]
 }

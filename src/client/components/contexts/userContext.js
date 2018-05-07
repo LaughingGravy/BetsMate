@@ -13,6 +13,7 @@ const UserContext = React.createContext({
     setUser: () => {}
 })
 
-module.exports = { UserContext, DefaultUser };
+export { UserContext, DefaultUser }
+
 
   

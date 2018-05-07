@@ -3,7 +3,7 @@ import WebpackConfig from 'webpack-config'
 // Common config
 import { regex, stats } from './common'
 
-import PATHS from '../../utilities/paths'
+import PATHS from '../utilities/paths'
 
 export default new WebpackConfig().merge({
 

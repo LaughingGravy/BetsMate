@@ -4,7 +4,7 @@ import WebpackConfig from 'webpack-config';
 import chalk from 'chalk';
 
 import { webpackProgress } from './common';
-import PATHS from '../../utilities/paths';
+import PATHS from '../utilities/paths';
 
 export default new WebpackConfig().extend({
     '[root]/server.js': conf => {
@@ -26,7 +26,7 @@ export default new WebpackConfig().extend({
     // Production server entry point
     entry: {
         javascript: [
-            path.resolve(PATHS.entry, 'server_prod.js'),
+            path.resolve(PATHS.entry, 'server-prod.js'),
         ],
     },
 

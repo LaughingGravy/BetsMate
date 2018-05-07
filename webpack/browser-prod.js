@@ -22,15 +22,35 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 import { regex, css, webpackProgress } from './common';
-import PATHS from '../../utilities/paths';
+import PATHS from '../utilities/paths';
 
 const extractCSS = new ExtractTextPlugin({
-    filename: 'assets/css/style.[contenthash].css',
+    filename: 'assets/css/style.[name].css',
     allChunks: true,
   });
 
-export default new WebpackConfig().extend('[root]/browser.js').merge({
-    mode: 'product',
+// Extend the `browser.js` config
+export default new WebpackConfig().extend({
+    '[root]/browser.js': config => {
+      // Optimise images
+      config.module.rules.find(l => l.test.toString() === regex.images.toString())
+        .use.push({
+          loader: 'image-webpack-loader',
+          // workaround for https://github.com/tcoopman/image-webpack-loader/issues/88
+          options: {},
+        });
+  
+      return config;
+    },
+  }).merge({
+    mode: 'production',
+
+    output: {
+        // Filenames will be <name>.<chunkhash>.js in production on the browser
+        filename: '[name].[chunkhash].js',
+        chunkFilename: '[name].[chunkhash].js',
+    },
+
     module: {
         rules: [
           // CSS loaders
@@ -40,24 +60,22 @@ export default new WebpackConfig().extend('[root]/browser.js').merge({
 
     plugins: [
         webpackProgress(
-            `${chalk.magenta.bold('ReactQL browser bundle')} in ${chalk.bgMagenta.white.bold('production mode')}`,
+            `${chalk.magenta.bold('Betsmate browser bundle')} in ${chalk.bgMagenta.white.bold('production mode')}`,
         ),
 
         new webpack.NoEmitOnErrorsPlugin(),
 
-        new UglifyJSPlugin({
-            test: /\.js($|\?)/i,
-            parallel: true,
-            sourceMap: true,
-            exclude: [/\.min\.js$/gi], // skip pre-minified libs
-        }),
+        // new UglifyJSPlugin({
+        //     parallel: true,
+        //     sourceMap: true,
+        //     exclude: [/\.min\.js$/gi], // skip pre-minified libs
+        // }),
 
         // A plugin for a more aggressive chunk merging strategy
         new webpack.optimize.AggressiveMergingPlugin(),
 
         // Compress assets into .gz files
         new CompressionPlugin({
-            test: /\.js/,
             asset: '[path].gz[query]',
             algorithm: 'gzip',
             minRatio: 0.99
@@ -74,11 +92,17 @@ export default new WebpackConfig().extend('[root]/browser.js').merge({
         // Fire up CSS extraction
         extractCSS,
 
+        // Extract webpack bootstrap logic into a separate file
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'manifest',
+        //     minChunks: Infinity,
+        // }),
+
         // Map hash to module id
         new webpack.HashedModuleIdsPlugin(),
 
         // Compute chunk hash
-        new WebpackChunkHash(),
+        //new WebpackChunkHash(),
 
         // Generate chunk manifest
         new ChunkManifestPlugin({

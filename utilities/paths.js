@@ -27,7 +27,7 @@ module.exports = {
     entry: path.join(root, 'entry'),
 
       // Webpack configuration files
-    webpack: path.join(root, 'library', 'webpack'),
+    webpack: path.join(root, 'webpack'),
 
     // Dist path; where bundled assets will wind up
     dist: path.join(root, 'dist'),

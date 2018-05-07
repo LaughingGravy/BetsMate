@@ -20,28 +20,41 @@ import { StaticRouter } from 'react-router-dom'
 
 // apollo graphql client
 import { ApolloProvider, getDataFromTree } from 'react-apollo'
-import { getBrowserClient } from '../../library/apolloClient/apollo'
+import { getBrowserClient } from '../library/apolloClient/apollo'
 
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
-import schema from './graphql/schema'
+import schema from '../src/server/graphql/schema'
 
-import models from './database/models'
+import models from '../src/server/database/models'
 import passport from 'passport'
-import passportConfig from './services/auth'
+import passportConfig from '../src/server/services/auth'
 import session from 'express-session'
-import { connectMongoDB } from './database/mongoDB'
+import { connectMongoDB } from '../src/server/database/mongoDB'
 const MongoStore = require('connect-mongo')(session)
 
 import path from 'path';
-import Config from '../../utilities/Config'
-import PATHS from '../../utilities/paths'
-import App from ''
+import Config from '../utilities/Config'
+import PATHS from '../utilities/paths'
 
-const router = express.Router()
+import enGB from '../static/locales/en-GB.json';
+import jaJP from '../static/locales/ja-JP.json';
+
+import App from '../src/client/components/App'
+
+export const router = express.Router()
 
 // test server is up
 router.get('/ping',(req, res) => {
     res.send('pong');
+});
+
+// serve the locale files
+router.get('/static/locales/en-GB.json',(req, res) => {
+  res.send(enGB);
+});
+
+router.get('/static/locales/ja-JP.json',(req, res) => {
+  res.send(jaJP);
 });
 
 const app = express();
@@ -50,7 +63,7 @@ const app = express();
 var corsOptions = {
     origin: getServerUrl(Config.host, Config.port),
     credentials: true // <-- REQUIRED backend setting
-  };
+};
   
 app.use(cors(corsOptions));
 app.use(cookieParser());
@@ -186,7 +199,7 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
   }
 }
 
-const runApolloEngine = () => {
+function runApolloEngine() {
   // Initialize engine with your API key. Alternatively,
   // set the ENGINE_API_KEY environment variable when you
   // run your program.
@@ -218,7 +231,7 @@ const runApolloEngine = () => {
 
 // Listener function that will start http(s) server(s) based on userland
 // config and available ports
-const listen = () => {
+function listen() {
     // Spawn the listeners.
     const servers = [];
   
@@ -237,10 +250,9 @@ const listen = () => {
     }
   
     return servers;
-  };
+  }
 
-// Export everything we need to run the server (in dev or prod)
-export default {
+  export default {
     router,
     app,
     listen,

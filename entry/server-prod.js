@@ -6,15 +6,10 @@ import { ApolloEngine } from 'apollo-engine'
 
 // Needed to read manifest files
 import { readFileSync } from 'fs';
-
-import { router, app, listen } from './server-base'
-import Config from '../../utilities/Config';
-
-import enGB from './public/locales/en-GB.json';
-import jaJP from './public/locales/locales/ja-JP.json';
+import Config from '../utilities/Config';
 
 // Extend the server base
-import server, { createReactHandler } from './server-base-ssr';
+import server, { createReactHandler, runApolloEngine } from './server-base';
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
@@ -35,14 +30,7 @@ process.on('unhandledRejection', (reason, p) => {
 //   })
 // });
 
-// serve the locale files
-router.get('/static/locales/en-GB.json',(req, res) => {
-    res.send(enGB);
-});
 
-router.get('/static/locales/ja-JP.json',(req, res) => {
-    res.send(jaJP);
-});
 
 // Read in manifest files
 const [manifest, chunkManifest] = ['manifest', 'chunk-manifest']

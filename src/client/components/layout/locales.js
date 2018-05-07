@@ -16,4 +16,4 @@ const SUPPOER_LOCALES = [
     }
 ];
 
-module.exports = SUPPOER_LOCALES;
+export default SUPPOER_LOCALES

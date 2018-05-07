@@ -4,7 +4,7 @@ import WebpackConfig from 'webpack-config'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 import { css } from './common'
-import PATHS from '../../utilities/paths'
+import PATHS from '../utilities/paths'
 
 const extractCSS = new ExtractTextPlugin({
     filename: 'assets/css/style.css',
@@ -20,13 +20,13 @@ export default [
 
         entry: {
             javascript: [
-            path.resolve(PATHS.entry, 'server_dev.js'),
+            path.resolve(PATHS.entry, 'server-dev.js'),
             ],
         },
 
         output: {
             path: PATHS.dist,
-            filename: 'server_dev.js',
+            filename: 'server-dev.js',
         },
 
         plugins: [

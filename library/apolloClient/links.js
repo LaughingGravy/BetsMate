@@ -16,4 +16,4 @@ const httpLink = createHttpLink({
     credentials: 'same-origin'
 });
 
-module.exports = { ErrorHandlerLink, httpLink }
+export { ErrorHandlerLink, httpLink }

@@ -2,7 +2,7 @@ import path from 'path';
 import webpack from 'webpack';
 import WebpackConfig from 'webpack-config';
 
-import PATHS from '../../utilities/paths';
+import PATHS from '../utilities/paths';
 
 // Extend the 'base' config
 export default new WebpackConfig().extend('[root]/base.js').merge({
@@ -12,7 +12,7 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
         // Client specific source code.  This is the stuff we write.
         browser: [
         // Entry point for the browser
-        path.join(PATHS.entry, 'browser.js', 'webpack-hot-middleware/client' ),
+        path.join(PATHS.entry, 'browser.js'),
         ],
         // Separate our third-party/vendor modules into a separate chunk, so that
         // we can load them independently of our app-specific code changes
@@ -60,7 +60,7 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
                     ],
                     plugins: [
                         'transform-regenerator',
-                        'babel-plugin-transform-decorators-legacy',
+                        'transform-decorators-legacy',
                     ],
                     },
                 }],

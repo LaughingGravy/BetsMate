@@ -1,12 +1,12 @@
-import PATHS from '../../utilities/paths';
+import PATHS from '../utilities/paths';
 
 // Show a nice little progress bar (for Webpack)
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 
 // css extractor
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+//import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+//import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 import chalk from 'chalk';
 
@@ -17,18 +17,43 @@ export const regex = {
   };
 
 export const css = {
+    // rules: [
+    //     {
+    //         test: /\.css$/,
+    //         use: [MiniCssExtractPlugin.loader, 'css-loader']
+    //     },
+    //     {
+    //         test: /\.scss$/,
+    //         use: ExtractTextPlugin.extract({
+    //             fallback: 'style-loader',
+    //             use: ['css-loader', 'sass-loader']
+    //         })
+    //     },
+    // ],
+    // CSS loader configuration -- plain CSS, SASS and LESS
     rules: [
-        {
-            test: /\.css$/,
-            use: [MiniCssExtractPlugin.loader, 'css-loader']
-        },
-        {
-            test: /\.scss$/,
-            use: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: ['css-loader', 'sass-loader']
-            })
-        },
+      {
+        ext: 'css',
+        use: [],
+      },
+      {
+        ext: 's(c|a)ss',
+        use: [
+          {
+            loader: 'resolve-url-loader',
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        ext: 'less',
+        use: ['less-loader'],
+      },
     ],
 
     // Defaults to use with `css-loader` in all environments
@@ -106,7 +131,7 @@ export const css = {
                 ...loader.use,
               ],
               fallback: 'style-loader',
-              publicPath: '../../',
+              publicPath: '../',
             }),
           };
         }
@@ -168,7 +193,7 @@ export const stats = {
 
 // Return a new Webpack plugin that shows a progress bar of what is being
 // built, and a 0-100% indicator of the Webpack build status
-export function webpackProgress(what = chalk.magenta.bold('ReactQL')) {
+export function webpackProgress(what = chalk.magenta.bold('Betsmate')) {
     return new ProgressBarPlugin({
       format: `${what} building [:bar] ${chalk.green.bold(':percent')} (:elapsed seconds)`,
     });
