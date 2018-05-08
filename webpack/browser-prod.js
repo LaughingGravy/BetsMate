@@ -28,11 +28,6 @@ import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import { regex, css, webpackProgress } from './common';
 import PATHS from '../utilities/paths';
 
-// const extractCSS = new ExtractTextPlugin({
-//     filename: 'assets/css/style.[chunkhash].css',
-//     allChunks: true,
-//   });
-
 // Extend the `browser.js` config
 export default new WebpackConfig().extend({
     '[root]/browser.js': config => {
@@ -68,12 +63,6 @@ export default new WebpackConfig().extend({
 
         new webpack.NoEmitOnErrorsPlugin(),
 
-        // new UglifyJSPlugin({
-        //     parallel: true,
-        //     sourceMap: true,
-        //     exclude: [/\.min\.js$/gi], // skip pre-minified libs
-        // }),
-
         new MiniCssExtractPlugin({
             filename: "assets/css/[name].[contenthash].css",
             chunkFilename: "assets/css/[id].[contenthash].css"
@@ -96,15 +85,6 @@ export default new WebpackConfig().extend({
             // nothing
             minRatio: 0.99,
         }),
-
-        // Fire up CSS extraction
-        //extractCSS,
-
-        // Extract webpack bootstrap logic into a separate file
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: 'manifest',
-        //     minChunks: Infinity,
-        // }),
 
         // Map hash to module id
         new webpack.HashedModuleIdsPlugin(),
