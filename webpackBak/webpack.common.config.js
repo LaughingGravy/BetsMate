@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PATHS = require('../utilities/paths');
 
-module.exports = {
+export default {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Bets Mate',

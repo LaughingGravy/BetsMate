@@ -82,4 +82,4 @@ function login({ email, password, req }) {
   });
 }
 
-module.exports = { signup, login };
+export { signup, login };

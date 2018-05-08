@@ -102,4 +102,4 @@ app.get('/static/locales/ja-JP.json',(req, res) => {
     res.send(jaJP);
 });
 
-module.exports = app;
+export default app;

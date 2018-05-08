@@ -3,7 +3,7 @@ const path = require('path');
 // Parent folder = project root
 const root = path.join(__dirname, '..');
 
-module.exports = {
+export default {
     // Root project folder.  This is the current dir.
     root,
 

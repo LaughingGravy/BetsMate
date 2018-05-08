@@ -1,3 +1,5 @@
+const { builtinModules } = require('module');
+
 // PostCSS filters
 const postcssNested = require('postcss-nested');
 

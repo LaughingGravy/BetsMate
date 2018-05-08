@@ -32,10 +32,10 @@ import { getBrowserClient } from '../library/apolloClient/apollo'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import schema from '../src/server/graphql/schema'
 
-import models from '../src/server/database/models'
 import passport from 'passport'
 import passportConfig from '../src/server/services/auth'
 import session from 'express-session'
+import models from '../src/server/database/models'
 import { connectMongoDB } from '../src/server/database/mongoDB'
 const MongoStore = require('connect-mongo')(session)
 

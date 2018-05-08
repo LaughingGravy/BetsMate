@@ -12,4 +12,4 @@ function createTransporter()
   });
 };
 
-module.exports = createTransporter;
+export default createTransporter;

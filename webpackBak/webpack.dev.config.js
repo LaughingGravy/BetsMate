@@ -5,7 +5,7 @@ import webpack from 'webpack';
 
 import PATHS from '../utilities/paths';
 
- module.exports = merge(common, {
+ export default merge(common, {
     mode: 'development',
     watch: true,
     entry: {

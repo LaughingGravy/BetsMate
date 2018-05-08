@@ -19,7 +19,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 // Copy files from `PATH.static` to `PATHS.public`
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-module.exports = merge(common, {
+export default merge(common, {
   entry: {
     vendor: [
       'axios','prop-types','react','react-apollo','react-dom','react-helmet','react-intl-universal','react-router-dom',

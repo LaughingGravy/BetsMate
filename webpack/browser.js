@@ -67,28 +67,28 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
         ],
     },
 
-    // optimization: {
-    //     runtimeChunk: false,
-    //     splitChunks: {
-    //         chunks: "async",
-    //         minSize: 30000,
-    //         minChunks: 1,
-    //         maxAsyncRequests: 5,
-    //         maxInitialRequests: 3,
-    //         name: true,
-    //         cacheGroups: {
-    //             default: {
-    //             minChunks: 2,
-    //             priority: -20,
-    //             reuseExistingChunk: true,
-    //             },
-    //             commons: {
-    //             test: /[\\/]node_modules[\\/]/,
-    //             priority: -10,
-    //             name: 'vendor',
-    //             chunks: 'all'
-    //             }
-    //         },
-    //     }
-    //   },
+    optimization: {
+        runtimeChunk: false,
+        splitChunks: {
+            chunks: "async",
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            name: true,
+            cacheGroups: {
+                default: {
+                minChunks: 2,
+                priority: -20,
+                reuseExistingChunk: true,
+                },
+                commons: {
+                test: /[\\/]node_modules[\\/]/,
+                priority: -10,
+                name: 'vendor',
+                chunks: 'all'
+                }
+            },
+        }
+      },
 })
