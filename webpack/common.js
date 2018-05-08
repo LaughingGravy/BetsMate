@@ -4,7 +4,7 @@ import PATHS from '../utilities/paths';
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 
 // css extractor
-//import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
 //import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
@@ -17,44 +17,43 @@ export const regex = {
   };
 
 export const css = {
-    // rules: [
-    //     {
-    //         test: /\.css$/,
-    //         use: [MiniCssExtractPlugin.loader, 'css-loader']
-    //     },
-    //     {
-    //         test: /\.scss$/,
-    //         use: ExtractTextPlugin.extract({
-    //             fallback: 'style-loader',
-    //             use: ['css-loader', 'sass-loader']
-    //         })
-    //     },
-    // ],
-    // CSS loader configuration -- plain CSS, SASS and LESS
-    rules: [
-      {
-        ext: 'css',
-        use: [],
-      },
-      {
-        ext: 's(c|a)ss',
+   
+  // CSS loader configuration -- plain CSS, SASS and LESS
+  rules: [
+    {
+      ext: 'css',
+      use: [],
+    },
+    {
+      ext: 's(c|a)ss',
+      use: [
+        {
+          loader: 'resolve-url-loader',
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true,
+          },
+        },
+      ],
+    },
+    {
+      ext: 'less',
+      use: ['less-loader'],
+    },
+  ],
+
+  prodRules: {
+        test: /\.s?[ac]ss$/,
         use: [
-          {
-            loader: 'resolve-url-loader',
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true,
-            },
-          },
-        ],
-      },
-      {
-        ext: 'less',
-        use: ['less-loader'],
-      },
-    ],
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'postcss-loader',
+            'postcss-loader',
+        ]
+  },
+  
 
     // Defaults to use with `css-loader` in all environments
   loaderDefaults: {
@@ -105,39 +104,8 @@ export const css = {
         }
       }
     }());
-  },
+  }
 
-  getExtractCSSLoaders(extractCSS, sourceMap = false) {
-    return (function* loadCss() {
-      for (const loader of css.rules) {
-        // Iterate over CSS/SASS/LESS and yield local and global mod configs
-        for (const mod of css.getModuleRegExp(loader.ext)) {
-          yield {
-            test: new RegExp(mod[0]),
-            loader: extractCSS.extract({
-              use: [
-                {
-                  loader: 'css-loader',
-                  query: Object.assign({}, css.loaderDefaults, {
-                    sourceMap,
-                  }, mod[1]),
-                },
-                {
-                  loader: 'postcss-loader',
-                  options: {
-                    sourceMap,
-                  },
-                },
-                ...loader.use,
-              ],
-              fallback: 'style-loader',
-              publicPath: '../',
-            }),
-          };
-        }
-      }
-    }());
-  },
 }
 
 export const stats = {

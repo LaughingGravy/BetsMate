@@ -5,7 +5,7 @@ import path from 'path';
 
 // Plugins
 import CleanWebpackPlugin from 'clean-webpack-plugin'
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 // Compression plugin for generating `.gz` static files
 import CompressionPlugin from 'compression-webpack-plugin'
 // Generate .br files, using the Brotli compression algorithm
@@ -19,15 +19,19 @@ import CopyWebpackPlugin from 'copy-webpack-plugin'
 // css extractor
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 // Bundle Analyzer plugin for viewing interactive treemap of bundle
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+// css 
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
+
 
 import { regex, css, webpackProgress } from './common';
 import PATHS from '../utilities/paths';
 
-const extractCSS = new ExtractTextPlugin({
-    filename: 'assets/css/style.[chunkhash].css',
-    allChunks: true,
-  });
+// const extractCSS = new ExtractTextPlugin({
+//     filename: 'assets/css/style.[chunkhash].css',
+//     allChunks: true,
+//   });
 
 // Extend the `browser.js` config
 export default new WebpackConfig().extend({
@@ -53,10 +57,9 @@ export default new WebpackConfig().extend({
 
     module: {
         rules: [
-          // CSS loaders
-          ...css.getExtractCSSLoaders(extractCSS),
-        ],
-      },
+            css.prodRules
+        ]
+    },
 
     plugins: [
         webpackProgress(
@@ -65,10 +68,15 @@ export default new WebpackConfig().extend({
 
         new webpack.NoEmitOnErrorsPlugin(),
 
-        new UglifyJSPlugin({
-            parallel: true,
-            sourceMap: true,
-            exclude: [/\.min\.js$/gi], // skip pre-minified libs
+        // new UglifyJSPlugin({
+        //     parallel: true,
+        //     sourceMap: true,
+        //     exclude: [/\.min\.js$/gi], // skip pre-minified libs
+        // }),
+
+        new MiniCssExtractPlugin({
+            filename: "assets/css/[name].[contenthash].css",
+            chunkFilename: "assets/css/[id].[contenthash].css"
         }),
 
         // A plugin for a more aggressive chunk merging strategy
@@ -90,7 +98,7 @@ export default new WebpackConfig().extend({
         }),
 
         // Fire up CSS extraction
-        extractCSS,
+        //extractCSS,
 
         // Extract webpack bootstrap logic into a separate file
         // new webpack.optimize.CommonsChunkPlugin({
@@ -157,7 +165,7 @@ export default new WebpackConfig().extend({
             minChunks: 1,
             maxAsyncRequests: 5,
             maxInitialRequests: 3,
-            name: true,
+            name: false,
             cacheGroups: {
             default: {
                 minChunks: 2,
@@ -169,8 +177,21 @@ export default new WebpackConfig().extend({
                 priority: -10,
                 name: 'vendor',
                 chunks: 'all'
-            }
+            },
           },
-        }
+        },
+        minimizer: [
+            new UglifyJsPlugin({
+              cache: true,
+              parallel: true,
+              sourceMap: true, // set to true if you want JS source maps
+              exclude: [/\.min\.js$/gi], // skip pre-minified libs
+            }),
+            new OptimizeCSSAssetsPlugin({
+                cssProcessor: require('cssnano'),
+                cssProcessorOptions: { discardComments: { removeAll: true } },
+                canPrint: true
+            })
+        ],
     },
 })
