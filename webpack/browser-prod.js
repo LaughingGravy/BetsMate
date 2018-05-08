@@ -10,20 +10,15 @@ import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import CompressionPlugin from 'compression-webpack-plugin'
 // Generate .br files, using the Brotli compression algorithm
 import BrotliPlugin from 'brotli-webpack-plugin'
-import WebpackChunkHash from 'webpack-chunk-hash'
-// Chunk Manifest plugin for generating a chunk asset manifest
-import ChunkManifestPlugin from 'chunk-manifest-webpack-plugin'
+
 import ManifestPlugin from 'webpack-manifest-plugin'
 // Copy files from `PATH.static` to `PATHS.public`
 import CopyWebpackPlugin from 'copy-webpack-plugin'
-// css extractor
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
 // Bundle Analyzer plugin for viewing interactive treemap of bundle
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 // css 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
-
 
 import { regex, css, webpackProgress } from './common';
 import PATHS from '../utilities/paths';
@@ -61,12 +56,18 @@ export default new WebpackConfig().extend({
             `${chalk.magenta.bold('Betsmate browser bundle')} in ${chalk.bgMagenta.white.bold('production mode')}`,
         ),
 
-        new webpack.NoEmitOnErrorsPlugin(),
-
-        new MiniCssExtractPlugin({
-            filename: "assets/css/[name].[contenthash].css",
-            chunkFilename: "assets/css/[id].[contenthash].css"
+        // Global variables
+        new webpack.DefinePlugin({
+            // We're running on the server
+            SERVER: true,
+            'process.env': {
+            // Debug development
+            NODE_ENV: JSON.stringify('production'),
+            DEBUG: false,
+            },
         }),
+
+        new webpack.NoEmitOnErrorsPlugin(),
 
         // A plugin for a more aggressive chunk merging strategy
         new webpack.optimize.AggressiveMergingPlugin(),
@@ -86,17 +87,9 @@ export default new WebpackConfig().extend({
             minRatio: 0.99,
         }),
 
-        // Map hash to module id
-        new webpack.HashedModuleIdsPlugin(),
-
-        // Compute chunk hash
-        new WebpackChunkHash(),
-
-        // Generate chunk manifest
-        new ChunkManifestPlugin({
-            // Put this in `dist` rather than `dist/public`
-            filename: '../chunk-manifest.json',
-            manifestVariable: 'webpackManifest',
+        new MiniCssExtractPlugin({
+            filename: "assets/css/[name].[contenthash].css",
+            chunkFilename: "assets/css/[id].[contenthash].css"
         }),
 
         // Generate assets manifest
@@ -126,17 +119,6 @@ export default new WebpackConfig().extend({
                 force: true, // This flag forces overwrites between versions
             },
         ]),
-
-        // Global variables
-        new webpack.DefinePlugin({
-            // We're running on the server
-            SERVER: true,
-            'process.env': {
-            // Debug development
-            NODE_ENV: JSON.stringify('production'),
-            DEBUG: false,
-            },
-        }),
     ],
     optimization: {
         splitChunks: {

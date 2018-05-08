@@ -30,8 +30,6 @@ process.on('unhandledRejection', (reason, p) => {
 //   })
 // });
 
-
-
 // Read in manifest files
 const [manifest, chunkManifest] = ['manifest', 'chunk-manifest']
   .map(name => JSON.parse(readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8')));

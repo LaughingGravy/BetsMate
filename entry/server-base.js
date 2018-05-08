@@ -4,6 +4,10 @@ import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 import favicon from 'serve-favicon';
+import React from 'react';
+
+// React utility to transform JSX to HTML (to send back to the client)
+import ReactDOMServer from 'react-dom/server';
 
 // For pre-pending a `<!DOCTYPE html>` stream to the server response
 import { PassThrough } from 'stream';
@@ -13,6 +17,9 @@ import { PassThrough } from 'stream';
 // for building both server types.
 import http from 'http';
 import https from 'https';
+
+// Patch global.`fetch` so that Apollo calls to GraphQL work
+import 'isomorphic-fetch';
 
 // React Router HOC for figuring out the exact React hierarchy to display
 // based on the URL
