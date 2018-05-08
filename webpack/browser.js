@@ -38,7 +38,6 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                include: [PATHS.src, PATHS.lib, PATHS.entry],
                 use: [
                 {
                     loader: 'babel-loader',
