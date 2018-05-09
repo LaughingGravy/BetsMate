@@ -43,6 +43,48 @@
             "port": 3000
         },
         {
+            "name": "Launch Server via NPM",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "npm",
+            "protocol": "inspector",
+            "stopOnEntry": true,
+            "console": "integratedTerminal",
+            "runtimeArgs": [
+                "run-script", "server", "--nolazy", "--inspect-brk=3000"                       
+            ],
+            "args": [],
+            "env": {
+                "NODE_ENV": "production",
+            },
+            "skipFiles": [
+                "node_modules/**"
+            ],
+            "port": 3000
+        },
+        {
+            "name": "Build & Launch Dev Server via NPM",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "npm",
+            "protocol": "inspector",
+            "stopOnEntry": true,
+            "console": "integratedTerminal",
+            "runtimeArgs": [
+                "run-script", "build-run-dev", "--nolazy", "--inspect-brk=3000"                       
+            ],
+            "args": [],
+            "env": {
+                "NODE_ENV": "production",
+            },
+            "skipFiles": [
+                "node_modules/**"
+            ],
+            "port": 3000
+        },
+        {
             "name": "Attach to Picked Process",
             "type": "node",
             "request": "attach",

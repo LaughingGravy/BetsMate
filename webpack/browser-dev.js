@@ -1,48 +1,54 @@
 import webpack from 'webpack'
 import WebpackConfig from 'webpack-config'
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+// Copy files from `PATH.static` to `PATHS.distDev`
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import chalk from 'chalk'
 
 import Config from '../utilities/Config'
+import PATHS from '../utilities/paths'
 
-import { css, stats } from './common'
+import { regex, css } from './common';
 
-export default new WebpackConfig().extend('[root]/browser.js').merge({
+const extractCSS = new ExtractTextPlugin({
+    filename: 'assets/css/style.css',
+    allChunks: true,
+  });
+
+// Extend the `browser.js` config
+export default new WebpackConfig().extend({
+    '[root]/browser.js': config => {
+      // Optimise images
+      config.module.rules.find(l => l.test.toString() === regex.images.toString())
+        .use.push({
+          loader: 'image-webpack-loader',
+          // workaround for https://github.com/tcoopman/image-webpack-loader/issues/88
+          options: {},
+        });
+  
+      return config;
+    },
+  }).merge({
     mode: 'development',
-    watch: true,
     devtool: 'cheap-module-eval-source-map',
+
+    // Extra output options, specific to the dev server -- source maps and
+    // our public path
+    // output: {
+    //     publicPath: `${LOCAL}`,
+    // },
+    output: {
+        path: PATHS.distDev
+    },
 
     module: {
         rules: [
           // CSS loaders
-          ...css.getDevLoaders(),
+          ...css.getExtractCSSLoaders(extractCSS, true /* sourceMaps = true */),
         ],
     },
 
-    // Extra output options, specific to the dev server -- source maps and
-    // our public path
-    output: {
-        publicPath: `${LOCAL}`,
-    },
-
     plugins: [
-        // Log to console when `webpack-dev-server` has finished
-        {
-            apply(compiler) {
-            compiler.plugin('done', () => {
-                logServerStarted({
-                type: 'hot-reloading browser',
-                host: Config.host,
-                port: Config.port,
-                chalk: chalk.bgMagenta.white,
-                allowSSL: false,
-                });
-            });
-            },
-        },
-
-        new webpack.NamedModulesPlugin(),
-
-        new webpack.HotModuleReplacementPlugin(),
 
         // Global variables
         new webpack.DefinePlugin({
@@ -51,8 +57,25 @@ export default new WebpackConfig().extend('[root]/browser.js').merge({
             'process.env': {
             // Debug development
             NODE_ENV: JSON.stringify('development'),
-            DEBUG: true,
+            DEBUG: false,
             },
         }),
+
+        new webpack.NamedModulesPlugin(),
+
+        new webpack.HotModuleReplacementPlugin(),
+
+        // Fire up CSS extraction
+        extractCSS,
+
+        // Copy files from `PATHS.static` to `dist/dev`.  No transformations
+        // will be performed on the files-- they'll be copied as-is
+        new CopyWebpackPlugin([
+            {
+                from: PATHS.static,
+                force: true, // This flag forces overwrites between versions
+            },
+        ]),
+
     ]
 })

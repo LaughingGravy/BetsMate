@@ -43,25 +43,24 @@ import path from 'path';
 import Config from '../utilities/Config'
 import PATHS from '../utilities/paths'
 
-import enGB from '../static/locales/en-GB.json';
-import jaJP from '../static/locales/ja-JP.json';
-
 import App from '../src/client/components/App'
 
+import enGB from './locales/en-GB.json';
+import jaJP from './locales/ja-JP.json';
+
 export const router = express.Router()
+
+router.get('/static/locales/en-GB.json',(req, res) => {
+  res.send(enGB)
+})
+
+router.get('/static/locales/ja-JP.json',(req, res) => {
+  res.send(jaJP)
+})
 
 // test server is up
 router.get('/ping',(req, res) => {
     res.send('pong');
-});
-
-// serve the locale files
-router.get('/static/locales/en-GB.json',(req, res) => {
-  res.send(enGB);
-});
-
-router.get('/static/locales/ja-JP.json',(req, res) => {
-  res.send(jaJP);
 });
 
 const app = express();
@@ -77,7 +76,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(helmet());
-app.use(favicon(path.resolve(PATHS.static, 'favicon.ico')));
+app.use(favicon('/favicon.ico'));
 
 // Connect to the database
 connectMongoDB(Config.mongoURL, Config.apolloClientOpt);

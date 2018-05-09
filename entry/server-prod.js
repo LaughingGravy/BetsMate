@@ -47,7 +47,8 @@ const scripts = [
   const { app, router, listen, runApolloEngine } = server;
 
   // Connect the production routes to the server
-  router.get('/*', createReactHandler(css, scripts, chunkManifest));
+  // serve the locale files
+  router.get('/*', createReactHandler(css, scripts, chunkManifest))
   app.use(router.routes())
   app.use(compression());
 

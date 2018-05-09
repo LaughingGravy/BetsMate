@@ -1,26 +1,22 @@
 import webpack from 'webpack'
 import WebpackConfig from 'webpack-config'
-
+import path from 'path'
+import chalk from 'chalk';
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
-import { css } from './common'
 import PATHS from '../utilities/paths'
-
-const extractCSS = new ExtractTextPlugin({
-    filename: 'assets/css/style.css',
-    allChunks: true,
-});
 
 export default [
     // Server bundle
     new WebpackConfig().extend('[root]/dev.js', '[root]/server.js').merge({
         mode: 'development',
-        watch: true,
+        //watch: true,
         stats: 'none',
 
+        // Production server entry point
         entry: {
             javascript: [
-            path.resolve(PATHS.entry, 'server-dev.js'),
+                path.resolve(PATHS.entry, 'server-dev.js'),
             ],
         },
 
@@ -30,56 +26,28 @@ export default [
         },
 
         plugins: [
-            new webpack.DefinePlugin({
-            // We ARE running on the server
-            SERVER: true,
-            'process.env': {
-                NODE_ENV: JSON.stringify('development'),
-                DEBUG: true,
-            },
-            }),
+
+            // new webpack.DefinePlugin({
+            // // We ARE running on the server
+            // //SERVER: true,
+            // 'process.env': {
+            //     // Point the server host/port to the dev server
+            //     HOST: JSON.stringify(process.env.HOST || 'localhost'),
+            //     PORT: JSON.stringify(process.env.PORT || '3000'),
+            //     SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
+        
+            //     // React constantly checking process.env.NODE_ENV causes massive
+            //     // slowdowns during rendering. Replacing process.env.NODE_ENV
+            //     // with a string not only removes this expensive check, it allows
+            //     // a minifier to remove all of React's warnings in production.
+            //     NODE_ENV: JSON.stringify('development'),
+            //     //DEBUG: true,
+            //   },
+            // }),
+
+            //new webpack.HotModuleReplacementPlugin(),
+
+            //new webpack.NoEmitOnErrorsPlugin()
         ]
-    }),
-
-    // Browser bundle
-    new WebpackConfig().extend('[root]/dev.js', '[root]/browser.js').merge({
-        watch: true,
-        stats: 'none',
-
-        output: {
-            path: PATHS.distDev,
-            filename: '[name].js',
-        },
-
-        module: {
-            rules: [
-                // CSS loaders
-                ...css.getExtractCSSLoaders(extractCSS, true /* sourceMaps = true */),
-            ],
-        },
-
-        plugins: [
-            new webpack.DefinePlugin({
-                SERVER: true,
-                'process.env': {   
-                    NODE_ENV: JSON.stringify('development'),
-                    DEBUG: true,
-                },
-            }),
-
-            new webpack.NoEmitOnErrorsPlugin(),
-
-            // Fire up CSS extraction
-            extractCSS,
-
-            // Copy files from `PATHS.static` to `dist/dev`.  No transformations
-            // will be performed on the files-- they'll be copied as-is
-            new CopyWebpackPlugin([
-                {
-                    from: PATHS.static,
-                    force: true, // This flag forces overwrites between versions
-                },
-            ]),
-        ],
     }),
 ]

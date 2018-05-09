@@ -1,27 +1,40 @@
 const express = require('express');
 const compression = require('compression');
-
-const { ApolloEngine } = require('apollo-engine');
-
+import webpack from 'webpack';
+import webpackMiddleware from'webpack-dev-middleware'
 const chalk = require('chalk'); 
 const path = require('path');
+const { ApolloEngine } = require('apollo-engine');
 
-// Needed to read manifest files
-import { readFileSync } from 'fs';
-
-// Extend the server base
-import server, { router, app, listen, createReactHandler } from './server-base'
 import Config from '../utilities/Config';
 
-import enGB from './dev/locales/en-GB.json';
-import jaJP from './dev/locales/locales/ja-JP.json';
+// Extend the server base
+import server, { createReactHandler, runApolloEngine } from './server-base';
 
-// serve the locale files
-router.get('/dev/locales/en-GB.json',(req, res) => {
-    res.send(enGB);
-});
+// Get manifest values
+const css = 'dev/assets/css/style.css';
+const scripts = ['dev/vendor.js', 'dev/browser.js'];
 
-router.get('/dev/locales/ja-JP.json',(req, res) => {
-    res.send(jaJP);
-});
+// Spawn the development server.
+// Runs inside an immediate `async` block, to await listening on ports
+(async () => {
+    const { app, router, listen } = server
+
+    router.get('/*', createReactHandler(css, scripts));
+
+    app.use(webpackMiddleware(compiler, options));
+    app.use(require("webpack-hot-middleware")(compiler)); 
+    app.use(router.routes())
+    app.use(compression());  
+
+    if (Config.isRunEngine) {
+        runApolloEngine()
+    }
+    else {
+        // Spawn the server
+        listen();
+    }
+})
+
+
 
