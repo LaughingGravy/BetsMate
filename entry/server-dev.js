@@ -8,22 +8,27 @@ const { ApolloEngine } = require('apollo-engine');
 
 import Config from '../utilities/Config';
 
+import enGB from '../dist/dev/locales/en-GB.json';
+import jaJP from '../dist/dev/locales/ja-JP.json';
+
 // Extend the server base
-import server, { createReactHandler, runApolloEngine } from './server-base';
+import server, { createReactHandler, runApolloEngine, addLocalesRoutes } from './server-base';
 
 // Get manifest values
-const css = 'dev/assets/css/style.css';
-const scripts = ['dev/vendor.js', 'dev/browser.js'];
+const css = '../dist/dev/assets/css/style.css';
+const scripts = ['../dist/dev/vendor.js', '../dist/dev/browser.js'];
 
 // Spawn the development server.
 // Runs inside an immediate `async` block, to await listening on ports
 (async () => {
     const { app, router, listen } = server
 
-    router.get('/*', createReactHandler(css, scripts));
+    addLocalesRoutes(router, enGB, jaJP)
 
-    app.use(webpackMiddleware(compiler, options));
-    app.use(require("webpack-hot-middleware")(compiler)); 
+    router.get('/*', (req, res) => createReactHandler(css, scripts))
+
+    //app.use(webpackMiddleware(compiler, options));
+   // app.use(require("webpack-hot-middleware")(compiler)); 
     app.use(router.routes())
     app.use(compression());  
 

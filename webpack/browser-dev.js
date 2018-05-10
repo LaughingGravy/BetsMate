@@ -30,13 +30,8 @@ export default new WebpackConfig().extend({
     },
   }).merge({
     mode: 'development',
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'source-map',
 
-    // Extra output options, specific to the dev server -- source maps and
-    // our public path
-    // output: {
-    //     publicPath: `${LOCAL}`,
-    // },
     output: {
         path: PATHS.distDev
     },
@@ -57,7 +52,7 @@ export default new WebpackConfig().extend({
             'process.env': {
             // Debug development
             NODE_ENV: JSON.stringify('development'),
-            DEBUG: false,
+            DEBUG: true,
             },
         }),
 

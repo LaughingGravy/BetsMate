@@ -23,19 +23,19 @@ class Common {
         this.apolloEngineServiceId = 'service:Betsmate:NXBwHRWuwnGryOWVgBF8lQ'; // default env variable will use ENGINE_API_KEY
     }   
 
-    handler404(ctx) {
-        return () => {
-            const stateDump = JSON.stringify(ctx.store.getState());
+    // handler404(ctx) {
+    //     return () => {
+    //         const stateDump = JSON.stringify(ctx.store.getState());
 
-            // Explicitly set the return status to 404.  This is done for us by
-            // default if we don't have a custom 404 handler, but left to the function
-            // otherwise (since we might not always want to return a 404)
-            ctx.status = 404;
+    //         // Explicitly set the return status to 404.  This is done for us by
+    //         // default if we don't have a custom 404 handler, but left to the function
+    //         // otherwise (since we might not always want to return a 404)
+    //         ctx.status = 404;
 
-            // Set the body
-            ctx.body = `This route does not exist on the server - Redux dump: ${stateDump}`;
-        }
-    } 
+    //         // Set the body
+    //         ctx.body = `This route does not exist on the server - Redux dump: ${stateDump}`;
+    //     }
+    // } 
 }
 
 let Config;

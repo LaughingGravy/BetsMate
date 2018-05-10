@@ -30,12 +30,14 @@ import { ApolloProvider, getDataFromTree } from 'react-apollo'
 import { getBrowserClient } from '../library/apolloClient/apollo'
 
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+
+import models from '../src/server/database/models'
 import schema from '../src/server/graphql/schema'
+import passportConfig from '../src/server/services/auth'
 
 import passport from 'passport'
-import passportConfig from '../src/server/services/auth'
 import session from 'express-session'
-import models from '../src/server/database/models'
+
 import { connectMongoDB } from '../src/server/database/mongoDB'
 const MongoStore = require('connect-mongo')(session)
 
@@ -45,18 +47,7 @@ import PATHS from '../utilities/paths'
 
 import App from '../src/client/components/App'
 
-import enGB from './locales/en-GB.json';
-import jaJP from './locales/ja-JP.json';
-
 export const router = express.Router()
-
-router.get('/static/locales/en-GB.json',(req, res) => {
-  res.send(enGB)
-})
-
-router.get('/static/locales/ja-JP.json',(req, res) => {
-  res.send(jaJP)
-})
 
 // test server is up
 router.get('/ping',(req, res) => {
@@ -125,8 +116,18 @@ app.use('/graphiql', graphiqlExpress({
 }),
 );
 
+export function addLocalesRoutes(router, enGB, jaJP) {
+  router.get('static/locales/en-GB.json',(req, res) => {
+    res.send(enGB)
+  })
+  
+  router.get('static/locales/ja-JP.json',(req, res) => {
+    res.send(jaJP)
+  })
+}
+
 export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
-  return async function reactHandler(res) {
+  return async function reactHandler(req, res) {
 
     const routeContext = {};
 
@@ -169,13 +170,13 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
       // `config.set404Handler()` to pass in a custom handler func that takes
       // the `ctx` and store
 
-      if (config.handler404) {
-        config.handler404(ctx);
+      // if (config.handler404) {
+      //   config.handler404(ctx);
 
-        // Return early -- no need to set a response body, because that should
-        // be taken care of by the custom 404 handler
-        return;
-      }
+      //   // Return early -- no need to set a response body, because that should
+      //   // be taken care of by the custom 404 handler
+      //   return;
+      // }
 
       res.status = routeContext.status;
     }
@@ -205,7 +206,7 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
   }
 }
 
-function runApolloEngine() {
+export function runApolloEngine() {
   // Initialize engine with your API key. Alternatively,
   // set the ENGINE_API_KEY environment variable when you
   // run your program.
@@ -230,14 +231,14 @@ function runApolloEngine() {
       expressApp: server
     }, () => {
       logServerStarted({
-        type: 'server',
+        type: 'dev server with apollo engine',
       });
   });
 }
 
 // Listener function that will start http(s) server(s) based on userland
 // config and available ports
-function listen() {
+export function listen() {
     // Spawn the listeners.
     const servers = [];
   
@@ -254,6 +255,10 @@ function listen() {
         https.createServer(Config.sslOptions, app.callback()).listen(process.env.SSL_PORT),
       );
     }
+
+    logServerStarted({
+      type: 'dev server',
+    });
   
     return servers;
   }

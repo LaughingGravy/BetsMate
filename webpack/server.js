@@ -86,9 +86,7 @@ export default new WebpackConfig().extend({
                     plugins: [
                         'transform-regenerator',
                         'babel-plugin-transform-decorators-legacy',
-                        'transform-object-rest-spread', { 
-                            'useBuiltIns': true 
-                        }
+                        'transform-object-rest-spread'
                     ],
                 },
             },

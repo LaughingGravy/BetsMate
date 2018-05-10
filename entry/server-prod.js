@@ -8,8 +8,11 @@ import { ApolloEngine } from 'apollo-engine'
 import { readFileSync } from 'fs';
 import Config from '../utilities/Config';
 
+import enGB from '../dist/public/locales/en-GB.json';
+import jaJP from '../dist/public/locales/ja-JP.json';
+
 // Extend the server base
-import server, { createReactHandler, runApolloEngine } from './server-base';
+import server, { createReactHandler, runApolloEngine, addLocalesRoutes } from './server-base';
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
@@ -48,6 +51,8 @@ const scripts = [
 
   // Connect the production routes to the server
   // serve the locale files
+  addLocalesRoutes(router, enGB, jaJP)
+
   router.get('/*', createReactHandler(css, scripts, chunkManifest))
   app.use(router.routes())
   app.use(compression());

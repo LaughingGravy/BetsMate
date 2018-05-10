@@ -49,6 +49,13 @@ export default new WebpackConfig().merge({
                 }
             ],
           },
+
+          // GraphQL queries
+          {
+            test: /\.(graphql|gql)$/,
+            exclude: /node_modules/,
+            loader: 'graphql-tag/loader',
+          },
     ]},
 
     // Output settings.  Where our files will wind up, and what we consider
