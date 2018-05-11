@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 
 // Enable async/await and generators, cross-browser
 import 'regenerator-runtime/runtime'
@@ -15,7 +15,9 @@ import { Container } from 'semantic-ui-react';
 // root component of application
 import App from '../src/client/components/App'
 // Get the custom `history` that we'll use to feed down to our `<Router>`
-import { history } from '../library/routing';
+//import { history } from '../library/routing';
+
+const client = getBrowserClient()
 
 function doRender() {
     ReactDOM.hydrate(
@@ -28,13 +30,11 @@ const Root = (() => {
     // Wrap the component hierarchy in <BrowserRouter>, so that our children
     // can respond to route changes
     const Chain = () => (
-        <Container fluid inverted='true'>
-            <ApolloProvider client={client}>
-                <Router history={history}>
-                    <App />
-                </Router>
-            </ApolloProvider>
-        </Container>
+        <ApolloProvider client={client}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </ApolloProvider>
     )
 })
 

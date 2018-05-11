@@ -41,7 +41,7 @@ class App extends React.Component{
           <Layout>  
             <Routes />
           </Layout>
-          </UserContext.Provider> 
+        </UserContext.Provider> 
       </Segment>         
     )      
   }

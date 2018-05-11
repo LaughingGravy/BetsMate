@@ -21,7 +21,7 @@ const Html = ({ helmet, scripts, window, css, children }) => (
       {helmet.noscript.toComponent()}
     </head>
     <body {...helmet.bodyAttributes.toComponent()}>
-      <div id="main">{children}</div>  
+      <div id="main">{children}</div>
       <script
         dangerouslySetInnerHTML={{
           __html: Object.keys(window).reduce(
@@ -37,7 +37,6 @@ const Html = ({ helmet, scripts, window, css, children }) => (
 Html.propTypes = {
   helmet: PropTypes.object.isRequired,
   window: PropTypes.object.isRequired,
-  state: PropTypes.object.isRequired,
   scripts: PropTypes.arrayOf(PropTypes.string).isRequired,
   css: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,

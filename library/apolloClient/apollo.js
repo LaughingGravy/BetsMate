@@ -14,6 +14,22 @@ const defaultOptions = {
     }
 };
 
+const cache = new InMemoryCache({
+    dataIdFromObject: object => object.id || null
+  })
+
+export function getClient(ssrMode = false)
+{
+    let opt = {
+        ssrMode: ssrMode,
+        link: concat(ErrorHandlerLink, httpLink),
+        cache: cache,
+        defaultOptions: defaultOptions
+    };
+
+    return new ApolloClient(opt);
+};
+
 export function getBrowserClient(ssrMode = false)
 {
     let opt = {
@@ -21,7 +37,7 @@ export function getBrowserClient(ssrMode = false)
         link: concat(ErrorHandlerLink, httpLink),
         cache: new InMemoryCache({
             dataIdFromObject: object => object.id || null
-          }),
+          }).restore(window.__APOLLO_STATE__),
         defaultOptions: defaultOptions
     };
 

@@ -54,7 +54,7 @@
             "trace": "all",
             "console": "integratedTerminal",
             "runtimeArgs": [
-                "run-script", "build-dev", "--nolazy", "--inspect-brk=3000"                       
+                "run-script", "server-dev", "--nolazy", "--inspect-brk=3000"                       
             ],
             "args": [],
             "env": {

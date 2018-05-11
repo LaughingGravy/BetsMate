@@ -15,8 +15,8 @@ import jaJP from '../dist/dev/locales/ja-JP.json';
 import server, { createReactHandler, runApolloEngine, addLocalesRoutes } from './server-base';
 
 // Get manifest values
-const css = '../dist/dev/assets/css/style.css';
-const scripts = ['../dist/dev/vendor.js', '../dist/dev/browser.js'];
+const css = 'assets/css/style.css';
+const scripts = ['vendor.js', 'browser.js'];
 
 // Spawn the development server.
 // Runs inside an immediate `async` block, to await listening on ports

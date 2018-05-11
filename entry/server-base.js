@@ -9,6 +9,9 @@ import React from 'react';
 // React utility to transform JSX to HTML (to send back to the client)
 import ReactDOMServer from 'react-dom/server';
 
+// Initial view to send back HTML render
+import Html from '../views/ssr';
+
 // For pre-pending a `<!DOCTYPE html>` stream to the server response
 import { PassThrough } from 'stream';
 
@@ -27,7 +30,7 @@ import { StaticRouter } from 'react-router-dom'
 
 // apollo graphql client
 import { ApolloProvider, getDataFromTree } from 'react-apollo'
-import { getBrowserClient } from '../library/apolloClient/apollo'
+import { getClient } from '../library/apolloClient/apollo'
 
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 
@@ -131,22 +134,30 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
 
     const routeContext = {};
 
-    const client = getBrowserClient(true);
+    const client = getClient(true);
 
     // Generate the HTML from our React tree.  We're wrapping the result
     // in `react-router`'s <StaticRouter> which will pull out URL info and
     // store it in our empty `route` object
     const components = (
-      <StaticRouter location={req.url} context={routeContext}>
-          <ApolloProvider client={client}>
-              <Container fluid inverted='true'>
-                  <Router history={history}>
-                      <App />
-                  </Router>
-              </Container>
-          </ApolloProvider>
-      </StaticRouter>
+      <ApolloProvider client={client}>
+        <StaticRouter location={req.url} context={routeContext}>    
+            <App />    
+        </StaticRouter>
+      </ApolloProvider>
     )
+
+    // const components = (
+    //   <StaticRouter location={req.url} context={routeContext}>
+    //       <ApolloProvider client={client}>
+    //           <Container fluid inverted='true'>
+    //               <Router history={history}>
+    //                   <App />
+    //               </Router>
+    //           </Container>
+    //       </ApolloProvider>
+    //   </StaticRouter>
+    // )
 
     // Wait for GraphQL data to be available in our initial render,
     // before dumping HTML back to the client
@@ -181,18 +192,20 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
       res.status = routeContext.status;
     }
 
-    const initialState = client.extract()
-
     // Create a stream of the React render. We'll pass in the
     // Helmet component to generate the <head> tag, as well as our Redux
     // store state so that the browser can continue from the server
     const reactStream = ReactDOMServer.renderToNodeStream(
       <Html
         helmet={Helmet.renderStatic()}
-        content={components}
         state={initialState}
+        window={{
+          webpackManifest: chunkManifest,
+          __STATE__: client.extract(),
+        }}
         css={css}
         scripts={scripts}>
+        {components}
       </Html>,
     );
 
