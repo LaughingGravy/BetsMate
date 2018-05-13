@@ -23,6 +23,8 @@ const scripts = ['vendor.js', 'browser.js'];
 (async () => {
     const { app, router, listen } = server
 
+    app.use( express.static( path.resolve( __dirname, "../dist/dev" ) ) );
+
     addLocalesRoutes(router, enGB, jaJP)
 
     router.get('/*', (req, res) => createReactHandler(css, scripts))

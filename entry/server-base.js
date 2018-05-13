@@ -214,8 +214,9 @@ export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
   
     // Set the return type to `text/html`, and stream the response back to
     // the client
-    res.type = 'text/html';
-    res.body = htmlStream;
+    res.type = 'text/html'
+    res.body = htmlStream
+    res.end()
   }
 }
 
