@@ -17,15 +17,14 @@ export default [
         // Production server entry point
         entry: {
             javascript: [
-                path.resolve(PATHS.entry, 'server-dev.js'),
+                path.resolve(PATHS.entry, 'ssrserver.js'),
             ],
         },
 
         output: {
             path: PATHS.dist,
-            filename: 'server-dev.js',
+            filename: 'server-ssr.js',
             publicPath: '/dist/',
-            globalObject: 'this'
         },
 
         plugins: [
@@ -48,7 +47,7 @@ export default [
               },
             }),
 
-            //new webpack.HotModuleReplacementPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
 
             new webpack.NoEmitOnErrorsPlugin()
         ]

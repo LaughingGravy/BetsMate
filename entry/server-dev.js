@@ -16,7 +16,7 @@ import server, { createReactHandler, runApolloEngine, addLocalesRoutes } from '.
 
 // Get manifest values
 const css = 'assets/css/style.css';
-const scripts = ['vendor.js', 'browser.js'];
+const scripts = ['/dist/vendor.js', '/dist/browser.js'];
 
 // Spawn the development server.
 // Runs inside an immediate `async` block, to await listening on ports
@@ -25,7 +25,15 @@ const scripts = ['vendor.js', 'browser.js'];
 
     app.use( express.static( path.resolve( __dirname, "../dist/dev" ) ) );
 
-    addLocalesRoutes(router, enGB, jaJP)
+   //addLocalesRoutes(router, enGB, jaJP)
+
+    app.get('static/locales/en-GB.json',(req, res) => {
+        res.send(enGB);
+    });
+   
+    app.get('static/locales/ja-JP.json',(req, res) => {
+        res.send(jaJP);
+    });
 
     router.get('/*', (req, res) => createReactHandler(css, scripts))
 
