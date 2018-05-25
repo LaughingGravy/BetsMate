@@ -25,8 +25,7 @@ const Html2 = ({ helmet, scripts, state, css, children }) => (
       <script dangerouslySetInnerHTML={{
             __html: `window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
           }} />
-      <script src="/dist/vendor.js" />
-      <script src="/dist/browser.js" />
+      {scripts.map(src => <script key={src} src={src} />)}
     </body>
   </html>
 );

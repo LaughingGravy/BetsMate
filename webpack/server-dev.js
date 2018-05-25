@@ -17,14 +17,13 @@ export default [
         // Production server entry point
         entry: {
             javascript: [
-                path.resolve(PATHS.entry, 'server-dev.js'),
-            ],
+                path.resolve(PATHS.entry, 'server-dev.js')
+            ], 
         },
 
         output: {
             path: PATHS.dist,
             filename: 'server-dev.js',
-            publicPath: '/dist/',
             globalObject: 'this'
         },
 

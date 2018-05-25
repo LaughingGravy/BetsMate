@@ -65,7 +65,7 @@ class Layout extends React.Component {
         }
 
         axios
-          .get(`static/locales/${currentLocale}.json`, { headers: {'Accept': 'application/json'}} )
+          .get(`/static/locales/${currentLocale}.json`, { headers: {'Accept': 'application/json'}} )
           .then(res => {
             // init method will load CLDR locale data according to currentLocale
             return intl.init({
@@ -91,11 +91,11 @@ class Layout extends React.Component {
             <Query query={CURRENT_USER}>
             {({ loading, error, data: { user }}) => {
                 if (loading) {
-                    return 'loading...';
+                    return <div>loading...</div>;
                 }
         
                 if (error) {
-                    return `Error: ${error}`;
+                    return <div>Error: {error}</div>;
                 }
 
                 if (user == null) {

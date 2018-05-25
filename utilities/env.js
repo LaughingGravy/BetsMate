@@ -1,4 +1,6 @@
-export function getServerUrl(host = process.env.HOST, port = process.env.PORT, allowSSL = true) {
+import React from 'react'
+
+export function getServerURL(host = process.env.HOST, port = process.env.PORT, allowSSL = true) {
     // Check for SSL
     if (allowSSL && process.env.SSL_PORT) {
         const stub = `https://$host || process.env.HOST}`;

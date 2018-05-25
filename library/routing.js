@@ -12,7 +12,7 @@ import { Route, Redirect as ReactRouterRedirect } from 'react-router-dom';
 
 // Create and export a custom history
 //export const history = process.env.BROWSER && createBrowserHistory();
-export const history = createBrowserHistory();
+export const history = process.env.BROWSER && createBrowserHistory();
 
 // <Status code="xxx"> component.  Updates the context router's context, which
 // can be used by the server handler to respond to the status on the server.

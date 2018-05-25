@@ -46,7 +46,9 @@ if (process.env.NODE_ENV === 'development')
         constructor() {
             super();
 
-            this.port = 3000;
+            this.port = process.env.PORT || 3000
+            this.sslPort = process.env.SSL_PORT || 443
+            this.allowSSL = false
             this.host = 'localhost'
 
             this.mongoURL = 'mongodb://admin:k0mbanwa@ds159866.mlab.com:59866/betsmate';

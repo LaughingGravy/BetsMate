@@ -6,16 +6,24 @@
             }
         }
     ]],
-    "plugins": ["babel-plugin-transform-runtime"],
+    "plugins": [],
     "env": {
         "development": {
             "plugins": [
-                "react-hot-loader/babel"
+                "react-hot-loader/babel",
+                ["transform-runtime",{
+                    "regenerator": true
+                }],
+                "transform-object-rest-spread",
+                "syntax-dynamic-import",
+                "transform-class-properties",
+                "transform-decorators-legacy"
             ]
         },
         "production": {
             "plugins": [
                 "transform-react-constant-elements", 
+                "transform-async-to-generator",
                 "transform-runtime", 
                 "transform-react-remove-prop-types",
                 "transform-object-rest-spread", { 

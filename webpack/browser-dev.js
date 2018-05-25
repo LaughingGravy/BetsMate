@@ -52,6 +52,7 @@ export default new WebpackConfig().extend({
             'process.env': {
             // Debug development
             NODE_ENV: JSON.stringify('development'),
+            BROWSER: true,
             DEBUG: true,
             },
         }),

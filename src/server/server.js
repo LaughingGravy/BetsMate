@@ -16,7 +16,7 @@ import path from 'path';
 import favicon from 'serve-favicon';
 
 import cors from 'cors';
-import { getServerUrl } from '../../utilities/env';
+import { getServerURL } from '../../utilities/env';
 
 import Config from '../../utilities/Config';
 import PATHS from '../../utilities/paths';
@@ -31,7 +31,7 @@ connectMongoDB(Config.mongoURL, Config.apolloClientOpt);
 
 // enable cors
 var corsOptions = {
-    origin: getServerUrl(Config.host, Config.port),
+    origin: getServerURL(Config.host, Config.port),
     credentials: true // <-- REQUIRED backend setting
   };
   
@@ -79,9 +79,6 @@ app.use(
       };
     }),
 );
-
-console.log('Config.isRunEngine ',Config.isRunEngine);
-
 
 // Instruct Express to pass on any request made to the '/graphiql' route
 app.use('/graphiql', graphiqlExpress({

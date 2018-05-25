@@ -1,16 +1,20 @@
-import {
-    GraphQLObjectType,
-    GraphQLString,
-    GraphQLSchema
-} from 'graphql';
+// import {
+//     GraphQLObjectType,
+//     GraphQLString,
+//     GraphQLSchema
+// } from 'graphql';
+const graphql = require('graphql');
+const {
+    GraphQLObjectType
+} = graphql
 
-const UserType  = require('./user_type');
+//const UserType  = require('./user_type');
 
-const RootQueryType = new GraphQLObjectType({
+export default new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
         user: {
-            type: UserType,
+            type: require('./user_type').default,
             resolve(parentValue, args, ctx) {
                 const req = ctx.req;
                 return req.user;
@@ -19,4 +23,4 @@ const RootQueryType = new GraphQLObjectType({
     }
 });
 
-export default RootQueryType;
+//export default RootQueryType;

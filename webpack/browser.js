@@ -18,7 +18,7 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
         // we can load them independently of our app-specific code changes
         vendor: [
             'axios','prop-types','react','react-apollo','react-dom','react-helmet','react-intl-universal','react-router-dom',
-            'semantic-ui-react'
+            'semantic-ui-react', 'graphql-tag'
         ],
     },
 
@@ -59,7 +59,7 @@ export default new WebpackConfig().extend('[root]/base.js').merge({
                     ],
                     plugins: [
                         'transform-regenerator',
-                        'transform-decorators-legacy',
+                        'transform-decorators-legacy'
                     ],
                     },
                 }],

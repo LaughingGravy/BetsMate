@@ -1,5 +1,6 @@
 import { createHttpLink } from 'apollo-link-http'
 import { onError } from "apollo-link-error"
+import fetch from 'isomorphic-fetch'
 
 const ErrorHandlerLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)

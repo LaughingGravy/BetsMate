@@ -77,16 +77,22 @@ export default new WebpackConfig().extend({
                         modules: false,
                         // Exclude default regenerator-- we want to enable async/await
                         // so we'll do that with a dedicated plugin
-                        exclude: ['transform-regenerator'],
-                        targets: { browsers: ['last 2 versions'] },
                         }],               
                         // Transpile JSX code
-                        'react', 'stage-2'
+                        'react'
                     ],
                     plugins: [
-                        'transform-regenerator',
+                        "syntax-dynamic-import",
+                        "transform-class-properties",
                         'babel-plugin-transform-decorators-legacy',
-                        'transform-object-rest-spread'
+                        'transform-object-rest-spread',
+                        'transform-async-to-generator',
+                        ['transform-runtime', {
+                            "helpers": false,
+                               "polyfill": false,
+                               "regenerator": true,
+                               "moduleName": "babel-runtime"
+                        }]
                     ],
                 },
             },
