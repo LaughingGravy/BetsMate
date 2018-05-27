@@ -5,16 +5,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import favicon from 'serve-favicon';
 import React from 'react';
-
-// React utility to transform JSX to HTML (to send back to the client)
-import ReactDOMServer from 'react-dom/server';
-
-// Initial view to send back HTML render
-import Html from '../views/ssr';
-import Html2 from '../views/ssr2';
-
-// For pre-pending a `<!DOCTYPE html>` stream to the server response
-import { PassThrough } from 'stream';
+import Helmet from 'react-helmet';
 
 // HTTP & SSL servers.  We can use `config.enableSSL|disableHTTP()` to enable
 // HTTPS and disable plain HTTP respectively, so we'll use Node's core libs
@@ -22,17 +13,23 @@ import { PassThrough } from 'stream';
 import http from 'http';
 import https from 'https';
 
-import { logServerStarted } from '../library/console'
-
 // React Router HOC for figuring out the exact React hierarchy to display
 // based on the URL
 import { StaticRouter } from 'react-router-dom'
 
+// Initial view to send back HTML render
+import Html from '../views/ssr';
+
+import { logServerStarted } from '../library/console'
+
 // apollo graphql client
 import { ApolloProvider, getDataFromTree } from 'react-apollo'
-//import { getClient } from '../library/apolloClient/apollo'
-
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+import { getServerClient } from '../library/apolloClient/apollo'
+// React utility to transform JSX to HTML (to send back to the client)
+import { renderToStaticMarkup, renderToString } from 'react-dom/server';
+
+import { getServerURL } from '../utilities/env'
 
 import models from '../src/server/database/models'
 import schema from '../src/server/graphql/schema'
@@ -47,8 +44,6 @@ const MongoStore = require('connect-mongo')(session)
 import path from 'path';
 import Config from '../utilities/Config'
 import PATHS from '../utilities/paths'
-
-import { getServerURL } from '../utilities/env'
 
 import App from '../src/client/components/App'
 
@@ -110,21 +105,21 @@ app.use(
         cacheControl: Config.isRunEngine
       };
     }),
-);
+)
 
 // Instruct Express to pass on any request made to the '/graphiql' route
 app.use('/graphiql', graphiqlExpress({
     endpointURL: '/graphql',
 }),
-);
+)
 
 export function addLocalesRoutes(app, enGB, jaJP) {
   app.get('/static/locales/en-GB.json',(req, res) => {
-    //res.json(JSON.stringify(enGB))
+    res.send(JSON.stringify(enGB))
   })
   
   app.get('/static/locales/ja-JP.json',(req, res) => {
-    //res.json(JSON.stringify(jaJP))
+    res.send(JSON.stringify(jaJP))
   })
 }
 
@@ -132,153 +127,68 @@ export function addFavicon(app, iconPath) {
   app.use(favicon(path.join(iconPath, 'favicon.ico')));
 }
 
-export async function createReactHandler(req, res, css = [], scripts = [], chunkManifest = {}) {
-  console.log("createReactHandler")
-  //return async function reactHandler(req, res) {
-    console.log("reactHandler")
+export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
+  return async function reactHandler(req, res) {
+
+    const client = getServerClient(req)
+
     const routeContext = {};
-
-    const client = getClient(true);
-
-    // Generate the HTML from our React tree.  We're wrapping the result
-    // in `react-router`'s <StaticRouter> which will pull out URL info and
-    // store it in our empty `route` object
+        
+    // The client-side App will instead use <BrowserRouter>
     const components = (
-        <ApolloProvider client={client}>
-          <StaticRouter location={req.url} context={routeContext}> 
-              <App />  
-              </StaticRouter>  
-        </ApolloProvider>    
+      <ApolloProvider client={client}>
+        <StaticRouter location={req.url} context={routeContext}>
+          <App />
+        </StaticRouter>
+      </ApolloProvider>
     )
 
-    // Wait for GraphQL data to be available in our initial render,
-    // before dumping HTML back to the client
-    await getDataFromTree(components);
+    await getDataFromTree(components) 
 
     // Handle redirects
     if ([301, 302].includes(routeContext.status)) {
       // 301 = permanent redirect, 302 = temporary
-      res.status = routeContext.status;
+      req.status = routeContext.status;
 
       // Issue the new `Location:` header
-      res.redirect(routeContext.url);
+      req.redirect(routeContext.url);
 
       // Return early -- no need to set a response body
       return;
-    }
-
+    }  
+      
     // Handle 404 Not Found
     if (routeContext.status === 404) {
       // By default, just set the status code to 404.  Or, we can use
       // `config.set404Handler()` to pass in a custom handler func that takes
       // the `ctx` and store
 
-      // if (config.handler404) {
-      //   config.handler404(ctx);
-
-      //   // Return early -- no need to set a response body, because that should
-      //   // be taken care of by the custom 404 handler
-      //   return;
-      // }
-
-      res.status = routeContext.status;
-    }
+      req.status = routeContext.status;
+    }  
+      
+    // We are ready to render for real
+    const content = renderToString(components);
+    const initialState = client.extract();
 
     // Create a stream of the React render. We'll pass in the
     // Helmet component to generate the <head> tag, as well as our Redux
     // store state so that the browser can continue from the server
-    const reactStream = ReactDOMServer.renderToNodeStream(
-      <Html
-        helmet={Helmet.renderStatic()}
-        window={{
-          webpackManifest: chunkManifest,
-          __APOLLO_STATE__: client.extract(),
-        }}
-        css={css}
-        scripts={scripts}>
-        {components}
-      </Html>,
-    );
+    const html = <Html
+                    helmet={Helmet.renderStatic()}
+                    window={{
+                      webpackManifest: chunkManifest,
+                      __APOLLO_STATE__: client.extract(),
+                    }}
+                    css={css}
+                    scripts={scripts}>
+                    {components}
+                </Html>
 
-    // Pipe the React stream to the HTML output
-    reactStream.pipe(htmlStream);
-  
-    // Set the return type to `text/html`, and stream the response back to
-    // the client
-    res.status(200)
-    res.type = 'text/html'
-    res.body = htmlStream
-    res.end()
-  //}
+      res.status(200);
+      res.send(`<!doctype html>\n${renderToStaticMarkup(html)}`);
+      res.end();
+  }
 }
-
-// export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
-//   return async function reactHandler(req, res) {
-
-//     console.log("reached createReactHandler")
-
-//     const routeContext = {};
-
-//     const client = getClient(true);
-
-//     // Generate the HTML from our React tree.  We're wrapping the result
-//     // in `react-router`'s <StaticRouter> which will pull out URL info and
-//     // store it in our empty `route` object
-//     const components = (
-//       <ApolloProvider client={client}>
-//         <StaticRouter location={req.url} context={routeContext}>    
-//             <App />    
-//         </StaticRouter>
-//       </ApolloProvider>
-//     )
-
-//     // Wait for GraphQL data to be available in our initial render,
-//     // before dumping HTML back to the client
-//     await getDataFromTree(components);
-
-//     // Handle redirects
-//     if ([301, 302].includes(routeContext.status)) {
-//       // 301 = permanent redirect, 302 = temporary
-//       res.status = routeContext.status;
-
-//       // Issue the new `Location:` header
-//       res.redirect(routeContext.url);
-
-//       // Return early -- no need to set a response body
-//       return;
-//     }
-
-//     // Handle 404 Not Found
-//     if (routeContext.status === 404) {
-//       // By default, just set the status code to 404.  Or, we can use
-//       // `config.set404Handler()` to pass in a custom handler func that takes
-//       // the `ctx` and store
-
-//       // if (config.handler404) {
-//       //   config.handler404(ctx);
-
-//       //   // Return early -- no need to set a response body, because that should
-//       //   // be taken care of by the custom 404 handler
-//       //   return;
-//       // }
-
-//       res.status = routeContext.status;
-//     }
-
-//     const content = ReactDOMServer.renderToString(components);
-
-//     const html = <Html2 helmet={Helmet.renderStatic()}
-//                           scripts={scripts}
-//                           state={client.extract()}
-//                           css={css}
-//                           children={content} 
-//                            />
-  
-//     res.status(200)
-//     res.send(`${ReactDOMServer.renderToStaticMarkup(html)}`)
-//     res.end()
-//   }
-// }
 
 export function runApolloEngine() {
   // Initialize engine with your API key. Alternatively,
@@ -314,18 +224,14 @@ export function runApolloEngine() {
 
 // Listener function that will start http(s) server(s) based on userland
 // config and available ports
-export function listen(app) {
+export function listen() {
     // Spawn the listeners.
     const servers = [];
 
-    const requestHandler = (request, response) => {
-      console.log(request.url)
-    }
-  
     // Plain HTTP
     if (Config.enableHTTP) {
       servers.push(
-        http.createServer(requestHandler).listen(Config.port, (err) => {
+        http.createServer(app).listen(Config.port, (err) => {
           if (err) {
             return console.log("Error: ", err)
           }
@@ -337,7 +243,7 @@ export function listen(app) {
     // SSL -- only enable this if we have an `SSL_PORT` set on the environment
     if (process.env.SSL_PORT) {
       servers.push(
-        https.createServer(Config.sslOptions, app.req, app.res).listen(Config.sslPort),
+        https.createServer(Config.sslOptions, app).listen(Config.sslPort),
       );
     }
 

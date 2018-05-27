@@ -7,14 +7,14 @@ const {
     GraphQLFloat
 } = graphql;
 
-//const UserType = require('./types/user_type');
+const UserType = require('./types/user_type').default;
 const AuthService = require('../services/auth');
 
 export default new GraphQLObjectType({
     name: 'Mutation',
     fields: {
         signup: {
-            type: require('./types/user_type').default,
+            type: UserType,
             args: {
                 email: { type: GraphQLString },
                 password: { type: GraphQLString },
@@ -26,7 +26,7 @@ export default new GraphQLObjectType({
             }
         },
         logout: {
-            type: require('./types/user_type').default,
+            type: UserType,
             resolve(parentValue, args, ctx) {
                 const req = ctx.req;
                 const { user } = req;
@@ -35,7 +35,7 @@ export default new GraphQLObjectType({
             }
         },
         login: {
-            type: require('./types/user_type').default,
+            type: UserType,
             args: {
                 email: { type: GraphQLString },
                 password: { type: GraphQLString }

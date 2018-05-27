@@ -21,7 +21,7 @@ const Html = ({ helmet, scripts, window, css, children }) => (
       {helmet.noscript.toComponent()}
     </head>
     <body {...helmet.bodyAttributes.toComponent()}>
-      <div id="main">{children}</div>  
+      <div id="content">{children}</div>  
       <script
         dangerouslySetInnerHTML={{
           __html: Object.keys(window).reduce(

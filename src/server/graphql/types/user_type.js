@@ -12,4 +12,4 @@ export default new GraphQLObjectType({
         email: { type: GraphQLString },
         role: { type: GraphQLString }
     }
-});
+})
