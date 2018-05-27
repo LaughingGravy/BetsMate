@@ -30,7 +30,7 @@ import { StaticRouter } from 'react-router-dom'
 
 // apollo graphql client
 import { ApolloProvider, getDataFromTree } from 'react-apollo'
-import { getClient } from '../library/apolloClient/apollo'
+//import { getClient } from '../library/apolloClient/apollo'
 
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 
@@ -120,11 +120,11 @@ app.use('/graphiql', graphiqlExpress({
 
 export function addLocalesRoutes(app, enGB, jaJP) {
   app.get('/static/locales/en-GB.json',(req, res) => {
-    res.sendFile('C:\\Development\\Javascript\\Betsmate\\dist\\dev\\locales\\en-GB.json')
+    //res.json(JSON.stringify(enGB))
   })
   
   app.get('/static/locales/ja-JP.json',(req, res) => {
-    res.sendFile('C:\\Development\\Javascript\\Betsmate\\dist\\dev\\locales\\ja-JP.json')
+    //res.json(JSON.stringify(jaJP))
   })
 }
 

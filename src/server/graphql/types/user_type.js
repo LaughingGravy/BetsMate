@@ -1,16 +1,9 @@
-// import {
-//     graphql,
-//     GraphQLID,
-//     GraphQLObjectType,
-//     GraphQLString,
-// } from 'graphql'
-
-const graphql = require('graphql');
-const {
+import {
+    graphql,
     GraphQLID,
     GraphQLObjectType,
     GraphQLString,
-} = graphql
+} from 'graphql'
 
 export default new GraphQLObjectType({
     name: 'UserType',
@@ -20,5 +13,3 @@ export default new GraphQLObjectType({
         role: { type: GraphQLString }
     }
 });
-
-//export default UserType;

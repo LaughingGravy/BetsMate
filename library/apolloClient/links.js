@@ -1,6 +1,8 @@
 import { createHttpLink } from 'apollo-link-http'
 import { onError } from "apollo-link-error"
 import fetch from 'isomorphic-fetch'
+import { getServerURL } from '../../utilities/env'
+import Config from "../../utilities/Config";
 
 const ErrorHandlerLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
@@ -12,9 +14,23 @@ const ErrorHandlerLink = onError(({ graphQLErrors, networkError }) => {
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-const httpLink = createHttpLink({
-    uri: '/graphql',
-    credentials: 'same-origin'
-});
+function getHttpLinkWithCookie(req)
+{
+  return createHttpLink({
+            uri: `${getServerURL(Config.host, Config.port, Config.allowSSL)}/graphql`,
+            credentials: 'same-origin',
+            headers: {
+              cookie: req.header('Cookie'),
+            }
+        })
+}
 
-export { ErrorHandlerLink, httpLink }
+function getHttpLinkWithoutCookie()
+{
+  return createHttpLink({
+            uri: `${getServerURL(Config.host, Config.port, Config.allowSSL)}/graphql`,
+            credentials: 'same-origin'
+        })
+}
+
+export { ErrorHandlerLink, getHttpLinkWithCookie, getHttpLinkWithoutCookie }

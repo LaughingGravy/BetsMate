@@ -6,16 +6,15 @@ import webpack from 'webpack'
 import chalk from 'chalk'
 import path from 'path'
 import { ApolloEngine } from 'apollo-engine'
-//import { getClient } from '../library/apolloClient/apollo'
+import { defaultOptions, getServerClient } from '../library/apolloClient/apollo'
 
 // apollo graphql client
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
 import { concat } from 'apollo-link'
 import { StaticRouter } from 'react-router';
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { onError } from "apollo-link-error"
+import { ErrorHandlerLink, getHttpLinkWithCookie } from '../library/apolloClient/links'
 import App from '../src/client/components/App'
 // React utility to transform JSX to HTML (to send back to the client)
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
@@ -33,22 +32,13 @@ import enGB from '../dist/dev/locales/en-GB.json';
 import jaJP from '../dist/dev/locales/ja-JP.json';
 
 // Extend the server base
-import server, { testAsync, createReactHandler, runApolloEngine, addLocalesRoutes, addFavicon } from './server-base';
+import server, { createReactHandler, runApolloEngine, addLocalesRoutes, addFavicon } from './server-base';
+//import { getServerClient } from '../library/apolloClient/apollo';
 
 // Get manifest values
 const css = 'assets/css/style.css';
 const scripts = ['vendor.js', 'browser.js'];
 const chunkManifest = {}
-
-const ErrorHandlerLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.map(({ message, locations, path }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-      )
-    );
-  if (networkError) console.log(`[Network error]: ${networkError}`);
-});
 
 //Spawn the development server.
 //Runs inside an immediate `async` block, to await listening on ports
@@ -58,39 +48,31 @@ const ErrorHandlerLink = onError(({ graphQLErrors, networkError }) => {
     app.use(express.static(PATHS.distDev))
     app.use(compression()) 
 
-    addLocalesRoutes(app, enGB, jaJP)
+    //addLocalesRoutes(app, enGB, jaJP)
 
     addFavicon(app, PATHS.distDev)
 
     app.get('/*', (req, res) => {
+
+      const client = new ApolloClient({
+        ssrMode: true,
+        link: concat(ErrorHandlerLink, getHttpLinkWithCookie(req)),
+        cache: new InMemoryCache({
+            dataIdFromObject: object => object.id || null
+          }),
+          defaultOptions: defaultOptions
+      })
         
-        const client = new ApolloClient({
-            ssrMode: true,
-            // Remember that this is the interface the SSR server will use to connect to the
-            // API server, so we need to ensure it isn't firewalled, etc
-            link: concat(ErrorHandlerLink, createHttpLink({
-              uri: 'http://localhost:3000/graphql',
-              credentials: 'same-origin',
-              headers: {
-                cookie: req.header('Cookie'),
-                },
-              })
-            ),
-            cache: new InMemoryCache({
-                dataIdFromObject: object => object.id || null
-            }),
-          });
+      const context = {};
         
-          const context = {};
-        
-          // The client-side App will instead use <BrowserRouter>
-          const components = (
-            <ApolloProvider client={client}>
-              <StaticRouter location={req.url} context={context}>
-                <App />
-              </StaticRouter>
-            </ApolloProvider>
-          )
+      // The client-side App will instead use <BrowserRouter>
+      const components = (
+        <ApolloProvider client={client}>
+          <StaticRouter location={req.url} context={context}>
+            <App />
+          </StaticRouter>
+        </ApolloProvider>
+      )
         
           // rendering code
           // getDataFromTree(components).then(() => {
@@ -133,7 +115,9 @@ const ErrorHandlerLink = onError(({ graphQLErrors, networkError }) => {
         //listen();
 
          console.log("listen on ", Config.port)
-         app.listen(Config.port)
+         app.listen(Config.port, (err) => {
+             console.log(err)
+         })
     }
 
 //})
@@ -157,6 +141,17 @@ function MyHtml({ content, state, scripts }) {
       </html>
     );
   }
+
+// function getServerClient(req) {
+//     return new ApolloClient({
+//           ssrMode: true,
+//           link: concat(ErrorHandlerLink, getHttpLinkWithCookie(req)),
+//           cache: new InMemoryCache({
+//               dataIdFromObject: object => object.id || null
+//             }),
+//             defaultOptions: defaultOptions
+//       })
+// }
 
     //app.use(webpackMiddleware(compiler, options));
    // app.use(require("webpack-hot-middleware")(compiler)); 
