@@ -36,7 +36,7 @@ class Layout extends React.Component {
     }
     
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.currentLocale !== this.state.currentLocale) {
+        if (!!prevState.currentLocale && prevState.currentLocale !== this.state.currentLocale) {
             this.loadLocales();
         }
     }

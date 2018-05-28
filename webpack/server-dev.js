@@ -47,7 +47,7 @@ export default [
               },
             }),
 
-            //new webpack.HotModuleReplacementPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
 
             new webpack.NoEmitOnErrorsPlugin()
         ]

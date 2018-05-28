@@ -1,8 +1,6 @@
 import React from 'react'
 import express from 'express'
 import compression from 'compression'
-import webpack from 'webpack'
-//import webpackMiddleware from'webpack-dev-middleware'
 import chalk from 'chalk'
 import path from 'path'
 
