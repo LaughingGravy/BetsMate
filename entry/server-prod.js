@@ -1,18 +1,18 @@
+import React from 'react'
 import express from 'express'
-import chalk from 'chalk'
 import compression from 'compression'
+import chalk from 'chalk'
 import path from 'path'
-import { ApolloEngine } from 'apollo-engine'
 
-// Needed to read manifest files
-import { readFileSync } from 'fs';
 import Config from '../utilities/Config';
+import PATHS from '../utilities/paths'
 
 import enGB from '../dist/public/locales/en-GB.json';
 import jaJP from '../dist/public/locales/ja-JP.json';
 
 // Extend the server base
-import server, { createReactHandler, runApolloEngine, addLocalesRoutes } from './server-base';
+import server, { createReactHandler, addLocalesRoutes, addFavicon } from './server-base';
+
 
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
@@ -35,14 +35,39 @@ process.on('unhandledRejection', (reason, p) => {
 
 // Read in manifest files
 const [manifest, chunkManifest] = ['manifest', 'chunk-manifest']
-  .map(name => JSON.parse(readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8')));
+  .map(name => JSON.parse(readFileSync(path.resolve(PATHS.public, `${name}.json`), 'utf8')));
 
 // Get manifest values
-const css = manifest['browser.css'];
+const css = manifest['style.css'];
 const scripts = [
   'manifest.js',
   'vendor.js',
   'browser.js'].map(key => manifest[key]);
+
+const { app, listen, runApolloEngine } = server
+
+app.use(express.static(PATHS.public))
+app.use(compression()) 
+
+addFavicon(app, PATHS.public)
+
+addLocalesRoutes(app, enGB, jaJP)
+
+app.get('/*', createReactHandler(css, scripts, chunkManifest))
+  
+if (Config.isRunEngine) {
+    runApolloEngine()
+}
+else {
+    // Spawn the server
+    listen();
+}
+
+
+
+
+
+
 
 // Spawn the development server.
 // Runs inside an immediate `async` block, to await listening on ports

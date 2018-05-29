@@ -45,9 +45,9 @@ export default new WebpackConfig().extend({
             SERVER: true,
             'process.env': {
               // Point the server host/port to the dev server
-              HOST: JSON.stringify(process.env.HOST || 'localhost'),
-              PORT: JSON.stringify(process.env.PORT || '3000'),
-              SSL_PORT: process.env.SSL_PORT ? JSON.stringify(process.env.SSL_PORT) : null,
+              HOST: JSON.stringify(process.env.HOST || Config.host),
+              PORT: JSON.stringify(process.env.PORT || Config.port),
+              SSL_PORT: allowSSL ? JSON.stringify(Config.sslPort) : null,
       
               // React constantly checking process.env.NODE_ENV causes massive
               // slowdowns during rendering. Replacing process.env.NODE_ENV

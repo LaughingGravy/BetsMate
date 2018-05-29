@@ -14,7 +14,7 @@ import jaJP from '../dist/dev/locales/ja-JP.json';
 import server, { createReactHandler, addLocalesRoutes, addFavicon } from './server-base';
 
 // Get manifest values
-const css = 'assets/css/style.css';
+const css = '../dist/dev/assets/css/style.css';
 const scripts = ['vendor.js', 'browser.js'];
 const chunkManifest = {}
 
