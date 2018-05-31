@@ -6,6 +6,7 @@ import path from 'path'
 
 import Config from '../utilities/Config';
 import PATHS from '../utilities/paths'
+import { logServerStarted } from '../library/console';
 
 import enGB from '../dist/dev/locales/en-GB.json';
 import jaJP from '../dist/dev/locales/ja-JP.json';
@@ -35,6 +36,10 @@ if (Config.isRunEngine) {
 else {
     // Spawn the server
     listen();
+
+    logServerStarted({
+        type: 'development server',
+    });    
 }
 
 

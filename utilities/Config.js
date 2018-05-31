@@ -22,20 +22,6 @@ class Common {
         this.isRunEngine = yn(process.env.RUN_ENGINE);
         this.apolloEngineServiceId = 'service:Betsmate:NXBwHRWuwnGryOWVgBF8lQ'; // default env variable will use ENGINE_API_KEY
     }   
-
-    // handler404(ctx) {
-    //     return () => {
-    //         const stateDump = JSON.stringify(ctx.store.getState());
-
-    //         // Explicitly set the return status to 404.  This is done for us by
-    //         // default if we don't have a custom 404 handler, but left to the function
-    //         // otherwise (since we might not always want to return a 404)
-    //         ctx.status = 404;
-
-    //         // Set the body
-    //         ctx.body = `This route does not exist on the server - Redux dump: ${stateDump}`;
-    //     }
-    // } 
 }
 
 let Config;
@@ -49,7 +35,7 @@ if (process.env.NODE_ENV === 'development')
             this.port = process.env.PORT || 3000
             this.sslPort = process.env.SSL_PORT || 443
             this.allowSSL = false
-            this.host = 'localhost'
+            this.host = process.env.HOST || 'localhost'
 
             this.mongoURL = 'mongodb://admin:k0mbanwa@ds159866.mlab.com:59866/betsmate';
             this.connectOpt = {
@@ -64,35 +50,16 @@ else
         constructor() {
             super();
 
-            this.port = 3000;
-            this.host = 'localhost';
+            this.port = process.env.PORT || 3000
+            this.host = process.env.HOST || 'localhost'
+            this.sslPort = process.env.SSL_PORT || 443
+            this.allowSSL = false
             this.mongoURL = 'mongodb://admin:k0mbanwa@ds159866.mlab.com:59866/betsmate';
             this.connectOpt = {
                 keepAlive: true
             };
         }
     }
-};
-
-// if (SERVER)
-//     Config = class ServerConfig extends Common {
-//     constructor() {
-//         super();
-//     }
-
-//     handler404(ctx) {
-//         return () => {
-//             const stateDump = JSON.stringify(ctx.store.getState());
-
-//             // Explicitly set the return status to 404.  This is done for us by
-//             // default if we don't have a custom 404 handler, but left to the function
-//             // otherwise (since we might not always want to return a 404)
-//             ctx.status = 404;
-
-//             // Set the body
-//             ctx.body = `This route does not exist on the server - Redux dump: ${stateDump}`;
-//         }
-//     }    
-// }
+}
 
 export default new Config();

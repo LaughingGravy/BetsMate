@@ -246,11 +246,7 @@ export function listen() {
         https.createServer(Config.sslOptions, app).listen(Config.sslPort),
       );
     }
-
-    logServerStarted({
-      type: 'dev server',
-    });
-  
+    
     return servers;
   }
 

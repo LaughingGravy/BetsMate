@@ -1,10 +1,11 @@
-import path from 'path';
-import webpack from 'webpack';
-import WebpackConfig from 'webpack-config';
-import chalk from 'chalk';
+import path from 'path'
+import webpack from 'webpack'
+import WebpackConfig from 'webpack-config'
+import chalk from 'chalk'
+import Config from '../utilities/Config'
 
-import { webpackProgress } from './common';
-import PATHS from '../utilities/paths';
+import { webpackProgress } from './common'
+import PATHS from '../utilities/paths'
 
 export default new WebpackConfig().extend({
     '[root]/server.js': conf => {
@@ -20,7 +21,7 @@ export default new WebpackConfig().extend({
         return conf;
     },
 }).merge({
-
+    mode: 'none', // optimizations when set to production cause errors - we will set appropriate optimizations 
     stats: 'minimal',
 
     // Production server entry point
@@ -33,29 +34,23 @@ export default new WebpackConfig().extend({
     output: {
         path: PATHS.dist,
         filename: 'server.js',
+        globalObject: 'this'
     },
 
     plugins: [
         webpackProgress(
-          `${chalk.magenta.bold('BetsMate server bundle')} in ${chalk.bgMagenta.white.bold('production mode')}`,
+          `${chalk.magenta.bold('BetsMate server bundle')} in ${chalk.bgMagenta.white.bold('production')}`,
         ),
 
         new webpack.DefinePlugin({
-            // We ARE running on the server
-            SERVER: true,
             'process.env': {
-              // Point the server host/port to the dev server
-              HOST: JSON.stringify(process.env.HOST || Config.host),
-              PORT: JSON.stringify(process.env.PORT || Config.port),
-              SSL_PORT: allowSSL ? JSON.stringify(Config.sslPort) : null,
-      
-              // React constantly checking process.env.NODE_ENV causes massive
-              // slowdowns during rendering. Replacing process.env.NODE_ENV
-              // with a string not only removes this expensive check, it allows
-              // a minifier to remove all of React's warnings in production.
-              NODE_ENV: JSON.stringify('production'),
-              DEBUG: false,
+            HOST: JSON.stringify(Config.host),
+            PORT: JSON.stringify(Config.port),
+            SSL_PORT: Config.allowSSL ? JSON.stringify(Config.sslPort) : null,
+            NODE_ENV: JSON.stringify('production'),
+            SERVER: true,
+            DEBUG: false,
             },
         }),
     ],
-});
+})

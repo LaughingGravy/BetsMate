@@ -7,11 +7,14 @@ import path from 'path';
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 // Compression plugin for generating `.gz` static files
-import CompressionPlugin from 'compression-webpack-plugin'
-// Generate .br files, using the Brotli compression algorithm
-import BrotliPlugin from 'brotli-webpack-plugin'
+import BrotliGzipPlugin from 'brotli-gzip-webpack-plugin'
+
+// Plugin for computing chunk hash
+import WebpackChunkHash from 'webpack-chunk-hash';
 
 import ManifestPlugin from 'webpack-manifest-plugin'
+// Chunk Manifest plugin for generating a chunk asset manifest
+import ChunkManifestPlugin from 'chunk-manifest-webpack-plugin';
 // Copy files from `PATH.static` to `PATHS.public`
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 // Bundle Analyzer plugin for viewing interactive treemap of bundle
@@ -43,6 +46,8 @@ export default new WebpackConfig().extend({
         // Filenames will be <name>.<chunkhash>.js in production on the browser
         filename: '[name].[chunkhash].js',
         chunkFilename: '[name].[chunkhash].js',
+        path: PATHS.public,
+        publicPath: "/"
     },
 
     module: {
@@ -53,38 +58,37 @@ export default new WebpackConfig().extend({
 
     plugins: [
         webpackProgress(
-            `${chalk.magenta.bold('Betsmate browser bundle')} in ${chalk.bgMagenta.white.bold('production mode')}`,
+            `${chalk.magenta.bold('Betsmate browser bundle')} in ${chalk.bgMagenta.white.bold('production')}`,
         ),
 
         // Global variables
         new webpack.DefinePlugin({
-            // We're running on the server
-            SERVER: true,
-            'process.env': {
-            // Debug development
-            NODE_ENV: JSON.stringify('production'),
-            DEBUG: false,
-            },
+            'process.env.NODE_ENV': JSON.stringify('production'),
+            'process.env.BROWSER': true,
+            'process.env.DEBUG': false
         }),
-
-        new webpack.NoEmitOnErrorsPlugin(),
 
         // A plugin for a more aggressive chunk merging strategy
         new webpack.optimize.AggressiveMergingPlugin(),
 
-        // Compress assets into .gz files
-        new CompressionPlugin({
-            asset: '[path].gz[query]',
-            algorithm: 'gzip',
+        new webpack.HashedModuleIdsPlugin(),
+
+        //Brotli compression-- often significantly smaller than the gzip equivalent
+        new BrotliGzipPlugin({
+            asset: '[path].br[query]',
+            algorithm: 'brotli',
+            test: /\.(js|css|html|svg)$/,
+            //threshold: 10240,
             minRatio: 0.99
         }),
 
-        // Also generate .br files, with Brotli compression-- often significantly
-        // smaller than the gzip equivalent, but not yet universally supported
-        new BrotliPlugin({
-            // Overwrite the default 80% compression-- anything is better than
-            // nothing
-            minRatio: 0.99,
+        //Compress assets into .gz files
+        new BrotliGzipPlugin({
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: /\.(js|css|html|svg)$/,
+            //threshold: 10240,
+            minRatio: 0.99
         }),
 
         new MiniCssExtractPlugin({
@@ -92,12 +96,19 @@ export default new WebpackConfig().extend({
             chunkFilename: "assets/css/[id].[contenthash].css"
         }),
 
+        // Generate chunk manifest
+        new ChunkManifestPlugin({
+            // Put this in `dist` rather than `dist/public`
+            filename: path.join(PATHS.dist, 'chunk-manifest.json'),
+            manifestVariable: 'webpackManifest'
+        }),
+
         // Generate assets manifest
         new ManifestPlugin({
             // Put this in `dist` rather than `dist/public`
-            fileName: '../manifest.json',
+            fileName: path.join(PATHS.dist, 'manifest.json'),
             // Prefix assets with '/' so that they can be referenced from any route
-            publicPath: '',
+            publicPath: "/",
             inlineManifest: true,
         }),
 
@@ -120,9 +131,10 @@ export default new WebpackConfig().extend({
             },
         ]),
     ],
+
     optimization: {
         splitChunks: {
-            chunks: "async",
+            chunks: "all",
             minSize: 30000,
             minChunks: 1,
             maxAsyncRequests: 5,
@@ -145,8 +157,8 @@ export default new WebpackConfig().extend({
         minimizer: [
             new UglifyJsPlugin({
               cache: true,
-              parallel: true,
-              sourceMap: true, // set to true if you want JS source maps
+              parallel: false,
+              sourceMap: false, // set to true if you want JS source maps
               exclude: [/\.min\.js$/gi], // skip pre-minified libs
             }),
             new OptimizeCSSAssetsPlugin({
@@ -155,5 +167,10 @@ export default new WebpackConfig().extend({
                 canPrint: true
             })
         ],
+        runtimeChunk: {
+            name: "manifest",
+        },
+        noEmitOnErrors: true
     },
 })
+

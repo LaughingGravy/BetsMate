@@ -26,9 +26,9 @@
                 "transform-async-to-generator",
                 "transform-runtime", 
                 "transform-react-remove-prop-types",
-                "transform-object-rest-spread", { 
+                ["transform-object-rest-spread", { 
                     "useBuiltIns": true 
-                }
+                }]
             ]
         }
     }

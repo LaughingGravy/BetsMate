@@ -60,17 +60,17 @@ export default new WebpackConfig().merge({
 
     // Output settings.  Where our files will wind up, and what we consider
     // to be the root public path for dev-server.
-    output: {
+    // output: {
 
-        // Our compiled bundles/static files will wind up in `dist/public`
-        path: PATHS.public,
+    //     // Our compiled bundles/static files will wind up in `dist/public`
+    //     path: PATHS.public,
 
-        // Deem the `dist` folder to be the root of our web server
-        publicPath: '',
+    //     // Deem the `dist` folder to be the root of our web server
+    //     publicPath: '',
 
-        // Filenames will simply be <name>.js
-        filename: '[name].js',
-    },
+    //     // Filenames will simply be <name>.js
+    //     filename: '[name].js',
+    // },
 
     plugins: [
         // Options that our module loaders will pull from

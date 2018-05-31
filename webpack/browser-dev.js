@@ -5,6 +5,8 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import chalk from 'chalk'
 
+import { webpackProgress } from './common'
+
 import Config from '../utilities/Config'
 import PATHS from '../utilities/paths'
 
@@ -30,7 +32,7 @@ export default new WebpackConfig().extend({
     },
   }).merge({
     mode: 'development',
-    devtool: 'source-map',
+    devtool: 'cheap-module-eval-source-map',
 
     output: {
         path: PATHS.distDev
@@ -44,16 +46,21 @@ export default new WebpackConfig().extend({
     },
 
     plugins: [
+        webpackProgress(
+            `${chalk.magenta.bold('Betsmate browser bundle')} in ${chalk.bgMagenta.white.bold('development mode')}`,
+        ),
 
         // Global variables
         new webpack.DefinePlugin({
-            // We're running on the server
-            SERVER: true,
-            'process.env': {
-            // Debug development
-            NODE_ENV: JSON.stringify('development'),
             BROWSER: true,
             DEBUG: true,
+            'process.env.NODE_ENV': JSON.stringify('development'),
+            // We're running on the server
+            // BROWSER: true,
+            // DEBUG: true,
+             'process.env': {
+            // // Debug development
+            NODE_ENV: JSON.stringify('development'),
             },
         }),
 
@@ -73,5 +80,30 @@ export default new WebpackConfig().extend({
             },
         ]),
 
-    ]
+    ],
+
+    optimization: {
+        runtimeChunk: false,
+        splitChunks: {
+            chunks: "async",
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            name: true,
+            cacheGroups: {
+                default: {
+                minChunks: 2,
+                priority: -20,
+                reuseExistingChunk: true,
+                },
+                commons: {
+                test: /[\\/]node_modules[\\/]/,
+                priority: -10,
+                name: 'vendor',
+                chunks: 'all'
+                }
+            },
+        }
+      },
 })

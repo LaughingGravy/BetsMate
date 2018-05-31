@@ -4,8 +4,12 @@ import compression from 'compression'
 import chalk from 'chalk'
 import path from 'path'
 
+// Needed to read manifest files
+import { readFileSync } from 'fs';
+
 import Config from '../utilities/Config';
 import PATHS from '../utilities/paths'
+import { logServerStarted } from '../library/console';
 
 import enGB from '../dist/public/locales/en-GB.json';
 import jaJP from '../dist/public/locales/ja-JP.json';
@@ -33,16 +37,16 @@ process.on('unhandledRejection', (reason, p) => {
 //   })
 // });
 
-// Read in manifest files
+//Read in manifest files
 const [manifest, chunkManifest] = ['manifest', 'chunk-manifest']
-  .map(name => JSON.parse(readFileSync(path.resolve(PATHS.public, `${name}.json`), 'utf8')));
+  .map(name => JSON.parse(readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8')));
 
 // Get manifest values
-const css = manifest['style.css'];
+const css = manifest['browser.css'];
 const scripts = [
-  'manifest.js',
-  'vendor.js',
-  'browser.js'].map(key => manifest[key]);
+   'manifest.js',
+   'vendor.js',
+   'browser.js'].map(key => manifest[key]);
 
 const { app, listen, runApolloEngine } = server
 
@@ -53,7 +57,7 @@ addFavicon(app, PATHS.public)
 
 addLocalesRoutes(app, enGB, jaJP)
 
-app.get('/*', createReactHandler(css, scripts, chunkManifest))
+app.get('/*', createReactHandler(css, scripts, manifest))
   
 if (Config.isRunEngine) {
     runApolloEngine()
@@ -61,8 +65,11 @@ if (Config.isRunEngine) {
 else {
     // Spawn the server
     listen();
-}
 
+    logServerStarted({
+      type: 'production server',
+  }); 
+}
 
 
 
@@ -71,28 +78,28 @@ else {
 
 // Spawn the development server.
 // Runs inside an immediate `async` block, to await listening on ports
-(async () => {
-  const { app, router, listen, runApolloEngine } = server;
+// (async () => {
+//   const { app, router, listen, runApolloEngine } = server;
 
-  // Connect the production routes to the server
-  // serve the locale files
-  addLocalesRoutes(router, enGB, jaJP)
+//   // Connect the production routes to the server
+//   // serve the locale files
+//   addLocalesRoutes(router, enGB, jaJP)
 
-  router.get('/*', createReactHandler(css, scripts, chunkManifest))
-  app.use(router.routes())
-  app.use(compression());
+//   router.get('/*', createReactHandler(css, scripts, chunkManifest))
+//   app.use(router.routes())
+//   app.use(compression());
 
-  if (Config.isRunEngine) {
-    runApolloEngine()
-  }
-  else {
-    // Spawn the server
-    listen();
-  }
+//   if (Config.isRunEngine) {
+//     runApolloEngine()
+//   }
+//   else {
+//     // Spawn the server
+//     listen();
+//   }
 
-  // Log to the terminal that we're ready for action
-  logServerStarted({
-    type: 'server',
-  })
+//   // Log to the terminal that we're ready for action
+//   logServerStarted({
+//     type: 'server',
+//   })
 
-})();
+// })();
