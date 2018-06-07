@@ -7,6 +7,10 @@ import favicon from 'serve-favicon';
 import React from 'react';
 import Helmet from 'react-helmet';
 
+import passport from 'passport'
+import session from 'express-session'
+const MongoStore = require('connect-mongo')(session)
+
 // HTTP & SSL servers.  We can use `config.enableSSL|disableHTTP()` to enable
 // HTTPS and disable plain HTTP respectively, so we'll use Node's core libs
 // for building both server types.
@@ -35,11 +39,7 @@ import models from '../src/server/database/models'
 import schema from '../src/server/graphql/schema'
 import passportConfig from '../src/server/services/auth'
 
-import passport from 'passport'
-import session from 'express-session'
-
 import { connectMongoDB } from '../src/server/database/mongoDB'
-const MongoStore = require('connect-mongo')(session)
 
 import path from 'path';
 import Config from '../utilities/Config'
@@ -47,27 +47,23 @@ import PATHS from '../utilities/paths'
 
 import App from '../src/client/components/App'
 
-const app = express();
+const app = express()
+const router = express.Router()
 
-// check is server is up
-app.get('/ping',(req, res) => {
-  res.send('pong');
-})
+// Connect to the database
+connectMongoDB(Config.mongoURL, Config.apolloClientOpt);
 
 // enable cors
 var corsOptions = {
     origin: getServerURL(Config.host, Config.port, Config.allowSSL),
     credentials: true // <-- REQUIRED backend setting
 };
-  
-app.use(cors(corsOptions));
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(helmet());
 
-// Connect to the database
-connectMongoDB(Config.mongoURL, Config.apolloClientOpt);
+app.use(helmet())
+app.use(cors(corsOptions))
+app.use(cookieParser())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
 
 // Configures express to use sessions. This places an encrypted identifier
 // on the users cookie. When a user makes a request, this middleware examines
@@ -75,13 +71,13 @@ connectMongoDB(Config.mongoURL, Config.apolloClientOpt);
 // The cookie itself only contains the id of a session; more data about the session
 // is stored inside of MongoDB.
 app.use(session({
-    resave: true,
-    saveUninitialized: true,
-    secret: Config.secret,
-    store: new MongoStore({
-        url: Config.mongoURL,
-        autoReconnect: true
-        })
+  resave: true,
+  saveUninitialized: true,
+  secret: Config.secret,
+  store: new MongoStore({
+      url: Config.mongoURL,
+      autoReconnect: true
+      })
 }));
 
 // Passport is wired into express as a middleware. When a request comes in,
@@ -90,41 +86,46 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Instruct Express to pass on any request made to the '/graphql' route
-// bodyParser is needed just for POST.
-app.use(
-    '/graphql',
-    bodyParser.json(),
-    graphqlExpress(req => {
-      return {
-        schema: schema,
-        context: {
-            req: req
-        },
-        tracing: Config.isRunEngine,
-        cacheControl: Config.isRunEngine
-      };
-    }),
+//check that server is up
+router.get('/ping',(req, res) => {
+  res.send('pong');
+})
+
+// // Instruct Express to pass on any request made to the '/graphql' route
+// // bodyParser is needed just for POST.
+router.use(
+  '/graphql',
+  bodyParser.json(),
+  graphqlExpress(req => {
+    return {
+      schema: schema,
+      context: {
+          req: req
+      },
+      tracing: Config.isRunEngine,
+      cacheControl: Config.isRunEngine
+    };
+  }),
 )
 
 // Instruct Express to pass on any request made to the '/graphiql' route
-app.use('/graphiql', graphiqlExpress({
-    endpointURL: '/graphql',
-}),
+router.use('/graphiql', graphiqlExpress({
+  endpointURL: '/graphql',
+  }),
 )
 
-export function addLocalesRoutes(app, enGB, jaJP) {
-  app.get('/static/locales/en-GB.json',(req, res) => {
+export function addLocalesRoutes(enGB, jaJP) {
+  router.get('/static/locales/en-GB.json',(req, res) => {
     res.send(JSON.stringify(enGB))
   })
   
-  app.get('/static/locales/ja-JP.json',(req, res) => {
+  router.get('/static/locales/ja-JP.json',(req, res) => {
     res.send(JSON.stringify(jaJP))
   })
 }
 
-export function addFavicon(app, iconPath) {
-  app.use(favicon(path.join(iconPath, 'favicon.ico')));
+export function addFavicon(iconPath) {
+  router.use(favicon(path.join(iconPath, 'favicon.ico')));
 }
 
 export function createReactHandler(css = [], scripts = [], chunkManifest = {}) {
@@ -252,6 +253,7 @@ export function listen() {
 
   export default {
     app,
+    router,
     listen,
     runApolloEngine
   };

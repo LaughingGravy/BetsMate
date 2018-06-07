@@ -41,7 +41,7 @@
     "babel-register": "6.26.0",
     "babel-runtime": "^6.26.0",
     "brotli-gzip-webpack-plugin": "^0.5.0",
-   // "chunk-manifest-webpack-plugin": "1.1.2",
+    "chunk-manifest-webpack-plugin": "1.1.2",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
     "cssnano": "^4.0.0-rc.2",

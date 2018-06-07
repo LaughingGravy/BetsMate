@@ -19,15 +19,15 @@ const css = '../dist/dev/assets/css/style.css';
 const scripts = ['vendor.js', 'browser.js'];
 const chunkManifest = {}
 
-const { app, listen, runApolloEngine } = server
+const { app, router, listen, runApolloEngine } = server
 
 app.use(express.static(PATHS.distDev))
 app.use(compression()) 
 
-addFavicon(app, PATHS.distDev)
+addFavicon(PATHS.distDev)
+addLocalesRoutes(enGB, jaJP)
 
-addLocalesRoutes(app, enGB, jaJP)
-
+app.use(router)
 app.get('/*', createReactHandler(css, scripts))
   
 if (Config.isRunEngine) {

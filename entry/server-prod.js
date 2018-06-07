@@ -17,7 +17,6 @@ import jaJP from '../dist/public/locales/ja-JP.json';
 // Extend the server base
 import server, { createReactHandler, addLocalesRoutes, addFavicon } from './server-base';
 
-
 process.on('unhandledRejection', (reason, p) => {
   console.error('Unhandled Rejection at:', p, 'reason:', reason);
   // send entire app down. Process manager will restart it
@@ -38,7 +37,10 @@ process.on('unhandledRejection', (reason, p) => {
 // });
 
 //Read in manifest files
-const [manifest, chunkManifest] = ['manifest', 'chunk-manifest']
+//const [manifest, chunkManifest] = ['manifest', 'chunk-manifest']
+//  .map(name => JSON.parse(readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8')));
+
+  const [manifest] = ['manifest']
   .map(name => JSON.parse(readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8')));
 
 // Get manifest values
@@ -48,17 +50,18 @@ const scripts = [
    'vendor.js',
    'browser.js'].map(key => manifest[key]);
 
-const { app, listen, runApolloEngine } = server
+const { app, router, listen, runApolloEngine } = server
 
+app.disable('x-powered-by');
 app.use(express.static(PATHS.public))
 app.use(compression()) 
 
-addFavicon(app, PATHS.public)
+addFavicon(PATHS.public)
+addLocalesRoutes(enGB, jaJP)
 
-addLocalesRoutes(app, enGB, jaJP)
-
+app.use(router)
 app.get('/*', createReactHandler(css, scripts, manifest))
-  
+
 if (Config.isRunEngine) {
     runApolloEngine()
 }
