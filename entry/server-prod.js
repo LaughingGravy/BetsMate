@@ -73,36 +73,3 @@ else {
       type: 'production server',
   }); 
 }
-
-
-
-
-
-
-// Spawn the development server.
-// Runs inside an immediate `async` block, to await listening on ports
-// (async () => {
-//   const { app, router, listen, runApolloEngine } = server;
-
-//   // Connect the production routes to the server
-//   // serve the locale files
-//   addLocalesRoutes(router, enGB, jaJP)
-
-//   router.get('/*', createReactHandler(css, scripts, chunkManifest))
-//   app.use(router.routes())
-//   app.use(compression());
-
-//   if (Config.isRunEngine) {
-//     runApolloEngine()
-//   }
-//   else {
-//     // Spawn the server
-//     listen();
-//   }
-
-//   // Log to the terminal that we're ready for action
-//   logServerStarted({
-//     type: 'server',
-//   })
-
-// })();
