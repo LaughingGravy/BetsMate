@@ -16,9 +16,15 @@
     "login-page-title": "Login",
     "register-page-title": "Registration",
     "reset-page-title": "Forgot Password",
+    "add-country-page-title": "Create Country",
 
     "email-label": "Email",
     "password-label": "Password",
     "login-button-label": "Login",
-    "register-button-label": "Sign up"
+    "register-button-label": "Sign up",
+
+    "country-name-label": "Country Name",
+    "country-name-placeholder": "England",
+
+    "save-button-label": "Save"
 }

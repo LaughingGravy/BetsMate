@@ -16,9 +16,15 @@
     "login-page-title": "ログイン",
     "register-page-title": "レジスター",
     "reset-page-title": "パスワード忘れた",
+    "add-country-page-title": "Create Country",
 
     "email-label": "Eメール",
     "password-label": "パスワード",
     "login-button-label": "ログイン",
-    "register-button-label": "新規登録"
+    "register-button-label": "新規登録",
+
+    "country-name-label": "国",
+    "country-name-placeholder": "イングランド",
+
+    "save-button-label": "セーブ"
 }

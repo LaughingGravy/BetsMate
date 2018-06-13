@@ -7,7 +7,7 @@ import LOGIN from '../../graphql/mutations/login'
 import CURRENT_USER from '../../graphql/queries/currentUser'
 import { history } from '../../../../library/routing'
 
-import AuthErrorDisplay from './AuthErrorDisplay'
+import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
 
 class LoginPage extends React.PureComponent {
   constructor(props) {
@@ -35,47 +35,47 @@ class LoginPage extends React.PureComponent {
           <h1>{intl.get("login-page-title")}</h1>
           </Grid.Row>
 
-            <Mutation mutation={LOGIN} 
-                      onCompleted={this.onLoginSuccessful}
-                      refetchQueries={[ {query: CURRENT_USER}]}>
-              {(login, { loading, error, data }) => (
-              <Grid.Row centered>
-                <GridColumn mobile={16} tablet={8} computer={4}>
-                  <Form className='segment' onSubmit={e => {
-                      e.preventDefault;
-                      login({ variables: { email, password } })
-                    }}>    
-                      <Form.Field required>
-                        <Form.Input name='email' label={intl.get("email-label")} placeholder='example@domain.com' onChange={this.handleChange} />
-                      </Form.Field>
+          <Mutation mutation={LOGIN} 
+                    onCompleted={this.onLoginSuccessful}
+                    refetchQueries={[ {query: CURRENT_USER}]}>
+            {(login, { loading, error, data }) => (
+            <Grid.Row centered>
+              <GridColumn mobile={16} tablet={8} computer={4}>
+                <Form className='segment' onSubmit={e => {
+                    e.preventDefault;
+                    login({ variables: { email, password } })
+                  }}>    
+                    <Form.Field required>
+                      <Form.Input name='email' label={intl.get("email-label")} placeholder='example@domain.com' onChange={this.handleChange} />
+                    </Form.Field>
 
-                      <Form.Field required>
-                        <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder='Password...' onChange={this.handleChange} />
-                      </Form.Field>
+                    <Form.Field required>
+                      <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder='Password...' onChange={this.handleChange} />
+                    </Form.Field>
 
-                      <Container textAlign='center'>
-                        <Form.Button primary loading={loading}>{intl.get("login-button-label")}</Form.Button>
-                        <Grid centered>
-                          <Grid.Row centered columns={2} divided>
-                            <GridColumn textAlign='right'>
-                              <NavLink to="/register" key="register">
-                                {intl.get("register-menu-header")}
-                              </NavLink>
-                            </GridColumn>
-                            <GridColumn textAlign='left'>
-                              <NavLink to="/reset" key="reset">
-                                {intl.get("reset-menu-header")}
-                              </NavLink>
-                            </GridColumn>
-                          </Grid.Row> 
-                        </Grid>
-                      </Container>                     
-                  </Form>
-                  {error && <AuthErrorDisplay error={error} />}
-                </GridColumn>
-              </Grid.Row>
-              )}
-            </Mutation>
+                    <Container textAlign='center'>
+                      <Form.Button primary loading={loading}>{intl.get("login-button-label")}</Form.Button>
+                      <Grid centered>
+                        <Grid.Row centered columns={2} divided>
+                          <GridColumn textAlign='right'>
+                            <NavLink to="/register" key="register">
+                              {intl.get("register-menu-header")}
+                            </NavLink>
+                          </GridColumn>
+                          <GridColumn textAlign='left'>
+                            <NavLink to="/reset" key="reset">
+                              {intl.get("reset-menu-header")}
+                            </NavLink>
+                          </GridColumn>
+                        </Grid.Row> 
+                      </Grid>
+                    </Container>                     
+                </Form>
+                {error && <GraphQLErrorDisplay error={error} />}
+              </GridColumn>
+            </Grid.Row>
+            )}
+          </Mutation>
 
         </Grid>
       </Container>            

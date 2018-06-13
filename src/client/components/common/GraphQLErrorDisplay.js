@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon, Message } from 'semantic-ui-react'
 import css from  '../styles/auth.css'
 
-const AuthErrorDisplay = ( { error: {graphQLErrors, networkError} } ) => {
+const GraphQLErrorDisplay = ( { error: {graphQLErrors, networkError} } ) => {
     return (
         <Message size='mini' attached='top' error>
             <Message.Content>
@@ -19,4 +19,4 @@ const AuthErrorDisplay = ( { error: {graphQLErrors, networkError} } ) => {
     )
 }
 
-export default AuthErrorDisplay
+export default GraphQLErrorDisplay

@@ -5,7 +5,7 @@ import { Form, Loader, Grid, Container, GridColumn } from 'semantic-ui-react'
 import { history } from '../../../../library/routing'
 import REGISTER from '../../graphql/mutations/register'
 import CURRENT_USER from '../../graphql/queries/currentUser'
-import AuthErrorDisplay from './AuthErrorDisplay'
+import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
 
 class RegistrationPage extends React.Component {
   constructor(props) {
@@ -57,7 +57,7 @@ class RegistrationPage extends React.Component {
                             <Form.Button primary loading={loading}>{intl.get("register-button-label")}</Form.Button>
                           </Container>
                       </Form>
-                      {error && <AuthErrorDisplay error={error} />}
+                      {error && <GraphQLErrorDisplay error={error} />}
                   </GridColumn>
                 </Grid.Row>
                )}

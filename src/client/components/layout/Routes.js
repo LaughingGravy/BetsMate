@@ -10,6 +10,8 @@ import ResetPage from '../authentication/ResetPage';
 import HomePage from '../home/HomePage';
 import AboutPage from '../about/AboutPage';
 
+import AddCountryPage from '../administration/country/AddCountry';
+
 const Routes = () => {
     return (
         <Switch>
@@ -20,6 +22,7 @@ const Routes = () => {
             <Route from="/login" component={LoginPage} />
             <Route from="/reset" component={ResetPage} />
             <Route path="/about" component={AboutPage} />
+            <Route path="/addCountry" component={AddCountryPage} />
             <Redirect exact from="about-us" to="about" />
             <Redirect to="/" />
         </Switch> 
