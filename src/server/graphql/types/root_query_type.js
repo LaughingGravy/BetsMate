@@ -1,10 +1,14 @@
 import {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLSchema
+    GraphQLSchema,
+    GraphQLList
 } from 'graphql';
 
-const UserType  = require('./user_type').default;
+const UserType  = require('./user_type').default
+const CountriesSearchType  = require('./searchCountries_type').default
+
+import AdminService from ('../services/admin')
 
 export default new GraphQLObjectType({
     name: 'RootQueryType',
@@ -15,6 +19,12 @@ export default new GraphQLObjectType({
                 const req = ctx.req;
                 return req.user;
             }
+        }
+    },
+    CountriesSearch: {
+        type: new GraphQLList(CountriesSearchType),
+        resolve(parentValue, args) {
+            return AdminService.Countries()
         }
     }
 })

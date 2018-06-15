@@ -17,6 +17,7 @@
     "register-page-title": "Registration",
     "reset-page-title": "Forgot Password",
     "add-country-page-title": "Create Country",
+    "countries-page-title": "Countries",
 
     "email-label": "Email",
     "password-label": "Password",
@@ -25,6 +26,8 @@
 
     "country-name-label": "Country Name",
     "country-name-placeholder": "England",
+
+    "countries-tbl-col-header-name": "Country Name",
 
     "save-button-label": "Save"
 }

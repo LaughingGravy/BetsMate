@@ -1,7 +1,7 @@
 import React from 'react';
 import intl from 'react-intl-universal'
 import { Mutation } from 'react-apollo'
-import { Form, Loader, Grid, Container, GridColumn } from 'semantic-ui-react'
+import { Form, Grid, Container, GridColumn } from 'semantic-ui-react'
 import { history } from '../../../../library/routing'
 import REGISTER from '../../graphql/mutations/register'
 import CURRENT_USER from '../../graphql/queries/currentUser'
