@@ -41,6 +41,10 @@ if (process.env.NODE_ENV === 'development')
             this.connectOpt = {
                 keepAlive: true
             };
+
+            this.bolt = "bolt://hobby-iiiklpkknlfngbkemhilohbl.dbs.graphenedb.com:24786"
+            this.neoUsername = "admin"
+            this.neoPassword = "b.CFFFu5eTaFox.68rQ5gRejhGzu9ZQ"
         }
     }
 }
@@ -58,6 +62,10 @@ else
             this.connectOpt = {
                 keepAlive: true
             };
+
+            this.bolt = "bolt://hobby-iiiklpkknlfngbkemhilohbl.dbs.graphenedb.com:24786"
+            this.neoUsername = "admin"
+            this.neoPassword = "b.CFFFu5eTaFox.68rQ5gRejhGzu9ZQ"
         }
     }
 }

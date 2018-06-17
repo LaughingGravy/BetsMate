@@ -28,7 +28,10 @@ import { logServerStarted } from '../library/console'
 
 // apollo graphql client
 import { ApolloProvider, getDataFromTree } from 'react-apollo'
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+//import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
+import { graphqlExpress } from 'apollo-server-express'
+import { express as playground } from 'graphql-playground/middleware'
+
 import { getServerClient } from '../library/apolloClient/apollo'
 // React utility to transform JSX to HTML (to send back to the client)
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
@@ -50,7 +53,7 @@ import App from '../src/client/components/App'
 const app = express()
 const router = express.Router()
 
-// Connect to the database
+// Connect to the mongo database
 connectMongoDB(Config.mongoURL, Config.apolloClientOpt);
 
 // enable cors
@@ -109,9 +112,14 @@ router.use(
 )
 
 // Instruct Express to pass on any request made to the '/graphiql' route
-router.use('/graphiql', graphiqlExpress({
-  endpointURL: '/graphql',
-  }),
+// router.use('/graphiql', graphiqlExpress({
+//   endpointURL: '/graphql',
+//   }),
+// )
+
+router.use('/playground', playground({ 
+  endpointUrl: '/graphql' 
+  })
 )
 
 export function addLocalesRoutes(enGB, jaJP) {
