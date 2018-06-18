@@ -12,18 +12,23 @@
 
     "home-page-title": "ホーム",
     "about-page-title": "アボウト",
-    "admin-page-title": "アドミン",
     "login-page-title": "ログイン",
+    "admin-page-title": "アドミン",
     "register-page-title": "レジスター",
     "reset-page-title": "パスワード忘れた",
-    "add-country-page-title": "Create Country",
-    "countries-page-title": "Countries",
 
     "email-label": "Eメール",
     "password-label": "パスワード",
     "login-button-label": "ログイン",
     "register-button-label": "新規登録",
 
+    
+    "admin-country-menu-header": "国",
+    "countries-menu-header": "Countries",
+    "add-country-menu-header": " Create Country",
+    "add-country-page-title": "Create Country",
+    "countries-page-title": "Countries",
+    
     "country-name-label": "国",
     "country-name-placeholder": "イングランド",
 

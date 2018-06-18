@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Menu, Icon, Flag, Segment, Dropdown, Button, Responsive, Popup, MenuItem, MenuMenu } from 'semantic-ui-react';
+import { Menu, Icon, Flag, Dropdown, Button, Responsive, Popup, MenuItem} from 'semantic-ui-react';
 import intl from 'react-intl-universal';
 
 import Logout from '../authentication/Logout'
@@ -63,7 +63,7 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, userCtx, onToggleSi
 
         {!userCtx.isAuthenticated && <MenuItem as={Responsive} maxWidth={Responsive.onlyComputer.minWidth}>
           <Popup position="bottom center" style={{"padding": "0px"}} hoverable basic trigger={<Icon name="user circle" size="large" />}>
-          < Menu vertical compact>
+          <Menu vertical compact>
               <MenuItem as={NavLink} to="/register" key="register" activeClassName="active"
                          compact="true">
                 {intl.get("register-menu-header")}

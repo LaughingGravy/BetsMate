@@ -16,13 +16,17 @@
     "login-page-title": "Login",
     "register-page-title": "Registration",
     "reset-page-title": "Forgot Password",
-    "add-country-page-title": "Create Country",
-    "countries-page-title": "Countries",
 
     "email-label": "Email",
     "password-label": "Password",
     "login-button-label": "Login",
     "register-button-label": "Sign up",
+    
+    "admin-country-menu-header": "Country",
+    "countries-menu-header": "Countries",
+    "add-country-menu-header": " Create Country",
+    "add-country-page-title": "Create Country",
+    "countries-page-title": "Countries",
 
     "country-name-label": "Country Name",
     "country-name-placeholder": "England",

@@ -28,9 +28,7 @@ import { logServerStarted } from '../library/console'
 
 // apollo graphql client
 import { ApolloProvider, getDataFromTree } from 'react-apollo'
-//import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
-import { graphqlExpress } from 'apollo-server-express'
-import { express as playground } from 'graphql-playground/middleware'
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 
 import { getServerClient } from '../library/apolloClient/apollo'
 // React utility to transform JSX to HTML (to send back to the client)
@@ -112,14 +110,9 @@ router.use(
 )
 
 // Instruct Express to pass on any request made to the '/graphiql' route
-// router.use('/graphiql', graphiqlExpress({
-//   endpointURL: '/graphql',
-//   }),
-// )
-
-router.use('/playground', playground({ 
-  endpointUrl: '/graphql' 
-  })
+router.use('/graphiql', graphiqlExpress({
+  endpointURL: '/graphql',
+  }),
 )
 
 export function addLocalesRoutes(enGB, jaJP) {

@@ -19,16 +19,16 @@ decorate(store, {
   onChange: action
 })
 
-class AddCountry extends React.PureComponent {
+class AddCountry extends React.Component {
   constructor(props) {
     super(props);
 
-    //this.updateProperty = this.updateProperty.bind(this)
+    this.updateProperty = this.updateProperty.bind(this)
   }
 
-  // updateProperty (key, value) {
-  //   this.props.store[key] = value
-  // }
+  updateProperty (key, value) {
+    this.props.store[key] = value
+  }
 
   render() {
 

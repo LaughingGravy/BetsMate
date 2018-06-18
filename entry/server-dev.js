@@ -1,8 +1,9 @@
-import React from 'react'
 import express from 'express'
 import compression from 'compression'
-import chalk from 'chalk'
 import path from 'path'
+
+// Needed to read manifest files
+import { readFileSync } from 'fs';
 
 import Config from '../utilities/Config';
 import PATHS from '../utilities/paths'
@@ -15,8 +16,17 @@ import jaJP from '../dist/dev/locales/ja-JP.json';
 import server, { createReactHandler, addLocalesRoutes, addFavicon } from './server-base';
 
 // Get manifest values
-const css = '../dist/dev/assets/css/style.css';
-const scripts = ['vendor.js', 'browser.js'];
+//const css = '../dist/dev/assets/css/style.css';
+//const scripts = ['vendor.js', 'browser.js'];
+const [manifest] = ['manifest']
+  .map(name => JSON.parse(readFileSync(path.resolve(PATHS.distDev, `${name}.json`), 'utf8')));
+
+// Get manifest values
+const css = manifest['browser.css'];
+const scripts = [
+   'manifest.js',
+   'vendor.js',
+   'browser.js'].map(key => manifest[key]);
 const chunkManifest = {}
 
 const { app, router, listen, runApolloEngine } = server

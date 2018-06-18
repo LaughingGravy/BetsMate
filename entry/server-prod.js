@@ -40,7 +40,7 @@ process.on('unhandledRejection', (reason, p) => {
 //const [manifest, chunkManifest] = ['manifest', 'chunk-manifest']
 //  .map(name => JSON.parse(readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8')));
 
-  const [manifest] = ['manifest']
+const [manifest] = ['manifest']
   .map(name => JSON.parse(readFileSync(path.resolve(PATHS.dist, `${name}.json`), 'utf8')));
 
 // Get manifest values

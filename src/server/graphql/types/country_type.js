@@ -5,7 +5,7 @@ import {
 } from 'graphql'
 
 export default new GraphQLObjectType({
-  name: 'CountriesSearchType',
+  name: 'CountryType',
   fields: {
       code: { type: GraphQLString },
       name: { type: GraphQLString }

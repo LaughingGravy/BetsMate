@@ -1,9 +1,11 @@
 import webpack from 'webpack'
 import WebpackConfig from 'webpack-config'
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import ManifestPlugin from 'webpack-manifest-plugin'
 // Copy files from `PATH.static` to `PATHS.distDev`
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import chalk from 'chalk'
+import path from 'path';
 
 import { webpackProgress } from './common'
 
@@ -52,15 +54,10 @@ export default new WebpackConfig().extend({
 
         // Global variables
         new webpack.DefinePlugin({
-            BROWSER: true,
-            DEBUG: true,
-            'process.env.NODE_ENV': JSON.stringify('development'),
-            // We're running on the server
-            // BROWSER: true,
-            // DEBUG: true,
              'process.env': {
-            // // Debug development
-            NODE_ENV: JSON.stringify('development'),
+                NODE_ENV: JSON.stringify('development'),
+                BROWSER: true,
+                DEBUG: true,
             },
         }),
 
@@ -70,6 +67,15 @@ export default new WebpackConfig().extend({
 
         // Fire up CSS extraction
         extractCSS,
+
+        // Generate assets manifest
+        new ManifestPlugin({
+            // Put this in `dist` rather than `dist/public`
+            fileName: path.join(PATHS.distDev, 'manifest.json'),
+            // Prefix assets with '/' so that they can be referenced from any route
+            publicPath: "/",
+            inlineManifest: true,
+        }),
 
         // Copy files from `PATHS.static` to `dist/dev`.  No transformations
         // will be performed on the files-- they'll be copied as-is

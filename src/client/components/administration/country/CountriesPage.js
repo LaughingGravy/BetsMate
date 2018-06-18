@@ -2,9 +2,8 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { Container, Grid, Table, Flag } from 'semantic-ui-react'
 
-import { withUser } from '../../contexts/userContext'
-import ALL_COUNTRIES from '../../graphql/queries/allCountries';
-
+import { withUser } from '../../contexts/withUserContext'
+import ALL_COUNTRIES from '../../../graphql/queries/allCountries';
 
 const CountriesPage = ({ userCtx }) => {
 

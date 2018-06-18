@@ -63,10 +63,12 @@ export default new WebpackConfig().extend({
 
         // Global variables
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production'),
-            'process.env.BROWSER': true,
-            'process.env.DEBUG': false
-        }),
+            'process.env': {
+               NODE_ENV: JSON.stringify('production'),
+               BROWSER: true,
+               DEBUG: false,
+           },
+       }),
 
         // A plugin for a more aggressive chunk merging strategy
         new webpack.optimize.AggressiveMergingPlugin(),
