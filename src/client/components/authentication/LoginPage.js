@@ -1,10 +1,10 @@
 import React from 'react'
 import intl from 'react-intl-universal'
 import { Mutation } from 'react-apollo'
-import { NavLink, Link } from 'react-router-dom';
-import { Form, Loader, Grid, Container, GridColumn } from 'semantic-ui-react'
-import LOGIN from '../../graphql/mutations/login'
-import CURRENT_USER from '../../graphql/queries/currentUser'
+import { NavLink } from 'react-router-dom';
+import { Form, Grid, Container, GridColumn } from 'semantic-ui-react'
+import LOGIN from '../../graphql/mutations/authentication/login'
+import CURRENT_USER from '../../graphql/queries/authentication/currentUser'
 import { history } from '../../../../library/routing'
 
 import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'

@@ -1,8 +1,8 @@
 import React from 'react'
 import { graphql, compose } from 'react-apollo';
 import { history } from '../../../../library/routing';
-import LOGOUT from '../../graphql/mutations/logout'
-import CURRENT_USER from '../../graphql/queries/currentUser'
+import LOGOUT from '../../graphql/mutations/authentication/logout'
+import CURRENT_USER from '../../graphql/queries/authentication/currentUser'
  
 class Logout extends React.PureComponent {
     constructor(props) {

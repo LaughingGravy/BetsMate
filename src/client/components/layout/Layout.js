@@ -14,7 +14,7 @@ import SUPPOER_LOCALES from './locales';
 import UserContextUpdater from '../contexts/UserContextUpdater'
 import { DefaultUser } from '../contexts/userContext'
 
-import CURRENT_USER from '../../graphql/queries/currentUser';
+import CURRENT_USER from '../../graphql/queries/authentication/currentUser';
 import { Query } from 'react-apollo';
 
 class Layout extends React.Component {

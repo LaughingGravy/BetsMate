@@ -1,8 +1,8 @@
-import React from 'react';
-import intl from 'react-intl-universal';
-import { Link } from 'react-router-dom';
-//import PropTypes from 'prop-types';
-import { Menu,  MenuItem, Grid, GridRow } from 'semantic-ui-react';
+import React from 'react'
+import intl from 'react-intl-universal'
+import { NavLink } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { Menu,  MenuItem, Grid, GridRow } from 'semantic-ui-react'
 
 import { withUser } from '../contexts/withUserContext'
 import AdminRoutes from './AdminRoutes'
@@ -15,8 +15,8 @@ const AdministrationPage = ( { match }) => {
       </Grid.Row>
 
       <Grid.Row centered>
-          <Menu stackable secondary>
-            <MenuItem as={Link} to={`${match.url}/country`} key="country" activeClassName="active"
+          <Menu stackable pointing>
+            <MenuItem as={NavLink} to={`${match.url}/country`} key="country" activeClassName="active"
                          compact="true">
                 {intl.get("admin-country-menu-header")}
               </MenuItem>
@@ -24,10 +24,15 @@ const AdministrationPage = ( { match }) => {
       </Grid.Row> 
 
       <GridRow centered>
-        <AdminRoutes />
+        <AdminRoutes match={match} />
       </GridRow>
     </Grid>
   )
 }
+
+AdministrationPage.propTypes = {
+  match: PropTypes.object.isRequired,
+  userCtx: PropTypes.object
+};
 
 export default withUser(AdministrationPage);

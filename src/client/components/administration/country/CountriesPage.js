@@ -1,9 +1,11 @@
 import React from 'react';
+import intl from 'react-intl-universal';
+import PropTypes from 'prop-types'
 import { Query } from 'react-apollo';
 import { Container, Grid, Table, Flag } from 'semantic-ui-react'
 
 import { withUser } from '../../contexts/withUserContext'
-import ALL_COUNTRIES from '../../../graphql/queries/allCountries';
+import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries';
 
 const CountriesPage = ({ userCtx }) => {
 
@@ -28,10 +30,17 @@ const CountriesPage = ({ userCtx }) => {
           <p>You are not authorised to view this page.</p>
           </Grid.Row>}
 
-        {(userCtx.isAuthenticated && userCtx.user.role == 'admin') &&  <Query query={ALL_COUNTRIES}>
+        {(userCtx.isAuthenticated && userCtx.user.role == 'admin') &&  
+          <Query query={ALL_COUNTRIES}>
             {({ loading, error, data: { countries }}) => {
 
-              if (loading) return null
+              if (loading) {
+                return <div>loading...</div>;
+              }
+
+              if (!error && !countries) {
+                return <Grid.Row centered>No data found.</Grid.Row>
+              }
 
               return (
               <Grid.Row centered>
@@ -64,5 +73,9 @@ const CountriesPage = ({ userCtx }) => {
     </Container>
   )
 }
+
+CountriesPage.propTypes = {
+  userCtx: PropTypes.object
+};
 
 export default withUser(CountriesPage)

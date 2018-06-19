@@ -1,38 +1,31 @@
 import React from 'react';
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
-import { decorate, observable, configure, action } from "mobx"
-import { observer } from "mobx-react"
+import { Form, Grid, Container, GridColumn } from 'semantic-ui-react'
 import GraphQLErrorDisplay from '../../common/GraphQLErrorDisplay'
 
-configure({ enforceActions: true })
-
-class store {
-  countryName = ""
-  onChange = (e, { name, value }) => {
-    this.countryName = value
-  }
-}
-
-decorate(store, {
-  countryName: observable,
-  onChange: action
-})
+import CREATE_COUNTRY from '../../../graphql/mutations/administration/createCountry'
+import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries'
 
 class AddCountry extends React.Component {
   constructor(props) {
     super(props);
 
-    this.updateProperty = this.updateProperty.bind(this)
+    this.state = { 
+      code: "",
+      name: ""
+    }
   }
 
-  updateProperty (key, value) {
-    this.props.store[key] = value
+  handleChange = (e, { name, value }) => this.setState({ [name]: value })
+
+  onSavedCountry(data) {
+    history.push('/administration/country/countries')
   }
 
   render() {
 
-    const { onChange } = this.props
+    const { code, name } = this.state
 
     return (
       <Container>
@@ -41,18 +34,25 @@ class AddCountry extends React.Component {
             <h1>{intl.get("add-country-page-title")}</h1>
           </Grid.Row>
 
-          {/* <Mutation mutation={ADD_COUNTRY}
-            onCompleted={this.onSavedCountry}>
-            {(login, { loading, error, data }) => ( */}
+           {(props.userCtx.isAuthenticated && props.userCtx.user.role == 'admin') && 
+           <Mutation mutation={CREATE_COUNTRY}
+            onSavedCountry={this.onSavedCountry}
+            refetchQueries={[ {query: ALL_COUNTRIES}]}>
+            {(createCountry, { loading, error, data }) => ( 
               <Grid.Row centered>
                 <GridColumn mobile={16} tablet={8} computer={4}>
                   <Form className='segment' onSubmit={e => {
                     e.preventDefault;
-                    // login({ variables: { email, password } })
+                    createCountry({ variables: { code, name } })
                   }}>
                     <Form.Field required>
+                      <Form.Input name='code' label={intl.get("country-code-label")} 
+                              placeholder={intl.get("country-code-placeholder")} onChange={this.handleChange} />
+                    </Form.Field>
+
+                    <Form.Field required>
                       <Form.Input name='country' label={intl.get("country-name-label")} 
-                              placeholder={intl.get("country-name-placeholder")} onChange={onChange} />
+                              placeholder={intl.get("country-name-placeholder")} onChange={this.handleChange} />
                     </Form.Field>
 
                     <Container textAlign='center'>
@@ -62,22 +62,13 @@ class AddCountry extends React.Component {
                   {error && <GraphQLErrorDisplay error={error} />}
                 </GridColumn>
               </Grid.Row>
-            {/* )}
-          </Mutation> */}
+            )}
+          </Mutation>}
 
         </Grid>
       </Container>
     )
   }
-}
-
-AddCountry = observer(AddCountry)
-
-AddCountry.propTypes = {
-  store: PropTypes.shape({
-    countryName: PropTypes.string,
-    onChange: PropTypes.func.isRequired
-  })
 }
 
 export default AddCountry

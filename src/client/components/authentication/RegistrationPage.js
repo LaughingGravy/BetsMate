@@ -3,8 +3,8 @@ import intl from 'react-intl-universal'
 import { Mutation } from 'react-apollo'
 import { Form, Grid, Container, GridColumn } from 'semantic-ui-react'
 import { history } from '../../../../library/routing'
-import REGISTER from '../../graphql/mutations/register'
-import CURRENT_USER from '../../graphql/queries/currentUser'
+import REGISTER from '../../graphql/mutations/authentication/register'
+import CURRENT_USER from '../../graphql/queries/authentication/currentUser'
 import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
 
 class RegistrationPage extends React.Component {
