@@ -2,12 +2,15 @@ import React from 'react';
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
 import { Form, Grid, Container, GridColumn } from 'semantic-ui-react'
+import { history } from '../../../../../library/routing'
+import { Mutation } from 'react-apollo'
 import GraphQLErrorDisplay from '../../common/GraphQLErrorDisplay'
 
+import { withUser } from '../../contexts/withUserContext'
 import CREATE_COUNTRY from '../../../graphql/mutations/administration/createCountry'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries'
 
-class AddCountry extends React.Component {
+class AddCountryPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -24,17 +27,17 @@ class AddCountry extends React.Component {
   }
 
   render() {
-
+    const { userCtx } = this.props
     const { code, name } = this.state
 
     return (
       <Container>
         <Grid columns={1} centered>
           <Grid.Row centered>
-            <h1>{intl.get("add-country-page-title")}</h1>
+            <h2>{intl.get("add-country-page-title")}</h2>
           </Grid.Row>
 
-           {(props.userCtx.isAuthenticated && props.userCtx.user.role == 'admin') && 
+           {(userCtx.isAuthenticated && userCtx.user.role == 'admin') && 
            <Mutation mutation={CREATE_COUNTRY}
             onSavedCountry={this.onSavedCountry}
             refetchQueries={[ {query: ALL_COUNTRIES}]}>
@@ -71,4 +74,8 @@ class AddCountry extends React.Component {
   }
 }
 
-export default AddCountry
+AddCountryPage.propTypes = {
+  userCtx: PropTypes.object
+};
+
+export default withUser(AddCountryPage)

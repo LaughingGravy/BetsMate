@@ -2,7 +2,7 @@ import React from 'react';
 import intl from 'react-intl-universal';
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo';
-import { Container, Grid, Table, Flag } from 'semantic-ui-react'
+import { Container, Grid, GridColumn, Table, Flag } from 'semantic-ui-react'
 
 import { withUser } from '../../contexts/withUserContext'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries';
@@ -23,7 +23,7 @@ const CountriesPage = ({ userCtx }) => {
       <Grid columns={1} centered>
 
         <Grid.Row centered>
-          <h1>{intl.get("countries-page-title")}</h1>
+          <h2>{intl.get("countries-page-title")}</h2>
         </Grid.Row>
 
         {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') && <Grid.Row centered>
@@ -38,7 +38,7 @@ const CountriesPage = ({ userCtx }) => {
                 return <div>loading...</div>;
               }
 
-              if (!error && !countries) {
+              if (!error && countries && !countries.length) {
                 return <Grid.Row centered>No data found.</Grid.Row>
               }
 
@@ -49,7 +49,7 @@ const CountriesPage = ({ userCtx }) => {
                   <Table celled>
                     <Table.Header>
                       <Table.Row>
-                        <Table.HeaderCell>Country</Table.HeaderCell>
+                        <Table.HeaderCell>Flag</Table.HeaderCell>
                         <Table.HeaderCell>Name</Table.HeaderCell>
                         <Table.HeaderCell>Code</Table.HeaderCell>
                       </Table.Row>

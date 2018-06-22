@@ -29,8 +29,10 @@
     "add-country-page-title": "Create Country",
     "countries-page-title": "Countries",
     
+    "country-code-label": "Code",
+    "country-code-placeholder": "jp",
     "country-name-label": "国",
-    "country-name-placeholder": "イングランド",
+    "country-name-placeholder": "日本",
 
     "countries-tbl-col-header-name": "国",
 
