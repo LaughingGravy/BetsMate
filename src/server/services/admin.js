@@ -1,7 +1,7 @@
 import { createSession } from "../database/neo4jDB"
 
-function AllCountries() {
-  var session = createSession();
+function allCountries() {
+  let session = createSession()
   return session
     .run(
       "MATCH (country:Country) RETURN country"
@@ -13,16 +13,33 @@ function AllCountries() {
     //   });
     // })
     .then(result => {
-      session.close();
+      session.close()
       return result.records.map(record => {
-        return record.get('country').properties;
+        return record.get('country').properties
       });
+    })
+    .catch(error => {
+      session.close()
+      throw error
+    })
+}
+
+function createCountry( { code, name }) {
+  let session = createSession()
+  return session
+    .run(
+      `CREATE (country:Country { code: "${code}", name: "${name}" }) 
+      RETURN country`
+    )
+    .then(result => {
+      session.close();
+      return result.get('country').properties;
     })
     .catch(error => {
       session.close();
       throw error;
-    });
+    })
 }
 
-export { AllCountries }
+export { allCountries, createCountry }
 

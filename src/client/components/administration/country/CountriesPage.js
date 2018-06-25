@@ -9,14 +9,19 @@ import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries'
 
 const CountriesPage = ({ userCtx }) => {
 
-  const flagRenderer = (item) => <Flag name={item.code} />
+  const flagRenderer = (code) => {
+    return (<Flag name={code} />)
+  }
 
-  const rowRenderer = (item) => 
-    <Table.Row key={item.code}>
-      <Table.Cell>{flagRenderer(item)}</Table.Cell>
-      <Table.Cell>{item.code}</Table.Cell>
-      <Table.Cell>{item.name}</Table.Cell>     
-    </Table.Row>
+  const rowRenderer = (country) => {
+    const { code, name } = country
+
+    return (<Table.Row key={code}>
+      <Table.Cell>{code}</Table.Cell>
+      <Table.Cell>{flagRenderer(code)}</Table.Cell>
+      <Table.Cell>{name}</Table.Cell>     
+    </Table.Row>)
+  }
 
   return (
     <Container>
@@ -41,6 +46,9 @@ const CountriesPage = ({ userCtx }) => {
               if (!error && countries && !countries.length) {
                 return <Grid.Row centered>No data found.</Grid.Row>
               }
+              else {
+                console.log("countries", countries)
+              }
 
               return (
               <Grid.Row centered>
@@ -49,15 +57,17 @@ const CountriesPage = ({ userCtx }) => {
                   <Table celled>
                     <Table.Header>
                       <Table.Row>
+                        <Table.HeaderCell>Code</Table.HeaderCell>
                         <Table.HeaderCell>Flag</Table.HeaderCell>
                         <Table.HeaderCell>Name</Table.HeaderCell>
-                        <Table.HeaderCell>Code</Table.HeaderCell>
                       </Table.Row>
                     </Table.Header>
 
                     <Table.Body>
-                      {countries.map(country => 
-                        rowRenderer(country))}
+                      {countries.map(country => {
+                            return rowRenderer(country)
+                        }
+                      )}
                     </Table.Body>
 
                   </Table>

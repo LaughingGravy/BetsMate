@@ -10,6 +10,9 @@ const {
 const UserType = require('./types/user_type').default;
 const AuthService = require('../services/auth');
 
+const CountryType = require('./types/country_type').default
+const AdminService = require('../services/admin')
+
 export default new GraphQLObjectType({
     name: 'Mutation',
     fields: {
@@ -44,8 +47,16 @@ export default new GraphQLObjectType({
                 const req = ctx.req;
                 return AuthService.login({ email, password, req });
             }
+        },
+        createCountry: {
+            type: CountryType,
+            args: {
+                code: { type: GraphQLString },
+                name: { type: GraphQLString }
+            },
+            resolve(parentValue, { code, name }) {
+                return AdminService.createCountry({ code, name });
+            }
         }
     }
 });
-
-//export default mutation;

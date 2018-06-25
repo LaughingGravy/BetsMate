@@ -54,7 +54,7 @@ class AddCountryPage extends React.Component {
                     </Form.Field>
 
                     <Form.Field required>
-                      <Form.Input name='country' label={intl.get("country-name-label")} 
+                      <Form.Input name='name' label={intl.get("country-name-label")} 
                               placeholder={intl.get("country-name-placeholder")} onChange={this.handleChange} />
                     </Form.Field>
 

@@ -13,7 +13,7 @@ const CountrySearchType = new GraphQLObjectType({
     countries: {
       type: new GraphQLList(CountryType),
       resolve() {
-        return AdminService.AllCountries()
+        return AdminService.allCountries()
       }
     }
   }
