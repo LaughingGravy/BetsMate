@@ -7,21 +7,25 @@ import { Menu,  MenuItem, Grid, GridRow } from 'semantic-ui-react'
 import { withUser } from '../contexts/withUserContext'
 import AdminRoutes from './AdminRoutes'
 
-const AdministrationPage = ( { match }) => {
+const AdministrationPage = ( { match, userCtx }) => {
   return (
     <Grid columns={1} centered>
       <Grid.Row centered>
         <h1>{intl.get("admin-page-title")}</h1>
       </Grid.Row>
 
-      <Grid.Row centered>
+      {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') && <Grid.Row centered>
+        <p>You are not authorised to view this page.</p>
+      </Grid.Row>}
+
+      {(userCtx.isAuthenticated || userCtx.user.role === 'admin') && <Grid.Row centered>
           <Menu stackable pointing>
             <MenuItem as={NavLink} to={`${match.url}/country`} key="country" activeClassName="active"
                          compact="true">
                 {intl.get("admin-country-menu-header")}
               </MenuItem>
           </Menu>
-      </Grid.Row> 
+      </Grid.Row>}
 
       <GridRow centered>
         <AdminRoutes match={match} />

@@ -32,7 +32,7 @@ class LoginPage extends React.PureComponent {
       <Container>
         <Grid columns={1} centered>
           <Grid.Row centered>
-          <h1>{intl.get("login-page-title")}</h1>
+          <h3>{intl.get("login-page-title")}</h3>
           </Grid.Row>
 
           <Mutation mutation={LOGIN} 

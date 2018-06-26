@@ -32,7 +32,7 @@ class RegistrationPage extends React.Component {
           <Container>
             <Grid columns={1} centered>
               <Grid.Row centered>
-              <h1>{intl.get("register-page-title")}</h1>
+              <h3>{intl.get("register-page-title")}</h3>
               </Grid.Row>
 
               <Mutation mutation={REGISTER} 

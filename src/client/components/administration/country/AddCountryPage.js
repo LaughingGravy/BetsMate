@@ -34,12 +34,12 @@ class AddCountryPage extends React.Component {
       <Container>
         <Grid columns={1} centered>
           <Grid.Row centered>
-            <h2>{intl.get("add-country-page-title")}</h2>
+            <h3>{intl.get("add-country-page-title")}</h3>
           </Grid.Row>
 
            {(userCtx.isAuthenticated && userCtx.user.role == 'admin') && 
            <Mutation mutation={CREATE_COUNTRY}
-            onSavedCountry={this.onSavedCountry}
+            onCompleted={this.onSavedCountry}
             refetchQueries={[ {query: ALL_COUNTRIES}]}>
             {(createCountry, { loading, error, data }) => ( 
               <Grid.Row centered>

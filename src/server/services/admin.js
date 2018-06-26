@@ -4,7 +4,9 @@ function allCountries() {
   let session = createSession()
   return session
     .run(
-      "MATCH (country:Country) RETURN country"
+      `MATCH (country:Country) 
+       RETURN country
+       ORDER BY country.name ASC`
     )
     // .then(result => {
     //   session.close();
@@ -33,7 +35,9 @@ function createCountry( { code, name }) {
     )
     .then(result => {
       session.close();
-      return result.get('country').properties;
+      return result.records.map(record => {
+        return record.get('country').properties
+      });
     })
     .catch(error => {
       session.close();

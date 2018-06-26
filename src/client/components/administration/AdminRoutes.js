@@ -3,12 +3,12 @@ import { Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { NotFound } from '../../../../library/routing'
 
-import CountryPage from '../administration/country/CountryPage'
+import CountryRoutes from './country/CountryRoutes'
 
 const AdminRoutes = ({ match }) => {
   return (
       <Switch>
-          <Route path={`${match.path}/country`} component={CountryPage} />
+          <CountryRoutes match={match} />
           <Route component={NotFound} />
       </Switch> 
   );

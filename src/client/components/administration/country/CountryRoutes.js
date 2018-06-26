@@ -1,23 +1,16 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import { NotFound } from '../../../../../library/routing'
+import { Route } from 'react-router-dom'
 
-import CountriesPage from '../../administration/country/CountriesPage'
-import AddCountryPage from '../../administration/country/AddCountryPage'
+import CountryPage from './CountryPage'
+import CountriesPage from './CountriesPage'
+import AddCountryPage from './AddCountryPage';
 
 const CountryRoutes = ({ match }) => {
-  return (
-      <Switch>
-          <Route path={`${match.path}/countries`} component={CountriesPage} />
-          <Route path={`${match.path}/createcountry`} component={AddCountryPage} />
-          <Route component={NotFound} />
-      </Switch> 
-  );
+  return (<React.Fragment>
+      <Route exact path={`${match.path}/country`}  render={(props) => <CountryPage match={match} {...props}><CountriesPage {...props} /></CountryPage>} />
+      <Route path={`${match.path}/country/countries`} render={(props) => <CountryPage match={match} {...props}><CountriesPage {...props}/></CountryPage>} />
+      <Route path={`${match.path}/country/createcountry`} render={(props) => <CountryPage match={match} {...props}><AddCountryPage {...props}/></CountryPage>} />     
+    </React.Fragment>
+  )
 }
-
-CountryRoutes.propTypes = {
-  match: PropTypes.object.isRequired,
-};
-
-export default CountryRoutes;
+export default CountryRoutes
