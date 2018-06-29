@@ -10,7 +10,7 @@ import { withUser } from '../../contexts/withUserContext'
 import CREATE_COUNTRY from '../../../graphql/mutations/administration/createCountry'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries'
 
-class AddCountryPage extends React.Component {
+class EditCountryPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -74,8 +74,8 @@ class AddCountryPage extends React.Component {
   }
 }
 
-AddCountryPage.propTypes = {
+EditCountryPage.propTypes = {
   userCtx: PropTypes.object
 };
 
-export default withUser(AddCountryPage)
+export default withUser(EditCountryPage)

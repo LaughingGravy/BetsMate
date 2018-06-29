@@ -2,51 +2,89 @@ import React from 'react';
 import intl from 'react-intl-universal';
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo';
-import { Container, Grid, GridColumn, Table, Flag, Button } from 'semantic-ui-react'
+import { Container, Grid, GridColumn, Table, Flag, Button, Header, Segment } from 'semantic-ui-react'
 
 import { history } from '../../../../../library/routing'
 import { withUser } from '../../contexts/withUserContext'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries';
 
+import CountriesGrid from './CountriesGrid.bak'
+
 class CountriesPage extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    this.handleCreateCountry = this.handleCreateCountry.bind(this)
+    this.handleCreate = this.handleCreate.bind(this)
+    this.handleEdit = this.handleEdit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
+    this.onRowClick = this.onRowClick.bind(this)
+
+    // this.state = {
+    //   activeRows: []
+    // }
   }
 
-  handleCreateCountry(e, data) {
-    const { setRoute } = this.props
-    history.push('/administration/country/createcountry')
+  handleCreate(e, data) {
+    console.log()
+    history.push('/administration/country/editcountry')
   }
 
-  flagRenderer(code) {
-    return (<Flag name={code} />)
+  handleEdit(e, data) {
+    history.push('/administration/country/editcountry')
   }
 
-  rowRenderer(country) {
-    const { code, name } = country
-
-    return (<Table.Row key={code} textAlign='center'>
-      <Table.Cell>{this.flagRenderer(code)}</Table.Cell>
-      <Table.Cell>{code}</Table.Cell>
-      <Table.Cell>{name}</Table.Cell>     
-    </Table.Row>)
+  handleDelete(e, data) {
+    history.push(`/administration/country/createcountry`)
   }
+
+  onRowClick(key) {
+    // this.setState({
+    //   activeRows: [key]
+    // })
+    console.log(key)
+  }
+
+  //onRowClick(e, data) {
+  //  console.log(e)
+    // if (this.state.selectedRowKeys.some(r => r.code === data.code)) {
+    //   this.state.selectedRowKeys
+    // }
+    // else {
+    //   this.setState({
+    //     selectedRowKeys: this.state.selectedRowKeys.filter(r => r.code !== data.code)
+    //   })
+    // }
+    // data.active = !data.active
+  //}
+
+  // flagRenderer(code) {
+  //   return (<Flag name={code} />)
+  // }
+
+  // rowRenderer(country) {
+  //   const { code, name } = country
+
+  //   return (<Table.Row key={code} textAlign='center' onClick={this.onRowClick}>
+  //     <Table.Cell>{this.flagRenderer(code)}</Table.Cell>
+  //     <Table.Cell>{code}</Table.Cell>
+  //     <Table.Cell>{name}</Table.Cell>     
+  //   </Table.Row>)
+  // }
+
+  
 
   render() {
     const { userCtx } = this.props
 
     return (
-      <Container>
         <Grid columns={1} centered>
 
           <Grid.Row centered>
-            <h3>{intl.get("countries-page-title")}</h3>
+            <Header as='h3' textAlign="center">{intl.get("countries-page-title")}</Header>
           </Grid.Row>
 
-          {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') && <Grid.Row centered>
-            <p>You are not authorised to view this page.</p>
+          {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') && <Grid.Row centered textAlign="center">
+            You are not authorised to view this page.
             </Grid.Row>}
 
           {(userCtx.isAuthenticated && userCtx.user.role == 'admin') &&  
@@ -54,7 +92,7 @@ class CountriesPage extends React.PureComponent {
               {({ loading, error, data: { countries }}) => {
 
                 if (loading) {
-                  return <div>loading...</div>;
+                  return <Container textAlign="center">loading...</Container>;
                 }
 
                 if (!error && countries && !countries.length) {
@@ -63,9 +101,16 @@ class CountriesPage extends React.PureComponent {
 
                 return (
                 <Grid.Row centered>
-                  <GridColumn mobile={16} tablet={8} computer={4}>
+                  <GridColumn>
 
-                    <Table celled>
+                    <CountriesGrid data={countries} />
+
+                    {/* <Table celled selectable stackable tableData={countries.map((c) => Object.assign({}, c, { active: true, onClick: this.onRowClick}))}
+                      headerRow={headerRow} renderBodyRow={renderBodyRow} /> */}
+
+{/* /*                   {/*   <Table celled selectable stackable headerRow={headerRow}> */}
+
+                    {/* <Table celled selectable stackable> 
       
                       <Table.Header>
                         <Table.Row textAlign='center'>
@@ -83,14 +128,39 @@ class CountriesPage extends React.PureComponent {
                       </Table.Body>
 
                       <Table.Footer>
-                        <Table.Row>
-                          <Table.Cell colSpan='3' textAlign='right'>
-                            <Button compact secondary onClick={this.handleCreateCountry}>{intl.get("create-country-button-label")}</Button>
+                        <Table.Row textAlign='center'>
+                          <Table.Cell colSpan='3'>
+                            <table>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                  <Button compact secondary onClick={this.handleCreate}>{intl.get("admin-create-button-label")}</Button>
+                                  </td>
+                                  <td>
+                                  <Button compact secondary onClick={this.handleEdit}>{intl.get("admin-edit-button-label")}</Button>
+                                  </td>
+                                  <td>
+                                  <Button compact secondary onClick={this.handleDelete}>{intl.get("admin-delete-button-label")}</Button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                             <Segment.Group compact basic horizontal size='tiny'>
+                              <Segment tertiary compact>
+                                <Button compact secondary onClick={this.handleCreate}>{intl.get("admin-create-button-label")}</Button>
+                              </Segment>
+                              <Segment tertiary compact>
+                                <Button compact secondary onClick={this.handleEdit}>{intl.get("admin-edit-button-label")}</Button>
+                              </Segment>
+                              <Segment tertiary compact>
+                                <Button compact secondary onClick={this.handleDelete}>{intl.get("admin-delete-button-label")}</Button>
+                              </Segment>
+                            </Segment.Group> 
                           </Table.Cell>
                         </Table.Row>
                       </Table.Footer>
 
-                    </Table>
+                    </Table>  */}
 
                     {error && <GraphQLErrorDisplay error={error} />}
                   </GridColumn>
@@ -100,7 +170,6 @@ class CountriesPage extends React.PureComponent {
             </Query>}
 
         </Grid>
-      </Container>
     )
   }
 }

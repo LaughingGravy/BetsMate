@@ -34,7 +34,9 @@
     "country-name-placeholder": "England",
 
     "countries-tbl-col-header-name": "Country Name",
-    "create-country-button-label": "Add Country",
+    "admin-create-button-label": "Create",
+    "admin-edit-button-label": "Edit",
+    "admin-delete-button-label": "Delete",
 
     "save-button-label": "Save"
 }

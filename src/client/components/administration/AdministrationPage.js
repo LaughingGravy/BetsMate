@@ -2,7 +2,7 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Menu,  MenuItem, Grid, GridRow } from 'semantic-ui-react'
+import { Header, Menu,  MenuItem, Grid, GridRow } from 'semantic-ui-react'
 
 import { withUser } from '../contexts/withUserContext'
 import AdminRoutes from './AdminRoutes'
@@ -11,11 +11,11 @@ const AdministrationPage = ( { match, userCtx }) => {
   return (
     <Grid columns={1} centered>
       <Grid.Row centered>
-        <h1>{intl.get("admin-page-title")}</h1>
+        <Header as ="h1">{intl.get("admin-page-title")}</Header>
       </Grid.Row>
 
-      {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') && <Grid.Row centered>
-        <p>You are not authorised to view this page.</p>
+      {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') && <Grid.Row centered textAlign="center">
+        You are not authorised to view this page.
       </Grid.Row>}
 
       {(userCtx.isAuthenticated || userCtx.user.role === 'admin') && <Grid.Row centered>
