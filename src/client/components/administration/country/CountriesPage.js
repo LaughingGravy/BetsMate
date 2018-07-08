@@ -8,7 +8,8 @@ import { history } from '../../../../../library/routing'
 import { withUser } from '../../contexts/withUserContext'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries';
 
-import CountriesGrid from './CountriesGrid.bak'
+//import CountriesGrid from './CountriesGrid.bak'
+import CountriesTable from './CountriesTable'
 
 class CountriesPage extends React.PureComponent {
   constructor(props) {
@@ -17,7 +18,7 @@ class CountriesPage extends React.PureComponent {
     this.handleCreate = this.handleCreate.bind(this)
     this.handleEdit = this.handleEdit.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
-    this.onRowClick = this.onRowClick.bind(this)
+    //this.onRowClick = this.onRowClick.bind(this)
 
     // this.state = {
     //   activeRows: []
@@ -37,12 +38,12 @@ class CountriesPage extends React.PureComponent {
     history.push(`/administration/country/createcountry`)
   }
 
-  onRowClick(key) {
+  //onRowClick(key) {
     // this.setState({
     //   activeRows: [key]
     // })
-    console.log(key)
-  }
+   // console.log(key)
+  //}
 
   //onRowClick(e, data) {
   //  console.log(e)
@@ -103,7 +104,7 @@ class CountriesPage extends React.PureComponent {
                 <Grid.Row centered>
                   <GridColumn>
 
-                    <CountriesGrid data={countries} />
+                    <CountriesTable data={countries} />
 
                     {/* <Table celled selectable stackable tableData={countries.map((c) => Object.assign({}, c, { active: true, onClick: this.onRowClick}))}
                       headerRow={headerRow} renderBodyRow={renderBodyRow} /> */}

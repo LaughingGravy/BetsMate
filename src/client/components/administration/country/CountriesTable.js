@@ -10,7 +10,7 @@ class CountriesTable extends React.Component {
 
   render() {
     const { data } = this.props
-    const { activeRows } = this.props
+    const { activeRows, onRowClick } = this.props
 
     console.log("this.props", this.props)
 
@@ -33,7 +33,7 @@ class CountriesTable extends React.Component {
                                   key={c.code}
                                   id={c.code}
                                   data={c}
-                                  onRowClick={this.props.onRowClick}
+                                  onRowClick={onRowClick}
                                   />
                 
               )
