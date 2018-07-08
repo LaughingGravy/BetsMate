@@ -12,9 +12,11 @@ export function withSelectableRowsTable(WrappedComponent) {
       this.onRowClick = this.onRowClick.bind(this);
     }
 
-    onRowClick(id, e) {
+    onRowClick(e, id) {
       const { activeRows } = this.state
-  
+
+      e.preventDefault()
+
       const nextRows = {
         ...activeRows,
         [id]: !activeRows[id]
@@ -29,7 +31,7 @@ export function withSelectableRowsTable(WrappedComponent) {
       const { activeRows } = this.state
 
       return (
-        <WrappedComponent {...this.props} activeRows= {activeRows} />
+        <WrappedComponent {...this.props} activeRows={activeRows} onRowClick={this.onRowClick} />
       )
     }
   }

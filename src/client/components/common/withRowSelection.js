@@ -9,11 +9,13 @@ export function withRowSelection(WrappedComponent) {
     }
 
     onClick = (e) => {
-      const { id , onRowClick } = this.props
-      onRowClick(id, e);
+      const { id, onRowClick } = this.props
+
+      onRowClick(e, id);
     }
 
     render() {
+
       return <WrappedComponent onClick={this.onClick} {...this.props} />
     }
   }

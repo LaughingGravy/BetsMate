@@ -9,10 +9,7 @@ class CountriesTable extends React.Component {
   }
 
   render() {
-    const { data } = this.props
-    const { activeRows, onRowClick } = this.props
-
-    console.log("this.props", this.props)
+    const { data, activeRows, onRowClick } = this.props
 
     return (
       <Table celled selectable stackable>
