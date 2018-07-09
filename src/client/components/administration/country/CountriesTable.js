@@ -1,15 +1,16 @@
 import React from 'react'
-import { Table, Flag } from 'semantic-ui-react'
+import { Table } from 'semantic-ui-react'
 import CountriesRow from './CountriesRow';
 import { withSelectableRowsTable } from '../../common/withSelectableRowsTable'
+import AdminTableButtonGroup from '../controls/AdminTableButtonGroup'
 
-class CountriesTable extends React.Component {
+class CountriesTable extends React.PureComponent {
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { data, activeRows, onRowClick } = this.props
+    const { data, activeRows, onRowClick, handleCreate, handleEdit, handleDelete } = this.props
 
     return (
       <Table celled selectable stackable>
@@ -37,6 +38,15 @@ class CountriesTable extends React.Component {
             }
           )}
         </Table.Body>
+
+        <Table.Footer>
+          <Table.Row textAlign='center'>
+            <Table.Cell colSpan='3'>
+              <AdminTableButtonGroup handleCreate={handleCreate} handleEdit={handleEdit} 
+                                      handleDelete={handleDelete} activeRows={activeRows} />
+            </Table.Cell>
+          </Table.Row>
+        </Table.Footer>
       </Table>
     )
   }

@@ -1,7 +1,7 @@
 import React from 'react';
-import intl from 'react-intl-universal';
+import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
-import { Query } from 'react-apollo';
+import { Query } from 'react-apollo'
 import { Container, Grid, GridColumn, Table, Flag, Button, Header, Segment } from 'semantic-ui-react'
 
 import { history } from '../../../../../library/routing'
@@ -26,16 +26,15 @@ class CountriesPage extends React.PureComponent {
   }
 
   handleCreate(e, data) {
-    console.log()
     history.push('/administration/country/editcountry')
   }
 
   handleEdit(e, data) {
-    history.push('/administration/country/editcountry')
+    history.push(`/administration/country/editcountry/${data.keys()}`)
   }
 
   handleDelete(e, data) {
-    history.push(`/administration/country/createcountry`)
+    history.push(`/administration/country/deletecountry`)
   }
 
   //onRowClick(key) {
@@ -104,7 +103,10 @@ class CountriesPage extends React.PureComponent {
                 <Grid.Row centered>
                   <GridColumn>
 
-                    <CountriesTable data={countries} isMultiSelect={false} />
+                    <CountriesTable data={countries} isMultiSelect={false} 
+                                    handleCreate={this.handleCreate}
+                                    handleEdit={this.handleEdit}
+                                    handleDelete={this.handleDelete} />
 
                     {/* <Table celled selectable stackable tableData={countries.map((c) => Object.assign({}, c, { active: true, onClick: this.onRowClick}))}
                       headerRow={headerRow} renderBodyRow={renderBodyRow} /> */}
