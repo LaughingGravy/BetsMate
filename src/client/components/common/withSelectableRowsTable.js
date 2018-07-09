@@ -13,20 +13,31 @@ export function withSelectableRowsTable(WrappedComponent) {
     }
 
     onRowClick(e, id) {
-      const { activeRows } = this.state
-
       e.preventDefault()
 
-      const nextRows = {
-        ...activeRows,
-        [id]: !activeRows[id]
+      const { activeRows } = this.state
+      const { isMultiSelect } = this.props
+
+      let nextRows = {}
+
+      if (isMultiSelect == true)  {
+        nextRows = {
+          ...activeRows,
+          [id]: !activeRows[id]
+        }
       }
-  
+      else {
+        nextRows = {
+          [id]: !activeRows[id]
+        }
+      }
+
       this.setState({
         activeRows: nextRows
       })
-    }
 
+    }
+  
     render() {
       const { activeRows } = this.state
 

@@ -104,7 +104,7 @@ class CountriesPage extends React.PureComponent {
                 <Grid.Row centered>
                   <GridColumn>
 
-                    <CountriesTable data={countries} />
+                    <CountriesTable data={countries} isMultiSelect={false} />
 
                     {/* <Table celled selectable stackable tableData={countries.map((c) => Object.assign({}, c, { active: true, onClick: this.onRowClick}))}
                       headerRow={headerRow} renderBodyRow={renderBodyRow} /> */}
