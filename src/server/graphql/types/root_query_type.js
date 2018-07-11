@@ -25,6 +25,15 @@ export default new GraphQLObjectType({
             resolve(parentValue, args) {
                 return AdminService.allCountries()
             }
+        },
+        countryByCode: {
+            type: CountryType,
+            args: {
+                code: { type: GraphQLString }
+            },
+            resolve(parentValue, { code }) {
+                return AdminService.getCountryByCode(code)
+            }
         }
     }
 })

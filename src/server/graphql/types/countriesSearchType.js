@@ -3,7 +3,6 @@ import {
   GraphQLList,
 } from 'graphql'
 
-//import CountryType from './country_type'
 const CountryType  = require('./country_type').default
 const AdminService = require('../../services/admin')
 

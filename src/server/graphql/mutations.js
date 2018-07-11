@@ -48,14 +48,14 @@ export default new GraphQLObjectType({
                 return AuthService.login({ email, password, req });
             }
         },
-        createCountry: {
+        mergeCountry: {
             type: CountryType,
             args: {
                 code: { type: GraphQLString },
                 name: { type: GraphQLString }
             },
             resolve(parentValue, { code, name }) {
-                return AdminService.createCountry({ code, name });
+                return AdminService.mergeCountry({ code, name });
             }
         }
     }

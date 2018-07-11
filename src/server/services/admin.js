@@ -8,12 +8,6 @@ function allCountries() {
        RETURN country
        ORDER BY country.name ASC`
     )
-    // .then(result => {
-    //   session.close();
-    //   return result.records.map(record => {
-    //     return new Movie(record.get('country'));
-    //   });
-    // })
     .then(result => {
       session.close()
       return result.records.map(record => {
@@ -26,11 +20,37 @@ function allCountries() {
     })
 }
 
-function createCountry( { code, name }) {
+function getCountryByCode(code) {
   let session = createSession()
   return session
     .run(
-      `CREATE (country:Country { code: "${code}", name: "${name}" }) 
+      `MATCH (country:Country { code: "${code}" }) 
+       RETURN country
+       LIMIT 1`
+    )
+    .then(result => {
+      session.close()    
+      if (result.records.length === 1) {
+        const record = result.records.shift()
+        return record.get('country').properties
+      }
+    })
+    .catch(error => {
+      session.close()
+      throw error
+    })
+}
+
+function mergeCountry( { code, name }) {
+  let session = createSession()
+  return session
+    // .run(
+    //   `CREATE (country:Country { code: "${code}", name: "${name}" }) 
+    //   RETURN country`
+    // )
+    .run(
+      `MERGE (country:Country { code: "${code}" })
+        SET country.name =  "${name}"
       RETURN country`
     )
     .then(result => {
@@ -45,5 +65,5 @@ function createCountry( { code, name }) {
     })
 }
 
-export { allCountries, createCountry }
+export { allCountries, getCountryByCode, mergeCountry }
 
