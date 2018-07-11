@@ -69,7 +69,28 @@ class EditCountryPage extends React.Component {
            {(userCtx.isAuthenticated && userCtx.user.role == 'admin') && 
            <Mutation mutation={MERGE_COUNTRY} key={code}
             onCompleted={this.onSavedCountry}
-            refetchQueries={[ {query: ALL_COUNTRIES}, {query: GET_COUNTRY_BY_CODE, variables: {code: code}}]}>
+
+            update={(store, { data: mergeCountry }) => {
+              const data = store.readQuery({
+                query: GET_COUNTRY_BY_CODE, 
+                variables: {
+                  code: code
+                }
+              })
+              
+              const { countryByCode } = data
+              countryByCode.code = code
+              countryByCode.name = countryName
+              
+              store.writeQuery({
+                query: GET_COUNTRY_BY_CODE, 
+                variables: {
+                  code: code
+                },
+                data: {countryByCode: countryByCode}
+              })
+            }}
+            refetchQueries={[ {query: ALL_COUNTRIES} ]}>
             {(mergeCountry, { loading, error, data }) => ( 
               <Grid.Row centered>
                 <GridColumn mobile={16} tablet={8} computer={4}>
