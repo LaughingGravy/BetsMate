@@ -26,20 +26,10 @@ class EditCountryPage extends React.Component {
 
   componentDidMount() {
     const { code, isEdit } = this.state
-
-    console.log("this.state", this.state)
     
     if (isEdit === true && code !== "") {
       this.fetchRecord(code)
     }
-  }
-
-  handleCodeRef = (c) => {
-    this.codeRef = c
-  }
-
-  handleCountryNameRef = (c) => {
-    this.countryNameRef = c
   }
   
   fetchRecord = (code) => {
@@ -77,7 +67,7 @@ class EditCountryPage extends React.Component {
           </Grid.Row>
 
            {(userCtx.isAuthenticated && userCtx.user.role == 'admin') && 
-           <Mutation mutation={MERGE_COUNTRY}
+           <Mutation mutation={MERGE_COUNTRY} key={code}
             onCompleted={this.onSavedCountry}
             refetchQueries={[ {query: ALL_COUNTRIES}, {query: GET_COUNTRY_BY_CODE, variables: {code: code}}]}>
             {(mergeCountry, { loading, error, data }) => ( 
