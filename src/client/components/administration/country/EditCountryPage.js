@@ -3,13 +3,15 @@ import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
 import { Form, Grid, Container, GridColumn } from 'semantic-ui-react'
 import { history } from '../../../../../library/routing'
-import { Mutation, withApollo, graphql, compose } from 'react-apollo'
+import { Mutation, withApollo, compose } from 'react-apollo'
 import GraphQLErrorDisplay from '../../common/GraphQLErrorDisplay'
 
 import { withUser } from '../../contexts/withUserContext'
 import MERGE_COUNTRY from '../../../graphql/mutations/administration/mergeCountry'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries'
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/getCountryByCode'
+
+import CountryForm from './CountryForm'
 
 class EditCountryPage extends React.Component {
   constructor(props) {
@@ -81,24 +83,12 @@ class EditCountryPage extends React.Component {
             {(mergeCountry, { loading, error, data }) => ( 
               <Grid.Row centered>
                 <GridColumn mobile={16} tablet={8} computer={4}>
-                  <Form className='segment' onSubmit={e => {
-                    e.preventDefault             
-                    mergeCountry({ variables: { code: code, name: countryName } })
-                  }}>
-                    <Form.Field required>
-                      <Form.Input name='code' value={code} label={intl.get("country-code-label")} 
-                              placeholder={intl.get("country-code-placeholder")} onChange={this.handleChange} />
-                    </Form.Field>
-
-                    <Form.Field required>
-                      <Form.Input name='countryName' value={countryName} label={intl.get("country-name-label")} 
-                              placeholder={intl.get("country-name-placeholder")} onChange={this.handleChange} />
-                    </Form.Field>
-
-                    <Container textAlign='center'>
-                      <Form.Button primary loading={loading}>{intl.get("save-button-label")}</Form.Button>
-                    </Container>
-                  </Form>
+                  <CountryForm  code={code} countryName={countryName} loading={loading}
+                                handleChange={this.handleChange}
+                                onSubmit={e => {
+                                            e.preventDefault             
+                                            mergeCountry({ variables: { code: code, name: countryName } })
+                                          }} />
                   {error && <GraphQLErrorDisplay error={error} />}
                 </GridColumn>
               </Grid.Row>
