@@ -2,11 +2,10 @@
 import React from 'react';
 import intl from 'react-intl-universal'
 import { Form, Container } from 'semantic-ui-react'
-import EditCountrySaveButton from './EditCountrySaveButton'
 
-const CountryForm = ({ handleChange, code, countryName }) => {
+const CountryFormBak = ({ onSubmit, handleChange, code, countryName, loading}) => {
   return (
-    <Form className='segment' onSubmit={e => e.preventDefault }>
+    <Form className='segment' onSubmit={onSubmit}>
       <Form.Field required>
         <Form.Input name='code' value={code} label={intl.get("country-code-label")} 
                 placeholder={intl.get("country-code-placeholder")} onChange={handleChange} />
@@ -18,10 +17,10 @@ const CountryForm = ({ handleChange, code, countryName }) => {
       </Form.Field>
 
       <Container textAlign='center'>
-        <EditCountrySaveButton code={code} countryName={countryName} />
+        <Form.Button primary loading={loading}>{intl.get("save-button-label")}</Form.Button>
       </Container>
     </Form>
   )
 }
 
-export default CountryForm
+export default CountryFormBak

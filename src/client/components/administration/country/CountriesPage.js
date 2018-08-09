@@ -9,6 +9,7 @@ import { withUser } from '../../contexts/withUserContext'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries';
 
 import CountriesTable from './CountriesTable'
+import GraphQLErrorDisplay from '../../common/GraphQLErrorDisplay'
 
 class CountriesPage extends React.PureComponent {
   constructor(props) {
@@ -49,7 +50,6 @@ class CountriesPage extends React.PureComponent {
             You are not authorised to view this page.
             </Grid.Row>}
 
-          {(userCtx.isAuthenticated && userCtx.user.role == 'admin') &&  
             <Query query={ALL_COUNTRIES}>
               {({ loading, error, data: { countries }}) => {
 
@@ -70,12 +70,11 @@ class CountriesPage extends React.PureComponent {
                                     handleEdit={this.handleEdit}
                                     handleDelete={this.handleDelete} />
                     {error && <GraphQLErrorDisplay error={error} />}
-
                   </GridColumn>
                 </Grid.Row>
               )   
               }}
-            </Query>}
+            </Query>
 
         </Grid>
     )
