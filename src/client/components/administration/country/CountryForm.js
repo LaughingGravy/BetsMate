@@ -1,26 +1,51 @@
 
 import React from 'react';
 import intl from 'react-intl-universal'
+import PropTypes from 'prop-types'
 import { Form, Container } from 'semantic-ui-react'
 
-const CountryForm = ({ onSubmit, handleChange, code, countryName, loading}) => {
-  return (
-    <Form className='segment' onSubmit={onSubmit}>
-      <Form.Field required>
-        <Form.Input name='code' value={code} label={intl.get("country-code-label")} 
-                placeholder={intl.get("country-code-placeholder")} onChange={handleChange} />
-      </Form.Field>
+import SaveCountryButton from './SaveCountryButton'
 
-      <Form.Field required>
-        <Form.Input name='countryName' value={countryName} label={intl.get("country-name-label")} 
-                placeholder={intl.get("country-name-placeholder")} onChange={handleChange} />
-      </Form.Field>
+// const CountryForm = ({ handleChange, code, countryName }) => {
+class CountryForm  extends React.Component {
+  constructor(props) {
+    super(props);
 
-      <Container textAlign='center'>
-        <Form.Button primary loading={loading}>{intl.get("save-button-label")}</Form.Button>
-      </Container>
-    </Form>
-  )
+    this.state = { 
+      code: props.code,
+      countryName: props.countryName
+      // isEdit: props.match.params.code.length > 0
+    }
+
+    console.log("state", this.state)
+  }
+
+  handleChange = (e, { name, value }) => this.setState({ [name]: value })
+
+  render() {
+    const { code, countryName } = this.state
+
+    return (
+      <Form className='segment' onSubmit={e => { e.preventDefault }}>
+        <Form.Field required>
+          <Form.Input name='code' value={code} label={intl.get("country-code-label")} 
+                  placeholder={intl.get("country-code-placeholder")} onChange={this.handleChange} />
+        </Form.Field>
+
+        <Form.Field required>
+          <Form.Input name='countryName' value={countryName} label={intl.get("country-name-label")} 
+                  placeholder={intl.get("country-name-placeholder")} onChange={this.handleChange} />
+        </Form.Field>
+
+        {/* <SaveCountryButton code={code} countryName={countryName} /> */}
+      </Form>
+    )  
+  }
 }
+
+CountryForm.propTypes = {
+  code: PropTypes.string,
+  countryName: PropTypes.string
+};
 
 export default CountryForm
