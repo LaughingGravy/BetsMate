@@ -57,6 +57,15 @@ export default new GraphQLObjectType({
             resolve(parentValue, { code, name }) {
                 return AdminService.mergeCountry({ code, name });
             }
+        },
+        deleteCountry: {
+            type: CountryType,
+            args: {
+                code: { type: GraphQLString }
+            },
+            resolve(parentValue, { code }) {
+                return AdminService.deleteCountry({ code });
+            }
         }
     }
 });

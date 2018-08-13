@@ -65,5 +65,25 @@ function mergeCountry( { code, name }) {
     })
 }
 
-export { allCountries, getCountryByCode, mergeCountry }
+function deleteCountry( { code, name }) {
+  let session = createSession()
+  return session
+    .run(
+      `MATCH (country:Country { code: "${code}" }) 
+       DELETE country
+      RETURN country`
+    )
+    .then(result => {
+      session.close();
+      return result.records.map(record => {
+        return record.get('country').properties
+      });
+    })
+    .catch(error => {
+      session.close();
+      throw error;
+    })
+}
+
+export { allCountries, getCountryByCode, mergeCountry, deleteCountry }
 

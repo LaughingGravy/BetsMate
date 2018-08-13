@@ -1,12 +1,13 @@
 import React from 'react';
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
-import { Query } from 'react-apollo'
+import { Query, compose, graphql } from 'react-apollo'
 import { Container, Grid, GridColumn, Header } from 'semantic-ui-react'
 
 import { history } from '../../../../../library/routing'
 import { withUser } from '../../contexts/withUserContext'
-import ALL_COUNTRIES from '../../../graphql/queries/administration/allCountries';
+import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
+import DELETE_COUNTRY from '../../../graphql/mutations/administration/country/deleteCountry'
 
 import CountriesTable from './CountriesTable'
 import GraphQLErrorDisplay from '../../common/GraphQLErrorDisplay'
@@ -33,7 +34,15 @@ class CountriesPage extends React.PureComponent {
   }
 
   handleDelete(e, data) {
-    history.push(`/administration/country/deletecountry`)
+    if (!Object.entries(data) || Object.entries(data).length === 0)
+      return
+
+    const code = Object.entries(data).shift()[0]
+
+    this.props.mutate({
+      variables: { code },
+      refetchQueries: [ {query: ALL_COUNTRIES}]
+    })
   }
 
   render() {
@@ -85,4 +94,6 @@ CountriesPage.propTypes = {
   userCtx: PropTypes.object.isRequired
 };
 
-export default withUser(CountriesPage)
+export default compose(
+  graphql(DELETE_COUNTRY)
+ )(withUser(CountriesPage))
