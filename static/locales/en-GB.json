@@ -2,6 +2,8 @@
     "locale-id": "en-GB",
     "locale-language": "English",
 
+    "auth-page-decline": "You are not authorised to view this page",
+
     "home-menu-header": "Home",
     "about-menu-header": "About",
     "admin-menu-header": "Administration",

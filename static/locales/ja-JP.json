@@ -2,6 +2,8 @@
     "locale-id": "ja-JP",
     "locale-language": "日本語",
 
+    "auth-page-decline": "このページを表示する権限がありません",
+
     "home-menu-header": "ホーム",
     "about-menu-header": "ヘルプ",
     "admin-menu-header": "アドミン",

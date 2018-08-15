@@ -1,10 +1,11 @@
-import React from 'react';
+import React from 'react'
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
+import { compose } from 'recompose'
 import { Grid, Container, GridColumn } from 'semantic-ui-react'
 
-import { withUser } from '../../contexts/withUserContext'
 import EditCountryPageContent from './EditCountryPageContent'
+import AuthorisationDeclineDisplay, { renderForAuthDecline } from '../../common/AuthorisationDeclineDisplay';
 
 const EditCountryPage = ({ userCtx, match } ) => {
   const code = match.params.code  
@@ -19,11 +20,7 @@ const EditCountryPage = ({ userCtx, match } ) => {
         <Grid.Row centered>
           <GridColumn mobile={16} tablet={8} computer={4}>
 
-               {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') &&
-               <Container textAlign="center">You are not authorised to view this page.</Container>}
-
-               {(userCtx.isAuthenticated && userCtx.user.role == 'admin') && 
-              <EditCountryPageContent code={code} />}
+              <EditCountryPageContent code={code} />
      
           </GridColumn>
         </Grid.Row>
@@ -37,4 +34,6 @@ EditCountryPage.propTypes = {
   userCtx: PropTypes.object
 };
 
-export default withUser(EditCountryPage)
+export default compose(
+  renderForAuthDecline(AuthorisationDeclineDisplay, "userCtx")
+)(EditCountryPage)
