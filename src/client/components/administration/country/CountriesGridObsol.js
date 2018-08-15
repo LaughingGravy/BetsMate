@@ -2,7 +2,7 @@ import React from 'react'
 import { Table, Flag } from 'semantic-ui-react'
 import CountriesRow from './CountriesRowBAK';
 
-class CountriesGrid extends React.Component {
+class CountriesGridObsol extends React.Component {
   constructor(props) {
     super(props);
 
@@ -61,7 +61,7 @@ class CountriesGrid extends React.Component {
   }
 }
 
-export default CountriesGrid
+export default CountriesGridObsol
 
 
 
