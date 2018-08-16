@@ -1,13 +1,11 @@
 import React from 'react'
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
-import { compose } from 'recompose'
+
 import { Grid, Container, GridColumn } from 'semantic-ui-react'
-
 import EditCountryPageContent from './EditCountryPageContent'
-import { AuthorisationDeclineDisplay, renderForAuthDecline } from '../../common/AuthorisationDeclineDisplay';
 
-const EditCountryPage = ({ userCtx, match } ) => {
+const EditCountryPage = ({ match } ) => {
   const code = match.params.code  
 
   return (
@@ -34,6 +32,4 @@ EditCountryPage.propTypes = {
   userCtx: PropTypes.object
 };
 
-export default compose(
-  renderForAuthDecline(AuthorisationDeclineDisplay, "userCtx")
-)(EditCountryPage)
+export default EditCountryPage

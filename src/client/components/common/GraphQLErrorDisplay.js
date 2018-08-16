@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon, Message } from 'semantic-ui-react'
+import { Message } from 'semantic-ui-react'
 import css from  '../styles/auth.css'
 
 const GraphQLErrorDisplay = ( { error: { graphQLErrors, networkError } } ) => {

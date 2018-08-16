@@ -6,10 +6,9 @@ import { compose } from 'recompose'
 import { Menu, MenuItem } from 'semantic-ui-react'
 
 import { withUser } from '../contexts/withUserContext'
-import { AuthorisationDeclineDisplay, renderForAuthDecline } from '../common/AuthorisationDeclineDisplay'
+import { AdminFailDisplay, renderForAdminFail } from '../common/ConditionalRender'
 
-const UnprotectedAdminPageMenu = ({ match, userCtx }) => {
-  console.log("AdminPageMenu userCtx", userCtx)
+const UnprotectedAdminPageMenu = ({ match }) => {
   return (
     <Menu stackable pointing>
       <MenuItem as={NavLink} to={`${match.url}/country`} key="country" activeClassName="active"
@@ -26,7 +25,7 @@ UnprotectedAdminPageMenu.propTypes = {
 }
 
 const AdminPageMenu = compose(
-  renderForAuthDecline(AuthorisationDeclineDisplay, "userCtx")
+  renderForAdminFail(AdminFailDisplay, "userCtx")
 )(UnprotectedAdminPageMenu)
 
 export default withUser(AdminPageMenu)
