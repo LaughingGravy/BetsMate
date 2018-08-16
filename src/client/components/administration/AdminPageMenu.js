@@ -6,7 +6,7 @@ import { compose } from 'recompose'
 import { Menu, MenuItem } from 'semantic-ui-react'
 
 import { withUser } from '../contexts/withUserContext'
-import { AdminFailDisplay, renderForAdminFail } from '../common/ConditionalRender'
+import { AdminFailAccessErrorDisplay, renderForAdminFailAccessError } from '../common/ConditionalRender'
 
 const UnprotectedAdminPageMenu = ({ match }) => {
   return (
@@ -25,7 +25,7 @@ UnprotectedAdminPageMenu.propTypes = {
 }
 
 const AdminPageMenu = compose(
-  renderForAdminFail(AdminFailDisplay, "userCtx")
+  renderForAdminFailAccessError(AdminFailAccessErrorDisplay, "userCtx")
 )(UnprotectedAdminPageMenu)
 
 export default withUser(AdminPageMenu)

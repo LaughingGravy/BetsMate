@@ -55,9 +55,9 @@ class CountriesPage extends React.PureComponent {
             <Header as='h3' textAlign="center">{intl.get("countries-page-title")}</Header>
           </Grid.Row>
 
-          {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') && <Grid.Row centered textAlign="center">
+          {/* {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') && <Grid.Row centered textAlign="center">
             You are not authorised to view this page.
-            </Grid.Row>}
+            </Grid.Row>} */}
 
             <Query query={ALL_COUNTRIES}>
               {({ loading, error, data: { countries }}) => {
