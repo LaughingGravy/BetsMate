@@ -5,7 +5,7 @@ import { compose } from 'recompose'
 import { Grid, Container, GridColumn } from 'semantic-ui-react'
 
 import EditCountryPageContent from './EditCountryPageContent'
-import AuthorisationDeclineDisplay, { renderForAuthDecline } from '../../common/AuthorisationDeclineDisplay';
+import { AuthorisationDeclineDisplay, renderForAuthDecline } from '../../common/AuthorisationDeclineDisplay';
 
 const EditCountryPage = ({ userCtx, match } ) => {
   const code = match.params.code  

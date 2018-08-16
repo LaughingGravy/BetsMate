@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { Header, Menu,  MenuItem, Grid, GridRow } from 'semantic-ui-react'
 
 import { withUser } from '../contexts/withUserContext'
+import AdminPageMenu from './AdminPageMenu'
 import AdminRoutes from './AdminRoutes'
 
 const AdministrationPage = ( { match, userCtx }) => {
@@ -14,7 +15,7 @@ const AdministrationPage = ( { match, userCtx }) => {
         <Header as ="h1">{intl.get("admin-page-title")}</Header>
       </Grid.Row>
 
-      {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') && <Grid.Row centered textAlign="center">
+      {/* {(!userCtx.isAuthenticated || userCtx.user.role != 'admin') && <Grid.Row centered textAlign="center">
         You are not authorised to view this page.
       </Grid.Row>}
 
@@ -25,7 +26,11 @@ const AdministrationPage = ( { match, userCtx }) => {
                 {intl.get("admin-country-menu-header")}
               </MenuItem>
           </Menu>
-      </Grid.Row>}
+      </Grid.Row>} */}
+
+       <GridRow centered>
+        <AdminPageMenu match={match} />
+      </GridRow>
 
       <GridRow centered>
         <AdminRoutes match={match} />

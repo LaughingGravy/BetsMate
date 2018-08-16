@@ -5,15 +5,14 @@ import { Container } from 'semantic-ui-react'
 
 import { withUser } from '../contexts/withUserContext'
 
-export function renderForAuthDecline(component, propName = "userCtx") {
-  return branch(
-    props => props[propName] && (!props[propName].isAuthenticated || !props[propName].user.role != "admin"),
+const renderForAuthDecline = (component, propName = "userCtx") =>
+  branch(
+    props => (!props[propName] || !props[propName].isAuthenticated || !props[propName].user.role != "admin"),
     renderComponent(component)
   )
-}
 
 const AuthorisationDeclineDisplay = props =>(
   <Container textAlign="center">{intl.get("auth-page-decline")}</Container>
 )
 
-export default withUser(AuthorisationDeclineDisplay)
+export { renderForAuthDecline, AuthorisationDeclineDisplay }
