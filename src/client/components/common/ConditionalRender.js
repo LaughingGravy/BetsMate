@@ -1,7 +1,9 @@
 import React from 'react'
 import intl from 'react-intl-universal'
 import { branch, renderComponent } from 'recompose';
-import { Container } from 'semantic-ui-react'
+import { Container, Button } from 'semantic-ui-react'
+
+import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
 
 const renderForAdminFailAccessError = (component, propName = "userCtx") =>
   branch(
@@ -22,4 +24,16 @@ const LoadingDisplay = props => (
   <Container textAlign="center">{intl.get("loading")}</Container>
 )
 
-export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, renderForLoading, LoadingDisplay }
+const renderForError = branch(
+  props => props.error,
+  renderComponent(LoadingDisplay)
+)
+
+const ErrorDisplay = props => (
+  <Container textAlign="center">
+    <GraphQLErrorDisplay error={props.error} />
+    <Button textAlign="center" onClick={props.refetch}>{intl.get("try-refetch-query")}</Button>
+  </Container>
+)
+
+export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, renderForLoading, LoadingDisplay, renderForError, ErrorDisplay }
