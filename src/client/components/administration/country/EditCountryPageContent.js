@@ -2,20 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import { Container } from 'semantic-ui-react'
+import { compose } from 'recompose'
 
+import { LoadingDisplay, renderForLoading } from '../../common/ConditionalRender'
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'
 import CountryForm from './CountryForm'
 
-const EditCountryPageContent = ({ code } ) => {
+const vanillaCountryPageContent = ({ code } ) => {
   const isEdit = !(code == null)
 
   return (
     <Query query={GET_COUNTRY_BY_CODE} variables={{ code }}>
       {({ loading, error, data }) => {
 
-        if (loading) {
-          return <Container textAlign="center">loading...</Container>
-        }
+        // if (loading) {
+        //   return <Container textAlign="center">loading...</Container>
+        // }
 
         if (!error && !data) {
           return <Container textAlign="center">`Country with code ${code} not found`</Container>
@@ -36,8 +38,12 @@ const EditCountryPageContent = ({ code } ) => {
   )
 }
 
-EditCountryPageContent.propTypes = {
-  userCtx: PropTypes.object
+vanillaCountryPageContent.propTypes = {
+  code: PropTypes.string
 };
+
+const EditCountryPageContent = compose(
+  renderForLoading(LoadingDisplay)
+)(vanillaCountryPageContent)
 
 export default EditCountryPageContent
