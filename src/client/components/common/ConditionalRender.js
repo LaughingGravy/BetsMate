@@ -15,9 +15,10 @@ const AdminFailAccessErrorDisplay = props => (
   <Container textAlign="center">{intl.get("auth-page-decline")}</Container>
 )
 
-const renderForLoading = branch(
-    props => props.loading,
-    renderComponent(LoadingDisplay)
+const renderForLoading = (component) => 
+  branch(
+    props => true,
+    renderComponent(component)
 )
 
 const LoadingDisplay = props => (
