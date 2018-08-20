@@ -7,7 +7,7 @@ import { LoadingDisplay, renderForLoading, renderForError, ErrorDisplay, renderF
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'
 import CountryForm from './CountryForm'
 
-const vanillaContent = ({ loading, error, data, code }) => {
+const vanillaContent = ({ data }) => {
   const isEdit = !(data.countryByCode == null)
 
   let countryByCode = { code: "", name: "" }
@@ -24,6 +24,7 @@ const vanillaContent = ({ loading, error, data, code }) => {
 
 const EnhancedContent = compose(
   renderForLoading(LoadingDisplay),
+  renderForError(ErrorDisplay),
   renderForNotFound(NotFoundDisplay, "code", "countryByCode")
 )(vanillaContent)
 

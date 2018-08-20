@@ -25,9 +25,9 @@ const LoadingDisplay = props => (
   <Container textAlign="center">{intl.get("loading")}</Container>
 )
 
-const renderForNotFound = (component, queryVariableName, propExpectedDataName, ) => 
+const renderForNotFound = (component, queryVariableName, dataName, ) => 
   branch(
-    props => !props.loading && !props.error && props.variables[queryVariableName] && !props.data[propExpectedDataName] ,
+    props => !props.loading && !props.error && props.variables[queryVariableName] && !props.data[dataName] ,
     renderComponent(component)
 )
 
@@ -35,9 +35,10 @@ const NotFoundDisplay = props => (
   <Container textAlign="center">{intl.get("not-found")}</Container>
 )
 
-const renderForError = branch(
-  props => props.error,
-  renderComponent(LoadingDisplay)
+const renderForError = (component) => 
+  branch(
+    props => props.error,
+    renderComponent(component)
 )
 
 const ErrorDisplay = props => (
