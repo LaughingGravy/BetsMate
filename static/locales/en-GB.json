@@ -5,6 +5,7 @@
     "auth-page-decline": "You are not authorised to view this page",
     "loading": "loading...",
     "try-refetch-query": "Try again",
+    "not-found": "No record was found matching search criteria",
 
     "home-menu-header": "Home",
     "about-menu-header": "About",

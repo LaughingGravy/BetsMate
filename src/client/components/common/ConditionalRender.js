@@ -1,6 +1,6 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { branch, renderComponent } from 'recompose';
+import { branch, renderComponent, compose } from 'recompose';
 import { Container, Button } from 'semantic-ui-react'
 
 import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
@@ -17,12 +17,22 @@ const AdminFailAccessErrorDisplay = props => (
 
 const renderForLoading = (component) => 
   branch(
-    props => true,
+    props => props.loading,
     renderComponent(component)
 )
 
 const LoadingDisplay = props => (
   <Container textAlign="center">{intl.get("loading")}</Container>
+)
+
+const renderForNotFound = (component, queryVariableName, propExpectedDataName, ) => 
+  branch(
+    props => !props.loading && !props.error && props.variables[queryVariableName] && !props.data[propExpectedDataName] ,
+    renderComponent(component)
+)
+
+const NotFoundDisplay = props => (
+  <Container textAlign="center">{intl.get("not-found")}</Container>
 )
 
 const renderForError = branch(
@@ -37,4 +47,4 @@ const ErrorDisplay = props => (
   </Container>
 )
 
-export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, renderForLoading, LoadingDisplay, renderForError, ErrorDisplay }
+export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, renderForLoading, LoadingDisplay, renderForError, ErrorDisplay, renderForNotFound, NotFoundDisplay }
