@@ -6,13 +6,15 @@ import { Grid, Container, GridColumn } from 'semantic-ui-react'
 import EditCountryPageContent from './EditCountryPageContent'
 
 const EditCountryPage = ({ match } ) => {
-  const code = match.params.code  
+  const code = match.params.code 
+  const isEdit = !(match.params.code == null)
 
   return (
     <Container>
       <Grid columns={1} centered>
         <Grid.Row centered>
-          <h3>{intl.get("add-country-page-title")}</h3>
+          {!isEdit && <h3>{intl.get("add-country-page-title")}</h3>}
+          {isEdit && <h3>{intl.get("edit-country-page-title")}</h3>}
         </Grid.Row>
 
         <Grid.Row centered>

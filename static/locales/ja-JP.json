@@ -29,12 +29,13 @@
 
     
     "admin-country-menu-header": "国",
-    "countries-menu-header": "Countries",
-    "add-country-menu-header": " Create Country",
-    "add-country-page-title": "Create Country",
-    "countries-page-title": "Countries",
+    "countries-menu-header": "国国",
+    "add-country-menu-header": "国を作成する",
+    "add-country-page-title": "国を作成する",
+    "edit-country-page-title": "国を編集する",
+    "countries-page-title": "国国",
     
-    "country-code-label": "Code",
+    "country-code-label": "コード",
     "country-code-placeholder": "jp",
     "country-name-label": "国",
     "country-name-placeholder": "日本",
