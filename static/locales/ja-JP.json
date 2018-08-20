@@ -26,7 +26,6 @@
     "password-label": "パスワード",
     "login-button-label": "ログイン",
     "register-button-label": "新規登録",
-
     
     "admin-country-menu-header": "国",
     "countries-menu-header": "国国",
@@ -34,6 +33,10 @@
     "add-country-page-title": "国を作成する",
     "edit-country-page-title": "国を編集する",
     "countries-page-title": "国国",
+
+    "country-tbl-code-col-hdr": "コード",
+    "country-tbl-flag-col-hdr": "旗",
+    "country-tbl-name-col-hdr": "名",
     
     "country-code-label": "コード",
     "country-code-placeholder": "jp",

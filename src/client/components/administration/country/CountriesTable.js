@@ -1,24 +1,19 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
-import CountriesRow from './CountriesRow';
+import intl from 'react-intl-universal'
+
+import CountriesRow from './CountriesRow'
 import { withSelectableRowsTable } from '../../common/withSelectableRowsTable'
 import AdminTableButtonGroup from '../controls/AdminTableButtonGroup'
 
-class CountriesTable extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { data, activeRows, onRowClick, handleCreate, handleEdit, handleDelete } = this.props
-
+const CountriesTable = ({ data, activeRows, onRowClick, handleCreate, handleEdit, handleDelete }) => {
     return (
       <Table celled selectable stackable>
         <Table.Header>
           <Table.Row textAlign='center'>
-            <Table.HeaderCell>Code</Table.HeaderCell>
-            <Table.HeaderCell>Flag</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>{intl.get("country-tbl-code-col-hdr")}</Table.HeaderCell>
+            <Table.HeaderCell>{intl.get("country-tbl-flag-col-hdr")}</Table.HeaderCell>
+            <Table.HeaderCell>{intl.get("country-tbl-name-col-hdr")}</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
@@ -49,7 +44,6 @@ class CountriesTable extends React.PureComponent {
         </Table.Footer>
       </Table>
     )
-  }
 }
 
 export default withSelectableRowsTable(CountriesTable)

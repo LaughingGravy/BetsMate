@@ -7,7 +7,7 @@ import { Form } from 'semantic-ui-react'
 import { history } from '../../../../../library/routing'
 import SaveCountryButton from './SaveCountryButton'
 
-class CountryForm  extends React.PureComponent {
+class CountryForm  extends React.Component {
   constructor(props) {
     super(props);
 
