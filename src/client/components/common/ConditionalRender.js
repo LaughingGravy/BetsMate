@@ -41,11 +41,19 @@ const renderForError = (component) =>
     renderComponent(component)
 )
 
-const ErrorDisplay = props => (
+const QueryErrorDisplay = props => (
   <Container textAlign="center">
     <GraphQLErrorDisplay error={props.error} />
-    <Button textAlign="center" onClick={props.refetch}>{intl.get("try-refetch-query")}</Button>
+    <Button tertiary onClick={props.refetch}>{intl.get("try-refetch-query")}</Button> 
   </Container>
 )
 
-export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, renderForLoading, LoadingDisplay, renderForError, ErrorDisplay, renderForNotFound, NotFoundDisplay }
+const MutateErrorDisplay = props => (
+  <Container textAlign="center">
+    <GraphQLErrorDisplay error={props.error} />
+  </Container>
+)
+
+export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, 
+        renderForLoading, LoadingDisplay, renderForError, QueryErrorDisplay, MutateErrorDisplay,
+        renderForNotFound, NotFoundDisplay }

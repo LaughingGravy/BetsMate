@@ -43,7 +43,6 @@ function getCountryByCode(code) {
 
 function mergeCountry( { code, name }) {
   let session = createSession()
-  return session
     // .run(
     //   `CREATE (country:Country { code: "${code}", name: "${name}" }) 
     //   RETURN country`

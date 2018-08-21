@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import { compose } from 'recompose'
 
-import { LoadingDisplay, renderForLoading, renderForError, ErrorDisplay, renderForNotFound, NotFoundDisplay } from '../../common/ConditionalRender'
+import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay, renderForNotFound, NotFoundDisplay } from '../../common/ConditionalRender'
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'
 import CountryForm from './CountryForm'
 
@@ -24,7 +24,7 @@ const vanillaContent = ({ data }) => {
 
 const EnhancedContent = compose(
   renderForLoading(LoadingDisplay),
-  renderForError(ErrorDisplay),
+  renderForError(QueryErrorDisplay),
   renderForNotFound(NotFoundDisplay, "code", "countryByCode")
 )(vanillaContent)
 
