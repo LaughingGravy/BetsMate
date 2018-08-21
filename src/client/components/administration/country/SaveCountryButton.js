@@ -2,10 +2,8 @@ import React from 'react';
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
-import { compose } from 'recompose'
-import { Container, Form } from 'semantic-ui-react'
 
-import { renderForError, MutateErrorDisplay } from '../../common/ConditionalRender'
+import AdminSaveButton from '../controls/AdminSaveButton'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'
 import MERGE_COUNTRY from '../../../graphql/mutations/administration/country/mergeCountry'
@@ -65,37 +63,34 @@ import MERGE_COUNTRY from '../../../graphql/mutations/administration/country/mer
 
 // export default SaveCountryButton
 
-const vanillaSaveCountryButton = ({mutation, loading, code, name, error}) => {
 
-  console.log("code, name, mergeCountry, loading, error", code, name, loading, error)
 
-  return (
-    <Container textAlign='center'>
-      <Form.Button primary
-                    onClick={e => { 
-                                    e.preventDefault();
-                                    mutation({ variables: { code, name }})
-                    }}
-                    loading={loading} 
-                  >{intl.get("save-button-label")}
-      </Form.Button>
+// const vanillaSaveCountryButton = ({mutation, loading, code, name, error}) => {
 
-      {/* {error && <GraphQLErrorDisplay error={error} />} */}
-    </Container>
-  )
-}
+//   console.log("code, name, mergeCountry, loading, error", code, name, loading, error)
 
-vanillaSaveCountryButton.propTypes = {
-  code: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
-  mergeCountry: PropTypes.func.isRequired
-};
+//   return (
+//     <Container textAlign='center'>
+//       <EnhancedGraphQLErrorDisplay error={error} />
+//       <Form.Button primary
+//                     onClick={e => { 
+//                                     e.preventDefault();
+//                                     mutation({ variables: { code, name }})
+//                     }}
+//                     loading={loading} 
+//                   >{intl.get("save-button-label")}
+//       </Form.Button>   
+//     </Container>
+//   )
+// }
 
-const EnhancedSaveCountryButton = compose(
-  renderForError(MutateErrorDisplay)
-)(vanillaSaveCountryButton)
+// vanillaSaveCountryButton.propTypes = {
+//   code: PropTypes.string.isRequired,
+//   name: PropTypes.string.isRequired,
+//   loading: PropTypes.bool.isRequired,
+//   error: PropTypes.object,
+//   mergeCountry: PropTypes.func.isRequired
+// };
 
 const SaveCountryButton = ({ code, name, onCompleted }) => {
   return (
@@ -126,7 +121,7 @@ const SaveCountryButton = ({ code, name, onCompleted }) => {
 
       refetchQueries={[ {query: ALL_COUNTRIES} ]}>
       {(mergeCountry, { loading, error }) => (
-          <EnhancedSaveCountryButton mutation={mergeCountry} loading={loading} error={error} code={code} name={name} />
+          <AdminSaveButton variables={{code: code, name: name}} mutation={mergeCountry} loading={loading} error={error} />
       )}
     </Mutation>
   )

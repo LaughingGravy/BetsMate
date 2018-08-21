@@ -1,6 +1,6 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { branch, renderComponent, compose } from 'recompose';
+import { branch, renderComponent, renderNothing } from 'recompose';
 import { Container, Button } from 'semantic-ui-react'
 
 import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
@@ -38,7 +38,18 @@ const NotFoundDisplay = props => (
 const renderForError = (component) => 
   branch(
     props => props.error,
-    renderComponent(component)
+          renderComponent(component),
+          renderNothing
+)
+
+const hideIfFailsPropsCheck = propsCheck =>
+  branch(
+    propsCheck,
+    renderNothing
+  )
+
+const errorCheck = hideIfFailsPropsCheck(
+  props => !props.error
 )
 
 const QueryErrorDisplay = props => (
@@ -56,4 +67,4 @@ const MutateErrorDisplay = props => (
 
 export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, 
         renderForLoading, LoadingDisplay, renderForError, QueryErrorDisplay, MutateErrorDisplay,
-        renderForNotFound, NotFoundDisplay }
+        renderForNotFound, NotFoundDisplay, errorCheck }

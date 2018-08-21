@@ -24,7 +24,7 @@ const vanillaContent = ({ data }) => {
 
 const EnhancedContent = compose(
   renderForLoading(LoadingDisplay),
-  renderForError(QueryErrorDisplay),
+  // renderForError(QueryErrorDisplay)
   renderForNotFound(NotFoundDisplay, "code", "countryByCode")
 )(vanillaContent)
 
