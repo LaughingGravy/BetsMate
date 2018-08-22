@@ -55,7 +55,6 @@ export default new GraphQLObjectType({
                 name: { type: GraphQLString }
             },
             resolve(parentValue, { code, name }) {
-                throw "test error"
                 return AdminService.mergeCountry({ code, name });
             }
         },

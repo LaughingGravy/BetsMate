@@ -4,7 +4,7 @@ import css from  '../styles/auth.css'
 
 const GraphQLErrorDisplay = ( { error: { graphQLErrors, networkError } } ) => {
     return (
-        <Message size='mini' attached='top' error>
+        <Message size='mini' floating error visible>
             <Message.Content>
                 <ul>
                     {graphQLErrors && graphQLErrors.map(({ message }, i) => {

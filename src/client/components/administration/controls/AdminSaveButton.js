@@ -2,7 +2,7 @@ import React from 'react';
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
 import { compose } from 'recompose'
-import { Container, Form } from 'semantic-ui-react'
+import { Container, Segment, Form } from 'semantic-ui-react'
 
 import { renderForError } from '../../common/ConditionalRender'
 import GraphQLErrorDisplay from '../../common/GraphQLErrorDisplay'
@@ -13,19 +13,17 @@ const EnhancedGraphQLErrorDisplay = compose(
 
 const AdminSaveButton = ({variables, mutation, loading, error}) => {
 
-  console.log("error", error)
-
   return (
-    <Container textAlign='center'>
-      <EnhancedGraphQLErrorDisplay error={error} />
-      <Form.Button primary
-                    onClick={e => { 
-                                    e.preventDefault();
-                                    mutation(variables)
-                    }}
-                    loading={loading} 
-                  >{intl.get("save-button-label")}
-      </Form.Button>  
+    <Container textAlign="center">
+        <EnhancedGraphQLErrorDisplay error={error} />
+        <Form.Button primary
+                      onClick={e => { 
+                                      e.preventDefault();
+                                      mutation({variables})
+                      }}
+                      loading={loading} 
+                    >{intl.get("save-button-label")}
+        </Form.Button>  
     </Container>
   )
 }
