@@ -22,9 +22,13 @@ const vanillaContent = ({ data }) => {
   )
 }
 
+vanillaContent.propTypes = {
+  data: PropTypes.object
+};
+
 const EnhancedContent = compose(
   renderForLoading(LoadingDisplay),
-  // renderForError(QueryErrorDisplay)
+  renderForError(QueryErrorDisplay),
   renderForNotFound(NotFoundDisplay, "code", "countryByCode")
 )(vanillaContent)
 

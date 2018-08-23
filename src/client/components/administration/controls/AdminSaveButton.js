@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import { compose } from 'recompose'
 import { Container, Segment, Form } from 'semantic-ui-react'
 
-import { renderForError } from '../../common/ConditionalRender'
+import { renderMessageForError } from '../../common/ConditionalRender'
 import GraphQLErrorDisplay from '../../common/GraphQLErrorDisplay'
 
 const EnhancedGraphQLErrorDisplay = compose(
-  renderForError(GraphQLErrorDisplay)
+  renderMessageForError(GraphQLErrorDisplay)
 )(GraphQLErrorDisplay)
 
 const AdminSaveButton = ({variables, mutation, loading, error}) => {

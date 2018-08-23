@@ -35,11 +35,17 @@ const NotFoundDisplay = props => (
   <Container textAlign="center">{intl.get("not-found")}</Container>
 )
 
-const renderForError = (component) => 
+const renderMessageForError = (component) => 
   branch(
+    props =>  props.error,
+              renderComponent(component),
+              renderNothing
+)
+
+const renderForError = (component) =>
+  branch (
     props => props.error,
-          renderComponent(component),
-          renderNothing
+             renderComponent(component)
 )
 
 const hideIfFailsPropsCheck = propsCheck =>
@@ -55,7 +61,7 @@ const errorCheck = hideIfFailsPropsCheck(
 const QueryErrorDisplay = props => (
   <Container textAlign="center">
     <GraphQLErrorDisplay error={props.error} />
-    <Button tertiary onClick={props.refetch}>{intl.get("try-refetch-query")}</Button> 
+    <Button primary onClick={props.refetch}>{intl.get("try-refetch-query")}</Button> 
   </Container>
 )
 
@@ -66,5 +72,7 @@ const MutateErrorDisplay = props => (
 )
 
 export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, 
-        renderForLoading, LoadingDisplay, renderForError, QueryErrorDisplay, MutateErrorDisplay,
-        renderForNotFound, NotFoundDisplay, errorCheck }
+        renderForLoading, LoadingDisplay, 
+        renderMessageForError, renderForError, QueryErrorDisplay, MutateErrorDisplay,
+        renderForNotFound, NotFoundDisplay, 
+        errorCheck }
