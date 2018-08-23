@@ -13,16 +13,17 @@ const SaveCountryButton = ({ code, name, onCompleted }) => {
       
       onCompleted={onCompleted}
 
-      update={(store, { data: mergeCountry }) => {
-        const data = store.readQuery({
+      update={(store) => {
+        
+        const getCountryByCodeData = store.readQuery({
           query: GET_COUNTRY_BY_CODE, 
           variables: {
             code: code
-          }
-        })
+          }}
+        )
 
-        if (data) {
-          const { countryByCode } = data
+        if (getCountryByCodeData) {
+          const { countryByCode } = getCountryByCodeData
           countryByCode.code = code
           countryByCode.name = name
           
@@ -36,7 +37,9 @@ const SaveCountryButton = ({ code, name, onCompleted }) => {
         }
       }}
 
-      refetchQueries={[ {query: ALL_COUNTRIES} ]}>
+      refetchQueries={[ {query: ALL_COUNTRIES} ]}
+
+      >
       {(mergeCountry, { loading, error }) => (
           <AdminSaveButton variables={{code: code, name: name}} mutation={mergeCountry} loading={loading} error={error} />
       )}
