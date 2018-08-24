@@ -25,9 +25,15 @@ const LoadingDisplay = props => (
   <Container textAlign="center">{intl.get("loading")}</Container>
 )
 
-const renderForNotFound = (component, queryVariableName, dataName, ) => 
+const renderForNotFound = (component, queryVariableName, dataName) => 
   branch(
     props => !props.loading && !props.error && props.variables[queryVariableName] && !props.data[dataName] ,
+    renderComponent(component)
+)
+
+const renderForDataNotFound = (component, dataName) => 
+  branch(
+    props => !props.loading && !props.error && !props.data[dataName] ,
     renderComponent(component)
 )
 
@@ -74,5 +80,5 @@ const MutateErrorDisplay = props => (
 export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, 
         renderForLoading, LoadingDisplay, 
         renderMessageForError, renderForError, QueryErrorDisplay, MutateErrorDisplay,
-        renderForNotFound, NotFoundDisplay, 
+        renderForNotFound, renderForDataNotFound, NotFoundDisplay, 
         errorCheck }
