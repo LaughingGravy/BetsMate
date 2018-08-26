@@ -1,52 +1,66 @@
 import React from 'react'
+import { Query } from 'react-apollo'
 import { Table } from 'semantic-ui-react'
-import intl from 'react-intl-universal'
+import { compose } from 'recompose'
 
+import { history } from '../../../../../library/routing'
+
+import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
+import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay, renderForDataNotFound, NotFoundDisplay } from '../../common/ConditionalRender'
+
+import CountriesTableHeader from './CountriesTableHeader'
+import CountriesTableFooter from './CountriesTableFooter'
 import CountriesRow from './CountriesRow'
 import { withSelectableRowsTable } from '../../common/withSelectableRowsTable'
-import AdminTableButtonGroup from '../controls/AdminTableButtonGroup'
 
-const CountriesTable = ({ data, activeRows, onRowClick, handleCreate, handleEdit, handleDelete }) => {
-    return (
-      <Table celled selectable stackable>
-        <Table.Header>
-          <Table.Row textAlign='center'>
-            <Table.HeaderCell>{intl.get("country-tbl-code-col-hdr")}</Table.HeaderCell>
-            <Table.HeaderCell>{intl.get("country-tbl-flag-col-hdr")}</Table.HeaderCell>
-            <Table.HeaderCell>{intl.get("country-tbl-name-col-hdr")}</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+const vanillaCountriesTable = ({ data: {countries}, activeRows, onRowClick }) => {
+  let code = ""
+  const anySelectedRows = Object.entries(activeRows).some(e => e[1] == true)
 
-        <Table.Body>
-          {
-            data.map(c => {
-            const isActive = activeRows[c.code]
-            
-            return(<CountriesRow active={isActive} 
-                                  key={c.code}
-                                  id={c.code}
-                                  data={c}
-                                  onRowClick={onRowClick}
-                                  />
-                
-              )
-            }
-          )}
-        </Table.Body>
+  if (anySelectedRows)
+    code = Object.entries(activeRows).shift()[0] 
 
-        <Table.Footer>
-          <Table.Row textAlign='center'>
-            <Table.Cell colSpan='3'>
-              <AdminTableButtonGroup handleCreate={handleCreate} handleEdit={handleEdit} 
-                                      handleDelete={handleDelete} activeRows={activeRows} />
-            </Table.Cell>
-          </Table.Row>
-        </Table.Footer>
-      </Table>
-    )
+  return (
+    <Table celled selectable stackable>
+      
+      <CountriesTableHeader />
+
+      <Table.Body>
+        {
+          countries.map(c => {
+          const isActive = activeRows[c.code]
+          
+          return(<CountriesRow active={isActive} 
+                                key={c.code}
+                                id={c.code}
+                                data={c}
+                                onRowClick={onRowClick}
+                                />      
+            )
+          }
+        )}
+      </Table.Body>
+
+      <CountriesTableFooter anySelectedRows={anySelectedRows} code={code} 
+                            createNavigate={this.createNavigate}
+                            editNavigate={this.editNavigate} />
+      
+    </Table>
+  )
 }
 
-export default withSelectableRowsTable(CountriesTable)
+const EnhancedCountriesTable = compose(
+  renderForLoading(LoadingDisplay),
+  renderForError(QueryErrorDisplay),
+  renderForDataNotFound(NotFoundDisplay, "countries")
+)(withSelectableRowsTable(vanillaCountriesTable))
 
+const CountriesTable = () => {
+  return (
+  <Query query={ALL_COUNTRIES}>
+    {EnhancedCountriesTable}
+  </Query>
+  )
+}
 
-
+export default CountriesTable
