@@ -1,8 +1,7 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
 
-import DeleteCountryButton from './DeleteCountryButton'
-import AdminTableButtonGroup from '../controls/AdminTableButtonGroup'
+import CountryTableButtonGroup from './CountryTableButtonGroup'
 
 class CountriesTableFooter extends React.PureComponent {
   constructor(props) {
@@ -29,10 +28,9 @@ class CountriesTableFooter extends React.PureComponent {
       <Table.Footer>
         <Table.Row textAlign='center'>
           <Table.Cell colSpan='3' textAlign="center">
-              <AdminTableButtonGroup anySelectedRows={anySelectedRows} 
+              <CountryTableButtonGroup anySelectedRows={anySelectedRows} 
                                       createNavigate={this.createNavigate}
-                                      editNavigate={this.editNavigate}
-                                      DeleteButton={<DeleteCountryButton code={code} disabled={anySelectedRows} />} />
+                                      editNavigate={this.editNavigate} />
           </Table.Cell>
         </Table.Row>
       </Table.Footer>

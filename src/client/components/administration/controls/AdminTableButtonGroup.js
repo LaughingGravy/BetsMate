@@ -17,14 +17,28 @@ import AdminDeleteButton from './AdminDeleteButton'
 
 // export default AdminTableButtonGroup
 
-const AdminTableButtonGroup = ({ createNavigate, editNavigate, anySelectedRows, DeleteButton }) => {
-  
+const EnhancedGraphQLErrorDisplay = compose(
+  renderMessageForError(GraphQLErrorDisplay)
+)(GraphQLErrorDisplay)
+
+const AdminTableButtonGroup = ({ variables, mutation, loading, error, createNavigate, editNavigate, activeRows }) => {
+  const anySelectedRows
+
   return (
-    <Button.Group>
-      <Button secondary onClick={(e) => createNavigate(e, activeRows)}>{intl.get("admin-create-button-label")}</Button>
-      <Button secondary disabled={!anySelectedRows} onClick={(e) => editNavigate(e, activeRows)}>{intl.get("admin-edit-button-label")}</Button>
-      {DeleteButton }
-    </Button.Group>
+    <Container textAlign="center">
+      <EnhancedGraphQLErrorDisplay error={error} />
+      <Button.Group>
+        <Button secondary onClick={(e) => createNavigate(e, activeRows)}>{intl.get("admin-create-button-label")}</Button>
+        <Button secondary disabled={!anySelectedRows} onClick={(e) => editNavigate(e, activeRows)}>{intl.get("admin-edit-button-label")}</Button>
+        <Button secondary onClick={e => { 
+                                          e.preventDefault();
+                                          mutation({variables})
+                                        }}
+                                        loading={loading}
+                                        >{intl.get("admin-delete-button-label")}
+          </Button>  
+      </Button.Group>
+    </Container>
   )
 }
 
