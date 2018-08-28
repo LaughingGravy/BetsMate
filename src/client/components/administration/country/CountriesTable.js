@@ -15,10 +15,10 @@ import { withSelectableRowsTable } from '../../common/withSelectableRowsTable'
 
 const vanillaCountriesTable = ({ data: {countries}, activeRows, onRowClick }) => {
   let code = ""
-  const anySelectedRows = Object.entries(activeRows).some(e => e[1] == true)
+  // const anySelectedRows = Object.entries(activeRows).some(e => e[1] == true)
 
-  if (anySelectedRows)
-    code = Object.entries(activeRows).shift()[0] 
+  // if (anySelectedRows)
+  code = Object.entries(activeRows).shift()[0] 
 
   return (
     <Table celled selectable stackable>
@@ -41,9 +41,7 @@ const vanillaCountriesTable = ({ data: {countries}, activeRows, onRowClick }) =>
         )}
       </Table.Body>
 
-      <CountriesTableFooter anySelectedRows={anySelectedRows} code={code} 
-                            createNavigate={this.createNavigate}
-                            editNavigate={this.editNavigate} />
+      <CountriesTableFooter activeRows={activeRows} />
       
     </Table>
   )
