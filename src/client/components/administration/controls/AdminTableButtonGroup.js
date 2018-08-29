@@ -2,7 +2,7 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
 import { compose } from 'recompose';
-import { Button } from 'semantic-ui-react'
+import { Container, Button } from 'semantic-ui-react'
 
 import GraphQLErrorDisplay from '../../common/GraphQLErrorDisplay'
 import { renderMessageForError } from '../../common/ConditionalRender'
@@ -11,8 +11,8 @@ const EnhancedGraphQLErrorDisplay = compose(
   renderMessageForError(GraphQLErrorDisplay)
 )(GraphQLErrorDisplay)
 
-const ButtonGroup = ({ activeRows, variables, mutation, loading }) => {
-  const anySelectedRows = Object.entries(activeRows).some(e => e[1] == true)
+const ButtonGroup = ({ activeRows, variables, mutation, loading, createNavigate, editNavigate }) => {
+  const anySelectedRows = (Object.entries(activeRows) && Object.entries(activeRows).some(e => e[1] == true))
 
   return (
     <Button.Group>
@@ -30,10 +30,15 @@ const ButtonGroup = ({ activeRows, variables, mutation, loading }) => {
 }
 
 ButtonGroup.propTypes = {
-  activeRows: PropTypes.array.isRequired,
+  activeRows: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]).isRequired,
+  variables: PropTypes.object.isRequired,
+  mutation: PropTypes.func.isRequired,
   createNavigate: PropTypes.func.isRequired,
   editNavigate: PropTypes.func.isRequired,
-  loading: loading
+  loading: PropTypes.bool.isRequired
 };
 
 const AdminTableButtonGroup = ({ variables, mutation, loading, error, createNavigate, editNavigate, activeRows }) => {
@@ -47,8 +52,12 @@ const AdminTableButtonGroup = ({ variables, mutation, loading, error, createNavi
 }
 
 AdminTableButtonGroup.propTypes = {
-  code: PropTypes.string.isRequired,
-  activeRows: PropTypes.array.isRequired,
+  activeRows: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]).isRequired,
+  variables: PropTypes.object.isRequired,
+  mutation: PropTypes.func.isRequired,
   createNavigate: PropTypes.func.isRequired,
   editNavigate: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,

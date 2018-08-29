@@ -3,8 +3,6 @@ import { Query } from 'react-apollo'
 import { Table } from 'semantic-ui-react'
 import { compose } from 'recompose'
 
-import { history } from '../../../../../library/routing'
-
 import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
 import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay, renderForDataNotFound, NotFoundDisplay } from '../../common/ConditionalRender'
 
@@ -13,12 +11,10 @@ import CountriesTableFooter from './CountriesTableFooter'
 import CountriesRow from './CountriesRow'
 import { withSelectableRowsTable } from '../../common/withSelectableRowsTable'
 
-const vanillaCountriesTable = ({ data: {countries}, activeRows, onRowClick }) => {
+ const vanillaCountriesTable = ({ data: { countries }, activeRows, onRowClick }) => {
   let code = ""
-  // const anySelectedRows = Object.entries(activeRows).some(e => e[1] == true)
-
-  // if (anySelectedRows)
-  code = Object.entries(activeRows).shift()[0] 
+  if (Object.entries(activeRows) && Object.entries(activeRows).some(e => e[1] == true))
+    code = Object.entries(activeRows).shift()[0]
 
   return (
     <Table celled selectable stackable>
@@ -55,9 +51,13 @@ const EnhancedCountriesTable = compose(
 
 const CountriesTable = () => {
   return (
-  <Query query={ALL_COUNTRIES}>
-    {EnhancedCountriesTable}
-  </Query>
+    <Query query={ALL_COUNTRIES}>
+       {({ loading, error, data }) => { 
+         return (
+           <EnhancedCountriesTable data={data} loading={loading} error={error} /> 
+         )
+       }}
+    </Query>
   )
 }
 

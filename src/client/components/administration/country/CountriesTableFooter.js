@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Table } from 'semantic-ui-react'
 
 import CountryTableButtonGroup from './CountryTableButtonGroup'
@@ -15,8 +16,11 @@ const CountriesTableFooter = ({ activeRows }) => {
   )
 }
 
-DeleteCountryButton.propTypes = {
-  activeRows: PropTypes.array.isRequired,
+CountriesTableFooter.propTypes = {
+  activeRows: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]).isRequired
 };
 
 export default CountriesTableFooter

@@ -6,7 +6,7 @@ import AdminDeleteButton from '../controls/AdminDeleteButton'
 import DELETE_COUNTRY from '../../../graphql/mutations/administration/country/deleteCountry'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
 
-const DeleteCountryButton = ({ code }) => {
+const DeleteCountryButtonObs = ({ code }) => {
   return (
     <Mutation mutation={DELETE_COUNTRY} 
               key={code} 
@@ -19,8 +19,8 @@ const DeleteCountryButton = ({ code }) => {
    )
  }
 
-DeleteCountryButton.propTypes = {
+ DeleteCountryButtonObs.propTypes = {
   code: PropTypes.string.isRequired
 };
 
-export default DeleteCountryButton
+export default DeleteCountryButtonObs
