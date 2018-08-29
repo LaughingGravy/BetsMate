@@ -17,10 +17,7 @@ const CountriesTableFooter = ({ activeRows }) => {
 }
 
 CountriesTableFooter.propTypes = {
-  activeRows: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object
-  ]).isRequired
+  activeRows: PropTypes.object.isRequired
 };
 
 export default CountriesTableFooter

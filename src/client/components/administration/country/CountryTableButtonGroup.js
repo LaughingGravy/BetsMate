@@ -47,10 +47,7 @@ const CountryTableButtonGroup = ({ activeRows }) => {
 }
 
 CountryTableButtonGroup.propTypes = {
-  activeRows: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object
-  ]).isRequired
+  activeRows: PropTypes.object.isRequired
 };
 
 export default CountryTableButtonGroup

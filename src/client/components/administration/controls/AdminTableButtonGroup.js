@@ -30,10 +30,11 @@ const ButtonGroup = ({ activeRows, variables, mutation, loading, createNavigate,
 }
 
 ButtonGroup.propTypes = {
-  activeRows: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object
-  ]).isRequired,
+  // activeRows: PropTypes.oneOfType([
+  //   PropTypes.array,
+  //   PropTypes.object
+  // ]).isRequired,
+  activeRows: PropTypes.object.isRequired,
   variables: PropTypes.object.isRequired,
   mutation: PropTypes.func.isRequired,
   createNavigate: PropTypes.func.isRequired,
@@ -52,10 +53,7 @@ const AdminTableButtonGroup = ({ variables, mutation, loading, error, createNavi
 }
 
 AdminTableButtonGroup.propTypes = {
-  activeRows: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object
-  ]).isRequired,
+  activeRows: PropTypes.object.isRequired,
   variables: PropTypes.object.isRequired,
   mutation: PropTypes.func.isRequired,
   createNavigate: PropTypes.func.isRequired,

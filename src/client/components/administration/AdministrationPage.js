@@ -10,7 +10,7 @@ const AdministrationPage = ( { match }) => {
   return (
     <Grid columns={1} centered>
       <Grid.Row centered>
-        <Header as ="h1">{intl.get("admin-page-title")}</Header>
+        <Header as ="h2">{intl.get("admin-page-title")}</Header>
       </Grid.Row>
 
        <GridRow centered>

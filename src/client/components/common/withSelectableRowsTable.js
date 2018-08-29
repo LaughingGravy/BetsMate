@@ -6,7 +6,7 @@ export function withSelectableRowsTable(WrappedComponent) {
       super(props);
 
       this.state = {
-        activeRows: []
+        activeRows: {}
       }
 
       this.onRowClick = this.onRowClick.bind(this);
