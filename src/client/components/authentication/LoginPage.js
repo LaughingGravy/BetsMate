@@ -2,8 +2,11 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Grid, Container, GridColumn } from 'semantic-ui-react'
 
-import AuthForm from './AuthForm'
+import LoginButton from './LoginButton'
 import LoginPageAlternativeButtonGroup from './LoginPageAlternativeButtonGroup'
+import { withAuthButtonAuthForm } from './withAuthButton'
+
+const AuthFormWithLoginButton = withAuthButtonAuthForm(LoginButton)
 
 const LoginPage = () => {
     return (
@@ -16,7 +19,7 @@ const LoginPage = () => {
           <Grid.Row centered>
             <GridColumn mobile={16} tablet={8} computer={4}>
               <Container textAlign='center'>
-                <AuthForm />
+                <AuthFormWithLoginButton />
                 <LoginPageAlternativeButtonGroup />
               </Container>  
             </GridColumn>

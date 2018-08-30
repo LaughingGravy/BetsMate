@@ -33,7 +33,7 @@ class AuthForm  extends React.Component {
                       value={password} onChange={this.handleChange} />
         </Form.Field>
 
-        <LoginButton email={email} password={password} />
+        {/* <LoginButton email={email} password={password} /> */}
       </Form>
     )
   }

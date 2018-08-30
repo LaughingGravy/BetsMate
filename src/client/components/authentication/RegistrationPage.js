@@ -1,71 +1,30 @@
 import React from 'react';
 import intl from 'react-intl-universal'
-import { Mutation } from 'react-apollo'
-import { Form, Grid, Container, GridColumn } from 'semantic-ui-react'
-import { history } from '../../../../library/routing'
-import REGISTER from '../../graphql/mutations/authentication/register'
-import CURRENT_USER from '../../graphql/queries/authentication/currentUser'
-import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
 
-class RegistrationPage extends React.Component {
-  constructor(props) {
-    super(props);
+import { Grid, Container, GridColumn } from 'semantic-ui-react'
+import LoginButton from './LoginButton'
+import { withAuthButtonAuthForm } from './withAuthButton'
 
-    this.state = { 
-      email: "",
-      password: "",
-      role: "user"
-    }
-  }
+const AuthFormWithRegisterButton = withAuthButtonAuthForm(LoginButton)
 
-  handleChange = (e, { name, value }) => this.setState({ [name]: value })
+const RegistrationPage = () => {
+    return (   
+      <Container>
+        <Grid columns={1} centered>
+          <Grid.Row centered>
+          <h3>{intl.get("register-page-title")}</h3>
+          </Grid.Row>
 
-  onRegisterSuccessful(data) {
-    history.goBack()
-  }
-  
-  render() {
-    const { password, email, role } = this.state
-
-    return (
-      
-          <Container>
-            <Grid columns={1} centered>
-              <Grid.Row centered>
-              <h3>{intl.get("register-page-title")}</h3>
-              </Grid.Row>
-
-              <Mutation mutation={REGISTER} 
-                onCompleted={this.onRegisterSuccessful}
-                refetchQueries={[ {query: CURRENT_USER}]}>
-                {(signup, { loading, error, data }) => (
-                  <Grid.Row centered>
-                    <GridColumn mobile={16} tablet={8} computer={4}>
-                      <Form onSubmit={e => {
-                          e.preventDefault;
-                          signup({ variables: { email, password, role } })
-                        }}>    
-                          <Form.Field required>
-                            <Form.Input name='email' label={intl.get("email-label")} placeholder='example@domain.com' onChange={this.handleChange} />
-                          </Form.Field>
-
-                          <Form.Field required>
-                            <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder='Password...' onChange={this.handleChange} />
-                          </Form.Field>
-
-                          <Container textAlign='center'>
-                            <Form.Button primary loading={loading}>{intl.get("register-button-label")}</Form.Button>
-                          </Container>
-                      </Form>
-                      {error && <GraphQLErrorDisplay error={error} />}
-                  </GridColumn>
-                </Grid.Row>
-               )}
-               </Mutation>
-           </Grid>
-          </Container>       
+          <Grid.Row centered>
+            <GridColumn mobile={16} tablet={8} computer={4}>
+              < Container textAlign='center'>
+                <AuthFormWithRegisterButton />
+              </Container>  
+            </GridColumn>
+          </Grid.Row>
+        </Grid>
+      </Container>       
     )
-  }
 }
   
   export default RegistrationPage;
