@@ -4,7 +4,6 @@ import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
 import { Form } from 'semantic-ui-react'
 
-import { history } from '../../../../../library/routing'
 import SaveCountryButton from './SaveCountryButton'
 
 class CountryForm  extends React.Component {
@@ -18,10 +17,6 @@ class CountryForm  extends React.Component {
   }
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
-
-  onCompleted = (data) => {
-    history.push('/administration/country/countries')
-  }
 
   render() {
     const { code, countryName } = this.state
@@ -40,7 +35,7 @@ class CountryForm  extends React.Component {
                   placeholder={intl.get("country-name-placeholder")} onChange={this.handleChange} />
         </Form.Field>
 
-        <SaveCountryButton code={code} name={countryName} onCompleted={this.onCompleted} />
+        <SaveCountryButton code={code} name={countryName} />
 
       </Form>
     ) 

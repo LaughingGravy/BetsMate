@@ -2,37 +2,37 @@ import React from 'react';
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
 import { compose } from 'recompose'
-import { Container, Form } from 'semantic-ui-react'
+import { Container, Button } from 'semantic-ui-react'
 
-import { renderMessageForError } from '../../common/ConditionalRender'
-import GraphQLErrorDisplay from '../../common/GraphQLErrorDisplay'
+import { renderMessageForError } from './ConditionalRender'
+import GraphQLErrorDisplay from './GraphQLErrorDisplay'
 
 const EnhancedGraphQLErrorDisplay = compose(
   renderMessageForError(GraphQLErrorDisplay)
 )(GraphQLErrorDisplay)
 
-const AdminSaveButton = ({variables, mutation, loading, error}) => {
-
+const MutationButton = ({variables, mutation, loading, error, label }) => {
   return (
     <Container textAlign="center">
         <EnhancedGraphQLErrorDisplay error={error} />
-        <Form.Button primary
+        <Button primary
                       onClick={e => { 
                                       e.preventDefault();
                                       mutation({variables})
                       }}
                       loading={loading} 
-                    >{intl.get("save-button-label")}
-        </Form.Button>  
+                    >{intl.get(label)}
+        </Button>  
     </Container>
   )
 }
 
-AdminSaveButton.propTypes = {
+MutationButton.propTypes = {
   variables: PropTypes.object.isRequired,
   mutation: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.object
+  error: PropTypes.object,
+  label: PropTypes.string.isRequired
 };
 
-export default AdminSaveButton
+export default MutationButton

@@ -2,15 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 
-import AdminSaveButton from '../controls/AdminSaveButton'
+import { history } from '../../../../../library/routing'
+import MutationButton from '../../common/MutationButton'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'
 import MERGE_COUNTRY from '../../../graphql/mutations/administration/country/mergeCountry'
 
-const SaveCountryButton = ({ code, name, onCompleted }) => {
+const SaveCountryButton = ({ code, name }) => {
+
+  const label = "save-button-label"
+
+  const onCompleted = (data) => {
+    history.push('/administration/country/countries')
+  }
+
   return (
     <Mutation mutation={MERGE_COUNTRY} key={code} 
-      
+
       onCompleted={onCompleted}
 
       update={(store) => {
@@ -37,11 +45,9 @@ const SaveCountryButton = ({ code, name, onCompleted }) => {
         }
       }}
 
-      refetchQueries={[ {query: ALL_COUNTRIES} ]}
-
-      >
+      refetchQueries={[ {query: ALL_COUNTRIES} ]}>
       {(mergeCountry, { loading, error }) => (
-          <AdminSaveButton variables={{code: code, name: name}} mutation={mergeCountry} loading={loading} error={error} />
+          <MutationButton variables={{code: code, name: name}} mutation={mergeCountry} loading={loading} error={error} label={label} />
       )}
     </Mutation>
   )
@@ -49,8 +55,7 @@ const SaveCountryButton = ({ code, name, onCompleted }) => {
 
 SaveCountryButton.propTypes = {
   code: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  onCompleted: PropTypes.func.isRequired
+  name: PropTypes.string.isRequired
 };
 
 export default SaveCountryButton
