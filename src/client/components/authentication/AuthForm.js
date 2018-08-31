@@ -1,8 +1,7 @@
 import React from 'react'
 import intl from 'react-intl-universal'
+import PropTypes from 'prop-types'
 import { Form } from 'semantic-ui-react'
-
-import LoginButton from './LoginButton'
 
 class AuthForm  extends React.Component {
   constructor(props) {
@@ -33,10 +32,14 @@ class AuthForm  extends React.Component {
                       value={password} onChange={this.handleChange} />
         </Form.Field>
 
-        {/* <LoginButton email={email} password={password} /> */}
+        {this.props.children}
       </Form>
     )
   }
+}
+
+AuthForm.propTypes = {
+  children: PropTypes.element.isRequired
 }
 
 export default AuthForm

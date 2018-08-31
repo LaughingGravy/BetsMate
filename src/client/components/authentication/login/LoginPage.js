@@ -4,7 +4,7 @@ import { Grid, Container, GridColumn } from 'semantic-ui-react'
 
 import LoginButton from './LoginButton'
 import LoginPageAlternativeButtonGroup from './LoginPageAlternativeButtonGroup'
-import { withAuthButtonAuthForm } from './withAuthButton'
+import { withAuthButtonAuthForm } from '../withAuthButtonAuthForm'
 
 const AuthFormWithLoginButton = withAuthButtonAuthForm(LoginButton)
 
@@ -17,7 +17,7 @@ const LoginPage = () => {
           </Grid.Row>
 
           <Grid.Row centered>
-            <GridColumn mobile={16} tablet={8} computer={4}>
+            <GridColumn mobile={14} tablet={8} computer={6}>
               <Container textAlign='center'>
                 <AuthFormWithLoginButton />
                 <LoginPageAlternativeButtonGroup />

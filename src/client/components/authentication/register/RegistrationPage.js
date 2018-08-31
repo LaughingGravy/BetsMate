@@ -2,10 +2,10 @@ import React from 'react';
 import intl from 'react-intl-universal'
 
 import { Grid, Container, GridColumn } from 'semantic-ui-react'
-import LoginButton from './LoginButton'
-import { withAuthButtonAuthForm } from './withAuthButton'
+import RegisterButton from './RegisterButton'
+import { withAuthButtonAuthForm } from '../withAuthButtonAuthForm'
 
-const AuthFormWithRegisterButton = withAuthButtonAuthForm(LoginButton)
+const AuthFormWithRegisterButton = withAuthButtonAuthForm(RegisterButton)
 
 const RegistrationPage = () => {
     return (   
@@ -16,7 +16,7 @@ const RegistrationPage = () => {
           </Grid.Row>
 
           <Grid.Row centered>
-            <GridColumn mobile={16} tablet={8} computer={4}>
+            <GridColumn mobile={14} tablet={8} computer={6}>
               < Container textAlign='center'>
                 <AuthFormWithRegisterButton />
               </Container>  
