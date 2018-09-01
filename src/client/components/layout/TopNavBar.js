@@ -1,8 +1,8 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Menu, Icon, Flag, Dropdown, Button, Responsive, Popup, MenuItem} from 'semantic-ui-react';
+import { Menu, Icon, Flag, Dropdown, Button, Responsive, Popup, MenuItem } from 'semantic-ui-react';
 import intl from 'react-intl-universal';
 
 import Logout from '../authentication/Logout'
@@ -54,11 +54,12 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, userCtx, onToggleSi
             </Menu.Item>
           </Responsive>}
 
-          {userCtx.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+          {<Responsive minWidth={Responsive.onlyComputer.minWidth}>
             <Logout>
               <Menu.Item as={NavLink}  to="/home" key="logout" activeClassName="active">
                 {intl.get("logout-menu-header")}
               </Menu.Item>
+             
             </Logout>
           </Responsive>} 
 

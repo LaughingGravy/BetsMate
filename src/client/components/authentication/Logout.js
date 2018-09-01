@@ -1,40 +1,43 @@
-import React from 'react'
-import { graphql, compose } from 'react-apollo';
-import { history } from '../../../../library/routing';
+import React from 'react';
+import { Mutation } from 'react-apollo'
+import { compose } from 'recompose'
+
+import { Loader } from 'semantic-ui-react'
+
+import { history } from '../../../../library/routing'
+import { renderIfAuthenticated } from '../common/ConditionalRender'
+import { withUser } from '../contexts/withUserContext'
 import LOGOUT from '../../graphql/mutations/authentication/logout'
 import CURRENT_USER from '../../graphql/queries/authentication/currentUser'
- 
-class Logout extends React.PureComponent {
-    constructor(props) {
-       super(props);
 
-       this.onLogoutSuccessful = this.onLogoutSuccessful.bind(this);
-       this.onSubmit = this.onSubmit.bind(this);
-    }
+const vanillaLogout = (props) => {
 
-    onLogoutSuccessful(data) {
-        history.push("/");
-    }
+  const onCompleted = (data) => {
+      history.push('/home');
+  }
 
-    onSubmit() {
-        this.props.mutate({
-            refetchQueries: [ {query: CURRENT_USER}],
-            onCompleted:  this.onLogoutSuccessful 
-        })
-    }
+  return (
+    <Mutation mutation={LOGOUT} key={"LOGOUT"} 
+      
+      onCompleted={onCompleted}
 
-    render() {
-        const { children } = this.props
-
-        return (
-            <span onClick={(e) => {this.onSubmit(e)}}> 
-                { children }
-            </span>
-        )
-    }
+      refetchQueries={[ {query: CURRENT_USER}]}>
+      {(logout, { loading }) => (
+          <span loading={loading} onClick={(e) => { 
+                                  e.preventDefault()
+                                  logout()
+                        }}> 
+              <Loader active={loading} />
+              { props.children }
+          </span>
+      )}
+    </Mutation>
+  )
 }
 
-export default compose(
-    graphql(LOGOUT),
-    graphql(CURRENT_USER)
-)(Logout)
+const Logout = compose(
+  renderIfAuthenticated(vanillaLogout),
+)(vanillaLogout)
+
+
+export default withUser(Logout)

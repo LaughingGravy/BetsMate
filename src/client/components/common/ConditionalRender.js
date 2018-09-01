@@ -15,6 +15,13 @@ const AdminFailAccessErrorDisplay = props => (
   <Container textAlign="center">{intl.get("auth-page-decline")}</Container>
 )
 
+const renderIfAuthenticated = (component, propName = "userCtx") =>
+  branch(
+    props => (props[propName] && props[propName].isAuthenticated),
+              renderComponent(component),
+              renderNothing
+)
+
 const renderForLoading = (component) => 
   branch(
     props => props.loading,
@@ -77,7 +84,7 @@ const MutateErrorDisplay = props => (
   </Container>
 )
 
-export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, 
+export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, renderIfAuthenticated,
         renderForLoading, LoadingDisplay, 
         renderMessageForError, renderForError, QueryErrorDisplay, MutateErrorDisplay,
         renderForNotFound, renderForDataNotFound, NotFoundDisplay, 
