@@ -8,7 +8,7 @@ import CURRENT_USER from '../../../graphql/queries/authentication/currentUser'
 
 import MutationButton from '../../common/MutationButton'
 
-const LoginButton = ({ email, password }) => {
+const LoginButton = ({ variables }) => {
 
   const label = "login-button-label"
 
@@ -20,13 +20,13 @@ const LoginButton = ({ email, password }) => {
   }
 
   return (
-    <Mutation mutation={LOGIN} key={email} 
+    <Mutation mutation={LOGIN} key={variables.email} 
       
       onCompleted={onCompleted}
 
       refetchQueries={[ {query: CURRENT_USER}]}>
       {(login, { loading, error }) => (
-        <MutationButton variables={{email: email, password: password}} mutation={login} 
+        <MutationButton variables={variables} mutation={login} 
                         loading={loading} error={error} label={label} />
     )}
     </Mutation>
@@ -34,8 +34,10 @@ const LoginButton = ({ email, password }) => {
 }
 
 LoginButton.propTypes = {
-  email: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired
-};
+  variables: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+  }).isRequired
+}
 
 export default LoginButton

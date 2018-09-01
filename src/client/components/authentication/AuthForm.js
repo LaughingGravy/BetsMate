@@ -31,15 +31,15 @@ class AuthForm  extends React.Component {
           <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder='Password...' 
                       value={password} onChange={this.handleChange} />
         </Form.Field>
-
-        {this.props.children}
+       
+        {this.props.render(this.state)}
       </Form>
     )
   }
 }
 
-AuthForm.propTypes = {
-  children: PropTypes.element.isRequired
-}
+// AuthForm.propTypes = {
+//   children: PropTypes.element.isRequired
+// }
 
 export default AuthForm

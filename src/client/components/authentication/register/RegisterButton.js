@@ -8,7 +8,7 @@ import CURRENT_USER from '../../../graphql/queries/authentication/currentUser'
 
 import MutationButton from '../../common/MutationButton'
 
-const RegisterButton = ({ email, password, role }) => {
+const RegisterButton = ({ variables: { email, password }, role }) => {
 
   const label = "register-button-label"
 
@@ -38,9 +38,11 @@ RegisterButton.defaultProps = {
 }
 
 RegisterButton.propTypes = {
-  email: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired
+  variables: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+  }).isRequired,
+  role: PropTypes.string
 };
 
 export default RegisterButton
