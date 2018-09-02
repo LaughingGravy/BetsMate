@@ -3,9 +3,7 @@ import intl from 'react-intl-universal'
 
 import { Grid, Container, GridColumn } from 'semantic-ui-react'
 import RegisterButton from './RegisterButton'
-import { withAuthButtonAuthForm } from '../withAuthButtonAuthForm'
-
-const AuthFormWithRegisterButton = withAuthButtonAuthForm(RegisterButton)
+import AuthForm from '../AuthForm'
 
 const RegistrationPage = () => {
     return (   
@@ -18,7 +16,9 @@ const RegistrationPage = () => {
           <Grid.Row centered>
             <GridColumn mobile={14} tablet={8} computer={6}>
               < Container textAlign='center'>
-                <AuthFormWithRegisterButton />
+                <AuthForm render={variables => (
+                    <RegisterButton variables={variables} /> 
+                )}/>
               </Container>  
             </GridColumn>
           </Grid.Row>

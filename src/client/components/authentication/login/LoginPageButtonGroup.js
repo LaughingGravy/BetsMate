@@ -3,7 +3,7 @@ import intl from 'react-intl-universal'
 import { NavLink } from 'react-router-dom';
 import { Grid, Container, GridColumn } from 'semantic-ui-react'
 
-const LoginPageAlternativeButtonGroup = () => {
+const LoginPageButtonGroup = () => {
   return (
     <Container textAlign='center'>
       <Grid centered>
@@ -24,4 +24,4 @@ const LoginPageAlternativeButtonGroup = () => {
   )
 }
 
-export default LoginPageAlternativeButtonGroup
+export default LoginPageButtonGroup

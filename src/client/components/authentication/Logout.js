@@ -2,7 +2,7 @@ import React from 'react';
 import { Mutation } from 'react-apollo'
 import { compose } from 'recompose'
 
-import { Loader } from 'semantic-ui-react'
+import { Loader, Segment } from 'semantic-ui-react'
 
 import { history } from '../../../../library/routing'
 import { renderIfAuthenticated } from '../common/ConditionalRender'
@@ -23,11 +23,11 @@ const vanillaLogout = (props) => {
 
       refetchQueries={[ {query: CURRENT_USER}]}>
       {(logout, { loading }) => (
-          <span loading={loading} onClick={(e) => { 
+          <span onClick={(e) => { 
                                   e.preventDefault()
                                   logout()
                         }}> 
-              <Loader active={loading} />
+              <Loader active={loading} inline="centered" />
               { props.children }
           </span>
       )}
