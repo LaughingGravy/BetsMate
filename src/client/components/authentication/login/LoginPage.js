@@ -1,6 +1,6 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Grid, Container, GridColumn } from 'semantic-ui-react'
+import { Container, Grid, GridColumn } from 'semantic-ui-react'
 
 import AuthForm from '../AuthForm'
 import LoginButton from './LoginButton'
@@ -8,7 +8,6 @@ import LoginPageButtonGroup from './LoginPageButtonGroup'
 
 const LoginPage = () => {
     return (
-      <Container>
         <Grid columns={1} centered>
           <Grid.Row centered>
           <h3>{intl.get("login-page-title")}</h3>
@@ -25,8 +24,7 @@ const LoginPage = () => {
             </GridColumn>
           </Grid.Row>
 
-        </Grid>
-      </Container>            
+        </Grid>     
     )
 }
   

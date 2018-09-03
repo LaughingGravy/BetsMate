@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 
 import { history } from '../../../../../library/routing'
+import RESET from '../../../graphql/mutations/authentication/reset'
 
 const RestButton = ({ variables }) => {
 
@@ -12,13 +13,11 @@ const RestButton = ({ variables }) => {
   }
 
   return (
-    <Mutation mutation={LOGIN} key={variables.email} 
+    <Mutation mutation={RESET} key={"RESET"} 
       
-      onCompleted={onCompleted}
-
-      refetchQueries={[ {query: CURRENT_USER}]}>
-      {(login, { loading, error }) => (
-        <MutationButton variables={variables} mutation={login} 
+      onCompleted={onCompleted}>
+      {(reset, { loading, error }) => (
+        <MutationButton variables={variables} mutation={reset} 
                         loading={loading} error={error} label={label} />
     )}
     </Mutation>

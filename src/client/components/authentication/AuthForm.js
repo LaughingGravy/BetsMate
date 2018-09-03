@@ -37,8 +37,4 @@ class AuthForm  extends React.Component {
   }
 }
 
-// AuthForm.propTypes = {
-//   children: PropTypes.element.isRequired
-// }
-
 export default AuthForm

@@ -21,11 +21,14 @@
     "login-page-title": "Login",
     "register-page-title": "Registration",
     "reset-page-title": "Forgot Password",
+    "change-password-page-title": "Change Password",
 
     "email-label": "Email",
     "password-label": "Password",
     "login-button-label": "Login",
     "register-button-label": "Sign up",
+
+    "reset-body-text": "Please enter your registered Bets Mate email address.<br>Once submitted a link to set a new password will be mailed.",
     
     "admin-country-menu-header": "Country",
     "countries-menu-header": "Countries",

@@ -3,6 +3,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const User = mongoose.model('user');
+const UserReset = mongoose.model('userReset');
 
 // SerializeUser is used to provide some identifying token that can be saved
 // in the users session.  We traditionally use the 'ID' for this.
@@ -82,4 +83,18 @@ function login({ email, password, req }) {
   });
 }
 
-export { signup, login };
+function reset({ email, token, expiry }) {
+  User.findOne({ email: email.toLowerCase() }, (err, user) => {
+    if (err) { return done(err); }
+    if (!user) { return done(null, false, 'Email not found! Please register.'); }
+  })
+
+  UserReset.updateOne({ "email": email.toLowerCase() },
+                      { $set: { "token": token, "expiry": expiry }},
+                      { upsert: true }, (err, ret) => {
+                        if (err) { return done(err); }
+                        else { return done(ret); }
+                      })
+}
+
+export { signup, login, reset };

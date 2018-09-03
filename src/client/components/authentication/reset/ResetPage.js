@@ -1,12 +1,18 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Form } from 'semantic-ui-react'
+import { Container, Grid,  } from 'semantic-ui-react'
+
+import RestForm from './ResetForm'
+import ResetButton from './ResetButton'
 
 const ResetPage = () => (
-  <Container>
   <Grid columns={1} centered>
     <Grid.Row centered>
       <h3>{intl.get("reset-page-title")}</h3>
+    </Grid.Row>
+
+    <Grid.Row>
+      {intl.get("reset-body-text")}
     </Grid.Row>
 
     <Grid.Row centered>
@@ -20,10 +26,6 @@ const ResetPage = () => (
     </Grid.Row>
 
   </Grid>
-</Container>
 )
 
-export default ResetPage
-
-  
 export default ResetPage

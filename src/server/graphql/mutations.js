@@ -8,10 +8,13 @@ const {
 } = graphql;
 
 const UserType = require('./types/user_type').default;
+const UserResetType = require('./types/user_reset_type').default;
 const AuthService = require('../services/auth');
 
 const CountryType = require('./types/country_type').default
 const AdminService = require('../services/admin')
+
+const HelperService = require('../services/helper')
 
 export default new GraphQLObjectType({
     name: 'Mutation',
@@ -46,6 +49,17 @@ export default new GraphQLObjectType({
             resolve(parentValue, { email, password }, ctx) {
                 const req = ctx.req;
                 return AuthService.login({ email, password, req });
+            }
+        },
+        reset: {
+            type: UserResetType,
+            args: {
+                email: { type: GraphQLString }
+            },
+            resolve(parentValue, { email }, ctx) {
+                const token = HelperService.getResetToken()
+                const expiry = HelperService.getResetExpiry()
+                return AuthService.reset({ email, token, expiry });
             }
         },
         mergeCountry: {

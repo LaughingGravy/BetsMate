@@ -21,11 +21,14 @@
     "admin-page-title": "アドミン",
     "register-page-title": "レジスター",
     "reset-page-title": "パスワード忘れた",
+    "change-password-page-title": "パスワードを変更する",
 
     "email-label": "Eメール",
     "password-label": "パスワード",
     "login-button-label": "ログイン",
     "register-button-label": "新規登録",
+
+    "reset-body-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
     
     "admin-country-menu-header": "国",
     "countries-menu-header": "国国",

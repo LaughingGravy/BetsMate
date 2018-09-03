@@ -16,7 +16,8 @@ class Common {
         this.secret = '@0m0r1 Blu3 F0rest Pr3f3cture',
         
         this.mailerUser = "gmail.user@gmail.com",
-        this.mailerPassword = "password";
+        this.mailerPassword = "password",
+        this.resetTokenExpiryInDays = 1,
         
         this.apolloClientOpt = {};
         this.isRunEngine = yn(process.env.RUN_ENGINE);
@@ -37,13 +38,15 @@ if (process.env.NODE_ENV === 'development')
             this.allowSSL = false
             this.host = process.env.HOST || 'localhost'
 
-            this.mongoURL = 'mongodb://admin:k0mbanwa@ds159866.mlab.com:59866/betsmate';
+            this.resetTokenExpiryInDays = 1
+
+            this.mongoURL = 'mongodb://admin:k0mbanwa@ds159866.mlab.com:59866/betsmate'
             this.connectOpt = {
                 keepAlive: true
-            };
+            },
 
             this.bolt = "bolt://hobby-iiiklpkknlfngbkemhilohbl.dbs.graphenedb.com:24786"
-            this.neoUsername = "admin"
+            this.neoUsername = "admin",
             this.neoPassword = "b.CFFFu5eTaFox.68rQ5gRejhGzu9ZQ"
         }
     }
@@ -62,6 +65,8 @@ else
             this.connectOpt = {
                 keepAlive: true
             };
+
+            this.resetTokenExpiryInDays = 1
 
             this.bolt = "bolt://hobby-iiiklpkknlfngbkemhilohbl.dbs.graphenedb.com:24786"
             this.neoUsername = "admin"

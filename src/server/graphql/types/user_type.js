@@ -1,5 +1,4 @@
 import {
-    graphql,
     GraphQLID,
     GraphQLObjectType,
     GraphQLString,

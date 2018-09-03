@@ -6,7 +6,7 @@ import { Redirect } from '../../../../library/routing'
 import AdministrationPage from '../administration/AdministrationPage'
 import RegistrationPage from '../authentication/register/RegistrationPage'
 import LoginPage from '../authentication/login/LoginPage'
-import ResetPage from '../authentication/ResetPage'
+import ResetPage from '../authentication/reset/ResetPage'
 import HomePage from '../home/HomePage'
 import AboutPage from '../about/AboutPage'
 
