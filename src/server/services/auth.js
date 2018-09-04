@@ -5,6 +5,9 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = mongoose.model('user');
 const UserReset = mongoose.model('userReset');
 
+import createTransporter from '../../../utilities/mailer'
+import { getResetMailOptions } from './authHelper'
+
 // SerializeUser is used to provide some identifying token that can be saved
 // in the users session.  We traditionally use the 'ID' for this.
 passport.serializeUser((user, done) => {
@@ -91,15 +94,23 @@ function reset({ email, token, expiry }) {
       if (!existingUser) { throw new Error('Email not found! Please register.'); }
     })
     .then(() => {
-      return new Promise((resolve, reject) => {
         UserReset.updateOne({ "email": userReset.email.toLowerCase() },
                             { $set: { "token": userReset.token, "expiry": userReset.expiry }},
                             { upsert: true }, (err) => {
-            if (err) { reject(err); }
-            else { resolve(userReset); }
+            if (err) { throw(err); }
         })
-      })
     })
+    .then(() => {
+      return new Promise((resolve, reject) => {
+        const smtpTransport = createTransporter()
+        const options = getResetMailOptions(userReset)
+
+        smtpTransport.sendMail(options, (err, resp) => {
+          if (err) { reject(err) }
+          if (resp) { resolve(userReset)}
+        })
+    })
+  })
 }
 
-export { signup, login, reset };
+export { signup, login, reset }

@@ -13,4 +13,16 @@ const getResetExpiry = () => {
   return addDays(getUTCDate(), Config.resetTokenExpiryInDays)
 }
 
-export { getResetToken, getResetExpiry }
+const getResetMailOptions = ({ email, token, expiry }) => {
+  return {
+          from: Config.mailerUser,
+          to: email,
+          subject: "Bets Mate Password Reset",
+          html: `<h1> Greetings ${email}</h1>` +
+                  "<p>Here is the link to reset your password.<p>" +
+                  `<p>The link is valid until ${expiry}</p>` +
+                  `<p><a href=http://localhost:3000/change/${token}>Click here</p>`
+          }
+}
+
+export { getResetToken, getResetExpiry, getResetMailOptions }

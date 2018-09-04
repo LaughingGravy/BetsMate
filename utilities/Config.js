@@ -15,8 +15,8 @@ class Common {
         this.connectOpt = {},
         this.secret = '@0m0r1 Blu3 F0rest Pr3f3cture',
         
-        this.mailerUser = "gmail.user@gmail.com",
-        this.mailerPassword = "password",
+        this.mailerUser = "baikinmanlovesdokinchan@gmail.com",
+        this.mailerPassword = "k0mbanwa",
         this.resetTokenExpiryInDays = 1,
         
         this.apolloClientOpt = {};
