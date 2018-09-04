@@ -14,7 +14,7 @@ const AuthService = require('../services/auth');
 const CountryType = require('./types/country_type').default
 const AdminService = require('../services/admin')
 
-const HelperService = require('../services/helper')
+const HelperService = require('../services/authHelper')
 
 export default new GraphQLObjectType({
     name: 'Mutation',

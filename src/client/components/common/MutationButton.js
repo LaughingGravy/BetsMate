@@ -12,6 +12,7 @@ const EnhancedGraphQLErrorDisplay = compose(
 )(GraphQLErrorDisplay)
 
 const MutationButton = ({variables, mutation, loading, error, label }) => {
+  console.log("error", error)
   return (
     <Container textAlign="center">
         <EnhancedGraphQLErrorDisplay error={error} />

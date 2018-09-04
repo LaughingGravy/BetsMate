@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 
 export default gql`
-mutation Reset($email: String, $token: String, $expiry: Date)
+mutation Reset($email: String)
 {
-  reset (email: $email, token: $token, expiry: $Date) {
+  reset (email: $email) {
     email
     token
     expiry

@@ -1,6 +1,6 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Container, Grid,  } from 'semantic-ui-react'
+import { Container, Grid, GridColumn } from 'semantic-ui-react'
 
 import RestForm from './ResetForm'
 import ResetButton from './ResetButton'

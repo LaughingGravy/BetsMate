@@ -84,17 +84,22 @@ function login({ email, password, req }) {
 }
 
 function reset({ email, token, expiry }) {
-  User.findOne({ email: email.toLowerCase() }, (err, user) => {
-    if (err) { return done(err); }
-    if (!user) { return done(null, false, 'Email not found! Please register.'); }
-  })
+  const userReset = { email, token, expiry }
 
-  UserReset.updateOne({ "email": email.toLowerCase() },
-                      { $set: { "token": token, "expiry": expiry }},
-                      { upsert: true }, (err, ret) => {
-                        if (err) { return done(err); }
-                        else { return done(ret); }
-                      })
+  return User.findOne({ email })
+    .then(existingUser => {
+      if (!existingUser) { throw new Error('Email not found! Please register.'); }
+    })
+    .then(() => {
+      return new Promise((resolve, reject) => {
+        UserReset.updateOne({ "email": userReset.email.toLowerCase() },
+                            { $set: { "token": userReset.token, "expiry": userReset.expiry }},
+                            { upsert: true }, (err) => {
+            if (err) { reject(err); }
+            else { resolve(userReset); }
+        })
+      })
+    })
 }
 
 export { signup, login, reset };

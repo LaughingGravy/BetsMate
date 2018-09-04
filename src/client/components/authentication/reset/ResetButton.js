@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import { Mutation } from 'react-apollo'
 
 import { history } from '../../../../../library/routing'
+import MutationButton from '../../common/MutationButton'
 import RESET from '../../../graphql/mutations/authentication/reset'
 
 const RestButton = ({ variables }) => {

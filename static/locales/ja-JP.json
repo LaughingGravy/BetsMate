@@ -27,6 +27,7 @@
     "password-label": "パスワード",
     "login-button-label": "ログイン",
     "register-button-label": "新規登録",
+    "reset-button-label": "リンクを送る",
 
     "reset-body-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
     
