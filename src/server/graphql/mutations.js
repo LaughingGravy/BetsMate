@@ -51,7 +51,7 @@ export default new GraphQLObjectType({
                 return AuthService.login({ email, password, req });
             }
         },
-        reset: {
+        resetLink: {
             type: UserResetType,
             args: {
                 email: { type: GraphQLString }
@@ -59,7 +59,17 @@ export default new GraphQLObjectType({
             resolve(parentValue, { email }, ctx) {
                 const token = HelperService.getResetToken()
                 const expiry = HelperService.getResetExpiry()
-                return AuthService.reset({ email, token, expiry });
+                return AuthService.resetLink({ email, token, expiry });
+            }
+        },
+        resetPassword: {
+            type: UserResetType,
+            args: {
+                token: { type: GraphQLString },
+                password: { type: GraphQLString }
+            },
+            resolve(parentValue, { token, password }, ctx) {
+                return AuthService.resetPassword({ token, password });
             }
         },
         mergeCountry: {

@@ -7,6 +7,7 @@ const UserReset = mongoose.model('userReset');
 
 import createTransporter from '../../../utilities/mailer'
 import { getResetMailOptions } from './authHelper'
+import { getUTCDate, isFirstEarlierThanSecond } from '../../../utilities/dates'
 
 // SerializeUser is used to provide some identifying token that can be saved
 // in the users session.  We traditionally use the 'ID' for this.
@@ -86,14 +87,13 @@ function login({ email, password, req }) {
   });
 }
 
-function reset({ email, token, expiry }) {
+function resetLink({ email, token, expiry }) {
   const userReset = { email, token, expiry }
 
-  return User.findOne({ email })
+  return User.findOne({email})
     .then(existingUser => {
       if (!existingUser) { throw new Error("email-not-reg-error"); }
-    })
-    .then(() => {
+
         UserReset.updateOne({ "email": userReset.email.toLowerCase() },
                             { $set: { "token": userReset.token, "expiry": userReset.expiry }},
                             { upsert: true }, (err) => {
@@ -113,4 +113,27 @@ function reset({ email, token, expiry }) {
   })
 }
 
-export { signup, login, reset }
+function resetPassword({ token, password }) {
+  return UserReset.findOne({token})
+    .then(existingUserReset => {
+      console.log("existingUserReset", existingUserReset)
+      if (!existingUserReset) { 
+        throw new Error("reset-token-not-found-error"); 
+      }
+
+      if (!isFirstEarlierThanSecond(existingUserReset.expiry, getUTCDate())) { 
+        throw new Error("reset-token-expired-error"); 
+      }
+
+      return new Promise((resolve, reject) => {
+        User.updateOne({ "email": existingUserReset.email },
+                      { $set: { "password": password }},
+                      { upsert: false }, (err) => {
+                        if (err) { reject(err) }
+                        if (resp) { resolve(existingUserReset)}
+                      })
+      })      
+    })
+}
+
+export { signup, login, resetLink, resetPassword }

@@ -2,7 +2,7 @@
 import React from 'react';
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
-import { Form } from 'semantic-ui-react'
+import { Form, Container } from 'semantic-ui-react'
 
 import SaveCountryButton from './SaveCountryButton'
 
@@ -35,7 +35,9 @@ class CountryForm  extends React.Component {
                   placeholder={intl.get("country-name-placeholder")} onChange={this.handleChange} />
         </Form.Field>
 
-        <SaveCountryButton code={code} name={countryName} />
+        <Container textAlign="center">
+          <SaveCountryButton code={code} name={countryName} />
+        </Container>
 
       </Form>
     ) 

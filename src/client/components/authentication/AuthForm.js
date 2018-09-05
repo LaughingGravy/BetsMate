@@ -27,7 +27,7 @@ class AuthForm  extends React.Component {
         </Form.Field>
 
         <Form.Field required>
-          <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder='Password...' 
+          <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder={intl.get("password-placeholder")}
                       value={password} onChange={this.handleChange} />
         </Form.Field>
        

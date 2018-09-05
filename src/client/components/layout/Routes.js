@@ -6,8 +6,9 @@ import { Redirect } from '../../../../library/routing'
 import AdministrationPage from '../administration/AdministrationPage'
 import RegistrationPage from '../authentication/register/RegistrationPage'
 import LoginPage from '../authentication/login/LoginPage'
-import ResetPage from '../authentication/reset/ResetPage'
-import ResetSuccessPage from '../authentication/reset/ResetSuccessPage'
+import ResetPage from '../authentication/resetLink/ResetPage'
+import ResetSuccessPage from '../authentication/resetLink/ResetSuccessPage'
+import ResetPasswordPage from '../authentication/resetPassword/ResetPasswordPage'
 import HomePage from '../home/HomePage'
 import AboutPage from '../about/AboutPage'
 
@@ -20,7 +21,8 @@ const Routes = () => {
             <Route path="/register" component={RegistrationPage} />
             <Route path="/resetsuccess" component={ResetSuccessPage} />
             <Route from="/login" component={LoginPage} />
-            <Route from="/reset" component={ResetPage} />
+            <Route from="/resetlink" component={ResetPage} />
+            <Route from="/resetchange/:token" component={ResetPasswordPage} />
             <Route path="/about" component={AboutPage} />
             <Redirect exact from="about-us" to="about" />
             <Redirect to="/" />

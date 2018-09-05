@@ -1,3 +1,4 @@
+import  { compareAsc } from 'date-fns'
 
 const getUTCDate = (dateString = Date.now()) => {
   const date = new Date(dateString);
@@ -12,4 +13,9 @@ const getUTCDate = (dateString = Date.now()) => {
   );
 };
 
-export { getUTCDate }
+const isFirstEarlierThanSecond = (firstDate, secondDate) => {
+  console.log("firstDate, secondDate", firstDate, secondDate)
+  return compareAsc(firstDate, secondDate) == -1
+}
+
+export { getUTCDate, isFirstEarlierThanSecond }

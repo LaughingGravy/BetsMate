@@ -14,8 +14,8 @@ const LoginPageButtonGroup = () => {
             </NavLink>
           </GridColumn>
           <GridColumn textAlign='left'>
-            <NavLink to="/reset" key="reset">
-              {intl.get("reset-menu-header")}
+            <NavLink to="/resetlink" key="resetlink">
+              {intl.get("resetlink-menu-header")}
             </NavLink>
           </GridColumn>
         </Grid.Row> 

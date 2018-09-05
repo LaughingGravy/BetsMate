@@ -9,7 +9,7 @@ const GraphQLErrorDisplay = ( { error: { graphQLErrors, networkError } } ) => {
             <Message.Content>
                 <ul>
                     {graphQLErrors && graphQLErrors.map(({ message }, i) => {
-                    return <li key={i}>{intl.get(message).defaultMessage(message)}</li>
+                    return <li key={i}>{intl.getHTML(message).defaultMessage(message)}</li>
                     })}
                     {
                         networkError && <li className={css} key={networkError.statusCode}>{networkError.message}</li>
@@ -21,25 +21,4 @@ const GraphQLErrorDisplay = ( { error: { graphQLErrors, networkError } } ) => {
 }
 
 export default GraphQLErrorDisplay
-
-
-// const GraphQLErrorDisplay = ( { error: { graphQLErrors, networkError } } ) => {
-//     return (
-//         <Message size='mini' floating error visible>
-//             <Message.Content>
-//                 <ul>
-//                     {graphQLErrors && graphQLErrors.map(({ message }, i) => {
-//                     return <li key={i}>{message}</li>
-//                     })}
-//                     {
-//                         networkError && <li className={css} key={networkError.statusCode}>{networkError.message}</li>
-//                     }
-//                 </ul>
-//             </Message.Content>
-//         </Message>
-//     )
-// }
-
-// export default GraphQLErrorDisplay
-
 

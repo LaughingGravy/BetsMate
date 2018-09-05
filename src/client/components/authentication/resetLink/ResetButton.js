@@ -4,7 +4,7 @@ import { Mutation } from 'react-apollo'
 
 import { history } from '../../../../../library/routing'
 import MutationButton from '../../common/MutationButton'
-import RESET from '../../../graphql/mutations/authentication/reset'
+import RESET_LINK from '../../../graphql/mutations/authentication/resetLink'
 
 const RestButton = ({ variables }) => {
 
@@ -15,11 +15,11 @@ const RestButton = ({ variables }) => {
   }
 
   return (
-    <Mutation mutation={RESET} key={"RESET"} 
+    <Mutation mutation={RESET_LINK} key={"RESET_LINK"} 
       
       onCompleted={onCompleted}>
-      {(reset, { loading, error }) => (
-        <MutationButton variables={variables} mutation={reset} 
+      {(resetLink, { loading, error }) => (
+        <MutationButton variables={variables} mutation={resetLink} 
                         loading={loading} error={error} label={label} />
     )}
     </Mutation>

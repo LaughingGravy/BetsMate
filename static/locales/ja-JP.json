@@ -13,7 +13,7 @@
     "register-menu-header": "レジスター",
     "logout-menu-header": "ログアウト",
     "login-menu-header": "ログイン",
-    "reset-menu-header": "パスワードのリセット",
+    "resetlink-menu-header": "パスワードのリセット",
 
     "home-page-title": "ホーム",
     "about-page-title": "アボウト",
@@ -21,6 +21,7 @@
     "admin-page-title": "アドミン",
     "register-page-title": "レジスター",
     "reset-page-title": "パスワード忘れた",
+    "reset-password-page-title": "パスワードを再設定する",
     "change-password-page-title": "パスワードを変更する",
 
     "email-label": "Eメール",
@@ -28,10 +29,15 @@
     "login-button-label": "ログイン",
     "register-button-label": "新規登録",
     "reset-button-label": "リンクを送る",
+    "confirm-password-label": "パスワードを認証する",
 
-    "reset-body-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
+    "password-placeholder": "パスワード...",
+
+    "reset-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
     "reset-link-msg-header": "メールリンク送信済み",
     "reset-link-msg-content": "リセットされたパスワードのリンクは登録されたメールアドレスに送信されました.<br>リンクをクリックし、画面の指示に従ってください.",
+
+    "reset-password-text": "新しいパスワードを入力して確認のために再入力してください.",
     
     "admin-country-menu-header": "国",
     "countries-menu-header": "国国",
@@ -62,5 +68,7 @@
     "duplicate-email-error": "電子メールは既に登録されています",
     "missing-credentials-error": "メールアドレスとパスワードを入力する必要があります.",
     "credentials-error": "メール/パスワードが認識されない.",
-    "email-not-reg-error": "メールが見つかりません！登録してください."
+    "email-not-reg-error": "メールが見つかりません！登録してください.",
+    "reset-token-not-found-error": "パスワードリセットトークンが見つかりません.",
+    "reset-token-expired-error": "リンクトークンが期限切れです. <br />新しいリクエストをしてください."
 }

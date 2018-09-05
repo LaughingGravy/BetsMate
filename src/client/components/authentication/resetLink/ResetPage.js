@@ -13,8 +13,8 @@ const ResetPage = () => (
 
     <Grid.Row centered>
       <GridColumn mobile={14} tablet={8} computer={6}>
-        <Segment basic textAlign="left" text="true">
-          {intl.getHTML("reset-body-text")}
+        <Segment compact basic textAlign="left" text="true">
+          {intl.getHTML("reset-text")}
         </Segment>
       </GridColumn>
     </Grid.Row>
