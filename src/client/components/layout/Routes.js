@@ -7,6 +7,7 @@ import AdministrationPage from '../administration/AdministrationPage'
 import RegistrationPage from '../authentication/register/RegistrationPage'
 import LoginPage from '../authentication/login/LoginPage'
 import ResetPage from '../authentication/reset/ResetPage'
+import ResetSuccessPage from '../authentication/reset/ResetSuccessPage'
 import HomePage from '../home/HomePage'
 import AboutPage from '../about/AboutPage'
 
@@ -17,6 +18,7 @@ const Routes = () => {
             <Route path="/home" component={HomePage} />
             <Route path="/administration" component={AdministrationPage} />
             <Route path="/register" component={RegistrationPage} />
+            <Route path="/resetsuccess" component={ResetSuccessPage} />
             <Route from="/login" component={LoginPage} />
             <Route from="/reset" component={ResetPage} />
             <Route path="/about" component={AboutPage} />

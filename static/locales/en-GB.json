@@ -29,7 +29,9 @@
     "register-button-label": "Sign up",
     "reset-button-label": "Send Link",
 
-    "reset-body-text": "Please enter your registered Bets Mate email address. Once submitted a link to set a new password will be mailed.",
+    "reset-body-text": "Please enter your registered Bets Mate email address.<br />Once submitted a link to set a new password will be mailed.",
+    "reset-link-msg-header": "Email Link Sent",
+    "reset-link-msg-content": "The reset password link has been sent successfully to your registered email address.<br />Please click on the link and follow the on screen instructions.",
     
     "admin-country-menu-header": "Country",
     "countries-menu-header": "Countries",
@@ -52,5 +54,12 @@
     "admin-edit-button-label": "Edit",
     "admin-delete-button-label": "Delete",
 
-    "save-button-label": "Save"
+    "save-button-label": "Save",
+
+    "email-not-found-error": "Email not found.",
+    "pwd-invalid-error": "Password not valid.",
+    "duplicate-email-error": "Email is already registered",
+    "missing-credentials-error": "You must provide an email and password.",
+    "credentials-error": "Email/password not recognised.",
+    "email-not-reg-error": "Email not found! Please register."
 }

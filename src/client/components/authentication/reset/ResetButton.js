@@ -11,7 +11,7 @@ const RestButton = ({ variables }) => {
   const label = "reset-button-label"
 
   const onCompleted = (data) => {
-      history.push('/login');
+      history.push('/resetsuccess');
   }
 
   return (

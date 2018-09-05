@@ -33,13 +33,13 @@ passport.deserializeUser((id, done) => {
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
   User.findOne({ email: email.toLowerCase() }, (err, user) => {
     if (err) { return done(err); }
-    if (!user) { return done(null, false, 'email not found!'); }
+    if (!user) { return done(null, false, "email-not-found-error"); }
     user.comparePassword(password, (err, isMatch) => {
       if (err) { return done(err); }
       if (isMatch) {
         return done(null, user);
       }
-      return done(null, false, 'password not valid!');
+      return done(null, false, "pwd-invalid-error");
     });
   });
 }));
@@ -54,11 +54,11 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
 function signup({ email, password, role, req }) {
   const user = new User({ email, password, role });
   
-  if (!email || !password) { throw new Error('You must provide an email and password.'); }
+  if (!email || !password) { throw new Error("missing-credentials-error"); }
 
   return User.findOne({ email })
     .then(existingUser => {
-      if (existingUser) { throw new Error('Email in use'); }
+      if (existingUser) { throw new Error("duplicate-email-error"); }
       return user.save();
     })
     .then(user => {
@@ -79,7 +79,7 @@ function signup({ email, password, role, req }) {
 function login({ email, password, req }) {
   return new Promise((resolve, reject) => {
     passport.authenticate('local', (err, user) => {
-      if (!user) { reject('Invalid credentials.') }
+      if (!user) { reject("credentials-error") }
 
       req.login(user, () => resolve(user));
     })({ body: { email, password } });
@@ -91,7 +91,7 @@ function reset({ email, token, expiry }) {
 
   return User.findOne({ email })
     .then(existingUser => {
-      if (!existingUser) { throw new Error('Email not found! Please register.'); }
+      if (!existingUser) { throw new Error("email-not-reg-error"); }
     })
     .then(() => {
         UserReset.updateOne({ "email": userReset.email.toLowerCase() },

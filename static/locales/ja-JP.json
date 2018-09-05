@@ -30,6 +30,8 @@
     "reset-button-label": "リンクを送る",
 
     "reset-body-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
+    "reset-link-msg-header": "メールリンク送信済み",
+    "reset-link-msg-content": "リセットされたパスワードのリンクは登録されたメールアドレスに送信されました.<br>リンクをクリックし、画面の指示に従ってください.",
     
     "admin-country-menu-header": "国",
     "countries-menu-header": "国国",
@@ -53,5 +55,12 @@
     "admin-edit-button-label": "エディト",
     "admin-delete-button-label": "抹消す",
 
-    "save-button-label": "セーブ"
+    "save-button-label": "セーブ",
+
+    "email-not-found-error": "メールが見つかりません.",
+    "pwd-invalid-error": "パスワードが無効です.",
+    "duplicate-email-error": "電子メールは既に登録されています",
+    "missing-credentials-error": "メールアドレスとパスワードを入力する必要があります.",
+    "credentials-error": "メール/パスワードが認識されない.",
+    "email-not-reg-error": "メールが見つかりません！登録してください."
 }
