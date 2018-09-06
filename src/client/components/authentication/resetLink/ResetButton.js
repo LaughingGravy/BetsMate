@@ -28,7 +28,8 @@ const RestButton = ({ variables }) => {
 
 RestButton.propTypes = {
   variables: PropTypes.shape({
-    email: PropTypes.string.isRequired
+    email: PropTypes.string.isRequired,
+    timeZone: PropTypes.string.isRequired
   }).isRequired
 }
 

@@ -7,7 +7,8 @@ class ResetForm  extends React.Component {
     super(props);
 
     this.state = { 
-      email: ""
+      email: "",
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
     }
   }
 

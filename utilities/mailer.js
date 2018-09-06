@@ -1,6 +1,6 @@
 const Config = require('../utilities/Config');
 const nodemailer = require('nodemailer')
-const xoauth2 = require('xoauth2');
+//const xoauth2 = require('xoauth2');
 
 function createTransporter()
 {

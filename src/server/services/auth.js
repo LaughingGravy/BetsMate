@@ -6,8 +6,7 @@ const User = mongoose.model('user');
 const UserReset = mongoose.model('userReset');
 
 import createTransporter from '../../../utilities/mailer'
-import { getResetMailOptions } from './authHelper'
-import { getUTCDate, isFirstEarlierThanSecond } from '../../../utilities/dates'
+import { getResetToken, getResetMailOptions, getUTCResetExpiry, isFirstLaterThanSecond } from './authHelper'
 
 // SerializeUser is used to provide some identifying token that can be saved
 // in the users session.  We traditionally use the 'ID' for this.
@@ -87,7 +86,10 @@ function login({ email, password, req }) {
   });
 }
 
-function resetLink({ email, token, expiry }) {
+function resetLink({ email, timeZone }) {
+  const token = getResetToken()
+  const expiry = getUTCResetExpiry()
+
   const userReset = { email, token, expiry }
 
   return User.findOne({email})
@@ -103,11 +105,13 @@ function resetLink({ email, token, expiry }) {
     .then(() => {
       return new Promise((resolve, reject) => {
         const smtpTransport = createTransporter()
-        const options = getResetMailOptions(userReset)
+        const options = getResetMailOptions(userReset, timeZone)
 
         smtpTransport.sendMail(options, (err, resp) => {
           if (err) { reject(err) }
-          if (resp) { resolve(userReset)}
+          if (resp) { 
+            resolve(userReset)
+          }
         })
     })
   })
@@ -116,12 +120,11 @@ function resetLink({ email, token, expiry }) {
 function resetPassword({ token, password }) {
   return UserReset.findOne({token})
     .then(existingUserReset => {
-      console.log("existingUserReset", existingUserReset)
       if (!existingUserReset) { 
         throw new Error("reset-token-not-found-error"); 
       }
 
-      if (!isFirstEarlierThanSecond(existingUserReset.expiry, getUTCDate())) { 
+      if (hasResetLinkExpired(existingUserReset.expiry)) { 
         throw new Error("reset-token-expired-error"); 
       }
 
@@ -130,7 +133,7 @@ function resetPassword({ token, password }) {
                       { $set: { "password": password }},
                       { upsert: false }, (err) => {
                         if (err) { reject(err) }
-                        if (resp) { resolve(existingUserReset)}
+                        resolve(existingUserReset)
                       })
       })      
     })

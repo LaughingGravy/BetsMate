@@ -14,8 +14,6 @@ const AuthService = require('../services/auth');
 const CountryType = require('./types/country_type').default
 const AdminService = require('../services/admin')
 
-const HelperService = require('../services/authHelper')
-
 export default new GraphQLObjectType({
     name: 'Mutation',
     fields: {
@@ -54,12 +52,11 @@ export default new GraphQLObjectType({
         resetLink: {
             type: UserResetType,
             args: {
-                email: { type: GraphQLString }
+                email: { type: GraphQLString },
+                timeZone: { type: GraphQLString }
             },
-            resolve(parentValue, { email }, ctx) {
-                const token = HelperService.getResetToken()
-                const expiry = HelperService.getResetExpiry()
-                return AuthService.resetLink({ email, token, expiry });
+            resolve(parentValue, { email, timeZone }, ctx) {
+                return AuthService.resetLink({ email, timeZone });
             }
         },
         resetPassword: {
@@ -69,6 +66,8 @@ export default new GraphQLObjectType({
                 password: { type: GraphQLString }
             },
             resolve(parentValue, { token, password }, ctx) {
+                const req = ctx.req;
+                console.log("req.locale", req.locale)
                 return AuthService.resetPassword({ token, password });
             }
         },

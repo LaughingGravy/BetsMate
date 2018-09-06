@@ -6,6 +6,7 @@ import cors from 'cors';
 import favicon from 'serve-favicon';
 import React from 'react';
 import Helmet from 'react-helmet';
+import createLocaleMiddleware from 'express-locale'
 
 import passport from 'passport'
 import session from 'express-session'
@@ -65,6 +66,7 @@ app.use(cors(corsOptions))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
+app.use(createLocaleMiddleware())
 
 // Configures express to use sessions. This places an encrypted identifier
 // on the users cookie. When a user makes a request, this middleware examines
