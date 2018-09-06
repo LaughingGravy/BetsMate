@@ -38,6 +38,9 @@
     "reset-link-msg-content": "リセットされたパスワードのリンクは登録されたメールアドレスに送信されました.<br>リンクをクリックし、画面の指示に従ってください.",
 
     "reset-password-text": "新しいパスワードを入力して確認のために再入力してください.",
+
+    "change-pwd-msg-header": "パスワード変更済み",
+    "change-pwd-msg-content": "パスワードが正常に保存されました. <br />次回にBets Mateにログインするときに使用してください.",
     
     "admin-country-menu-header": "国",
     "countries-menu-header": "国国",

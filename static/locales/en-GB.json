@@ -38,6 +38,9 @@
     "reset-link-msg-content": "The reset password link has been sent successfully to your registered email address.<br />Please click on the link and follow the on screen instructions.",
 
     "reset-password-text": "Please enter a new password and re-enter it for confirmation.",
+
+    "change-pwd-msg-header": "Password Changed",
+    "change-pwd-msg-content": "Your password has been saved successfully. <br />Please use it next time you sign in to Bets Mate",
     
     "admin-country-menu-header": "Country",
     "countries-menu-header": "Countries",

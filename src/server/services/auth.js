@@ -86,6 +86,18 @@ function login({ email, password, req }) {
   });
 }
 
+function changePassword({ password, req }) {
+  return new Promise((resolve, reject) => {
+    passport.authenticate('local', (err, user) => {
+      if (!user) { reject("credentials-error") }
+
+      user.password = password
+      user.save()
+      req.login(user, () => resolve(user));
+    })({ body: { user: { email, password } } });
+  })
+}
+
 function resetLink({ email, timeZone }) {
   const token = getResetToken()
   const expiry = getUTCResetExpiry()
@@ -147,4 +159,4 @@ function resetPassword({ token, password }) {
     })
 }
 
-export { signup, login, resetLink, resetPassword }
+export { signup, login, resetLink, resetPassword, changePassword }

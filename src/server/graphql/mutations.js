@@ -69,6 +69,16 @@ export default new GraphQLObjectType({
                 return AuthService.resetPassword({ token, password });
             }
         },
+        changePassword: {
+            type: UserType,
+            args: {
+                password: { type: GraphQLString }
+            },
+            resolve(parentValue, { password }, ctx) {
+                const req = ctx.req;
+                return AuthService.changePassword({ password }, req);
+            }
+        },
         mergeCountry: {
             type: CountryType,
             args: {

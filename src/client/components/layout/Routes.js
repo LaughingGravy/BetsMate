@@ -9,6 +9,8 @@ import LoginPage from '../authentication/login/LoginPage'
 import ResetPage from '../authentication/resetLink/ResetPage'
 import ResetSuccessPage from '../authentication/resetLink/ResetSuccessPage'
 import ResetPasswordPage from '../authentication/resetPassword/ResetPasswordPage'
+import ChangePasswordPage from '../authentication/changePassword/ChangePasswordPage'
+import ChangeSuccessPage from '../authentication/changePassword/ChangeSuccessPage'
 import HomePage from '../home/HomePage'
 import AboutPage from '../about/AboutPage'
 
@@ -23,6 +25,8 @@ const Routes = () => {
             <Route from="/login" component={LoginPage} />
             <Route from="/resetlink" component={ResetPage} />
             <Route from="/resetchange/:token" component={ResetPasswordPage} />
+            <Route from="/changepassword" component={ChangePasswordPage} />
+            <Route from="/changesuccess" component={ChangeSuccessPage} />
             <Route path="/about" component={AboutPage} />
             <Redirect exact from="about-us" to="about" />
             <Redirect to="/" />
