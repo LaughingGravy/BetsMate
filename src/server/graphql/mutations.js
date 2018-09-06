@@ -66,8 +66,6 @@ export default new GraphQLObjectType({
                 password: { type: GraphQLString }
             },
             resolve(parentValue, { token, password }, ctx) {
-                const req = ctx.req;
-                console.log("req.locale", req.locale)
                 return AuthService.resetPassword({ token, password });
             }
         },

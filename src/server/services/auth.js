@@ -6,7 +6,7 @@ const User = mongoose.model('user');
 const UserReset = mongoose.model('userReset');
 
 import createTransporter from '../../../utilities/mailer'
-import { getResetToken, getResetMailOptions, getUTCResetExpiry, isFirstLaterThanSecond } from './authHelper'
+import { getResetToken, getResetMailOptions, getUTCResetExpiry, hasResetLinkExpired } from './authHelper'
 
 // SerializeUser is used to provide some identifying token that can be saved
 // in the users session.  We traditionally use the 'ID' for this.
@@ -129,12 +129,20 @@ function resetPassword({ token, password }) {
       }
 
       return new Promise((resolve, reject) => {
-        User.updateOne({ "email": existingUserReset.email },
-                      { $set: { "password": password }},
-                      { upsert: false }, (err) => {
-                        if (err) { reject(err) }
-                        resolve(existingUserReset)
-                      })
+        const { email } = existingUserReset
+        
+        User.findOne({ email })
+          .then(existingUser => {
+            if (!existingUser) { reject(new Error("email-not-found-error")) }
+            existingUser.password = password 
+            existingUser.save()
+          })
+          .then(() => {
+            existingUserReset.remove()
+          })
+          .then(() => {
+            resolve(existingUserReset)
+          })
       })      
     })
 }
