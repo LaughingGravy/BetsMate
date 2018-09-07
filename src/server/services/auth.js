@@ -61,46 +61,35 @@ function signup({ token, username, password, role, req }) {
     .then(existingUserRegister => {
       if (!existingUserRegister) { throw new Error("reg-token-not-found-error"); }
       user.email = existingUserRegister.email
-    })
-    .then(() => {
+
       const { email } = user
 
-      return User.findOne({email})
-      .then(existingUser => {
-        if (existingUser) { throw new Error("duplicate-email-error"); }  
-      })
-      .then(() => {
-        return User.findOne({ username })
-          .then(existingUser => {
-            if (existingUser) { throw new Error("duplicate-username-error"); }
-            return user.save();
-          })
-          .then(user => {
-            return new Promise((resolve, reject) => {
-              req.login(user, (err) => {
-                if (err) { reject(err); }
-                resolve(user);
-              });
-            });
-          });
-      })
-    })
-  }
+      User.findOne({email})
+        .then(existingUser => {
+          if (existingUser) { throw new Error("duplicate-email-error"); }  
+        })
 
-//   return User.findOne({ email })
-//     .then(existingUser => {
-//       if (existingUser) { throw new Error("duplicate-email-error"); }
-//       return user.save();
-//     })
-//     .then(user => {
-//       return new Promise((resolve, reject) => {
-//         req.login(user, (err) => {
-//           if (err) { reject(err); }
-//           resolve(user);
-//         });
-//       });
-//     });
-// }
+        User.findOne({email})
+          .then(existingUser => {
+            if (existingUser) { throw new Error("duplicate-email-error"); }  
+          })
+    })
+    .then(() => {
+      return User.findOne({ username })
+        .then(existingUser => {
+          if (existingUser) { throw new Error("duplicate-username-error"); }
+            return user.save();
+        })
+        .then(user => {
+          return new Promise((resolve, reject) => {
+            req.login(user, (err) => {
+              if (err) { reject(err); }
+                resolve(user);
+            });
+        });
+    })
+  })
+}
 
 // Logs in a user.  This will invoke the 'local-strategy' defined above in this
 // file. Notice the strange method signature here: the 'passport.authenticate'
