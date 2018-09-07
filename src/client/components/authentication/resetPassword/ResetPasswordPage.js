@@ -2,7 +2,7 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Container, Grid, GridColumn, Segment } from 'semantic-ui-react'
 
-import ResetPasswordForm from './ResetPasswordForm'
+import TokenPasswordForm from './TokenPasswordForm'
 import ResetPasswordButton from './ResetPasswordButton'
 
 const ResetPasswordPage = ({match}) => {
@@ -24,7 +24,7 @@ const ResetPasswordPage = ({match}) => {
 
       <Grid.Row centered>
         <GridColumn mobile={14} tablet={8} computer={6}>        
-            <ResetPasswordForm token={token} render={variables => (
+            <TokenPasswordForm token={token} render={variables => (
               <Container textAlign='center'>
                 <ResetPasswordButton variables={variables} /> 
               </Container>

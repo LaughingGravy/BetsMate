@@ -9,6 +9,7 @@ const {
 
 const UserType = require('./types/user_type').default;
 const UserResetType = require('./types/user_reset_type').default;
+const UserRegisterType = require('./types/user_register_type').default;
 const AuthService = require('../services/auth');
 
 const CountryType = require('./types/country_type').default
@@ -20,13 +21,14 @@ export default new GraphQLObjectType({
         signup: {
             type: UserType,
             args: {
-                email: { type: GraphQLString },
+                token: { type: GraphQLString },
+                username: { type: GraphQLString },
                 password: { type: GraphQLString },
                 role: { type: GraphQLString }
             },
-            resolve(parentValue, { email, password, role }, ctx ) { //request is request object from express
+            resolve(parentValue, { token, username, password, role }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthService.signup({ email, password, role, req});
+                return AuthService.signup({ token, username, password, role, req});
             }
         },
         logout: {
@@ -57,6 +59,16 @@ export default new GraphQLObjectType({
             },
             resolve(parentValue, { email, timeZone }, ctx) {
                 return AuthService.resetLink({ email, timeZone });
+            }
+        },
+        registerLink: {
+            type: UserRegisterType,
+            args: {
+                email: { type: GraphQLString },
+                timeZone: { type: GraphQLString }
+            },
+            resolve(parentValue, { email, timeZone }, ctx) {
+                return AuthService.registerLink({ email, timeZone });
             }
         },
         resetPassword: {

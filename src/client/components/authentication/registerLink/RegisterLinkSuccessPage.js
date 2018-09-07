@@ -2,7 +2,7 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
 
-const ResetSuccessPage = () => (
+const RegisterLinkSuccessPage = () => (
   <Grid columns={1} centered>
     <Grid.Row centered>
       <GridColumn mobile={14} tablet={8} computer={6}>
@@ -13,7 +13,7 @@ const ResetSuccessPage = () => (
           </Message.Header>
           <br />
           <Message.Content>
-            {intl.getHTML("reset-link-msg-content")}
+            {intl.getHTML("register-link-msg-content")}
           </Message.Content>
         </Message>
       </GridColumn>
@@ -21,4 +21,4 @@ const ResetSuccessPage = () => (
   </Grid>
 )
 
-export default ResetSuccessPage
+export default RegisterLinkSuccessPage

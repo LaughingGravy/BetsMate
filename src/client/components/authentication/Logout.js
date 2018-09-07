@@ -2,7 +2,7 @@ import React from 'react';
 import { Mutation } from 'react-apollo'
 import { compose } from 'recompose'
 
-import { Loader, Segment } from 'semantic-ui-react'
+import { Loader } from 'semantic-ui-react'
 
 import { history } from '../../../../library/routing'
 import { renderIfAuthenticated } from '../common/ConditionalRender'

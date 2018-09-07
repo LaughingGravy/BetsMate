@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import intl from 'react-intl-universal'
 import { Form } from 'semantic-ui-react'
 
-class ResetPasswordForm  extends React.Component {
+class RegisterForm  extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = { 
+      username: "",
       password: "",
       passwordConfirm: ""
     }
@@ -16,12 +17,17 @@ class ResetPasswordForm  extends React.Component {
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
-    const { password, passwordConfirm } = this.state
+    const { username, password, passwordConfirm } = this.state
 
     return (
       <Form className='segment' onSubmit={e => {
                                                   e.preventDefault;
-                                                }}>    
+                                                }}>  
+        <Form.Field required>
+          <Form.Input name='username' type='text' label={intl.get("username-label")} placeholder={intl.get("username-placeholder")}
+                      value={username} onChange={this.handleChange} />
+        </Form.Field>
+
         <Form.Field required>
           <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder={intl.get("password-placeholder")}
                       value={password} onChange={this.handleChange} />
@@ -32,14 +38,14 @@ class ResetPasswordForm  extends React.Component {
                       value={passwordConfirm} onChange={this.handleChange} />
         </Form.Field>
        
-        {this.props.render({token: this.props.token, password: password})}
+        {this.props.render({token: this.props.token, password: password, username: username})}
       </Form>
     )
   }
 }
 
-ResetPasswordForm.propTypes = {
+RegisterForm.propTypes = {
   token: PropTypes.string.isRequired
 };
 
-export default ResetPasswordForm
+export default RegisterForm

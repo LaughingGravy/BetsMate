@@ -29,7 +29,7 @@ const SideNavBar = ({ visible, onToggleSideBarVisibility, userCtx, children }) =
             <Grid columns={2} padded divided>
             {!userCtx.isAuthenticated && <Grid.Row>
               <Grid.Column textAlign="right">
-                  <Link to="/register" key="register" onClick={onToggleSideBarVisibility}>
+                  <Link to="/register/link" key="registerlink" onClick={onToggleSideBarVisibility}>
                     {intl.get("register-menu-header")}
                   </Link>
                 </Grid.Column>

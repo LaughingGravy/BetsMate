@@ -19,28 +19,35 @@
     "about-page-title": "アボウト",
     "login-page-title": "ログイン",
     "admin-page-title": "アドミン",
-    "register-page-title": "レジスター",
+    "register-page-title": "登録を有効にする",
     "reset-page-title": "パスワード忘れた",
     "reset-password-page-title": "パスワードを再設定する",
     "change-password-page-title": "パスワードを変更する",
+    "register-link-page-title": "レジスター",
 
     "email-label": "Eメール",
     "password-label": "パスワード",
+    "username-label": "ユーザー名",
     "login-button-label": "ログイン",
     "register-button-label": "新規登録",
     "reset-button-label": "リンクを送る",
     "confirm-password-label": "パスワードを認証する",
 
     "password-placeholder": "パスワード...",
+    "username-placeholder": "ユーザー名...",
 
     "reset-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
-    "reset-link-msg-header": "メールリンク送信済み",
+    "link-msg-header": "メールリンク送信済み",
     "reset-link-msg-content": "リセットされたパスワードのリンクは登録されたメールアドレスに送信されました.<br>リンクをクリックし、画面の指示に従ってください.",
 
     "reset-password-text": "新しいパスワードを入力して確認のために再入力してください.",
 
     "change-pwd-msg-header": "パスワード変更済み",
     "change-pwd-msg-content": "パスワードが正常に保存されました. <br />次回にBets Mateにログインするときに使用してください.",
+
+    "registration-activate-text": "確認のためにパスワードを入力して再入力してください.<br />アクティベーションボタンをクリックして登録を完了.",
+    "registration-link-text": "電子メールアドレスを入力して、リンクを送信ボタンをクリックするとアカウントアクティベーションリンクが送信されます.",
+    "register-link-msg-content": "アカウントアクティベーションリンクが指定されたメールアドレスに正常に送信されました.<br />リンクをクリックし、画面の指示に従ってください.",
     
     "admin-country-menu-header": "国",
     "countries-menu-header": "国国",
@@ -69,9 +76,12 @@
     "email-not-found-error": "メールが見つかりません.",
     "pwd-invalid-error": "パスワードが無効です.",
     "duplicate-email-error": "電子メールは既に登録されています",
+    "duplicate-username-error": "ユーザー名が既に登録されてます.<br />もう一度お試しください.",
     "missing-credentials-error": "メールアドレスとパスワードを入力する必要があります.",
     "credentials-error": "メール/パスワードが認識されない.",
     "email-not-reg-error": "メールが見つかりません！登録してください.",
-    "reset-token-not-found-error": "パスワードリセットトークンが見つかりません.",
-    "reset-token-expired-error": "リンクトークンが期限切れです. <br />新しいリクエストをしてください."
+    "reset-token-not-found-error": "パスワードリセットリンクトークンが見つかりません.",
+    "reset-token-expired-error": "リセットリンクトークンが期限切れです. <br />新しいリクエストをしてください.",
+    "reg-token-not-found-error": "アクティベーションリンクトークンが見つかりません.",
+    "reg-token-expired-error": "アクティベーションリンクトークンが期限切れです. <br />新しいリクエストをしてください."
 }

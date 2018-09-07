@@ -4,9 +4,10 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const User = mongoose.model('user');
 const UserReset = mongoose.model('userReset');
+const UserRegister = mongoose.model('userRegister');
 
 import createTransporter from '../../../utilities/mailer'
-import { getResetToken, getResetMailOptions, getUTCResetExpiry, hasResetLinkExpired } from './authHelper'
+import { getToken, getResetMailOptions, getUTCTokenExpiry, hasLinkExpired, getRegisterMailOptions } from './authHelper'
 
 // SerializeUser is used to provide some identifying token that can be saved
 // in the users session.  We traditionally use the 'ID' for this.
@@ -51,25 +52,55 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
 // Notice the Promise created in the second 'then' statement.  This is done
 // because Passport only supports callbacks, while GraphQL only supports promises
 // for async code!  Awkward!
-function signup({ email, password, role, req }) {
-  const user = new User({ email, password, role });
+function signup({ token, username, password, role, req }) {
+  const user = new User({ username, password, role });
   
-  if (!email || !password) { throw new Error("missing-credentials-error"); }
+  if (!username || !password) { throw new Error("missing-reg-details-error"); }
 
-  return User.findOne({ email })
-    .then(existingUser => {
-      if (existingUser) { throw new Error("duplicate-email-error"); }
-      return user.save();
+  return UserRegister.findOne({ token })
+    .then(existingUserRegister => {
+      if (!existingUserRegister) { throw new Error("reg-token-not-found-error"); }
+      user.email = existingUserRegister.email
     })
-    .then(user => {
-      return new Promise((resolve, reject) => {
-        req.login(user, (err) => {
-          if (err) { reject(err); }
-          resolve(user);
-        });
-      });
-    });
-}
+    .then(() => {
+      const { email } = user
+
+      return User.findOne({email})
+      .then(existingUser => {
+        if (existingUser) { throw new Error("duplicate-email-error"); }  
+      })
+      .then(() => {
+        return User.findOne({ username })
+          .then(existingUser => {
+            if (existingUser) { throw new Error("duplicate-username-error"); }
+            return user.save();
+          })
+          .then(user => {
+            return new Promise((resolve, reject) => {
+              req.login(user, (err) => {
+                if (err) { reject(err); }
+                resolve(user);
+              });
+            });
+          });
+      })
+    })
+  }
+
+//   return User.findOne({ email })
+//     .then(existingUser => {
+//       if (existingUser) { throw new Error("duplicate-email-error"); }
+//       return user.save();
+//     })
+//     .then(user => {
+//       return new Promise((resolve, reject) => {
+//         req.login(user, (err) => {
+//           if (err) { reject(err); }
+//           resolve(user);
+//         });
+//       });
+//     });
+// }
 
 // Logs in a user.  This will invoke the 'local-strategy' defined above in this
 // file. Notice the strange method signature here: the 'passport.authenticate'
@@ -98,9 +129,40 @@ function changePassword({ password, req }) {
   })
 }
 
+function registerLink({ email, timeZone }) {
+  const token = getToken()
+  const expiry = getUTCTokenExpiry()
+
+  const userRegister = { email, token, expiry }
+
+  return User.findOne({email})
+    .then(existingUser => {
+      if (existingUser) { throw new Error("duplicate-email-error"); }
+
+        UserRegister.updateOne({ "email": userRegister.email.toLowerCase() },
+                            { $set: { "token": userRegister.token, "expiry": userRegister.expiry }},
+                            { upsert: true }, (err) => {
+            if (err) { throw(err); }
+        })
+    })
+    .then(() => {
+      return new Promise((resolve, reject) => {
+        const smtpTransport = createTransporter()
+        const options = getRegisterMailOptions(userRegister, timeZone)
+
+        smtpTransport.sendMail(options, (err, resp) => {
+          if (err) { reject(err) }
+          if (resp) { 
+            resolve(userRegister)
+          }
+        })
+    })
+  })
+}
+
 function resetLink({ email, timeZone }) {
-  const token = getResetToken()
-  const expiry = getUTCResetExpiry()
+  const token = getToken()
+  const expiry = getUTCTokenExpiry()
 
   const userReset = { email, token, expiry }
 
@@ -136,7 +198,7 @@ function resetPassword({ token, password }) {
         throw new Error("reset-token-not-found-error"); 
       }
 
-      if (hasResetLinkExpired(existingUserReset.expiry)) { 
+      if (hasLinkExpired(existingUserReset.expiry)) { 
         throw new Error("reset-token-expired-error"); 
       }
 
@@ -159,4 +221,4 @@ function resetPassword({ token, password }) {
     })
 }
 
-export { signup, login, resetLink, resetPassword, changePassword }
+export { signup, login, resetLink, resetPassword, changePassword, registerLink }

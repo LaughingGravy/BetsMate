@@ -3,18 +3,18 @@ import intl from 'react-intl-universal'
 import { Container, Grid, GridColumn, Segment } from 'semantic-ui-react'
 
 import LinkForm from '../LinkForm'
-import ResetButton from './ResetButton'
+import RegisterLinkButton from './RegisterLinkButton'
 
-const ResetPage = () => (
+const RegisterLinkPage = () => (
   <Grid columns={1} centered>
     <Grid.Row centered>
-      <h3>{intl.get("reset-page-title")}</h3>
+      <h3>{intl.get("register-link-page-title")}</h3>
     </Grid.Row>
 
     <Grid.Row centered>
       <GridColumn mobile={14} tablet={8} computer={6}>
         <Segment compact basic textAlign="left" text="true">
-          {intl.getHTML("reset-text")}
+          {intl.getHTML("registration-link-text")}
         </Segment>
       </GridColumn>
     </Grid.Row>
@@ -23,7 +23,7 @@ const ResetPage = () => (
       <GridColumn mobile={14} tablet={8} computer={6}>
         <Container textAlign='center'>
           <LinkForm render={variables => (
-            <ResetButton variables={variables} /> 
+            <RegisterLinkButton variables={variables} /> 
           )}/>
         </Container>
       </GridColumn>
@@ -32,4 +32,4 @@ const ResetPage = () => (
   </Grid>
 )
 
-export default ResetPage
+export default RegisterLinkPage

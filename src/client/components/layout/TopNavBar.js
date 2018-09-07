@@ -41,7 +41,7 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, userCtx, onToggleSi
           </Menu.Item>
 
           {!userCtx.isAuthenticated && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
-            <Menu.Item as={NavLink}  to="/register" key="register"
+            <Menu.Item as={NavLink}  to="/register/link" key="registerlink"
                         activeClassName="active">
               {intl.get("register-menu-header")}
             </Menu.Item>
@@ -66,7 +66,7 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, userCtx, onToggleSi
           {!userCtx.isAuthenticated && <MenuItem as={Responsive} maxWidth={Responsive.onlyComputer.minWidth}>
             <Popup position="bottom center" style={{"padding": "0px"}} hoverable basic trigger={<Icon name="user circle" size="large" />}>
             <Menu vertical compact>
-                <MenuItem as={NavLink} to="/register" key="register" activeClassName="active"
+                <MenuItem as={NavLink} to="/register/link" key="registerlink" activeClassName="active"
                           compact="true">
                   {intl.get("register-menu-header")}
                 </MenuItem>

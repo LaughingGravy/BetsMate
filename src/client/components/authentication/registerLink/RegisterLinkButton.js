@@ -4,33 +4,33 @@ import { Mutation } from 'react-apollo'
 
 import { history } from '../../../../../library/routing'
 import MutationButton from '../../common/MutationButton'
-import RESET_LINK from '../../../graphql/mutations/authentication/resetLink'
+import REGISTER_LINK from '../../../graphql/mutations/authentication/registerLink'
 
-const ResetButton = ({ variables }) => {
+const RegisterLinkButton = ({ variables }) => {
 
   const label = "reset-button-label"
 
   const onCompleted = (data) => {
-      history.push('/reset/link/success');
+      history.push('/register/link/success');
   }
 
   return (
-    <Mutation mutation={RESET_LINK} key={"RESET_LINK"} 
+    <Mutation mutation={REGISTER_LINK} key={"REGISTER_LINK"} 
       
       onCompleted={onCompleted}>
-      {(resetLink, { loading, error }) => (
-        <MutationButton variables={variables} mutation={resetLink} 
+      {(registerLink, { loading, error }) => (
+        <MutationButton variables={variables} mutation={registerLink} 
                         loading={loading} error={error} label={label} />
     )}
     </Mutation>
   )
 }
 
-ResetButton.propTypes = {
+RegisterLinkButton.propTypes = {
   variables: PropTypes.shape({
     email: PropTypes.string.isRequired,
     timeZone: PropTypes.string.isRequired
   }).isRequired
 }
 
-export default ResetButton
+export default RegisterLinkButton
