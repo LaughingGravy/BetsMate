@@ -54,12 +54,11 @@ const TopNavBar = ({ locales, onSelectLocale, defaultLocale, userCtx, onToggleSi
             </Menu.Item>
           </Responsive>}
 
-          {<Responsive minWidth={Responsive.onlyComputer.minWidth}>
+          <Responsive minWidth={Responsive.onlyComputer.minWidth}>
             <Logout>
               <Menu.Item as={NavLink}  to="/home" key="logout" activeClassName="active">
                 {intl.get("logout-menu-header")}
-              </Menu.Item>
-             
+              </Menu.Item>       
             </Logout>
           </Responsive>} 
 

@@ -7,7 +7,7 @@ const UserReset = mongoose.model('userReset');
 const UserRegister = mongoose.model('userRegister');
 
 import createTransporter from '../../../utilities/mailer'
-import { getToken, getResetMailOptions, getUTCTokenExpiry, hasLinkExpired, getRegisterMailOptions } from './authHelper'
+import { getUTCDate, getToken, getResetMailOptions, getUTCTokenExpiry, hasLinkExpired, getRegisterMailOptions } from './authHelper'
 
 // SerializeUser is used to provide some identifying token that can be saved
 // in the users session.  We traditionally use the 'ID' for this.
@@ -52,10 +52,10 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
 // Notice the Promise created in the second 'then' statement.  This is done
 // because Passport only supports callbacks, while GraphQL only supports promises
 // for async code!  Awkward!
-function signup({ token, username, password, role, req }) {
-  const user = new User({ username, password, role });
+function signup({ token, displayName, password, role, req }) {
+  const user = new User({ displayName, password, role });
   
-  if (!username || !password) { throw new Error("missing-reg-details-error"); }
+  if (!displayName || !password) { throw new Error("missing-reg-details-error"); }
 
   return UserRegister.findOne({ token })
     .then(existingUserRegister => {
@@ -75,7 +75,7 @@ function signup({ token, username, password, role, req }) {
           })
     })
     .then(() => {
-      return User.findOne({ username })
+      return User.findOne({ displayName })
         .then(existingUser => {
           if (existingUser) { throw new Error("duplicate-username-error"); }
             return user.save();
@@ -93,7 +93,7 @@ function signup({ token, username, password, role, req }) {
 
 // Logs in a user.  This will invoke the 'local-strategy' defined above in this
 // file. Notice the strange method signature here: the 'passport.authenticate'
-// function returns a function, as its indended to be used as a middleware with
+// function returns a function, as its intended to be used as a middleware with
 // Express.  We have another compatibility layer here to make it work nicely with
 // GraphQL, as GraphQL always expects to see a promise for handling async code.
 function login({ email, password, req }) {
@@ -111,10 +111,13 @@ function changePassword({ password, req }) {
     passport.authenticate('local', (err, user) => {
       if (!user) { reject("credentials-error") }
 
-      user.password = password
-      user.save()
+      user.updateOne({ "email": user.email.toLowerCase() },
+                      { $set: { "password": password }},
+                      { upsert: false })
+
+
       req.login(user, () => resolve(user));
-    })({ body: { user: { email, password } } });
+    })({ body: { user: { email, displayName, password, regDate, lastAccessDate } } });
   })
 }
 

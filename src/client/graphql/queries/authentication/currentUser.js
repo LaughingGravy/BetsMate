@@ -3,9 +3,11 @@ import gql from 'graphql-tag';
 export default gql`
     query {
         user {
-            username
+            displayName
             email
             role
+            regDate
+            lastAccessDate
         }
     }
 `;

@@ -4,12 +4,16 @@ import {
     GraphQLString,
 } from 'graphql'
 
+import GraphQLDate from 'graphql-date'
+
 export default new GraphQLObjectType({
     name: 'UserType',
     fields: {
         id: { type: GraphQLID },
-        username: { type: GraphQLString },
         email: { type: GraphQLString },
-        role: { type: GraphQLString }
+        role: { type: GraphQLString },
+        displayName: { type: GraphQLString },
+        regDate: { type: GraphQLDate },
+        lastAccessDate: { type: GraphQLDate },
     }
 })

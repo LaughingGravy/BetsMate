@@ -22,13 +22,13 @@ export default new GraphQLObjectType({
             type: UserType,
             args: {
                 token: { type: GraphQLString },
-                username: { type: GraphQLString },
+                displayName: { type: GraphQLString },
                 password: { type: GraphQLString },
                 role: { type: GraphQLString }
             },
-            resolve(parentValue, { token, username, password, role }, ctx ) { //request is request object from express
+            resolve(parentValue, { token, displayName, password, role }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthService.signup({ token, username, password, role, req});
+                return AuthService.signup({ token, displayName, password, role, req});
             }
         },
         logout: {

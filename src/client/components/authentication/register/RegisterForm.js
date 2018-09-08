@@ -8,7 +8,7 @@ class RegisterForm  extends React.Component {
     super(props);
 
     this.state = { 
-      username: "",
+      displayName: "",
       password: "",
       passwordConfirm: ""
     }
@@ -17,15 +17,15 @@ class RegisterForm  extends React.Component {
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
-    const { username, password, passwordConfirm } = this.state
+    const { displayName, password, passwordConfirm } = this.state
 
     return (
       <Form className='segment' onSubmit={e => {
                                                   e.preventDefault;
                                                 }}>  
         <Form.Field required>
-          <Form.Input name='username' type='text' label={intl.get("username-label")} placeholder={intl.get("username-placeholder")}
-                      value={username} onChange={this.handleChange} />
+          <Form.Input name='displayName' type='text' label={intl.get("username-label")} placeholder={intl.get("username-placeholder")}
+                      value={displayName} onChange={this.handleChange} />
         </Form.Field>
 
         <Form.Field required>
@@ -38,7 +38,7 @@ class RegisterForm  extends React.Component {
                       value={passwordConfirm} onChange={this.handleChange} />
         </Form.Field>
        
-        {this.props.render({token: this.props.token, password: password, username: username})}
+        {this.props.render({token: this.props.token, password: password, displayName: displayName})}
       </Form>
     )
   }

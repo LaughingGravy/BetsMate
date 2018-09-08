@@ -8,6 +8,10 @@ const getToken = () => {
   return UUID.v4()
 }
 
+const getUTCDate = () => {
+  return moment().utc().toDate()
+}
+
 const getUTCTokenExpiry = () => {
   return moment().utc().add(Config.tokenExpiryInDays, "d").toDate()
 }
@@ -49,4 +53,5 @@ const getRegisterMailOptions = ({ email, token, expiry }, timeZone) => {
           }
 }
 
-export { getToken, getUTCTokenExpiry, hasLinkExpired, convertUTCToTimeZone, getResetMailOptions, getRegisterMailOptions }
+export { getToken, getUTCDate, getUTCTokenExpiry, hasLinkExpired, convertUTCToTimeZone, 
+          getResetMailOptions, getRegisterMailOptions }
