@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { history } from '../../../../library/routing';
+import { history } from '../../../../../library/routing';
 
 import { Segment, SegmentGroup } from 'semantic-ui-react'
 import intl from 'react-intl-universal';
 import axios from 'axios';
 
-import TopNavBar from './TopNavBar';
-import SideNavBar from './SideNavBar';
-import MainBar from './mainBar/MainBar'
+import TopNavBar from '../TopNavBar';
+import SideNavBar from '../SideNavBar';
+import MainBar from '../mainBar/MainBar'
 
 import SUPPOER_LOCALES from './locales';
 
-import UserContextUpdater from '../contexts/UserContextUpdater'
-import { DefaultUser } from '../contexts/userContext'
+import UserContextUpdater from '../../contexts/UserContextUpdater'
+import { DefaultUser } from '../../contexts/userContext'
 
-import CURRENT_USER from '../../graphql/queries/authentication/currentUser';
+import CURRENT_USER from '../../../graphql/queries/authentication/currentUser';
 import { Query } from 'react-apollo';
 
-class Layout extends React.Component {
+class LayoutBak extends React.Component {
     constructor(props) {
         super(props);
       
@@ -132,4 +132,4 @@ class Layout extends React.Component {
     }
 }
 
-export default Layout;
+export default LayoutBak;

@@ -1,9 +1,8 @@
 
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { hot } from 'react-hot-loader'
 import { Segment } from 'semantic-ui-react'
-import Layout from './layout/Layout'
+import Layout from './layout/MainLayout/Layout'
 import Routes from './layout/Routes'
 
 import { UserContext, DefaultUser } from './contexts/userContext'
