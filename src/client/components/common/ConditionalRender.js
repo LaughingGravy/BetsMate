@@ -15,9 +15,9 @@ const AdminFailAccessErrorDisplay = props => (
   <Container textAlign="center">{intl.get("auth-page-decline")}</Container>
 )
 
-const renderIfAuthenticated = (component, propName = "userCtx") =>
+const renderIfAuthenticated = (component, propName = "userCtx", isAuthenticated = true) =>
   branch(
-    props => (props[propName] && props[propName].isAuthenticated),
+    props => (props[propName] && isAuthenticated == props[propName].isAuthenticated),
               renderComponent(component),
               renderNothing
 )

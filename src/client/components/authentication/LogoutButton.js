@@ -3,15 +3,14 @@ import { Mutation } from 'react-apollo'
 import { compose } from 'recompose'
 import intl from 'react-intl-universal';
 
-import { Button, ButtonContent } from 'semantic-ui-react'
-import { NavLink } from 'react-router-dom';
+import { Button } from 'semantic-ui-react'
 import { history } from '../../../../library/routing'
 import { renderIfAuthenticated } from '../common/ConditionalRender'
 import { withUser } from '../contexts/withUserContext'
 import LOGOUT from '../../graphql/mutations/authentication/logout'
 import CURRENT_USER from '../../graphql/queries/authentication/currentUser'
 
-const vanillaLogout = (props) => {
+const vanillaLogoutButton = (props) => {
 
   const onCompleted = (data) => {
       history.push('/home');
@@ -24,21 +23,20 @@ const vanillaLogout = (props) => {
 
       refetchQueries={[ {query: CURRENT_USER}]}>
       {(logout, { loading }) => (
-          <span style={{ opacity: 0}} basic onClick={(e) => { 
+          <Button basic color="black" loading={loading} onClick={(e) => { 
                                   e.preventDefault()
                                   logout()                      
-                        }}
-                        loading={loading}>           
-              { props.children }
-          </span>
+                        }}> 
+            {intl.get("logout-menu-header")}          
+          </Button>
       )}
     </Mutation>
   )
 }
 
-const Logout = compose(
-  renderIfAuthenticated(vanillaLogout),
-)(vanillaLogout)
+const LogoutButton = compose(
+  renderIfAuthenticated(vanillaLogoutButton),
+)(vanillaLogoutButton)
 
 
-export default withUser(Logout)
+export default withUser(LogoutButton)

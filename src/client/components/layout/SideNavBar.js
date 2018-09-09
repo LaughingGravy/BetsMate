@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import { Sidebar, Menu, Button, Icon, Segment, Grid, Divider } from 'semantic-ui-react'
 
-import Logout from '../authentication/Logout'
+import Logout from '../authentication/LogoutButton'
 import { withUser } from '../contexts/withUserContext'
 
 const SideNavBar = ({ visible, onToggleSideBarVisibility, userCtx, children }) => {

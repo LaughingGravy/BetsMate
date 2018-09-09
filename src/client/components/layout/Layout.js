@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { history } from '../../../../library/routing';
 
-import { Segment } from 'semantic-ui-react'
+import { Segment, SegmentGroup } from 'semantic-ui-react'
 import intl from 'react-intl-universal';
 import axios from 'axios';
 
 import TopNavBar from './TopNavBar';
 import SideNavBar from './SideNavBar';
+import MainBar from './mainBar/MainBar'
 
 import SUPPOER_LOCALES from './locales';
 
@@ -109,16 +110,19 @@ class Layout extends React.Component {
                                         onToggleSideBarVisibility={this.onToggleSideBarVisibility}
                                         onLogoutRequested={this.onLogoutRequested}
                                         >
-                                <TopNavBar locales={SUPPOER_LOCALES} 
-                                        defaultLocale={this.state.currentLocale}
-                                        onSelectLocale={this.onSelectLocale} 
-                                        onToggleSideBarVisibility={this.onToggleSideBarVisibility}
-                                        onLogoutRequested={this.onLogoutRequested}
-                                        />
+    
+                                    <Segment basic clearing>
+                                    <MainBar locales={SUPPOER_LOCALES} 
+                                             defaultLocale={this.state.currentLocale}
+                                             onSelectLocale={this.onSelectLocale} />
+                                    <TopNavBar onToggleSideBarVisibility={this.onToggleSideBarVisibility} />
+                                    </Segment>
                                     <Segment basic padded>
                                         {React.Children.map(this.props.children, 
                                         child => React.cloneElement(child, {currentLocale: this.state.currentLocale}))}
                                     </Segment>
+                                       
+                                
                             </SideNavBar>
                         </UserContextUpdater>
                 )   
