@@ -23,7 +23,7 @@ const vanillaLogoutButton = (props) => {
 
       refetchQueries={[ {query: CURRENT_USER}]}>
       {(logout, { loading }) => (
-          <Button basic color="black" loading={loading} onClick={(e) => { 
+          <Button basic secondary inverted loading={loading} onClick={(e) => { 
                                   e.preventDefault()
                                   logout()                      
                         }}> 

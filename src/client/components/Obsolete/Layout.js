@@ -18,7 +18,7 @@ import { DefaultUser } from '../../contexts/userContext'
 import CURRENT_USER from '../../../graphql/queries/authentication/currentUser';
 import { Query } from 'react-apollo';
 
-class LayoutBak extends React.Component {
+class Layout extends React.Component {
     constructor(props) {
         super(props);
       
@@ -87,7 +87,6 @@ class LayoutBak extends React.Component {
     }
     
     render() { 
-
         return (
             <Query query={CURRENT_USER}>
             {({ loading, error, data: { user }}) => {
@@ -132,4 +131,4 @@ class LayoutBak extends React.Component {
     }
 }
 
-export default LayoutBak;
+export default Layout;

@@ -16,10 +16,10 @@ const AdminFailAccessErrorDisplay = props => (
 )
 
 const renderIfAuthenticated = (component, propName = "userCtx", isAuthenticated = true) =>
-  branch(
-    props => (props[propName] && isAuthenticated == props[propName].isAuthenticated),
-              renderComponent(component),
-              renderNothing
+branch(
+  props => (props[propName] && isAuthenticated == props[propName].isAuthenticated),
+            renderComponent(component),
+            renderNothing
 )
 
 const renderForLoading = (component) => 

@@ -10,21 +10,22 @@ import { withUser } from '../../contexts/withUserContext';
 
 const vanillaRightMenuUnAuthItems = () => (
   <React.Fragment>
-    <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-      <Menu.Item fitted="horizontally" key="registerlink">
-        <Button secondary inverted onClick={e => history.push("/register/link")}>
-          {intl.get("register-menu-header")}
-        </Button>
-      </Menu.Item>
+    <Responsive minWidth={Responsive.onlyMobile.maxWidth}>
+      <Popup position="bottom center" style={{"padding": "0px"}} hoverable basic trigger={<Icon name="user circle" size="large" />}>
+        <Menu vertical compact>
+          <MenuItem as={NavLink} to="/register/link" key="registerlink" activeClassName="active"
+                    compact="true">
+            {intl.get("register-menu-header")}
+          </MenuItem>
+          <MenuItem as={NavLink} to="/login" key="login" activeClassName="active"
+                    compact="true">
+            {intl.get("login-menu-header")}
+          </MenuItem>
+        </Menu>   
+      </Popup>
     </Responsive>
 
-    <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-      <Menu.Item fitted="horizontally" key="loginlink">
-        <Button secondary inverted onClick={e => history.push("/login")}>
-          {intl.get("login-menu-header")}
-        </Button>
-      </Menu.Item>
-    </Responsive>
+
   </React.Fragment>
 )
 

@@ -10,12 +10,13 @@ import { renderForLoading, renderForError, QueryErrorDisplay } from '../../commo
 import UserContextUpdater from '../../contexts/UserContextUpdater'
 import { DefaultUser } from '../../contexts/userContext'
 
-import TopNavBar from '../TopNavBar'
+// import SportsNavBar from '../sportsNavBar/SportsNavBar'
 import SideNavBar from '../SideNavBar'
 import MainBar from '../mainBar/MainBar'
 
 const vanillaLayoutContent = (props) => {
   const { user, toggleSideBarVisibility, onToggleSideBarVisibility, currentLocale, onSelectLocale, locales } = props
+
   return (
         <UserContextUpdater input={user}>             
           <SideNavBar visible={toggleSideBarVisibility} 
@@ -24,8 +25,9 @@ const vanillaLayoutContent = (props) => {
             <Segment basic clearing>
               <MainBar locales={locales} 
                         defaultLocale={currentLocale}
-                        onSelectLocale={onSelectLocale} />
-              <TopNavBar onToggleSideBarVisibility={onToggleSideBarVisibility} />
+                        onSelectLocale={onSelectLocale}
+                        onToggleSideBarVisibility={onToggleSideBarVisibility} />
+              {/* <SportsNavBar onToggleSideBarVisibility={onToggleSideBarVisibility} /> */}
             </Segment>
             <Segment basic padded>
                 {React.Children.map(props.children, 

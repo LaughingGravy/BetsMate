@@ -76,6 +76,7 @@ class Layout extends React.Component {
     
     render() { 
       const { initDone, currentLocale, toggleSideBarVisibility } = this.state
+
       return (
         initDone && <LayoutContent currentLocale={currentLocale} toggleSideBarVisibility={toggleSideBarVisibility} 
                                     locales={SUPPOER_LOCALES} onSelectLocale={this.onSelectLocale}
