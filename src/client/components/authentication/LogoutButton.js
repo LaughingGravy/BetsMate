@@ -10,7 +10,7 @@ import { withUser } from '../contexts/withUserContext'
 import LOGOUT from '../../graphql/mutations/authentication/logout'
 import CURRENT_USER from '../../graphql/queries/authentication/currentUser'
 
-const vanillaLogoutButton = (props) => {
+const vanillaLogoutButton = () => {
 
   const onCompleted = (data) => {
       history.push('/home');
@@ -23,7 +23,7 @@ const vanillaLogoutButton = (props) => {
 
       refetchQueries={[ {query: CURRENT_USER}]}>
       {(logout, { loading }) => (
-          <Button basic secondary inverted loading={loading} onClick={(e) => { 
+          <Button size="mini" basic compact secondary loading={loading} onClick={(e) => { 
                                   e.preventDefault()
                                   logout()                      
                         }}> 

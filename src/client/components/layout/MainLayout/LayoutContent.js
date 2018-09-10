@@ -11,7 +11,7 @@ import UserContextUpdater from '../../contexts/UserContextUpdater'
 import { DefaultUser } from '../../contexts/userContext'
 
 // import SportsNavBar from '../sportsNavBar/SportsNavBar'
-import SideNavBar from '../SideNavBar'
+import SideNavBar from '../sideBar/SideNavBar'
 import MainBar from '../mainBar/MainBar'
 
 const vanillaLayoutContent = (props) => {
@@ -29,7 +29,7 @@ const vanillaLayoutContent = (props) => {
                         onToggleSideBarVisibility={onToggleSideBarVisibility} />
               {/* <SportsNavBar onToggleSideBarVisibility={onToggleSideBarVisibility} /> */}
             </Segment>
-            <Segment basic padded>
+            <Segment basic>
                 {React.Children.map(props.children, 
                 child => React.cloneElement(child, {currentLocale: currentLocale}))}
             </Segment>                 

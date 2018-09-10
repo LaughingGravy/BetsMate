@@ -12,7 +12,7 @@ const vanillaRightMenuUnAuthItems = () => (
   <React.Fragment>
     <Responsive minWidth={Responsive.onlyTablet.minWidth}>
       <Menu.Item fitted="horizontally" key="registerlink">
-        <Button secondary inverted onClick={e => history.push("/register/link")}>
+        <Button size="mini" basic compact secondary onClick={e => history.push("/register/link")}>
           {intl.get("register-menu-header")}
         </Button>
       </Menu.Item>
@@ -20,7 +20,7 @@ const vanillaRightMenuUnAuthItems = () => (
 
     <Responsive minWidth={Responsive.onlyTablet.minWidth}>
       <Menu.Item fitted="horizontally" key="loginlink">
-        <Button secondary inverted onClick={e => history.push("/login")}>
+        <Button size="mini" basic compact secondary onClick={e => history.push("/login")}>
           {intl.get("login-menu-header")}
         </Button>
       </Menu.Item>
