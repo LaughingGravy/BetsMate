@@ -87,5 +87,6 @@
     "reset-token-not-found-error": "Password reset link token not found.",
     "reset-token-expired-error": "The reset link token has expired.<br />Please make a new request.",
     "reg-token-not-found-error": "Activation link token not found.",
-    "reg-token-expired-error": "The activation link token has expired.<br />Please make a new request."
+    "reg-token-expired-error": "The activation link token has expired.<br />Please make a new request.",
+    "auth-access-message-error": "This page is for users not logged in."
 }

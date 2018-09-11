@@ -4,8 +4,9 @@ import { Menu, Icon } from 'semantic-ui-react'
 
 import { history } from '../../../../../library/routing'
 import InternationalisationItem from './InternationalisationItem'
-import RightMenuUnAuthItems from './RightMenuUnAuthItems'
-import RightMenuLogoutItem from './RightMenuLogoutItem'
+// import RightMenuUnAuthItems from './RightMenuUnAuthItems'
+// import RightMenuLogoutItem from './RightMenuLogoutItem'
+import RightMenuItems from './RightMenuItems'
 import SideBarMenuItem from './SideBarMenuItem'
 import AdminMenuItem from './AdminMenuItem'
 
@@ -25,8 +26,7 @@ const MainBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisibi
     
     <Menu.Menu fitted="true" position="right">  
       <InternationalisationItem locales={locales} onSelectLocale={onSelectLocale} defaultLocale={defaultLocale} />
-      <RightMenuUnAuthItems />
-      <RightMenuLogoutItem /> 
+      <RightMenuItems />
       <SideBarMenuItem onToggleSideBarVisibility={onToggleSideBarVisibility} />
     </Menu.Menu>
   </Menu>

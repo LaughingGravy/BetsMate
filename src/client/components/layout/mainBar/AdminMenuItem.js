@@ -6,7 +6,7 @@ import { compose } from 'recompose'
 import { Menu, Responsive } from 'semantic-ui-react'
 import intl from 'react-intl-universal';
 
-import { renderIfAuthenticated } from '../../common/ConditionalRender'
+import { renderIfRole } from '../../common/ConditionalRender'
 import { withUser } from '../../contexts/withUserContext'
 
 const vanillaAdminMenuItem = () => (
@@ -18,7 +18,7 @@ const vanillaAdminMenuItem = () => (
 )
 
 const AdminMenuItem = compose(
-  renderIfAuthenticated(vanillaAdminMenuItem)
+  renderIfRole(vanillaAdminMenuItem)
 )(vanillaAdminMenuItem)
 
 AdminMenuItem.propTypes = {

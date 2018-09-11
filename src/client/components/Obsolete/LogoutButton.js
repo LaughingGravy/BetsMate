@@ -4,11 +4,11 @@ import { compose } from 'recompose'
 import intl from 'react-intl-universal';
 
 import { Button } from 'semantic-ui-react'
-import { history } from '../../../../library/routing'
-import { renderIfAuthenticated } from '../common/ConditionalRender'
-import { withUser } from '../contexts/withUserContext'
-import LOGOUT from '../../graphql/mutations/authentication/logout'
-import CURRENT_USER from '../../graphql/queries/authentication/currentUser'
+import { history } from '../../../../../library/routing'
+import { renderIfAuthenticated } from '../../common/ConditionalRender'
+import { withUser } from '../../contexts/withUserContext'
+import LOGOUT from '../../../graphql/mutations/authentication/logout'
+import CURRENT_USER from '../../../graphql/queries/authentication/currentUser'
 
 const vanillaLogoutButton = () => {
 

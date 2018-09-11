@@ -22,6 +22,20 @@ branch(
             renderNothing
 )
 
+const renderOrIfAuthenticated = (component, altComponent, propName = "userCtx", isAuthenticated = true) =>
+branch(
+  props => (props[propName] && isAuthenticated == props[propName].isAuthenticated),
+            renderComponent(component),
+            renderComponent(altComponent)
+)
+
+const renderIfRole = (component, propName = "userCtx", role = "admin") =>
+branch(
+  props => (props[propName] && props[propName].isAuthenticated && role == props[propName].role),
+            renderComponent(component),
+            renderNothing
+)
+
 const renderForLoading = (component) => 
   branch(
     props => props.loading,
@@ -46,6 +60,10 @@ const renderForDataNotFound = (component, dataName) =>
 
 const NotFoundDisplay = props => (
   <Container textAlign="center">{intl.get("not-found")}</Container>
+)
+
+const AuthenticatedUserErrorDisplay = props => (
+  <Container textAlign="center">{intl.get("auth-access-message-error")}</Container>
 )
 
 const renderMessageForError = (component) => 
@@ -84,8 +102,7 @@ const MutateErrorDisplay = props => (
   </Container>
 )
 
-export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, renderIfAuthenticated,
-        renderForLoading, LoadingDisplay, 
-        renderMessageForError, renderForError, QueryErrorDisplay, MutateErrorDisplay,
-        renderForNotFound, renderForDataNotFound, NotFoundDisplay, 
+export { AdminFailAccessErrorDisplay, renderForAdminFailAccessError, renderIfAuthenticated, renderIfRole, renderOrIfAuthenticated,
+        renderForLoading, renderMessageForError, renderForError, renderForNotFound, renderForDataNotFound,
+        LoadingDisplay, QueryErrorDisplay, MutateErrorDisplay, NotFoundDisplay, AuthenticatedUserErrorDisplay,
         errorCheck }

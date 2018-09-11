@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { compose } from 'recompose'
 
 import { Grid } from 'semantic-ui-react'
-import intl from 'react-intl-universal';
+import intl from 'react-intl-universal'
 
-import Logout from '../../authentication/LogoutButton'
 import { renderIfAuthenticated } from '../../common/ConditionalRender'
 import { withUser } from '../../contexts/withUserContext'
 
