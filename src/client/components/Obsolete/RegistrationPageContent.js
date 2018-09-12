@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import intl from 'react-intl-universal'
 import { compose } from 'recompose'
 
-import { renderOrIfAuthenticated, AuthenticatedUserErrorDisplay } from '../../common/ConditionalRender'
-import { withUser } from '../../contexts/withUserContext'
+import { renderOrIfAuthenticated, AuthenticatedUserErrorDisplay } from '../common/ConditionalRender'
+import { withUser } from '../contexts/withUserContext'
 
 import { Grid, Container, GridColumn, Segment } from 'semantic-ui-react'
-import RegisterButton from './RegisterButton'
-import RegisterForm from './RegisterForm'
+import RegisterButton from '../authentication/register/RegisterButton'
+import RegisterForm from '../authentication/register/RegisterForm'
 
 const vanillaRegPageContent = ({token}) => {
   return (  

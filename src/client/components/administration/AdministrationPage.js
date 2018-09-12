@@ -1,9 +1,8 @@
 import React from 'react'
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
-import { Header, Grid, GridRow } from 'semantic-ui-react'
+import { Header, Grid, GridRow, Menu } from 'semantic-ui-react'
 
-import AdminPageMenu from './AdminPageMenu'
 import AdminRoutes from './AdminRoutes'
 
 const AdministrationPage = ( { match }) => {
@@ -14,7 +13,12 @@ const AdministrationPage = ( { match }) => {
       </Grid.Row>
 
        <GridRow centered>
-        <AdminPageMenu match={match} />
+        <Menu stackable pointing>
+          <MenuItem as={NavLink} to={`${match.url}/country`} key="country" activeClassName="active"
+                        compact="true">
+              {intl.get("admin-country-menu-header")}
+          </MenuItem>
+        </Menu>
       </GridRow>
 
       <GridRow centered>

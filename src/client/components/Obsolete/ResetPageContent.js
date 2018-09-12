@@ -4,11 +4,11 @@ import intl from 'react-intl-universal'
 import { Grid, GridColumn, Segment, Container } from 'semantic-ui-react'
 
 import { compose } from 'recompose'
-import { renderOrIfAuthenticated, AuthenticatedUserErrorDisplay } from '../../common/ConditionalRender'
-import { withUser } from '../../contexts/withUserContext'
+import { renderOrIfAuthenticated, AuthenticatedUserErrorDisplay } from '../common/ConditionalRender'
+import { withUser } from '../contexts/withUserContext'
 
-import LinkForm from '../LinkForm'
-import ResetButton from './ResetButton'
+import LinkForm from '../authentication/LinkForm'
+import ResetButton from '../authentication/resetLink/ResetButton'
 
 const vanillaResetPageContent = () => (
   <React.Fragment>

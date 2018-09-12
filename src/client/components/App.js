@@ -3,7 +3,7 @@ import React from 'react'
 import { hot } from 'react-hot-loader'
 import { Segment } from 'semantic-ui-react'
 import Layout from './layout/MainLayout/Layout'
-import Routes from './layout/Routes'
+import Routes from './layout/routes/Routes'
 
 import { UserContext, DefaultUser } from './contexts/userContext'
 

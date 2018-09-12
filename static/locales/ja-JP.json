@@ -2,7 +2,6 @@
     "locale-id": "ja-JP",
     "locale-language": "日本語",
 
-    "auth-page-decline": "このページを表示する権限がありません",
     "loading": "読み込み中...",
     "try-refetch-query": "再試行する",
     "not-found": "検索条件に一致するレコードが見つかりませんでした",
@@ -75,6 +74,8 @@
 
     "save-button-label": "セーブ",
 
+    "auth-page-decline-warning-title": "不正アクセス",
+    "auth-page-decline-warning-msg": "このページを表示する権限がありません.",
     "email-not-found-error": "メールが見つかりません.",
     "pwd-invalid-error": "パスワードが無効です.",
     "duplicate-email-error": "電子メールは既に登録されています",
@@ -86,5 +87,8 @@
     "reset-token-expired-error": "リセットリンクトークンが期限切れです. <br />新しいリクエストをしてください.",
     "reg-token-not-found-error": "アクティベーションリンクトークンが見つかりません.",
     "reg-token-expired-error": "アクティベーションリンクトークンが期限切れです. <br />新しいリクエストをしてください.",
-    "auth-access-message-error": "このページはログインしていないユーザーを対象としています."
+    "user_loggedin-message-error": "ナビゲートしたページは、まだログインしていないユーザーのみが閲覧できます.",
+    "user_loggedin-warning-page-title": "ログイン済み",
+    "user_not_loggedin-message-error": "あなたが移動したページは、ログインしているユーザーのみです.",
+    "user_not_loggedin-warning-page-title": "ログインしていない"
 }

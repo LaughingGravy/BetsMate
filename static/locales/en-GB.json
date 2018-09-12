@@ -2,7 +2,6 @@
     "locale-id": "en-GB",
     "locale-language": "English",
 
-    "auth-page-decline": "You are not authorised to view this page",
     "loading": "loading...",
     "try-refetch-query": "Try again",
     "not-found": "No record was found matching search criteria",
@@ -76,6 +75,8 @@
 
     "save-button-label": "Save",
 
+    "auth-page-decline-warning-title": "Unauthorised Access",
+    "auth-page-decline-warning-msg": "You are not authorised to view this page.",
     "email-not-found-error": "Email not found.",
     "pwd-invalid-error": "Password not valid.",
     "duplicate-email-error": "Email is already registered",
@@ -88,5 +89,8 @@
     "reset-token-expired-error": "The reset link token has expired.<br />Please make a new request.",
     "reg-token-not-found-error": "Activation link token not found.",
     "reg-token-expired-error": "The activation link token has expired.<br />Please make a new request.",
-    "auth-access-message-error": "This page is for users not logged in."
+    "user_loggedin-message-error": "The page you have navigated to is only for users that have yet to log in.",
+    "user_loggedin-warning-page-title": "Already Logged In",
+    "user_not_loggedin-message-error": "The page you have navigated to is only for users that have logged in.",
+    "user_not_loggedin-warning-page-title": "Not Logged In"
 }
