@@ -33,8 +33,9 @@ passport.deserializeUser((id, done) => {
 // This string is provided back to the GraphQL client.
 passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
   User.findOne({ email: email.toLowerCase() }, (err, user) => {
+
     if (err) { return done(err); }
-    if (!user) { return done(null, false, "email-not-found-error"); }
+    if (!user) { return done(null, false, "credentials-error"); }
     user.comparePassword(password, (err, isMatch) => {
       if (err) { return done(err); }
       if (isMatch) {
@@ -106,18 +107,18 @@ function login({ email, password, req }) {
   });
 }
 
-function changePassword({ password, req }) {
+function changePassword({ email, password, req }, newPassword) {
   return new Promise((resolve, reject) => {
     passport.authenticate('local', (err, user) => {
       if (!user) { reject("credentials-error") }
 
-      user.updateOne({ "email": user.email.toLowerCase() },
-                      { $set: { "password": password }},
+      user.updateOne({ "email": email.toLowerCase() },
+                      { $set: { "password": newPassword }},
                       { upsert: false })
 
 
       req.login(user, () => resolve(user));
-    })({ body: { user: { email, displayName, password, regDate, lastAccessDate } } });
+    })({ body: { user: { email, password } } });
   })
 }
 

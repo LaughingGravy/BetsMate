@@ -14,13 +14,14 @@ import UserRoutes from './UserRoutes'
 const Routes = () => (
     <Switch>
         <Route exact path="/" component={HomePage} />
-        <Route path="/home" component={HomePage} />    
+        <Route path="/home" component={HomePage} />  
+        <Route path="/about" component={AboutPage} />  
         <Route path="/register/link/success" component={RegisterLinkSuccessPage} />
         <Route path="/reset/link/success" component={ResetSuccessPage} />
         <Route path="/change/success" component={ChangeSuccessPage} />
 
         <UserRoutes />
-        <Route path="/about" component={AboutPage} />
+        
         <Redirect exact from="about-us" to="about" /> 
         <Redirect to="/home" />
     </Switch> 

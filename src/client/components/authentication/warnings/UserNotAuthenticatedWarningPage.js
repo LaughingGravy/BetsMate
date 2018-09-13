@@ -9,11 +9,11 @@ const UserNotAuthenticatedWarningPage = () => (
         <Message size="big" warning>
           
           <Message.Header>
-            <Icon name="warning" size="large" />{intl.get("user_loggedin-warning-page-title")}
+            <Icon name="warning" size="large" />{intl.get("user_not_loggedin-warning-page-title")}
           </Message.Header>
           <br />
           <Message.Content>
-            {intl.getHTML("user_loggedin-message-error")}
+            {intl.getHTML("user_not_loggedin-message-error")}
           </Message.Content>
         </Message>
       </GridColumn>

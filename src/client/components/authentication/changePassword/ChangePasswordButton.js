@@ -29,7 +29,9 @@ const ChangePasswordButton = ({ variables }) => {
 
 ChangePasswordButton.propTypes = {
   variables: PropTypes.shape({
-    password: PropTypes.string.isRequired
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    newPassword: PropTypes.string.isRequired
   }).isRequired
 }
 

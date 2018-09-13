@@ -12,34 +12,34 @@ import ResetPage from '../../authentication/resetLink/ResetPage'
 import ResetPasswordPage from '../../authentication/resetPassword/ResetPasswordPage'
 import ChangePasswordPage from '../../authentication/changePassword/ChangePasswordPage'
 
-import UserLoggedInPage from '../../authentication/warnings/UserLoggedInWarningPage'
+import UserLoggedInWarningPage from '../../authentication/warnings/UserLoggedInWarningPage'
 import UserNotAuthenticatedWarningPage from '../../authentication/warnings/UserNotAuthenticatedWarningPage'
 import UserRoleNoPermissionPage from '../../authentication/warnings/UserRoleNoPermissionPage'
 
 const UserRoutes = ({ userCtx }) => {
-  const { isAuthenticated, role } = userCtx
+  const { isAuthenticated, user: { role } } = userCtx
 
   return (
     <React.Fragment>
       <Route path="/login" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInPage /> ) : (<LoginPage match={match} />) )} />
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<LoginPage match={match} />) )} />
 
       <Route exact path="/register/:token" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInPage /> ) : (<RegistrationPage match={match} />) )} />
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<RegistrationPage match={match} />) )} />
       
        <Route exact path="/register/link" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInPage /> ) : (<RegisterLinkPage match={match} />) )} />
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<RegisterLinkPage match={match} />) )} />
 
       <Route exact path="/reset/link" render={({match}) => (
-          !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<ResetPage match={match} />) )} />
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<ResetPage match={match} />) )} />
 
       <Route path="/reset/:token" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInPage /> ) : (<ResetPasswordPage match={match} />) )} />
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<ResetPasswordPage match={match} />) )} />
 
-      <Route exact path="/change/" render={({match}) => (
-          !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<ChangePasswordPage match={match} />) )} />
+      <Route exact path="/change" render={({match}) => (
+          !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<ChangePasswordPage match={match} />)  )} />
 
-      <Route exact path="/administration/" render={({match}) => (
+      <Route exact path="/administration" render={({match}) => (
           !isAuthenticated || role != "admin" ? (<UserRoleNoPermissionPage /> ) : (<AdministrationPage match={match} />) )} />
     </React.Fragment>
   )

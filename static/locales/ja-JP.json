@@ -33,6 +33,9 @@
     "register-button-label": "新規登録",
     "reset-button-label": "リンクを送る",
     "confirm-password-label": "パスワードを認証する",
+    "current-password-label": "現在のパスワード",
+    "new-password-label": "新しいパスワード",
+    "confirm-new-password-label": "新しいパスワードを確認",
 
     "password-placeholder": "パスワード...",
     "username-placeholder": "ユーザー名...",
@@ -82,7 +85,6 @@
     "duplicate-username-error": "ユーザー名が既に登録されてます.<br />もう一度お試しください.",
     "missing-credentials-error": "メールアドレスとパスワードを入力する必要があります.",
     "credentials-error": "メール/パスワードが認識されない.",
-    "email-not-reg-error": "メールが見つかりません！登録してください.",
     "reset-token-not-found-error": "パスワードリセットリンクトークンが見つかりません.",
     "reset-token-expired-error": "リセットリンクトークンが期限切れです. <br />新しいリクエストをしてください.",
     "reg-token-not-found-error": "アクティベーションリンクトークンが見つかりません.",

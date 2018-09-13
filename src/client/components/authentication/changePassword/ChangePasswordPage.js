@@ -22,7 +22,7 @@ const ChangePasswordPage = () => (
 
     <Grid.Row centered>
       <GridColumn mobile={14} tablet={8} computer={6}>        
-          <ChangePasswordForm render={variables => (
+          <ChangePasswordForm render={(variables) => (
             <Container textAlign='center'>
               <ChangePasswordButton variables={variables} /> 
             </Container>

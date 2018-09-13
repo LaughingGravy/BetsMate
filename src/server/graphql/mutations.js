@@ -84,11 +84,13 @@ export default new GraphQLObjectType({
         changePassword: {
             type: UserType,
             args: {
-                password: { type: GraphQLString }
+                email: { type: GraphQLString },
+                password: { type: GraphQLString },
+                newPassword: { type: GraphQLString }
             },
-            resolve(parentValue, { password }, ctx) {
+            resolve(parentValue, { email, password, newPassword}, ctx) {
                 const req = ctx.req;
-                return AuthService.changePassword({ password }, req);
+                return AuthService.changePassword({ email, password, req}, newPassword);
             }
         },
         mergeCountry: {

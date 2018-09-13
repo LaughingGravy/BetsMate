@@ -33,6 +33,9 @@
     "register-button-label": "Activate",
     "reset-button-label": "Send Link",
     "confirm-password-label": "Confirm Password",
+    "current-password-label": "Current Password",
+    "new-password-label": "New Password",
+    "confirm-new-password-label": "Confirm New Password",
 
     "password-placeholder": "Password...",
     "username-placeholder": "Username...",
@@ -84,7 +87,6 @@
     "missing-credentials-error": "You must provide an email and password.",
     "missing-reg-details-error": "You must provide a username and password.",
     "credentials-error": "Email/password not recognised.",
-    "email-not-reg-error": "Email not found! Please register.",
     "reset-token-not-found-error": "Password reset link token not found.",
     "reset-token-expired-error": "The reset link token has expired.<br />Please make a new request.",
     "reg-token-not-found-error": "Activation link token not found.",
