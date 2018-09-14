@@ -18,7 +18,8 @@ class Common {
         this.mailerUser = "baikinmanlovesdokinchan@gmail.com",
         this.mailerPassword = "k0mbanwa",
         this.mailerReply = "no.reply@betsmate.com",
-        this.tokenExpiryInDays = 1,
+        this.loginTokenExpiryInHours = 6,
+        this.emailVerificationExpiryInHours = 1,
         
         this.apolloClientOpt = {};
         this.isRunEngine = yn(process.env.RUN_ENGINE);

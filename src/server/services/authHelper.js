@@ -12,8 +12,12 @@ const getUTCDate = () => {
   return moment().utc().toDate()
 }
 
-const getUTCTokenExpiry = () => {
-  return moment().utc().add(Config.tokenExpiryInDays, "d").toDate()
+const getUTCFutureDate = (duration, key) => {
+  return moment().utc().add(duration, key).toDate()
+}
+
+const getFutureDate = (duration, key) => {
+  return moment().add(duration, key).toDate()
 }
 
 const convertUTCToTimeZone = (utcDate, timeZone) => {
@@ -53,5 +57,5 @@ const getRegisterMailOptions = ({ email, token, expiry }, timeZone) => {
           }
 }
 
-export { getToken, getUTCDate, getUTCTokenExpiry, hasLinkExpired, convertUTCToTimeZone, 
+export { getToken, getUTCDate, getFutureDate, hasLinkExpired, convertUTCToTimeZone, 
           getResetMailOptions, getRegisterMailOptions }

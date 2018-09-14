@@ -2,23 +2,27 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const config = require('../config/config');
+//const config = require('../config/config');
 const crypto = require('crypto');
 const LocalStrategy = require('passport-local').Strategy;
 const argon2 = require('argon2');
 const speakeasy = require('speakeasy');
 const qrCode = require('qrcode');
 
+import userService from './user'
+import Config from '../../../utilities/Config'
+import { getFutureDate } from './authHelper'
+
 passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, done) => {
-  return User.findOne({email: username}, (error, user) => {
+  return userService.findOne({email: username}, (error, user) => {
     if (error) {
       return done(error);
     }
     if (!user) {
       return done(null, false, {
-        message: 'User not found' // This message is for debugging only.
-      });                         // Don't tell the user that a username does / doesn't exist.
-    }                             // Instead just tell them 'Invalid login credentials', or similar.
+        message: "credentials-error" // Don't tell the user that an email/username does / doesn't exist.
+      });                         
+    }                            
     if (user) {
       return validateUserPassword(user.passwordHash, password)
         .then((validated) => {
@@ -26,12 +30,12 @@ passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, d
             return done(user);
           } else {
             return done(null, false, {
-              message: 'Password is wrong' // Same as 'User not found' message above. Don't give the user this message.
-            })                             // Give them the exact same message as for user not found, eg. 'Invalid login credentials'.
+              message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
+            })                            
           }
         })
         .catch((error) => {
-          console.log('error')
+          console.log("error");
           console.log(error)
           return done(error)
         });
@@ -61,7 +65,7 @@ let authService = {
     return loginUser(req, res)
       .then((result) => {
         if (!result) {
-          throw new Error ('Invalid login credentials');
+          throw new Error ("credentials-error");
         }
         if (result) {
           return result;
@@ -122,11 +126,14 @@ let authService = {
         console.log(resetUser)
         return resetUser;
       })
-  }
+  },
 
+  GetNewUser: () =>{
+    return getNewUser()
+  }
 }
 
-module.exports = authService;
+export default authService
 
 function validateUserPassword(hash, password) {
   return argon2.verify(hash, password)
@@ -146,15 +153,16 @@ function validateUserPassword(hash, password) {
 
 function generateJwt(user) {
   return jwt.sign({
-    _id: user._id,
+   // _id: user._id,
     email: user.email,
     exp: new Date().valueOf() + (1000 * 60 * 60 * 6) // 6 hours
-  }, config.jwtPassword);
+  }, Config.secret);
 }
 
 function registerUser(userObject) {
   let promise = new Promise((resolve, reject) => {
-    let user = new User;
+    //let user = new User;
+    let user = getNewUser()
     let emailVerificationString = crypto.randomBytes(32).toString('base64');
     user.email = userObject.email;
     argon2.hash(userObject.password, {type: argon2.argon2id}).then((hash) => { // Hash the password with Argon2id: https://crypto.stackexchange.com/questions/48935/why-use-argon2i-or-argon2d-if-argon2id-exists?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
@@ -162,7 +170,8 @@ function registerUser(userObject) {
       argon2.hash(emailVerificationString, {type: argon2.argon2id}).then((emailVerificationHash) => {
         user.emailVerificationHash = emailVerificationHash;
         user.emailVerificationExpiry = new Date().valueOf() + (1000 * 60 * 60); // Expires in 1 hour. Make it a shorter time for production app.
-        user.save((error) => {
+        //user.save((error) => {
+        userService.createOne((error, regUser) => {
           if (error) {
             console.log('error saving user')
             console.log(error)
@@ -182,19 +191,20 @@ function registerUser(userObject) {
 };
 
 function verifyEmailAddress(email, emailVerificationString) {
-  return User.findOne({email: email})
+  return userService.getOne({email: email})
     .then((user) => {
       if (user) {
         if (user.emailVerificationExpiry > new Date().valueOf()) {
           return argon2.verify(user.emailVerificationHash, emailVerificationString)
             .then((verified) => {
-              console.log('verified fro argon2')
+              console.log('verified from argon2')
               console.log(verified)
               if (verified) {
                 user.emailVerificationExpiry = null;
                 user.emailVerificationHash = null;
                 user.verified = true;
-                user.save();
+                //user.save();
+                userService.updateOne(user)
                 return verified
               } else {
                 return 'error verifying email address'
@@ -242,7 +252,8 @@ function loginUser(req, res) {
 };
 
 function getUser(email) {
-  return User.findOne({email: email})
+  //return User.findOne({email: email})
+  return userService.findOne({email: email})
     .then((user) => {
       if (!user) {
         return ({message: 'Error getting user'})
@@ -254,7 +265,8 @@ function getUser(email) {
 
 function activate2FactorAuthentication(email) {
   let promise = new Promise((resolve, reject) => {
-    User.findOne({email: email})
+    //User.findOne({email: email})
+    userService.findOne({email: email})
       .then((user) => {
         if (!user) {
           throw new Error('Error getting user')
@@ -266,7 +278,8 @@ function activate2FactorAuthentication(email) {
             algorithm: 'sha256'
           });
           user.tempTwoFactorSecret = twoFactorSecret;
-          user.save();
+          //user.save();
+          userService.updateOne(user)
           qrCode.toDataURL(twoFactorSecret.otpauth_url, (error, dataUrl) => {
             if (error) {
               console.log('error creating qrcode');
@@ -281,7 +294,8 @@ function activate2FactorAuthentication(email) {
 };
 
 function verifyTwoFactorCode(token, email) {
-  return User.findOne({email: email})
+  // return User.findOne({email: email})
+  return userService.findOne({email: email})
     .then((user) => {
       if (!user) {
         throw new Error('error getting user')
@@ -294,7 +308,8 @@ function verifyTwoFactorCode(token, email) {
         if (verified === true) {
           user.twoFactorSecret = user.tempTwoFactorSecret;
           user.tempTwoFactorSecret = null;
-          user.save();
+          //user.save();
+          userService.updateOne(user)
         }
         return {verified: verified, user: user}
       }
@@ -302,7 +317,8 @@ function verifyTwoFactorCode(token, email) {
 }
 
 function generatePasswordResetCode(email) {
-  return User.findOne({email: email})
+  //return User.findOne({email: email})
+  return userService.findOne({email: email})
     .then((user) => {
       if (!user) {
         throw new Error('error getting user')
@@ -311,7 +327,8 @@ function generatePasswordResetCode(email) {
         return argon2.hash(code, {type: argon2.argon2id}).then((hash) => {
           user.passwordResetHash = hash;
           user.passwordResetExpiry = new Date().valueOf() + (1000 * 60 * 5) // 5 minutes
-          user.save();
+          //user.save();
+          userService.updateOne(user)
           return code;
         })
       }
@@ -319,7 +336,8 @@ function generatePasswordResetCode(email) {
 }
 
 function checkPasswordResetCode(code, email) {
-  return User.findOne({email: email})
+  // return User.findOne({email: email})
+  return userService.findOne({email: email})
     .then((user) => {
       if (!user) {
         throw new Error('error getting user')
@@ -339,7 +357,8 @@ function checkPasswordResetCode(code, email) {
 }
 
 function resetPassword(email, password) {
-  return User.findOne({email: email})
+  // return User.findOne({email: email})
+  return userService.findOne({email: email})
     .then((user) => {
       console.log('user')
       console.log(user)
@@ -348,9 +367,29 @@ function resetPassword(email, password) {
       } else {
         return argon2.hash(password, {type: argon2.argon2id}).then((hash) => { // Hash the password with Argon2id: https://crypto.stackexchange.com/questions/48935/why-use-argon2i-or-argon2d-if-argon2id-exists?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
           user.passwordHash = hash;
-          user.save()
+          //user.save()
+          userService.updateOne(user)
           return user;
         })
       }
     })
 }
+
+function getNewUser() {
+  return {
+    email: "",
+    passwordHash: "",
+    displayName: "Guest",
+    role: "Guest",
+    registerDate: {},
+    lastAccessDate: {},
+    verified: false,
+    emailVerificationHash: "",
+    emailVerificationExpiry: 0,
+    passwordResetHash: "",
+    tempTwoFactorSecret: {},
+    twoFactorSecret: {}
+  }
+}
+
+
