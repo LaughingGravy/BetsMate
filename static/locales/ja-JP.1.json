@@ -18,16 +18,9 @@
 
     "home-page-title": "ホーム",
     "about-page-title": "アボウト",
-
-    "register-page-title": "アカウント登録",
-    "register-button-label": "登録",
-
-
-
-
-
     "login-page-title": "ログイン",
     "admin-page-title": "アドミン",
+    "register-page-title": "登録を有効にする",
     "reset-page-title": "パスワード忘れた",
     "reset-password-page-title": "パスワードを再設定する",
     "change-password-page-title": "パスワードを変更する",
@@ -37,7 +30,7 @@
     "password-label": "パスワード",
     "username-label": "ユーザー名",
     "login-button-label": "ログイン",
-    
+    "register-button-label": "新規登録",
     "reset-button-label": "リンクを送る",
     "confirm-password-label": "パスワードを認証する",
     "current-password-label": "現在のパスワード",
@@ -46,17 +39,6 @@
 
     "password-placeholder": "パスワード...",
     "username-placeholder": "ユーザー名...",
-
-
-    "registration-text": "あなたの詳細を入力し、登録ボタンをクリックするとアカウントアクティベーションリンクが送信されます.",
-
-
-
-
-
-
-
-
 
     "reset-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
     "link-msg-header": "メールリンク送信済み",

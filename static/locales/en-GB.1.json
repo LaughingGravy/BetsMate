@@ -20,14 +20,10 @@
     "about-page-title": "About",
     "admin-page-title": "Administration",
 
-    "register-page-title": "Register Account",
-    "register-button-label": "Register",
 
-
-
-
-
+    
     "login-page-title": "Login",
+    "register-page-title": "Activate Registration",
     "reset-page-title": "Forgot Password",
     "reset-password-page-title": "Reset Password",
     "change-password-page-title": "Change Password",
@@ -37,6 +33,7 @@
     "password-label": "Password",
     "username-label": "Username",
     "login-button-label": "Login",
+    "register-button-label": "Activate",
     "reset-button-label": "Send Link",
     "confirm-password-label": "Confirm Password",
     "current-password-label": "Current Password",
@@ -45,12 +42,6 @@
 
     "password-placeholder": "Password...",
     "username-placeholder": "Username...",
-
-
-
-    "registration-text": "Please enter your details and an account activation link will be sent on clicking upon the Register button.",
-
-
 
 
     "reset-text": "Please enter your registered Bets Mate email address.<br />Once submitted a link to set a new password will be mailed.",
@@ -64,7 +55,7 @@
 
     "registration-activate-text": "Please enter a password and re-enter it for confirmation.<br />Complete registration by clicking on the Activation button.",
 
-    
+    "registration-link-text": "Please enter an email address and an account activation link will be sent on clicking upon the Send Link button.",
     "register-link-msg-content": "The account activation link has been sent successfully to the email address provided.<br />Please click on the link and follow the on screen instructions.",
     
     "admin-country-menu-header": "Country",

@@ -8,7 +8,7 @@ import CURRENT_USER from '../../../graphql/queries/authentication/currentUser'
 
 import MutationButton from '../../common/MutationButton'
 
-const RegisterButton = ({ variables: { email, password, displayName, timeZone }, role }) => {
+const RegisterButton = ({ variables: { token, displayName, password }, role }) => {
 
   const label = "register-button-label"
 
@@ -22,8 +22,8 @@ const RegisterButton = ({ variables: { email, password, displayName, timeZone },
       onCompleted={onCompleted}
 
       refetchQueries={[ {query: CURRENT_USER}]}>
-      {(register, { loading, error }) => (
-        <MutationButton variables={{ email: email, displayName: displayName, password: password, role: role, timeZone: timeZone }} mutation={register} 
+      {(signup, { loading, error }) => (
+        <MutationButton variables={{token: token, displayName: displayName, password: password, role: role}} mutation={signup} 
                         loading={loading} error={error} label={label} />
     )}
     </Mutation>
@@ -36,10 +36,9 @@ RegisterButton.defaultProps = {
 
 RegisterButton.propTypes = {
   variables: PropTypes.shape({
-    email: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
     displayName: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
-    timeZone: PropTypes.string.isRequired
   }).isRequired,
   role: PropTypes.string
 };

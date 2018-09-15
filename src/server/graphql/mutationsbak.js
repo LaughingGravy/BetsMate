@@ -7,29 +7,17 @@ const {
     GraphQLFloat
 } = graphql;
 
+const UserType = require('./types/user_type').default;
+const UserResetType = require('./types/user_reset_type').default;
+const UserRegisterType = require('./types/user_register_type').default;
+const AuthService = require('../services/auth');
+
 const CountryType = require('./types/country_type').default
 const AdminService = require('../services/admin')
-
-import AuthenticationService from '../services/authentication'
 
 export default new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-        register: {
-            type: UserType,
-            args: {
-                email: { type: GraphQLString },
-                displayName: { type: GraphQLString },
-                password: { type: GraphQLString },
-                role: { type: GraphQLString }
-            },
-            resolve(parentValue, { email, displayName, password, role }, ctx ) { //request is request object from express
-                const req = ctx.req;
-                return AuthenticationService.RegisterUser({ email, displayName, password, role, timeZone, req });
-            }
-        },
-
-
         signup: {
             type: UserType,
             args: {

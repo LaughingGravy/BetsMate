@@ -44,10 +44,13 @@ passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, d
 }));
 
 let authService = {
-  RegisterUser: (user) => {
+  RegisterUser: (user, timeZone) => {
     return registerUser(user)
       .then((emailVerificationObject) => {
-        return emailVerificationObject;
+        //return emailVerificationObject;
+        // send email
+        const options = getRegisterMailOptions(emailVerificationObject, timeZone)
+        return sendEmail(options)       
       })
       .catch((error) => {
         return error;
@@ -163,21 +166,25 @@ function registerUser(userObject) {
   let promise = new Promise((resolve, reject) => {
     //let user = new User;
     let user = getNewUser()
-    let emailVerificationString = crypto.randomBytes(32).toString('base64');
-    user.email = userObject.email;
+    let emailVerificationString = crypto.randomBytes(32).toString('base64')
+
+    user.email = userObject.email
+    user.displayName = userObject.displayName
+    user.role = userObject.role
+
     argon2.hash(userObject.password, {type: argon2.argon2id}).then((hash) => { // Hash the password with Argon2id: https://crypto.stackexchange.com/questions/48935/why-use-argon2i-or-argon2d-if-argon2id-exists?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
       user.passwordHash = hash;
       argon2.hash(emailVerificationString, {type: argon2.argon2id}).then((emailVerificationHash) => {
         user.emailVerificationHash = emailVerificationHash;
         user.emailVerificationExpiry = new Date().valueOf() + (1000 * 60 * 60); // Expires in 1 hour. Make it a shorter time for production app.
         //user.save((error) => {
-        userService.createOne((error, regUser) => {
+        userService.createOne((error) => {
           if (error) {
             console.log('error saving user')
             console.log(error)
             reject(error);
           }
-          resolve({emailAddress: user.email, emailVerificationString: emailVerificationString});
+          resolve({emailAddress: user.email, emailVerificationString: emailVerificationString, emailVerificationExpiry: emailVerificationExpiry});
         })
       })
     })
@@ -390,6 +397,19 @@ function getNewUser() {
     tempTwoFactorSecret: {},
     twoFactorSecret: {}
   }
+}
+
+function sendEmail(options) {
+  return new Promise((resolve, reject) => {
+    const smtpTransport = createTransporter()
+
+    smtpTransport.sendMail(options, (err, resp) => {
+      if (err) { reject(err) }
+      if (resp) { 
+        resolve(options.emailAddress)
+      }
+    })
+  })
 }
 
 

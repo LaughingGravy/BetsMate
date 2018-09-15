@@ -42,18 +42,32 @@ const getResetMailOptions = ({ email, token, expiry }, timeZone) => {
           }
 }
 
-const getRegisterMailOptions = ({ email, token, expiry }, timeZone) => {
-  const localDate = moment(convertUTCToTimeZone(expiry, timeZone )).format("dddd MMMM YYYY h:mm:ss a")
+// const getRegisterMailOptions = ({ email, token, expiry }, timeZone) => {
+//   const localDate = moment(convertUTCToTimeZone(expiry, timeZone )).format("dddd MMMM YYYY h:mm:ss a")
+
+//   return {
+//           from: Config.mailerReply,
+//           to: email,
+//           subject: "Bets Mate Registration Activation",
+//           html: `<h1> Greetings ${email}</h1>` +
+//                   "<p>Below is the link to activate your registration with Bets Mate.<p>" +
+//                   `<p>The link is valid until ${localDate}</p>` +
+//                   `You will be prompted to enter a password to complete the registration process`+
+//                   `<p><a href=http://localhost:3000/register/${token}>Click here</p>`
+//           }
+// }
+
+const getRegisterMailOptions = ({ emailAddress, emailVerificationString, emailVerificationExpiry }, timeZone) => {
+  const localDate = moment(convertUTCToTimeZone(emailVerificationExpiry, timeZone )).format("dddd MMMM YYYY h:mm:ss a")
 
   return {
           from: Config.mailerReply,
           to: email,
-          subject: "Bets Mate Registration Activation",
+          subject: "Bets Mate Registration",
           html: `<h1> Greetings ${email}</h1>` +
-                  "<p>Below is the link to activate your registration with Bets Mate.<p>" +
+                  "<p>Here is the link to reset your password.<p>" +
                   `<p>The link is valid until ${localDate}</p>` +
-                  `You will be prompted to enter a password to complete the registration process`+
-                  `<p><a href=http://localhost:3000/register/${token}>Click here</p>`
+                  `<p><a href=http://localhost:3000/reset/${token}>Click here</p>`
           }
 }
 

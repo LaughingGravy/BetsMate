@@ -8,7 +8,6 @@ class RegisterForm  extends React.Component {
     super(props);
 
     this.state = { 
-      email: "",
       displayName: "",
       password: "",
       passwordConfirm: "",
@@ -19,17 +18,12 @@ class RegisterForm  extends React.Component {
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
-    const { displayName, password, passwordConfirm, timeZone } = this.state
+    const { displayName, password, passwordConfirm } = this.state
 
     return (
       <Form className='segment' onSubmit={e => {
                                                   e.preventDefault;
                                                 }}>  
-        <Form.Field required>
-          <Form.Input name='email' label={intl.get("email-label")} placeholder='example@domain.com' 
-                      value={email} onChange={this.handleChange} />
-        </Form.Field>
-
         <Form.Field required>
           <Form.Input name='displayName' type='text' label={intl.get("username-label")} placeholder={intl.get("username-placeholder")}
                       value={displayName} onChange={this.handleChange} />
@@ -45,7 +39,7 @@ class RegisterForm  extends React.Component {
                       value={passwordConfirm} onChange={this.handleChange} />
         </Form.Field>
        
-        {this.props.render({email: email, password: password, displayName: displayName, timeZone: timeZone})}
+        {this.props.render({token: this.props.token, password: password, displayName: displayName})}
       </Form>
     )
   }
