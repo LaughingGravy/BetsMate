@@ -3,6 +3,7 @@ import moment from 'moment'
 import tz from 'moment-timezone'
 
 import Config from '../../../utilities/Config'
+import { getServerURL } from '../../../utilities/env'
 
 const getToken = () => {
   return UUID.v4()
@@ -64,10 +65,11 @@ const getRegisterMailOptions = ({ emailAddress, emailVerificationString, emailVe
           from: Config.mailerReply,
           to: email,
           subject: "Bets Mate Registration",
-          html: `<h1> Greetings ${email}</h1>` +
-                  "<p>Here is the link to reset your password.<p>" +
+          html: `<h1> Greetings</h1>` +
+                  "Thanks for registering with Bets Mate" +
+                  "<p>Please follow this link to confirm your email address and activate your account.<p>" +
                   `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=http://localhost:3000/reset/${token}>Click here</p>`
+                  `<p><a href=http://${getServerURL()}/verify-email?email=${emailAddress}&emailVerificationString=${encodeURIComponent(emailVerificationString)}>Click here</p>`
           }
 }
 

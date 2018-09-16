@@ -5,12 +5,6 @@ import { Route } from 'react-router-dom'
 import { withUser } from '../../contexts/withUserContext'
 
 import AdministrationPage from '../../administration/AdministrationPage'
-import VerifyEmailPage from '../../authentication/verifyEmail/VerifyEmailPage'
-import VerifyEmailSuccessPage from '../../authentication/verifyEmail/VerifySuccessPage'
-import VerifyEmailFailurePage from '../../authentication/verifyEmail/VerifyFailurePage'
-
-
-
 import RegisterLinkPage from '../../authentication/registerLink/RegisterLinkPage'
 import RegistrationPage from '../../authentication/register/RegistrationPage'
 import LoginPage from '../../authentication/login/LoginPage'
@@ -26,27 +20,13 @@ const UserRoutes = ({ userCtx }) => {
   const { isAuthenticated, user: { role } } = userCtx
 
   return (
-    <React.Fragment>   
-      <Route exact path="/register" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<RegistrationPage match={match} />) )} />
-      
-      <Route exact path="/verify-email" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailPage match={match} />) )} />
-
-      <Route exact path="/verify-email-success" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailSuccessPage match={match} />) )} />
-       
-       <Route exact path="/verify-email-failure" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailFailurePage match={match} />) )} />
-
-
-
-
-          
-
+    <React.Fragment>
       <Route path="/login" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<LoginPage match={match} />) )} />
-       
+
+      <Route exact path="/register/:token" render={({match}) => (
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<RegistrationPage match={match} />) )} />
+      
        <Route exact path="/register/link" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<RegisterLinkPage match={match} />) )} />
 

@@ -21,6 +21,7 @@
 
     "register-page-title": "アカウント登録",
     "register-button-label": "登録",
+    "verify-email-success-header": "アカウント確認済み",
 
 
 
@@ -49,9 +50,10 @@
 
 
     "registration-text": "あなたの詳細を入力し、登録ボタンをクリックするとアカウントアクティベーションリンクが送信されます.",
-
-
-
+    "verify-email-msg-content": "あなたのアカウントは確認済みです。<br /> Bets Mateにログインしてください.",
+    "verify-email-fail-header": "アカウント確認の失敗",
+    "verify-email-fail-msg-content": "あなたのアカウントは確認されていません.",
+    "email-not-verified-error": "アカウントを確認してください.",
 
 
 

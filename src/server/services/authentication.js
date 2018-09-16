@@ -64,8 +64,8 @@ let authService = {
       });
   },
 
-  LoginUser: (req, res) => {
-    return loginUser(req, res)
+  LoginUser: ({ email, password, req }) => {
+    return loginUser({ email, password, req })
       .then((result) => {
         if (!result) {
           throw new Error ("credentials-error");
@@ -80,6 +80,11 @@ let authService = {
         return error;
       })
   },
+  }
+
+
+
+
 
   GetUser: (email) => {
     return getUser(email)
@@ -210,6 +215,7 @@ function verifyEmailAddress(email, emailVerificationString) {
                 user.emailVerificationExpiry = null;
                 user.emailVerificationHash = null;
                 user.verified = true;
+                user.registrationDate = new Date()
                 //user.save();
                 userService.updateOne(user)
                 return verified
@@ -232,7 +238,17 @@ function verifyEmailAddress(email, emailVerificationString) {
     });
 };
 
-function loginUser(req, res) {
+function loginUser({ email, password, req }) {
+  return new Promise((resolve, reject) => {
+    passport.authenticate('local', (err, user) => {
+      if (!user) { reject("credentials-error") }
+
+      req.login(user, () => resolve(user));
+    })({ body: { email, password } });
+  });
+}
+
+function loginUser({ email, password, req }) {
   let promise = new Promise((resolve, reject) => {
     passport.authenticate('local', (user, error, info) => {
       if (error) {
@@ -250,7 +266,7 @@ function loginUser(req, res) {
           let token = generateJwt(user);
           resolve({user: user, token: token})
         } else {
-          resolve({message: 'Please verify your email address.'})
+          reject(new Error("email-not-verified-error"))
         }
       }
     })(req, res);

@@ -28,21 +28,36 @@ export default new GraphQLObjectType({
                 return AuthenticationService.RegisterUser({ email, displayName, password, role, timeZone, req });
             }
         },
-
-
-        signup: {
+        verifyByEmail: {
             type: UserType,
             args: {
-                token: { type: GraphQLString },
-                displayName: { type: GraphQLString },
-                password: { type: GraphQLString },
-                role: { type: GraphQLString }
+                email: { type: GraphQLString },
+                emailVerificationString: { type: GraphQLString }
             },
-            resolve(parentValue, { token, displayName, password, role }, ctx ) { //request is request object from express
+            resolve(parentValue, { email, emailVerificationString }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthService.signup({ token, displayName, password, role, req});
+                return AuthenticationService.VerifyEmailAddress({ email, emailVerificationString, req });
             }
         },
+        loginUser: {
+            type: UserType,
+            args: {
+                email: { type: GraphQLString },
+                password: { type: GraphQLString }
+            },
+            resolve(parentValue, { email, password }, ctx) {
+                const req = ctx.req;
+                return AuthenticationService.LoginUser({ email, password, req });
+            }
+        },
+
+
+
+
+
+
+
+
         logout: {
             type: UserType,
             resolve(parentValue, args, ctx) {
@@ -52,17 +67,7 @@ export default new GraphQLObjectType({
                 return user;
             }
         },
-        login: {
-            type: UserType,
-            args: {
-                email: { type: GraphQLString },
-                password: { type: GraphQLString }
-            },
-            resolve(parentValue, { email, password }, ctx) {
-                const req = ctx.req;
-                return AuthService.login({ email, password, req });
-            }
-        },
+        
         resetLink: {
             type: UserResetType,
             args: {

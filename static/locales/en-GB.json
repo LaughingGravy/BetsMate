@@ -23,7 +23,11 @@
     "register-page-title": "Register Account",
     "register-button-label": "Register",
 
-
+    "verify-email-success-header": "Account Verified",
+    "verify-email-msg-content": "Your account has been verified.<br />Please login in to Bets Mate.",
+    "verify-email-fail-header": "Account VerificationF ailure",
+    "verify-email-fail-msg-content": "Your account has not been verified.",
+    "email-not-verified-error": "Please verify your account.",
 
 
 
