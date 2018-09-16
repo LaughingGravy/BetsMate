@@ -11,7 +11,7 @@ const qrCode = require('qrcode');
 
 import userService from './user'
 import Config from '../../../utilities/Config'
-import { getFutureDate } from './authHelper'
+import { getRegisterMailOptions, getResetPasswordMailOptions } from './authHelper'
 
 passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, done) => {
   return userService.findOne({email: username}, (error, user) => {
@@ -44,8 +44,8 @@ passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, d
 }));
 
 let authService = {
-  RegisterUser: (user, timeZone) => {
-    return registerUser(user)
+  Register: (user, timeZone) => {
+    return register(user)
       .then((emailVerificationObject) => {
         //return emailVerificationObject;
         // send email
@@ -64,8 +64,8 @@ let authService = {
       });
   },
 
-  LoginUser: ({ email, password, req }) => {
-    return loginUser({ email, password, req })
+  Login: ({ email, password, req }) => {
+    return login({ email, password, req })
       .then((result) => {
         if (!result) {
           throw new Error ("credentials-error");
@@ -80,11 +80,6 @@ let authService = {
         return error;
       })
   },
-  }
-
-
-
-
 
   GetUser: (email) => {
     return getUser(email)
@@ -112,12 +107,13 @@ let authService = {
       })
   },
 
-  SendPasswordResetEmail: (email) => {
-    return generatePasswordResetCode(email)
-      .then((code) => {
+  SendPasswordResetEmail: (email, timeZone) => {
+    return generatePasswordResetCode(email, timeZone)
+      .then((user) => {
         console.log('code');
         console.log(code);
-        return code;
+        const options = getResetPasswordMailOptions(user, timeZone)
+        return sendEmail(options)    
       })
   },
 
@@ -167,7 +163,7 @@ function generateJwt(user) {
   }, Config.secret);
 }
 
-function registerUser(userObject) {
+function register(userObject) {
   let promise = new Promise((resolve, reject) => {
     //let user = new User;
     let user = getNewUser()
@@ -238,17 +234,7 @@ function verifyEmailAddress(email, emailVerificationString) {
     });
 };
 
-function loginUser({ email, password, req }) {
-  return new Promise((resolve, reject) => {
-    passport.authenticate('local', (err, user) => {
-      if (!user) { reject("credentials-error") }
-
-      req.login(user, () => resolve(user));
-    })({ body: { email, password } });
-  });
-}
-
-function loginUser({ email, password, req }) {
+function login({ email, password, req }) {
   let promise = new Promise((resolve, reject) => {
     passport.authenticate('local', (user, error, info) => {
       if (error) {
@@ -264,12 +250,12 @@ function loginUser({ email, password, req }) {
       if (user) {
         if (user.verified === true) {
           let token = generateJwt(user);
-          resolve({user: user, token: token})
+          req.login(user, () => resolve({user: user, token: token}))
         } else {
           reject(new Error("email-not-verified-error"))
         }
       }
-    })(req, res);
+    })({ body: { email, password } })
   });
   return promise;
 };
@@ -352,7 +338,8 @@ function generatePasswordResetCode(email) {
           user.passwordResetExpiry = new Date().valueOf() + (1000 * 60 * 5) // 5 minutes
           //user.save();
           userService.updateOne(user)
-          return code;
+
+          return user;
         })
       }
     })

@@ -21,11 +21,12 @@ export default new GraphQLObjectType({
                 email: { type: GraphQLString },
                 displayName: { type: GraphQLString },
                 password: { type: GraphQLString },
-                role: { type: GraphQLString }
+                role: { type: GraphQLString },
+                timeZone: { type: GraphQLString }
             },
-            resolve(parentValue, { email, displayName, password, role }, ctx ) { //request is request object from express
+            resolve(parentValue, { email, displayName, password, role, timeZone }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthenticationService.RegisterUser({ email, displayName, password, role, timeZone, req });
+                return AuthenticationService.Register({ email, displayName, password, role, timeZone, req });
             }
         },
         verifyByEmail: {
@@ -39,7 +40,7 @@ export default new GraphQLObjectType({
                 return AuthenticationService.VerifyEmailAddress({ email, emailVerificationString, req });
             }
         },
-        loginUser: {
+        login: {
             type: UserType,
             args: {
                 email: { type: GraphQLString },
@@ -47,16 +48,9 @@ export default new GraphQLObjectType({
             },
             resolve(parentValue, { email, password }, ctx) {
                 const req = ctx.req;
-                return AuthenticationService.LoginUser({ email, password, req });
+                return AuthenticationService.Login({ email, password, req });
             }
         },
-
-
-
-
-
-
-
 
         logout: {
             type: UserType,
@@ -67,7 +61,51 @@ export default new GraphQLObjectType({
                 return user;
             }
         },
+
+        sendPasswordResetEmail: {
+            type: UserType,
+            args: {
+                email: { type: GraphQLString },
+                timeZone: { type: GraphQLString }
+            },
+            resolve(parentValue, { email, timeZone }, ctx) {
+                return AuthService.SendPasswordResetEmail({ email, timeZone });
+            }
+        },
+
+
+
         
+
+
+
+        mergeCountry: {
+            type: CountryType,
+            args: {
+                code: { type: GraphQLString },
+                name: { type: GraphQLString }
+            },
+            resolve(parentValue, { code, name }) {
+                return AdminService.mergeCountry({ code, name });
+            }
+        },
+        deleteCountry: {
+            type: CountryType,
+            args: {
+                code: { type: GraphQLString }
+            },
+            resolve(parentValue, { code }) {
+                return AdminService.deleteCountry({ code });
+            }
+        },
+        
+
+
+
+
+
+
+
         resetLink: {
             type: UserResetType,
             args: {
@@ -110,24 +148,6 @@ export default new GraphQLObjectType({
                 return AuthService.changePassword({ email, password, req}, newPassword);
             }
         },
-        mergeCountry: {
-            type: CountryType,
-            args: {
-                code: { type: GraphQLString },
-                name: { type: GraphQLString }
-            },
-            resolve(parentValue, { code, name }) {
-                return AdminService.mergeCountry({ code, name });
-            }
-        },
-        deleteCountry: {
-            type: CountryType,
-            args: {
-                code: { type: GraphQLString }
-            },
-            resolve(parentValue, { code }) {
-                return AdminService.deleteCountry({ code });
-            }
-        }
+        
     }
 });

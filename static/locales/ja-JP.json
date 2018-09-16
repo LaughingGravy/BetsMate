@@ -23,13 +23,16 @@
     "register-button-label": "登録",
     "verify-email-success-header": "アカウント確認済み",
 
+    "reset-page-title": "パスワード忘れた",
+    "reset-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
+
 
 
 
 
     "login-page-title": "ログイン",
     "admin-page-title": "アドミン",
-    "reset-page-title": "パスワード忘れた",
+    
     "reset-password-page-title": "パスワードを再設定する",
     "change-password-page-title": "パスワードを変更する",
     "register-link-page-title": "レジスター",
@@ -56,11 +59,6 @@
     "email-not-verified-error": "アカウントを確認してください.",
 
 
-
-
-
-
-    "reset-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
     "link-msg-header": "メールリンク送信済み",
     "reset-link-msg-content": "リセットされたパスワードのリンクは登録されたメールアドレスに送信されました.<br>リンクをクリックし、画面の指示に従ってください.",
 

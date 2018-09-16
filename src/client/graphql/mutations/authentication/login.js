@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 
 export default gql`
-mutation LoginUser($email: String, $password: String)
+mutation Login($email: String, $password: String)
 {
-  loginUser (email: $email, password: $password) {
+  login (email: $email, password: $password) {
     user: {
       displayName
       email

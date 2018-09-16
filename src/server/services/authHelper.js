@@ -29,19 +29,19 @@ const hasLinkExpired = (linkDate) => {
   return moment(linkDate).utc().isBefore(moment().utc())
 }
 
-const getResetMailOptions = ({ email, token, expiry }, timeZone) => {
-  const localDate = moment(convertUTCToTimeZone(expiry, timeZone )).format("dddd MMMM YYYY h:mm:ss a")
+// const getResetMailOptions = ({ email, token, expiry }, timeZone) => {
+//   const localDate = moment(convertUTCToTimeZone(expiry, timeZone )).format("dddd MMMM YYYY h:mm:ss a")
 
-  return {
-          from: Config.mailerReply,
-          to: email,
-          subject: "Bets Mate Password Reset",
-          html: `<h1> Greetings ${email}</h1>` +
-                  "<p>Here is the link to reset your password.<p>" +
-                  `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=http://localhost:3000/reset/${token}>Click here</p>`
-          }
-}
+//   return {
+//           from: Config.mailerReply,
+//           to: email,
+//           subject: "Bets Mate Password Reset",
+//           html: `<h1> Greetings ${email}</h1>` +
+//                   "<p>Here is the link to reset your password.<p>" +
+//                   `<p>The link is valid until ${localDate}</p>` +
+//                   `<p><a href=http://localhost:3000/reset/${token}>Click here</p>`
+//           }
+// }
 
 // const getRegisterMailOptions = ({ email, token, expiry }, timeZone) => {
 //   const localDate = moment(convertUTCToTimeZone(expiry, timeZone )).format("dddd MMMM YYYY h:mm:ss a")
@@ -69,9 +69,23 @@ const getRegisterMailOptions = ({ emailAddress, emailVerificationString, emailVe
                   "Thanks for registering with Bets Mate" +
                   "<p>Please follow this link to confirm your email address and activate your account.<p>" +
                   `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=http://${getServerURL()}/verify-email?email=${emailAddress}&emailVerificationString=${encodeURIComponent(emailVerificationString)}>Click here</p>`
+                  `<p><a href=${getServerURL()}/verify-email?email=${emailAddress}&emailVerificationString=${encodeURIComponent(emailVerificationString)}>Click here</p>`
+          }
+}
+
+const getResetPasswordMailOptions = ({ email, passwordResetExpiry }, timeZone) => {
+  const localDate = moment(convertUTCToTimeZone(passwordResetExpiry, timeZone )).format("dddd MMMM YYYY h:mm:ss a")
+
+  return {
+          from: Config.mailerReply,
+          to: email,
+          subject: "Bets Mate Password Reset",
+          html: `<h1> Greetings Bets Mate User</h1>` +
+                  "<p>Here is the link to reset your password.<p>" +
+                  `<p>The link is valid until ${localDate}</p>` +
+                  `<p><a href=${getServerURL()}/password-reset?code=${encodeURIComponent(resetCode)}&email=${email}>Click here</p>`
           }
 }
 
 export { getToken, getUTCDate, getFutureDate, hasLinkExpired, convertUTCToTimeZone, 
-          getResetMailOptions, getRegisterMailOptions }
+          getResetMailOptions, getRegisterMailOptions, getResetPasswordMailOptions }

@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 
 export default gql`
-mutation Register($displayName: String, $password: String, $role: String)
+mutation Register($email: String, $displayName: String, $password: String, $role: String, $timeZone: String)
 {
-  signup (displayName: $displayName, password: $password, role: $role) {
+  register (email: $email, displayName: $displayName, password: $password, role: $role), timeZone: $timeZone) {
     email
     displayName
     role
