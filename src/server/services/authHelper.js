@@ -83,7 +83,7 @@ const getResetPasswordMailOptions = ({ email, passwordResetExpiry }, timeZone) =
           html: `<h1> Greetings Bets Mate User</h1>` +
                   "<p>Here is the link to reset your password.<p>" +
                   `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=${getServerURL()}/password-reset?code=${encodeURIComponent(resetCode)}&email=${email}>Click here</p>`
+                  `<p><a href=${getServerURL()}/password-reset?token=${encodeURIComponent(resetCode)}&email=${email}>Click here</p>`
           }
 }
 

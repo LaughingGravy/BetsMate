@@ -117,8 +117,8 @@ let authService = {
       })
   },
 
-  CheckPasswordResetCode: (code, email) => {
-    return checkPasswordResetCode(code, email)
+  CheckPasswordResetToken: (token, email) => {
+    return checkPasswordResetToken(token, email)
       .then((result) => {
         return result
       })
@@ -131,6 +131,23 @@ let authService = {
         return resetUser;
       })
   },
+
+  ChangePassword: (email, password, token) => {
+    CheckPasswordResetToken(token, email)
+      .then((result) => {
+        if (result.verified) {
+          ResetPassword(email, password)
+            .then((resetUser) => {
+              if (!resetUser) {
+                console.log('error resetting user password');
+              } else {
+                return resetUser
+              }
+            })
+        }
+      })
+  },
+
 
   GetNewUser: () =>{
     return getNewUser()
@@ -216,20 +233,20 @@ function verifyEmailAddress(email, emailVerificationString) {
                 userService.updateOne(user)
                 return verified
               } else {
-                return 'error verifying email address'
+                return {verified: false, message: 'verifiy-email-error'}
               }
 
             })
             .catch((error) => {
               console.log('error verifying email address');
               console.log(error);
-              return error
+              return {verified: false, message: error}
             })
         } else {
-          return 'Verification token has expired.';
+          return {verified: false, message: 'expired-email-token-error'}
         }
       } else {
-        return 'Error verifiying email address';
+        return {verified: false, message: 'verifiy-email-error'}
       }
     });
 };
@@ -345,7 +362,7 @@ function generatePasswordResetCode(email) {
     })
 }
 
-function checkPasswordResetCode(code, email) {
+function checkPasswordResetToken(code, email) {
   // return User.findOne({email: email})
   return userService.findOne({email: email})
     .then((user) => {
@@ -355,12 +372,12 @@ function checkPasswordResetCode(code, email) {
         if (user.passwordResetExpiry > new Date().valueOf()) {
           return argon2.verify(user.passwordResetHash, code)
             .then((verified) => {
-              let info = verified ? 'All good in the good' : 'Nice try, but no banana.'
-              return ({verified, info})
+              let message = verified ? 'verify-token-succeeded' : 'verify-password-token-error'
+              return ({verified, message})
             })
         } else {
           console.log('expired');
-          return ({verified: false, info: 'Your reset code has expired. Please request another and be faster next time.'})
+          return {verified: false, message:'reset-token-expired-error'}
         }
       }
     })
@@ -373,7 +390,7 @@ function resetPassword(email, password) {
       console.log('user')
       console.log(user)
       if (!user) {
-        throw new Error('error getting user')
+        throw new Error('find-user-error')
       } else {
         return argon2.hash(password, {type: argon2.argon2id}).then((hash) => { // Hash the password with Argon2id: https://crypto.stackexchange.com/questions/48935/why-use-argon2i-or-argon2d-if-argon2id-exists?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
           user.passwordHash = hash;

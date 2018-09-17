@@ -5,6 +5,7 @@ import { history } from '../../../../../library/routing'
 
 import VERIFY_EMAIL from '../../../graphql/mutations/authentication/verifyByEmail'
 
+import VerifyEmailFailurePage from './VerifyEmailFailurePage'
 import MutationOnMount from '../../common/MutationOnMount'
 
 const VerifyEmailPage = ({match}) => {
@@ -14,15 +15,15 @@ const VerifyEmailPage = ({match}) => {
     const { verified } = data
 
     if (verified)
-      history.replace('/verify-email-success')
-    else
-    history.replace('/verify-email-failure')
+      history.replace('/login')
   }
 
   return (   
     <Container textAlign="center">
       <MutationOnMount variable={{ email: email, emailVerificationString: emailVerificationString }}
-                        onCompleted={onCompleted} mutation={VERIFY_EMAIL} />
+                        onCompleted={onCompleted} mutation={VERIFY_EMAIL} render={data => (
+                          <VerifyEmailFailurePage verified={data.verified} message={data.message} />
+                        )} />
     </Container>      
   )
 }

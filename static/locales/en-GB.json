@@ -25,12 +25,23 @@
 
     "verify-email-success-header": "Account Verified",
     "verify-email-msg-content": "Your account has been verified.<br />Please login in to Bets Mate.",
-    "verify-email-fail-header": "Account VerificationF ailure",
+    "verify-email-fail-header": "Account Verification Failure",
     "verify-email-fail-msg-content": "Your account has not been verified.",
     "email-not-verified-error": "Please verify your account.",
+    "verifiy-email-error": "An error occurred when verifying the email address.",
+    "expired-email-token-error": "The email verification token has expired.",
 
     "reset-password-page-title": "Reset Password",
     "reset-text": "Please enter your registered Bets Mate email address.<br />Once submitted a link to set a new password will be mailed.",
+    "verify-reset-fail-header": "Reset Password Failure",
+    "verify-reset-fail-msg-content": "The verification has failed.",
+   
+    "reset-token-expired-error": "The reset password token has expired.<br />Please make a new request.",
+    "reset-password-token-error": "An error occurred when verifying the password token.",
+
+    "find-user-error": "An error occurred when finding the user account.",
+
+
 
 
 
@@ -107,7 +118,7 @@
     "missing-reg-details-error": "You must provide a username and password.",
     "credentials-error": "Email/password not recognised.",
     "reset-token-not-found-error": "Password reset link token not found.",
-    "reset-token-expired-error": "The reset link token has expired.<br />Please make a new request.",
+    
     "reg-token-not-found-error": "Activation link token not found.",
     "reg-token-expired-error": "The activation link token has expired.<br />Please make a new request.",
     "user_loggedin-message-error": "The page you have navigated to is only for users that have yet to log in.",

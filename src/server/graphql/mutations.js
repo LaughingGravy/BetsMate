@@ -2,12 +2,14 @@ const graphql = require('graphql');
 const {
     GraphQLObjectType,
     GraphQLString,
+    GraphQLBoolean,
     GraphQLInt,
     GraphQLID,
     GraphQLFloat
 } = graphql;
 
 const CountryType = require('./types/country_type').default
+import VerifyType from '../graphql/types/verify_type'
 const AdminService = require('../services/admin')
 
 import AuthenticationService from '../services/authentication'
@@ -30,14 +32,14 @@ export default new GraphQLObjectType({
             }
         },
         verifyByEmail: {
-            type: UserType,
+            type: VerifyType,
             args: {
                 email: { type: GraphQLString },
                 emailVerificationString: { type: GraphQLString }
             },
             resolve(parentValue, { email, emailVerificationString }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthenticationService.VerifyEmailAddress({ email, emailVerificationString, req });
+                return AuthenticationService.VerifyEmailAddress({ email, emailVerificationString });
             }
         },
         login: {
@@ -51,7 +53,6 @@ export default new GraphQLObjectType({
                 return AuthenticationService.Login({ email, password, req });
             }
         },
-
         logout: {
             type: UserType,
             resolve(parentValue, args, ctx) {
@@ -61,7 +62,6 @@ export default new GraphQLObjectType({
                 return user;
             }
         },
-
         sendPasswordResetEmail: {
             type: UserType,
             args: {
@@ -72,7 +72,29 @@ export default new GraphQLObjectType({
                 return AuthService.SendPasswordResetEmail({ email, timeZone });
             }
         },
-
+        verifyPasswordResetToken: {
+            type: VerifyType,
+            args: {
+                email: { type: GraphQLString },
+                token: { type: GraphQLString }
+            },
+            resolve(parentValue, { email, token }, ctx ) { //request is request object from express
+                const req = ctx.req;
+                return AuthenticationService.CheckPasswordResetToken({ email, token });
+            }
+        },
+        changePassword: {
+            type: UserType,
+            args: {
+                email: { type: GraphQLString },
+                password: { type: GraphQLString }
+            },
+            resolve(parentValue, { email, password }, ctx) {
+                const req = ctx.req
+                const { token } = req.body
+                return AuthService.ChangePassword({ email, password, token });
+            }
+        },
 
 
         

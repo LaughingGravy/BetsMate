@@ -88,6 +88,13 @@ const errorCheck = hideIfFailsPropsCheck(
   props => !props.error
 )
 
+const hideIfTestFails = (component, testFunc) =>
+  branch(
+    testFunc,
+    renderComponent(component),
+    renderNothing
+)
+
 const QueryErrorDisplay = props => (
   <Container textAlign="center">
     <GraphQLErrorDisplay error={props.error} />
@@ -103,5 +110,5 @@ const MutateErrorDisplay = props => (
 
 export { renderForAdminFailAccessError, renderIfAuthenticated, renderIfRole, renderOrIfAuthenticated, renderOrIfRole,
         renderForLoading, renderMessageForError, renderForError, renderForNotFound, renderForDataNotFound,
-        LoadingDisplay, QueryErrorDisplay, MutateErrorDisplay, NotFoundDisplay,
+        LoadingDisplay, QueryErrorDisplay, MutateErrorDisplay, NotFoundDisplay, hideIfTestFails,
         errorCheck }

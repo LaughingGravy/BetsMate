@@ -22,9 +22,20 @@
     "register-page-title": "アカウント登録",
     "register-button-label": "登録",
     "verify-email-success-header": "アカウント確認済み",
+    "verifiy-email-error": "メールアドレスの確認中にエラーが発生しました.",
+    "expired-email-token-error": "電子メールの検証トークンが期限切れです.",
 
     "reset-page-title": "パスワード忘れた",
     "reset-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
+    "verify-reset-fail-header": "パスワードのリセット失敗",
+    "verify-reset-fail-msg-content": "検証に失敗しました.",
+  
+    "reset-token-expired-error": "リセットリンクトークンが期限切れです. <br />新しいリクエストをしてください.",
+    "reset-password-token-error": "パスワードトークンの検証中にエラーが発生しました.",
+    "find-user-error": "ユーザーアカウントを見つけるときにエラーが発生しました.",
+    
+
+
 
 
 
@@ -104,7 +115,7 @@
     "missing-credentials-error": "メールアドレスとパスワードを入力する必要があります.",
     "credentials-error": "メール/パスワードが認識されない.",
     "reset-token-not-found-error": "パスワードリセットリンクトークンが見つかりません.",
-    "reset-token-expired-error": "リセットリンクトークンが期限切れです. <br />新しいリクエストをしてください.",
+
     "reg-token-not-found-error": "アクティベーションリンクトークンが見つかりません.",
     "reg-token-expired-error": "アクティベーションリンクトークンが期限切れです. <br />新しいリクエストをしてください.",
     "user_loggedin-message-error": "ナビゲートしたページは、まだログインしていないユーザーのみが閲覧できます.",

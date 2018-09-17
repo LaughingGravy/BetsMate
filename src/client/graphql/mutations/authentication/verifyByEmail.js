@@ -5,6 +5,7 @@ mutation VerifyByEmail($email: String, $emailVerificationString: String)
 {
   verifyByEmail (email: $email, emailVerificationString: $emailVerificationString) {
     verified
+    message
   }
 }
 `
