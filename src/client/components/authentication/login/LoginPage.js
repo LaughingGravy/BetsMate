@@ -8,7 +8,7 @@ import LoginPageButtonGroup from './LoginPageButtonGroup'
 
 const LoginPage = () => {
   return (
-    <Grid columns={1} centered>
+    <Grid columns={1} centered> 
       <Grid.Row centered>
       <h3>{intl.get("login-page-title")}</h3>
       </Grid.Row>
@@ -16,8 +16,8 @@ const LoginPage = () => {
       <Grid.Row centered>
         <GridColumn mobile={14} tablet={8} computer={6}>
           <Container textAlign='center'>
-            <AuthForm render={variables => (
-              <LoginButton variables={variables} /> 
+            <AuthForm render={props => (
+              <LoginButton variables={{ email: props.email, password: props.password }} disabled={!props.isFormValid} /> 
               )}/>
             <LoginPageButtonGroup />
           </Container>  

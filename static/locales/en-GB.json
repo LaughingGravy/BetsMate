@@ -124,5 +124,12 @@
     "user_loggedin-message-error": "The page you have navigated to is only for users that have yet to log in.",
     "user_loggedin-warning-page-title": "Already Logged In",
     "user_not_loggedin-message-error": "The page you have navigated to is only for users that have logged in.",
-    "user_not_loggedin-warning-page-title": "Not Logged In"
+    "user_not_loggedin-warning-page-title": "Not Logged In",
+
+
+
+
+    "email-format-val-msg": "Not a valid email",
+    "minlength-val-msg": "Minimum number of characters",
+    "confirm-password-val-msg": "Passwords do not match"
 }

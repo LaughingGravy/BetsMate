@@ -24,9 +24,9 @@ const RegistrationPage = ({match}) => {
 
       <Grid.Row centered>
         <GridColumn mobile={14} tablet={8} computer={6}>
-            <RegisterForm token={token} render={variables => (
+            <RegisterForm token={token} render={props => (
               <Container textAlign="center">
-                <RegisterButton variables={variables} /> 
+                <RegisterButton variables={{ email: props.email, displayName: props.displayName, password: props.password }} disabled={!props.isFormValid} /> 
               </Container>
             )}/> 
         </GridColumn>

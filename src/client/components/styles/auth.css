@@ -1,3 +1,6 @@
-.authInput {
-    width: 100%;
+
+.error {
+    border: 1px;
+    border-style: solid;
+    color: red;
 }

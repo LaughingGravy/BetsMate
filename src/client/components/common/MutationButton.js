@@ -11,11 +11,11 @@ const EnhancedGraphQLErrorDisplay = compose(
   renderMessageForError(GraphQLErrorDisplay)
 )(GraphQLErrorDisplay)
 
-const MutationButton = ({variables, mutation, loading, error, label }) => {
+const MutationButton = ({ variables, mutation, loading, error, label, disabled }) => {
   return (
     <React.Fragment>
       <EnhancedGraphQLErrorDisplay error={error} />
-      <Button primary
+      <Button primary disabled={disabled}
                     onClick={e => { 
                                     e.preventDefault();
                                     mutation({variables})
@@ -32,7 +32,8 @@ MutationButton.propTypes = {
   mutation: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired
 };
 
 export default MutationButton

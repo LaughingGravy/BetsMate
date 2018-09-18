@@ -8,7 +8,7 @@ import CURRENT_USER from '../../../graphql/queries/authentication/currentUser'
 
 import MutationButton from '../../common/MutationButton'
 
-const LoginButton = ({ variables }) => {
+const LoginButton = ({ variables, disabled }) => {
 
   const label = "login-button-label"
 
@@ -26,7 +26,7 @@ const LoginButton = ({ variables }) => {
 
       refetchQueries={[ {query: CURRENT_USER}]}>
       {(login, { loading, error }) => (
-        <MutationButton variables={variables} mutation={login} 
+        <MutationButton variables={variables} disabled={disabled} mutation={login} 
                         loading={loading} error={error} label={label} />
     )}
     </Mutation>
@@ -37,7 +37,8 @@ LoginButton.propTypes = {
   variables: PropTypes.shape({
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
-  }).isRequired
+  }).isRequired,
+  disabled: PropTypes.bool.isRequired
 }
 
 export default LoginButton

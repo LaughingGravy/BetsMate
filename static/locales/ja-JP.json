@@ -121,5 +121,13 @@
     "user_loggedin-message-error": "ナビゲートしたページは、まだログインしていないユーザーのみが閲覧できます.",
     "user_loggedin-warning-page-title": "ログイン済み",
     "user_not_loggedin-message-error": "あなたが移動したページは、ログインしているユーザーのみです.",
-    "user_not_loggedin-warning-page-title": "ログインしていない"
+    "user_not_loggedin-warning-page-title": "ログインしていない",
+
+
+
+
+
+    "email-format-val-msg": "有効なメールではありません",
+    "minlength-val-msg": "最小文字数",
+    "confirm-password-val-msg": "パスワードが一致していません"
 }
