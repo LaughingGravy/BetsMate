@@ -7,6 +7,8 @@ import '../styles/auth.css'
 import { validateLogin } from '../authentication/login/validate'
 import { shouldMarkError } from '../validation/common'
 
+import ValidationInput from '../common/ValidationInput'
+
 class AuthForm  extends React.Component {
   constructor(props) {
     super(props);
@@ -42,17 +44,29 @@ class AuthForm  extends React.Component {
       <Form className='segment' onSubmit={e => {
                                                   e.preventDefault;
                                                 }}>    
-        <Form.Field required>
+        {/* <Form.Field required>
           <Form.Input name='email' label={intl.get("email-label")} placeholder='example@domain.com' 
                       value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')}
                       className={shouldMarkError(errors['email'], pristine['email']) ? "error" : ""} />
+        </Form.Field> */}
+
+        <Form.Field required>
+          <ValidationInput name='email' label={intl.get("email-label")} placeholder='example@domain.com' 
+                      value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')}
+                      errors={errors['email']} isPristine={pristine['email']} />
         </Form.Field>
 
         <Form.Field required>
+          <ValidationInput name='password' type='password' label={intl.get("password-label")} placeholder={intl.get("password-placeholder")}
+                      value={password} onChange={this.handleChange} onBlur={this.handleBlur('password')}
+                      errors={errors['password']} isPristine={pristine['password']} />
+        </Form.Field>
+
+        {/* <Form.Field required>
           <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder={intl.get("password-placeholder")}
                       value={password} onChange={this.handleChange} onBlur={this.handleBlur('password')}
                       className={shouldMarkError(errors['password'], pristine['password']) ? "error" : ""} />
-        </Form.Field>
+        </Form.Field> */}
        
         {this.props.render(...this.state, isFormValid)}
       </Form>

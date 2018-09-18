@@ -39,6 +39,13 @@ branch(
             renderComponent(altComponent)
 )
 
+const renderOrIfPropArray = (component, altComponent, propName = "errors") =>
+branch(
+  props => (props[propName] && props[propName].length > 0),
+            renderComponent(component),
+            renderComponent(altComponent)
+)
+
 const renderForLoading = (component) => 
   branch(
     props => props.loading,
@@ -110,5 +117,5 @@ const MutateErrorDisplay = props => (
 
 export { renderForAdminFailAccessError, renderIfAuthenticated, renderIfRole, renderOrIfAuthenticated, renderOrIfRole,
         renderForLoading, renderMessageForError, renderForError, renderForNotFound, renderForDataNotFound,
-        LoadingDisplay, QueryErrorDisplay, MutateErrorDisplay, NotFoundDisplay, hideIfTestFails,
+        LoadingDisplay, QueryErrorDisplay, MutateErrorDisplay, NotFoundDisplay, hideIfTestFails, renderOrIfPropArray,
         errorCheck }
