@@ -9,7 +9,7 @@ const ValidationInput = (props) => {
   const errMessages = ""
   const firstErrMessage = ""
 
-  if (errors && errors.length > 0) {
+  if (!isPristine && errors && errors.length > 0) {
     isError = true
     firstErrMessage = errors[0].msg
  
@@ -20,7 +20,7 @@ const ValidationInput = (props) => {
     errMessages = errMessages.substring(0, errMessage.length - "<br />".length)
   }
 
-  const shouldDisplayError = isError && !isPristine
+  const shouldDisplayError = !isPristine && isError 
  
   return (
     <React.Fragment>
