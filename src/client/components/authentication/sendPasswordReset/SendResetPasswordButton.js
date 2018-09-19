@@ -6,12 +6,12 @@ import { history } from '../../../../../library/routing'
 import MutationButton from '../../common/MutationButton'
 import SEND_RESET_PASSWORD_EMAIL from '../../../graphql/mutations/authentication/sendResetPasswordEmail'
 
-const SendResetEmailButton = ({ variables }) => {
+const SendResetPasswordButton = ({ variables }) => {
 
   const label = "reset-button-label"
 
   const onCompleted = (data) => {
-      history.push('/reset/link/success');
+      history.push('/reset-password/success');
   }
 
   return (
@@ -26,11 +26,11 @@ const SendResetEmailButton = ({ variables }) => {
   )
 }
 
-ResetButton.propTypes = {
+SendResetPasswordButton.propTypes = {
   variables: PropTypes.shape({
     email: PropTypes.string.isRequired,
     timeZone: PropTypes.string.isRequired
   }).isRequired
 }
 
-export default SendResetEmailButton
+export default SendResetPasswordButton

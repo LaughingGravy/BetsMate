@@ -12,7 +12,7 @@ const ChangePasswordButton = ({ variables }) => {
   const label = "save-button-label"
 
   const onCompleted = (data) => {
-      history.push('/changesuccess');
+      history.push('/change-password/success');
   }
 
   return (

@@ -69,7 +69,7 @@ const getRegisterMailOptions = ({ emailAddress, emailVerificationString, emailVe
                   "Thanks for registering with Bets Mate" +
                   "<p>Please follow this link to confirm your email address and activate your account.<p>" +
                   `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=${getServerURL()}/verify-email?email=${emailAddress}&emailVerificationString=${encodeURIComponent(emailVerificationString)}>Click here</p>`
+                  `<p><a href=${getServerURL()}/verify-email/${emailAddress}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
           }
 }
 
@@ -83,7 +83,7 @@ const getResetPasswordMailOptions = ({ email, passwordResetExpiry }, timeZone) =
           html: `<h1> Greetings Bets Mate User</h1>` +
                   "<p>Here is the link to reset your password.<p>" +
                   `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=${getServerURL()}/password-reset?token=${encodeURIComponent(resetCode)}&email=${email}>Click here</p>`
+                  `<p><a href=${getServerURL()}/${email}/${encodeURIComponent(resetCode)}>Click here</p>`
           }
 }
 

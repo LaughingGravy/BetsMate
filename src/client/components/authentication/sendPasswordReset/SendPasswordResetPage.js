@@ -5,7 +5,7 @@ import { Grid, Segment, Container } from 'semantic-ui-react'
 import LinkForm from '../LinkForm'
 import ResetButton from './ResetButton'
 
-const SendPasswordResetEmailPage = () => (
+const SendPasswordResetPage = () => (
   <Grid columns={1} centered>
     <Grid.Row centered>
       <h3>{intl.get("reset-page-title")}</h3>
@@ -32,4 +32,4 @@ const SendPasswordResetEmailPage = () => (
   </Grid>
 )
 
-export default SendPasswordResetEmailPage
+export default SendPasswordResetPage

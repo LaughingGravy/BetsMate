@@ -11,7 +11,7 @@ import { withUser } from '../../contexts/withUserContext';
 const vanillaRegisterMenuItem = () => (
   <Responsive minWidth={Responsive.onlyTablet.minWidth}>
     <Menu.Item fitted="horizontally" key="registerlink">
-      <Button size="mini" basic compact secondary onClick={e => history.push("/register/link")}>
+      <Button size="mini" basic compact secondary onClick={e => history.push("/register")}>
         {intl.get("register-menu-header")}
       </Button>
     </Menu.Item>

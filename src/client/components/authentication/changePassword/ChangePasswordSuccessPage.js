@@ -2,7 +2,7 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
 
-const ChangeSuccessPage = () => (
+const ChangePasswordSuccessPage = () => (
   <Grid columns={1} centered>
     <Grid.Row centered>
       <GridColumn mobile={14} tablet={8} computer={6}>
@@ -21,4 +21,4 @@ const ChangeSuccessPage = () => (
   </Grid>
 )
 
-export default ChangeSuccessPage
+export default ChangePasswordSuccessPage

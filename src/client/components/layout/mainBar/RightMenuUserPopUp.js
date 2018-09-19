@@ -13,7 +13,7 @@ const vanillaRightMenuUnAuthItems = () => (
     <Responsive minWidth={Responsive.onlyMobile.maxWidth}>
       <Popup position="bottom center" style={{"padding": "0px"}} hoverable basic trigger={<Icon name="user circle" size="large" />}>
         <Menu vertical compact>
-          <MenuItem as={NavLink} to="/register/link" key="registerlink" activeClassName="active"
+          <MenuItem as={NavLink} to="/register" key="register" activeClassName="active"
                     compact="true">
             {intl.get("register-menu-header")}
           </MenuItem>
