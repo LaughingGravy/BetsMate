@@ -11,12 +11,13 @@ import VerifyEmailFailurePage from '../../authentication/verifyEmail/VerifyFailu
 
 
 
-import RegisterLinkPage from '../../authentication/registerLink/RegisterLinkPage'
-import RegistrationPage from '../../authentication/register/RegistrationPage'
+//import RegisterLinkPage from '../../authentication/registerLink/RegisterLinkPage'
+import RegisterPage from '../../authentication/register/RegisterPage'
 import LoginPage from '../../authentication/login/LoginPage'
-import ResetPage from '../../authentication/resetLink/ResetPage'
-import ResetPasswordPage from '../../authentication/resetPassword/ResetPasswordPage'
+//import ResetPage from '../../authentication/resetLink/ResetPage'
+//import ResetPasswordPage from '../../authentication/resetPassword/ResetPasswordPage'
 import ChangePasswordPage from '../../authentication/changePassword/ChangePasswordPage'
+import SendPasswordResetEmailPage from '../../authentication/sendPasswordResetEmail/SendPasswordResetEmailPage'
 
 import UserLoggedInWarningPage from '../../authentication/warnings/UserLoggedInWarningPage'
 import UserNotAuthenticatedWarningPage from '../../authentication/warnings/UserNotAuthenticatedWarningPage'
@@ -27,8 +28,12 @@ const UserRoutes = ({ userCtx }) => {
 
   return (
     <React.Fragment>   
+
+      <Route exact path="/administration" render={({match}) => (
+          !isAuthenticated || role != "admin" ? (<UserRoleNoPermissionPage /> ) : (<AdministrationPage match={match} />) )} />
+          
       <Route exact path="/register" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<RegistrationPage match={match} />) )} />
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<RegisterPage match={match} />) )} />
       
       <Route exact path="/verify-email" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailPage match={match} />) )} />
@@ -39,13 +44,20 @@ const UserRoutes = ({ userCtx }) => {
        <Route exact path="/verify-email-failure" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailFailurePage match={match} />) )} />
 
+       <Route exact path="/change-password" render={({match}) => (
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<ChangePasswordPage match={match} />) )} />
 
-
-
-          
-
-      <Route path="/login" render={({match}) => (
+       <Route path="/login" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<LoginPage match={match} />) )} />
+
+       <Route exact path="/send-password-reset" render={({match}) => (
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<SendPasswordResetEmailPage match={match} />) )} />
+
+      <Route exact path="/verify-email?email=:email&emailVerificationString=:emailVerificationString" render={({match}) => (
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailPage match={match} />) )} />
+
+
+
        
        <Route exact path="/register/link" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<RegisterLinkPage match={match} />) )} />
@@ -59,8 +71,7 @@ const UserRoutes = ({ userCtx }) => {
       <Route exact path="/change" render={({match}) => (
           !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<ChangePasswordPage match={match} />)  )} />
 
-      <Route exact path="/administration" render={({match}) => (
-          !isAuthenticated || role != "admin" ? (<UserRoleNoPermissionPage /> ) : (<AdministrationPage match={match} />) )} />
+      
     </React.Fragment>
   )
 }

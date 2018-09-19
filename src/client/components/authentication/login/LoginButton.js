@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 
 import { history } from '../../../../../library/routing'
-import LOGIN from '../../../graphql/mutations/authentication/loginUser'
+import LOGIN from '../../../graphql/mutations/authentication/login'
 import CURRENT_USER from '../../../graphql/queries/authentication/currentUser'
 
 import MutationButton from '../../common/MutationButton'

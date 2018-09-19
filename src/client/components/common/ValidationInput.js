@@ -5,9 +5,9 @@ import { Responsive, Form, Icon } from 'semantic-ui-react'
 const ValidationInput = (props) => {
   const { errors, isPristine } = props
 
-  const isError = false
-  const errMessages = ""
-  const firstErrMessage = ""
+  let isError = false
+  let errMessages = ""
+  let firstErrMessage = ""
 
   if (!isPristine && errors && errors.length > 0) {
     isError = true
@@ -26,14 +26,14 @@ const ValidationInput = (props) => {
     <React.Fragment>
        {!shouldDisplayError && <Form.Input {...props} />}
 
-      {shouldDisplayError && <Responsive minWidth={...Responsive.onlyComputer.minWidth}>
+      {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
       <Form.Input error {...props} action={<Popup
                                                               trigger={<Icon name="info circle" size="tiny" circular color="red" />}
                                                               content={errMessages}
                                                               on='hover' />} />
       </Responsive>}
 
-      {shouldDisplayError && <Responsive maxWidth={...Responsive.onlyTablet.maxWidth}>
+      {shouldDisplayError && <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
         <React.Fragment>
           <Form.Input error {...props} />
           <Label size="mini" basic pointing>{firstErrMessage}</Label>
