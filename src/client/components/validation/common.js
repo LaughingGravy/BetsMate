@@ -1,8 +1,3 @@
-const shouldMarkError = (error, isPristine) => {
-  const shouldShow = !isPristine;
-  
-  return error ? shouldShow : false;
-};
 
 const getErrorsFromValidationObjs = (validationObjects) => {
   const errors =[]

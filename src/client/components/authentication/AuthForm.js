@@ -5,8 +5,6 @@ import { Form } from 'semantic-ui-react'
 import '../styles/auth.css'
 
 import { validateLogin } from '../authentication/login/validate'
-import { shouldMarkError } from '../validation/common'
-
 import ValidationInput from '../common/ValidationInput'
 
 class AuthForm  extends React.Component {
