@@ -4,7 +4,6 @@ import intl from 'react-intl-universal'
 const validateConfirmPassword = (password, confirmPassword) => {
   return [
       {
-        key: "confirmPassword",
         test: () => { password === confirmPassword },
         msg: <span>{intl.get("confirm-password-val-msg")}</span>
       }

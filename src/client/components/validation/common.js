@@ -23,7 +23,6 @@ const getErrorsFromValidationObjs = (validationObjects) => {
 const minLength = (name, minlength) => {
   return [
       {
-        key: "minLength",
         test: () =>  { name.length >= minlength},
         msg: <pre>{intl.get("minlength-val-msg")} {minlength}</pre>
       }
@@ -33,7 +32,6 @@ const minLength = (name, minlength) => {
 const required = (name) => {
   return [
       {
-        key: "required",
         test: () =>  { name.length > 0},
         msg: <span>{intl.get("required-val-msg")}</span>
       }
