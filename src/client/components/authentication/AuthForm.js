@@ -36,7 +36,8 @@ class AuthForm  extends React.Component {
   render() {
     const { email, password, pristine } = this.state
     const errors = validateLogin(email, password)
-    const isFormValid = !Object.keys(errors).some(x => errors[x])
+    //const isFormValid = !Object.keys(errors).some(x => errors[x])
+    const isFormValid = errors && errors.length > 0
     
     return (
       <Form className='segment' onSubmit={e => {

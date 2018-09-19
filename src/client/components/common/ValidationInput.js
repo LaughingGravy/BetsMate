@@ -9,13 +9,11 @@ const ValidationInput = (props) => {
   const errMessages = ""
   const firstErrMessage = ""
 
-  const failedValidation =  errors.filter(error => { error.test() })
-
-  if (failedValidation.length > 0) {
+  if (errors && errors.length > 0) {
     isError = true
-    firstErrMessage = failedValidation[0].msg
+    firstErrMessage = errors[0].msg
  
-    failedValidation.map(error => {
+    errors.map(error => {
         errMessages.concat(error.msg, "<br />")
     })
 
@@ -46,10 +44,12 @@ const ValidationInput = (props) => {
 }
 
 ValidationInput.propTypes = {
-  errors: PropTypes.arrayOf(PropTypes.shape({
+  errors: PropTypes.objectOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
-    test: PropTypes.func.isRequired,
-    msg: PropTypes.string.isRequired
+    validationObjSet: PropTypes.arrayOf(PropTypes.shape({
+        test: PropTypes.func.isRequired,
+        msg: PropTypes.string.isRequired
+    })).isRequired
   })),
   isPristine: PropTypes.bool.isRequired
 }

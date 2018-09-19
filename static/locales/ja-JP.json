@@ -129,5 +129,6 @@
 
     "email-format-val-msg": "有効なメールではありません",
     "minlength-val-msg": "最小文字数",
+    "required-val-msg": "必須フィールド",
     "confirm-password-val-msg": "パスワードが一致していません"
 }

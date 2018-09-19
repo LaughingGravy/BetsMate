@@ -2,22 +2,42 @@
 const getErrorsFromValidationObjs = (validationObjects) => {
   const errors =[]
 
-  validationObjects.map(obj => {
-    if (!obj.test())
-      errors.push({ key: obj.key, msg: obj.msg})
+  validationObjects.map(objSet => {
+    const key = objSet.key
+    const erroredValidationObjSet = []
+
+    objSet.map(obj =>{
+      if (!obj.test()) {
+        erroredValidationObjSet.push(obj)
+      }
+    })
+
+    if (erroredValidationObjSet.length > 0) {
+      errors.push({ key: key, validationObjSet: erroredValidationObjSet })
+    }
   })
 
   return errors
 }
 
-const minLength = (key, name, minlength) => {
+const minLength = (name, minlength) => {
   return [
       {
-        key: key,
+        key: "minLength",
         test: () =>  { name.length >= minlength},
         msg: <pre>{intl.get("minlength-val-msg")} {minlength}</pre>
       }
     ]
 }
 
-export { shouldMarkError, getErrorsFromValidationObjs, minLength }
+const required = (name) => {
+  return [
+      {
+        key: "required",
+        test: () =>  { name.length > 0},
+        msg: <span>{intl.get("required-val-msg")}</span>
+      }
+    ]
+}
+
+export { getErrorsFromValidationObjs, minLength, required }

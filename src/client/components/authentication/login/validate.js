@@ -1,10 +1,24 @@
 import { validateEmail } from '../../validation/email'
-import { getErrorsFromValidationObjs } from '../../validation/common'
+import { getErrorsFromValidationObjs, required } from '../../validation/common'
 
 const validateLogin = (email, password) => {
   const validationObjects = [
-    validateEmail(email),
-    minLength("password", password, 8),
+    [
+      {
+        key: "email",
+        validationObjectSet: [
+          required(email),
+          validateEmail(email)
+        ]
+      },
+      {
+        key: "password",
+        validationObjectSet: [
+          required(password),
+          minLength(password, 8)
+        ]
+      }
+    ]
   ]
 
   return getErrorsFromValidationObjs(validationObjects)

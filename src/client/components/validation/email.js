@@ -2,7 +2,7 @@ import intl from 'react-intl-universal'
 
 const validateEmail = (email) => {
   return {
-    key: "email",
+    key: "emailFormat",
     test: () => {
       var re = /\S+@\S+\.\S+/
       return re.test(email)

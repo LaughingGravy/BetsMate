@@ -131,5 +131,6 @@
 
     "email-format-val-msg": "Not a valid email",
     "minlength-val-msg": "Minimum number of characters",
+    "required-val-msg": "Mandatory field",
     "confirm-password-val-msg": "Passwords do not match"
 }
