@@ -1,13 +1,35 @@
 import { validateEmail } from '../../validation/email'
 import { validateConfirmPassword } from '../../validation/password'
-import { getErrorsFromValidationObjs, minLength } from '../../validation/common'
+import { getErrorsFromValidationObjs, minLength, required } from '../../validation/common'
 
 const validateRegister = (email, displayName, password, passwordConfirm) => {
   const validationObjects = [
-    validateEmail(email),
-    minLength("password", password, 8),
-    minLength("displayName", displayName, 5),
-    validateConfirmPassword(passwordConfirm)
+    {
+      key: "email",
+      validationObjectSet: [
+        required(email),
+        validateEmail(email)
+      ]
+    },
+    {
+      key: "displayName",
+      validationObjectSet: [
+        minLength("displayName", displayName, 5),
+      ]
+    },
+    {
+      key: "password",
+      validationObjectSet: [
+        required(password),
+        minLength(password, 8)
+      ]
+    },
+    {
+      key: "passwordConfirm",
+      validationObjectSet: [
+        validateConfirmPassword(password, passwordConfirm)
+      ]
+    }
   ]
 
   return getErrorsFromValidationObjs(validationObjects)
