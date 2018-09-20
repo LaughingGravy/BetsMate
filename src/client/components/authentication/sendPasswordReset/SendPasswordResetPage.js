@@ -3,7 +3,7 @@ import intl from 'react-intl-universal'
 import { Grid, Segment, Container } from 'semantic-ui-react'
 
 import LinkForm from '../LinkForm'
-import ResetButton from './ResetButton'
+import SendResetPasswordButton from './SendResetPasswordButton'
 
 const SendPasswordResetPage = () => (
   <Grid columns={1} centered>
@@ -23,7 +23,7 @@ const SendPasswordResetPage = () => (
       <GridColumn mobile={14} tablet={8} computer={6}>
         <Container textAlign='center'>
           <LinkForm render={variables => (
-            <ResetButton variables={variables} /> 
+            <SendResetPasswordButton variables={variables} /> 
           )}/>
         </Container>
       </GridColumn>

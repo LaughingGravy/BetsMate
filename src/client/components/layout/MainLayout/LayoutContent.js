@@ -54,7 +54,7 @@ const EnhancedLayoutContent = compose(
 const LayoutContent = (props) =>{
   return (
     <Query query={CURRENT_USER}>
-      {({ loading, error, data: { user }}) => {
+      {({ loading, error, user }) => {
 
         if (user == null) {
             user = DefaultUser

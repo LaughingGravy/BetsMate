@@ -5,7 +5,6 @@ import { Form } from 'semantic-ui-react'
 import '../styles/auth.css'
 
 import { validateEmail } from '../validation/email'
-import { shouldMarkError } from '../validation/common'
 
 class ResetForm  extends React.Component {
   constructor(props) {
@@ -39,8 +38,7 @@ class ResetForm  extends React.Component {
                                                 }}>    
         <Form.Field required>
           <Form.Input name='email' label={intl.get("email-label")} placeholder='example@domain.com' 
-                      value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')}
-                      className={shouldMarkError(errors['email'], pristine['email']) ? "error" : ""} />
+                      value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')} />
         </Form.Field>
        
         {this.props.render(this.state)}

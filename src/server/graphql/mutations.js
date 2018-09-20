@@ -8,6 +8,7 @@ const {
     GraphQLFloat
 } = graphql;
 
+import UserType from './types/user_type'
 const CountryType = require('./types/country_type').default
 import VerifyType from '../graphql/types/verify_type'
 const AdminService = require('../services/admin')
@@ -62,14 +63,14 @@ export default new GraphQLObjectType({
                 return user;
             }
         },
-        sendPasswordResetEmail: {
+        sendPasswordReset: {
             type: UserType,
             args: {
                 email: { type: GraphQLString },
                 timeZone: { type: GraphQLString }
             },
             resolve(parentValue, { email, timeZone }, ctx) {
-                return AuthService.SendPasswordResetEmail({ email, timeZone });
+                return AuthService.SendPasswordReset({ email, timeZone });
             }
         },
         verifyPasswordResetToken: {
@@ -119,57 +120,6 @@ export default new GraphQLObjectType({
             resolve(parentValue, { code }) {
                 return AdminService.deleteCountry({ code });
             }
-        },
-        
-
-
-
-
-
-
-
-        resetLink: {
-            type: UserResetType,
-            args: {
-                email: { type: GraphQLString },
-                timeZone: { type: GraphQLString }
-            },
-            resolve(parentValue, { email, timeZone }, ctx) {
-                return AuthService.resetLink({ email, timeZone });
-            }
-        },
-        registerLink: {
-            type: UserRegisterType,
-            args: {
-                email: { type: GraphQLString },
-                timeZone: { type: GraphQLString }
-            },
-            resolve(parentValue, { email, timeZone }, ctx) {
-                return AuthService.registerLink({ email, timeZone });
-            }
-        },
-        resetPassword: {
-            type: UserResetType,
-            args: {
-                token: { type: GraphQLString },
-                password: { type: GraphQLString }
-            },
-            resolve(parentValue, { token, password }, ctx) {
-                return AuthService.resetPassword({ token, password });
-            }
-        },
-        changePassword: {
-            type: UserType,
-            args: {
-                email: { type: GraphQLString },
-                password: { type: GraphQLString },
-                newPassword: { type: GraphQLString }
-            },
-            resolve(parentValue, { email, password, newPassword}, ctx) {
-                const req = ctx.req;
-                return AuthService.changePassword({ email, password, req}, newPassword);
-            }
-        },
-        
+        }
     }
 });

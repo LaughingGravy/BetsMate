@@ -3,10 +3,9 @@ import PropTypes from 'prop-types'
 import intl from 'react-intl-universal'
 import { Form } from 'semantic-ui-react'
 
-import '../styles/auth.css'
+import '../../styles/auth.css'
 
 import { validateRegister } from './validate'
-import { shouldMarkError } from '../validation/common'
 
 class RegisterForm  extends React.Component {
   constructor(props) {
@@ -45,26 +44,26 @@ class RegisterForm  extends React.Component {
                                                 }}>  
         <Form.Field required>
           <Form.Input name='email' label={intl.get("email-label")} placeholder='example@domain.com' 
-                      value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')}
-                      className={shouldMarkError(errors['email'], pristine['email']) ? "error" : ""} />
+                      value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')} />
+                      // className={shouldMarkError(errors['email'], pristine['email']) ? "error" : ""} />
         </Form.Field>
 
         <Form.Field required>
           <Form.Input name='displayName' type='text' label={intl.get("username-label")} placeholder={intl.get("username-placeholder")}
-                      value={displayName} onChange={this.handleChange} onBlur={this.handleBlur('displayName')}
-                      className={shouldMarkError(errors['displayName'], pristine['displayName']) ? "error" : ""} />
+                      value={displayName} onChange={this.handleChange} onBlur={this.handleBlur('displayName')} />
+                      {/* className={shouldMarkError(errors['displayName'], pristine['displayName']) ? "error" : ""} /> */}
         </Form.Field>
 
         <Form.Field required>
           <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder={intl.get("password-placeholder")}
-                      value={password} onChange={this.handleChange} onBlur={this.handleBlur('password')}
-                      className={shouldMarkError(errors['password'], pristine['password']) ? "error" : ""} />
+                      value={password} onChange={this.handleChange} onBlur={this.handleBlur('password')} />
+                      {/* className={shouldMarkError(errors['password'], pristine['password']) ? "error" : ""} /> */}
         </Form.Field>
 
         <Form.Field required>
           <Form.Input name='passwordConfirm' type='password' label={intl.get("confirm-password-label")} placeholder={intl.get("password-placeholder")} 
-                      value={passwordConfirm} onChange={this.handleChange} onBlur={this.handleBlur('passwordConfirm')}
-                      className={shouldMarkError('passwordConfirm') ? "error" : ""} />
+                      value={passwordConfirm} onChange={this.handleChange} onBlur={this.handleBlur('passwordConfirm')} />
+                      // className={shouldMarkError('passwordConfirm') ? "error" : ""} />
         </Form.Field>
        
         {this.props.render({...this.state, isFormValid })}

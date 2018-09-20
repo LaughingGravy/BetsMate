@@ -1,6 +1,4 @@
 const passport = require('passport');
-const mongoose = require('mongoose');
-const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 //const config = require('../config/config');
 const crypto = require('crypto');
@@ -107,7 +105,7 @@ let authService = {
       })
   },
 
-  SendPasswordResetEmail: (email, timeZone) => {
+  SendPasswordReset: (email, timeZone) => {
     return generatePasswordResetCode(email, timeZone)
       .then((user) => {
         console.log('code');
@@ -228,7 +226,7 @@ function verifyEmailAddress(email, emailVerificationString) {
                 user.emailVerificationExpiry = null;
                 user.emailVerificationHash = null;
                 user.verified = true;
-                user.registrationDate = new Date()
+                user.registerDate = new Date()
                 //user.save();
                 userService.updateOne(user)
                 return verified

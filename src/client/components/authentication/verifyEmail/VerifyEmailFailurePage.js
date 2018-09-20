@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import intl from 'react-intl-universal'
+import { compose } from 'recompose'
 import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
+
+import { hideIfTestFails } from '../../common/ConditionalRender'
 
 const vanillaVerifyEmailFailurePage = ({error, verified, message}) => (
   <Grid columns={1} centered>

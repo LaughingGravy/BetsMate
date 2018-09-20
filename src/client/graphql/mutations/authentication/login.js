@@ -4,7 +4,7 @@ export default gql`
 mutation Login($email: String, $password: String)
 {
   login (email: $email, password: $password) {
-    user: {
+    user {
       displayName
       email
       role

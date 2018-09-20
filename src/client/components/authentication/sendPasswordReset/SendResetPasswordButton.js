@@ -4,7 +4,7 @@ import { Mutation } from 'react-apollo'
 
 import { history } from '../../../../../library/routing'
 import MutationButton from '../../common/MutationButton'
-import SEND_RESET_PASSWORD_EMAIL from '../../../graphql/mutations/authentication/sendResetPasswordEmail'
+import SEND_RESET_PASSWORD from '../../../graphql/mutations/authentication/sendPasswordRest'
 
 const SendResetPasswordButton = ({ variables }) => {
 
@@ -15,7 +15,7 @@ const SendResetPasswordButton = ({ variables }) => {
   }
 
   return (
-    <Mutation mutation={SEND_RESET_PASSWORD_EMAIL} key={"SEND_RESET_PASSWORD_EMAIL"} 
+    <Mutation mutation={SEND_RESET_PASSWORD} key={"SEND_RESET_PASSWORD"} 
       
       onCompleted={onCompleted}>
       {(sendResetPasswordEmail, { loading, error }) => (

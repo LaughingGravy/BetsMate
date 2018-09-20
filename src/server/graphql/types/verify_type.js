@@ -1,6 +1,7 @@
 import {
   GraphQLBoolean,
   GraphQLString,
+  GraphQLObjectType
 } from 'graphql'
 
 export default new GraphQLObjectType({
