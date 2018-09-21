@@ -4,7 +4,7 @@ const validateEmail = (email) => {
   const obj = {
     test: () => {
       var re = /\S+@\S+\.\S+/
-      return re.test(email)
+      return re.test(email)  ? true : false
     },
     msg: intl.get("email-format-val-msg")
   }

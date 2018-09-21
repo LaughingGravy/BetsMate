@@ -14,7 +14,7 @@ const validateRegister = (email, displayName, password, passwordConfirm) => {
     {
       key: "displayName",
       validationObjectSet: [
-        minLength("displayName", displayName, 5),
+        minLength(displayName, 5),
       ]
     },
     {

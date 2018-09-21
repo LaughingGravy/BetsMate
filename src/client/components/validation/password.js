@@ -4,8 +4,8 @@ import intl from 'react-intl-universal'
 const validateConfirmPassword = (password, confirmPassword) => {
   const obj =
       {
-        test: () => { password === confirmPassword },
-        msg: `<span>${intl.get("confirm-password-val-msg")}</span>`
+        test: () => { return password === confirmPassword  ? true : false },
+        msg: intl.get("confirm-password-val-msg")
       }
 
   return obj

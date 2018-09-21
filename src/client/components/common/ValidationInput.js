@@ -3,13 +3,16 @@ import PropTypes from 'prop-types'
 import { Responsive, Form, Icon } from 'semantic-ui-react'
 
 const ValidationInput = (props) => {
-  const { errors, isPristine } = props
+  const { errors } = props
+
+  console.log("ValidationInput errors", errors)
 
   let isError = false
   let errMessages = ""
   let firstErrMessage = ""
 
-  if (!isPristine && errors && errors.length > 0) {
+  // if (!pristine && errors && errors.length > 0) {
+  if ( errors && errors.length > 0) {
     isError = true
     firstErrMessage = errors[0].msg
  
@@ -20,7 +23,9 @@ const ValidationInput = (props) => {
     errMessages = errMessages.substring(0, errMessage.length - "<br />".length)
   }
 
-  const shouldDisplayError = !isPristine && isError 
+  const shouldDisplayError = isError 
+
+ 
  
   return (
     <React.Fragment>
@@ -28,9 +33,9 @@ const ValidationInput = (props) => {
 
       {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
       <Form.Input error {...props} action={<Popup
-                                                              trigger={<Icon name="info circle" size="tiny" circular color="red" />}
-                                                              content={errMessages}
-                                                              on='hover' />} />
+                                                  trigger={<Icon name="info circle" size="tiny" circular color="red" />}
+                                                  content={errMessages}
+                                                  on='hover' />} />
       </Responsive>}
 
       {shouldDisplayError && <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>
@@ -43,15 +48,19 @@ const ValidationInput = (props) => {
   )
 }
 
-ValidationInput.propTypes = {
-  errors: PropTypes.objectOf(PropTypes.shape({
-    key: PropTypes.string.isRequired,
-    validationObjSet: PropTypes.arrayOf(PropTypes.shape({
-        test: PropTypes.func.isRequired,
-        msg: PropTypes.string.isRequired
-    })).isRequired
-  })),
-  isPristine: PropTypes.bool.isRequired
-}
+// ValidationInput.propTypes = {
+//   validation: PropTypes.objectOf((PropTypes.shape({
+//     pristine: PropTypes.bool.isRequired,
+//     errors: PropTypes.objectOf(PropTypes.shape({
+//       key: PropTypes.string.isRequired,
+//       validationObjSet: PropTypes.arrayOf(PropTypes.shape({
+//           test: PropTypes.func.isRequired,
+//           msg: PropTypes.string.isRequired
+//       })).isRequired
+//     }))
+//   })))
+// }
 
 export default ValidationInput
+
+

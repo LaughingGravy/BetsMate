@@ -1,21 +1,21 @@
-import React from 'react'
+
 import intl from 'react-intl-universal'
 
 const getErrorsFromValidationObjs = (validationObjects) => {
   const errors =[]
 
   validationObjects.map(fieldSet => {
-    const key = fieldSet.key
-    const erroredValidationObjSet = []
+
+    let erroredfieldSet = { key: fieldSet.key, objs: []}
 
     fieldSet.validationObjectSet.map(obj =>{
       if (!obj.test()) {
-        erroredValidationObjSet.push(obj)
+        erroredfieldSet.objs.push(obj)
       }
     })
 
-    if (erroredValidationObjSet.length > 0) {
-      errors.push({ key: key, validationObjSet: erroredValidationObjSet })
+    if (erroredfieldSet.objs.length > 0) {
+      errors.push(erroredfieldSet)
     }
   })
 
@@ -25,20 +25,20 @@ const getErrorsFromValidationObjs = (validationObjects) => {
 const minLength = (name, minlength) => {
   const obj =
       {
-        test: () =>  { name.length >= minlength},
-        msg: `<pre>${intl.get("minlength-val-msg")} ${minlength}</pre>`
+        test: () =>  { return name.length >= minlength },
+        msg: `${intl.get("minlength-val-msg")} ${minlength}`
       }
   return obj
 }
 
 const required = (name) => {
-  const obj =  
+  const obj = 
   {
-    test: () =>  { name && name.length > 0},
-    msg: `<span>${intl.get("required-val-msg")}</span>`
+    test: () =>  { return name.length > 0},
+    msg: `${intl.get("required-val-msg")}`
   }
 
-  return obj
+  return obj;
 }
 
 export { getErrorsFromValidationObjs, minLength, required }
