@@ -22,6 +22,10 @@ const getErrorsFromValidationObjs = (validationObjects) => {
   return errors
 }
 
+const getErrObjs = (errorsSets, key) => {
+  return errorsSets.filter(errSet => errSet.key == key)[0]
+}
+
 const minLength = (name, minlength) => {
   const obj =
       {
@@ -41,4 +45,4 @@ const required = (name) => {
   return obj;
 }
 
-export { getErrorsFromValidationObjs, minLength, required }
+export { getErrorsFromValidationObjs, getErrObjs, minLength, required }
