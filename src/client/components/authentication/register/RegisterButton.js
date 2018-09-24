@@ -31,7 +31,7 @@ const RegisterButton = ({ variables: { email, password, displayName, timeZone },
 }
 
 RegisterButton.defaultProps = {
-  role: "user"
+  role: "admin"
 }
 
 RegisterButton.propTypes = {

@@ -12,7 +12,7 @@ import Config from '../../../utilities/Config'
 import { getRegisterMailOptions, getResetPasswordMailOptions } from './authHelper'
 
 passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, done) => {
-  return userService.findOne({email: username}, (error, user) => {
+  return userService.FindOne({email: username}, (error, user) => {
     if (error) {
       return done(error);
     }
@@ -194,7 +194,7 @@ function register(userObject) {
         user.emailVerificationHash = emailVerificationHash;
         user.emailVerificationExpiry = new Date().valueOf() + (1000 * 60 * 60); // Expires in 1 hour. Make it a shorter time for production app.
         //user.save((error) => {
-        userService.createOne((error) => {
+        userService.CreateOne((error) => {
           if (error) {
             console.log('error saving user')
             console.log(error)
@@ -214,7 +214,7 @@ function register(userObject) {
 };
 
 function verifyEmailAddress(email, emailVerificationString) {
-  return userService.getOne({email: email})
+  return userService.GetOne({email: email})
     .then((user) => {
       if (user) {
         if (user.emailVerificationExpiry > new Date().valueOf()) {
@@ -228,7 +228,7 @@ function verifyEmailAddress(email, emailVerificationString) {
                 user.verified = true;
                 user.registerDate = new Date()
                 //user.save();
-                userService.updateOne(user)
+                userService.UpdateOne(user)
                 return verified
               } else {
                 return {verified: false, message: 'verifiy-email-error'}
@@ -277,7 +277,7 @@ function login({ email, password, req }) {
 
 function getUser(email) {
   //return User.findOne({email: email})
-  return userService.findOne({email: email})
+  return userService.FindOne({email: email})
     .then((user) => {
       if (!user) {
         return ({message: 'Error getting user'})
@@ -290,7 +290,7 @@ function getUser(email) {
 function activate2FactorAuthentication(email) {
   let promise = new Promise((resolve, reject) => {
     //User.findOne({email: email})
-    userService.findOne({email: email})
+    userService.FindOne({email: email})
       .then((user) => {
         if (!user) {
           throw new Error('Error getting user')
@@ -303,7 +303,7 @@ function activate2FactorAuthentication(email) {
           });
           user.tempTwoFactorSecret = twoFactorSecret;
           //user.save();
-          userService.updateOne(user)
+          userService.UpdateOne(user)
           qrCode.toDataURL(twoFactorSecret.otpauth_url, (error, dataUrl) => {
             if (error) {
               console.log('error creating qrcode');
@@ -319,7 +319,7 @@ function activate2FactorAuthentication(email) {
 
 function verifyTwoFactorCode(token, email) {
   // return User.findOne({email: email})
-  return userService.findOne({email: email})
+  return userService.FindOne({email: email})
     .then((user) => {
       if (!user) {
         throw new Error('error getting user')
@@ -333,7 +333,7 @@ function verifyTwoFactorCode(token, email) {
           user.twoFactorSecret = user.tempTwoFactorSecret;
           user.tempTwoFactorSecret = null;
           //user.save();
-          userService.updateOne(user)
+          userService.UpdateOne(user)
         }
         return {verified: verified, user: user}
       }
@@ -342,7 +342,7 @@ function verifyTwoFactorCode(token, email) {
 
 function generatePasswordResetCode(email) {
   //return User.findOne({email: email})
-  return userService.findOne({email: email})
+  return userService.FindOne({email: email})
     .then((user) => {
       if (!user) {
         throw new Error('error getting user')
@@ -352,7 +352,7 @@ function generatePasswordResetCode(email) {
           user.passwordResetHash = hash;
           user.passwordResetExpiry = new Date().valueOf() + (1000 * 60 * 5) // 5 minutes
           //user.save();
-          userService.updateOne(user)
+          userService.UpdateOne(user)
 
           return user;
         })
@@ -362,7 +362,7 @@ function generatePasswordResetCode(email) {
 
 function checkPasswordResetToken(code, email) {
   // return User.findOne({email: email})
-  return userService.findOne({email: email})
+  return userService.FindOne({email: email})
     .then((user) => {
       if (!user) {
         throw new Error('error getting user')
@@ -383,7 +383,7 @@ function checkPasswordResetToken(code, email) {
 
 function resetPassword(email, password) {
   // return User.findOne({email: email})
-  return userService.findOne({email: email})
+  return userService.FindOne({email: email})
     .then((user) => {
       console.log('user')
       console.log(user)
@@ -393,7 +393,7 @@ function resetPassword(email, password) {
         return argon2.hash(password, {type: argon2.argon2id}).then((hash) => { // Hash the password with Argon2id: https://crypto.stackexchange.com/questions/48935/why-use-argon2i-or-argon2d-if-argon2id-exists?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
           user.passwordHash = hash;
           //user.save()
-          userService.updateOne(user)
+          userService.UpdateOne(user)
           return user;
         })
       }
