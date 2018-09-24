@@ -55,29 +55,25 @@ class RegisterForm  extends React.Component {
         <Form.Field required>
           <ValidationInput name='email' type="email" label={intl.get("email-label")} placeholder='example@domain.com' 
                       value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')} 
-                      errors={emailErrObjs}  />
-                      {/* className={shouldMarkError(errors['email'], pristine['email']) ? "error" : ""} /> */}
+                      errors={emailErrObjs} pristine={pristineFields['email'] ? 1 : 0} />
         </Form.Field>
 
         <Form.Field required>
           <ValidationInput name='displayName' type='text' label={intl.get("username-label")} placeholder={intl.get("username-placeholder")}
                       value={displayName} onChange={this.handleChange} onBlur={this.handleBlur('displayName')}
-                      errors={displayNameErrObjs} />
-                      {/* className={shouldMarkError(errors['displayName'], pristine['displayName']) ? "error" : ""} /> */}
+                      errors={displayNameErrObjs} pristine={pristineFields['displayName'] ? 1 : 0} />
         </Form.Field>
 
         <Form.Field required>
           <ValidationInput name='password' type='password' label={intl.get("password-label")} placeholder={intl.get("password-placeholder")}
                       value={password} onChange={this.handleChange} onBlur={this.handleBlur('password')}
-                      errors={passwordErrObjs} />
-                      {/* className={shouldMarkError(errors['password'], pristine['password']) ? "error" : ""} /> */}
+                      errors={passwordErrObjs} pristine={pristineFields['password'] ? 1 : 0} />
         </Form.Field>
 
         <Form.Field required>
           <ValidationInput name='passwordConfirm' type='password' label={intl.get("confirm-password-label")} placeholder={intl.get("password-placeholder")} 
                       value={passwordConfirm} onChange={this.handleChange} onBlur={this.handleBlur('passwordConfirm')}
-                      errors={confirmPasswordErrObjs} />
-                      {/* className={shouldMarkError('passwordConfirm') ? "error" : ""} /> */}
+                      errors={confirmPasswordErrObjs} pristine={pristineFields['passwordConfirm'] ? 1 : 0} />
         </Form.Field>
        
         {this.props.render({...this.state, isFormValid })}
