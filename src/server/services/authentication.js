@@ -43,14 +43,17 @@ passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, d
 
 let authService = {
   Register: (user, timeZone) => {
+    console.log("Register")
     return register(user)
       .then((emailVerificationObject) => {
+        console.log("emailVerificationObject", emailVerificationObject)
         //return emailVerificationObject;
         // send email
         const options = getRegisterMailOptions(emailVerificationObject, timeZone)
         return sendEmail(options)       
       })
       .catch((error) => {
+        console.log("Register Error: ", error)
         return error;
       })
   },
@@ -147,7 +150,7 @@ let authService = {
   },
 
 
-  GetNewUser: () =>{
+  GetNewUser: () => {
     return getNewUser()
   }
 }
@@ -194,13 +197,14 @@ function register(userObject) {
         user.emailVerificationHash = emailVerificationHash;
         user.emailVerificationExpiry = new Date().valueOf() + (1000 * 60 * 60); // Expires in 1 hour. Make it a shorter time for production app.
         //user.save((error) => {
-        userService.CreateOne((error) => {
+        userService.CreateOne(user)
+          .then((regUser, error) => {
           if (error) {
             console.log('error saving user')
             console.log(error)
             reject(error);
           }
-          resolve({emailAddress: user.email, emailVerificationString: emailVerificationString, emailVerificationExpiry: emailVerificationExpiry});
+          resolve({emailAddress: regUser.email, emailVerificationString: emailVerificationString, emailVerificationExpiry: emailVerificationExpiry});
         })
       })
     })

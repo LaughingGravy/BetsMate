@@ -53,6 +53,7 @@ let userService = {
       })
       .catch(error => {
         session.close();
+        console.log("CreateOne Error: ", error)
         throw error;
       })
   },
