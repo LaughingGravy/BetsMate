@@ -22,7 +22,7 @@ const getFutureDate = (duration, key) => {
 }
 
 const convertUTCToTimeZone = (utcDate, timeZone) => {
- return moment(utcDate).utc().tz(timeZone).toDate()
+ return moment(new Date(utcDate)).utc().tz(timeZone).toDate()
 }
 
 const hasLinkExpired = (linkDate) => {
@@ -58,8 +58,11 @@ const hasLinkExpired = (linkDate) => {
 //           }
 // }
 
-const getRegisterMailOptions = ({ emailAddress, emailVerificationString, emailVerificationExpiry }, timeZone) => {
-  const localDate = moment(convertUTCToTimeZone(emailVerificationExpiry, timeZone )).format("dddd MMMM YYYY h:mm:ss a")
+const getRegisterMailOptions = (emailVerificationObject, timeZone) => {
+  const { email, emailVerificationString, emailVerificationExpiry } = emailVerificationObject
+  //const localDate = moment(new Date(convertUTCToTimeZone(emailVerificationExpiry, timeZone ))).format("MMM Do YYYY h:mm:ss a")
+
+  const localDate = moment(convertUTCToTimeZone((new Date(emailVerificationExpiry), timeZone))).format("MMM Do YYYY h:mm:ss a")
 
   return {
           from: Config.mailerReply,
@@ -69,7 +72,7 @@ const getRegisterMailOptions = ({ emailAddress, emailVerificationString, emailVe
                   "Thanks for registering with Bets Mate" +
                   "<p>Please follow this link to confirm your email address and activate your account.<p>" +
                   `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=${getServerURL()}/verify-email/${emailAddress}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
+                  `<p><a href=${getServerURL()}/verify-email/${email}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
           }
 }
 

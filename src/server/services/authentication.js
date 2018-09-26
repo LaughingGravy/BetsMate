@@ -10,6 +10,7 @@ const qrCode = require('qrcode');
 import userService from './user'
 import Config from '../../../utilities/Config'
 import { getRegisterMailOptions, getResetPasswordMailOptions } from './authHelper'
+import { createTransporter } from '../../../utilities/mailer'
 
 passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, done) => {
   return userService.FindOne({email: username}, (error, user) => {
@@ -42,12 +43,15 @@ passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, d
 }));
 
 let authService = {
-  Register: ({ user, timeZone }) => {
-    console.log("timeZone")
+  Register: ({ email, displayName, password, role }, timeZone) => {
+    const user = { email, displayName, password, role }
+
     return register(user)
       .then((emailVerificationObject) => {
         // send email
         const options = getRegisterMailOptions(emailVerificationObject, timeZone)
+        console.log("options", options)
+
         return sendEmail(options)       
       })
       .catch((error) => {
@@ -202,7 +206,8 @@ function register(userObject) {
               console.log(error)
               reject(error);
             }
-            const emailVerificationObj = getEmailVerificationObj(regUser[0]);
+            const { email, emailVerificationExpiry } = regUser[0]
+            const emailVerificationObj = { email, emailVerificationString, emailVerificationExpiry }
             resolve(emailVerificationObj);
           })
           .catch((error) => {
@@ -425,15 +430,12 @@ function getNewUser() {
   }
 }
 
-function getEmailVerificationObj(user) {
-  console.log("user", user)
-  const { email, emailVerificationHash, emailVerificationExpiry } = user
-
-  console.log("email, emailVerificationHash, emailVerificationExpiry",email, emailVerificationHash, emailVerificationExpiry)
+function getEmailVerificationObj(provider) {
+  const { email, emailVerificationString, emailVerificationExpiry } = provider
 
   return {
     email: email,
-    emailVerificationHash: emailVerificationHash,
+    emailVerificationString: emailVerificationString,
     emailVerificationExpiry: emailVerificationExpiry,
   }
 }
