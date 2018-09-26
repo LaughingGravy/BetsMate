@@ -9,7 +9,7 @@ const qrCode = require('qrcode');
 
 import userService from './user'
 import Config from '../../../utilities/Config'
-import { getRegisterMailOptions, getResetPasswordMailOptions } from './authHelper'
+import { getRegisterMailOptions, getResetPasswordMailOptions, getUTCFutureDate } from './authHelper'
 import { createTransporter } from '../../../utilities/mailer'
 
 passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, done) => {
@@ -197,7 +197,8 @@ function register(userObject) {
       user.passwordHash = hash;
       argon2.hash(emailVerificationString, {type: argon2.argon2id}).then((emailVerificationHash) => {
         user.emailVerificationHash = emailVerificationHash;
-        user.emailVerificationExpiry = new Date().valueOf() + (1000 * 60 * 60); // Expires in 1 hour. Make it a shorter time for production app.
+        //user.emailVerificationExpiry = new Date().valueOf() + (1000 * 60 * 60); // Expires in 1 hour. Make it a shorter time for production app.
+        user.emailVerificationExpiry = getUTCFutureDate(1, "hours"); // Expires in 1 hour. Make it a shorter time for production app.
         //user.save((error) => {
         userService.CreateOne(user)  // will return an array with a single user
           .then((regUser, error) => {

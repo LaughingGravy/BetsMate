@@ -14,7 +14,10 @@ const getUTCDate = () => {
 }
 
 const getUTCFutureDate = (duration, key) => {
-  return moment().utc().add(duration, key).toDate()
+  console.log("prior getUTCFutureDate")
+  const myDate = moment(new Date(utcDate)).utc().add(duration, key).toDate()
+  console.log("myDate", myDate)
+  return myDate
 }
 
 const getFutureDate = (duration, key) => {
@@ -60,9 +63,10 @@ const hasLinkExpired = (linkDate) => {
 
 const getRegisterMailOptions = (emailVerificationObject, timeZone) => {
   const { email, emailVerificationString, emailVerificationExpiry } = emailVerificationObject
+
   //const localDate = moment(new Date(convertUTCToTimeZone(emailVerificationExpiry, timeZone ))).format("MMM Do YYYY h:mm:ss a")
 
-  const localDate = moment(convertUTCToTimeZone((new Date(emailVerificationExpiry), timeZone))).format("MMM Do YYYY h:mm:ss a")
+  const localDate = new Date(emailVerificationExpiry)
 
   return {
           from: Config.mailerReply,
@@ -90,5 +94,5 @@ const getResetPasswordMailOptions = ({ email, passwordResetExpiry }, timeZone) =
           }
 }
 
-export { getToken, getUTCDate, getFutureDate, hasLinkExpired, convertUTCToTimeZone, 
+export { getToken, getUTCDate, getFutureDate, getUTCFutureDate, hasLinkExpired, convertUTCToTimeZone, 
           getResetMailOptions, getRegisterMailOptions, getResetPasswordMailOptions }

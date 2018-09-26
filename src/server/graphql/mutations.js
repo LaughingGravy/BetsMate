@@ -29,7 +29,6 @@ export default new GraphQLObjectType({
             },
             resolve(parentValue, { email, displayName, password, role, timeZone }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                console.log("mutation timeZone", timeZone)
                 return AuthenticationService.Register({ email, displayName, password, role}, timeZone);
             }
         },
