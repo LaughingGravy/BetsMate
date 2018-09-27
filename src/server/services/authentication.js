@@ -49,10 +49,16 @@ let authService = {
     return register(user)
       .then((emailVerificationObject) => {
         // send email
-        const options = getRegisterMailOptions(emailVerificationObject, timeZone)
-        console.log("options", options)
+        const options = getRegisterMailOptions(emailVerificationObject, timeZone);
 
-        return sendEmail(options)       
+        return sendEmail(options)
+          .then(email =>{
+            resolve(email);
+          }) 
+          .catch((error) => {
+            console.log("Register Error: ", error)
+            return error;
+          }) 
       })
       .catch((error) => {
         console.log("Register Error: ", error)
@@ -443,7 +449,9 @@ function getEmailVerificationObj(provider) {
 
 function sendEmail(options) {
   return new Promise((resolve, reject) => {
+    console.log("options", options)
     const smtpTransport = createTransporter()
+    console.log("smtpTransport", smtpTransport)
 
     smtpTransport.sendMail(options, (err, resp) => {
       if (err) { reject(err) }

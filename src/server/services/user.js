@@ -33,7 +33,7 @@ let userService = {
         `CREATE (user:User { email: "${email}" })
           SET user.displayName =  "${displayName}",
               user.role =  "${role}",
-              user.registerDate =  "${registerDate}",
+              user.registerDate = "${registerDate}",
               user.lastAccessDate =  "${lastAccessDate}",
               user.passwordHash =  "${passwordHash}",
               user.passwordResetHash =  "${passwordResetHash}",

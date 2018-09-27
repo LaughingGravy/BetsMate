@@ -14,10 +14,7 @@ const getUTCDate = () => {
 }
 
 const getUTCFutureDate = (duration, key) => {
-  console.log("prior getUTCFutureDate")
-  const myDate = moment(new Date(utcDate)).utc().add(duration, key).toDate()
-  console.log("myDate", myDate)
-  return myDate
+  return moment().utc().add(duration, key).toDate()
 }
 
 const getFutureDate = (duration, key) => {
@@ -67,17 +64,16 @@ const getRegisterMailOptions = (emailVerificationObject, timeZone) => {
   //const localDate = moment(new Date(convertUTCToTimeZone(emailVerificationExpiry, timeZone ))).format("MMM Do YYYY h:mm:ss a")
 
   const localDate = new Date(emailVerificationExpiry)
-
-  return {
-          from: Config.mailerReply,
-          to: email,
-          subject: "Bets Mate Registration",
-          html: `<h1> Greetings</h1>` +
-                  "Thanks for registering with Bets Mate" +
-                  "<p>Please follow this link to confirm your email address and activate your account.<p>" +
-                  `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=${getServerURL()}/verify-email/${email}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
-          }
+    return {
+            from: Config.mailerReply,
+            to: email,
+            subject: "Bets Mate Registration",
+            html: `<h1> Greetings</h1>` +
+                    "Thanks for registering with Bets Mate" +
+                    "<p>Please follow this link to confirm your email address and activate your account.<p>" +
+                    `<p>The link is valid until ${localDate}</p>` +
+                    `<p><a href=${getServerURL()}/verify-email/${email}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
+            }
 }
 
 const getResetPasswordMailOptions = ({ email, passwordResetExpiry }, timeZone) => {
