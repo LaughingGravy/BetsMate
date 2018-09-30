@@ -1,6 +1,6 @@
 import UUID from 'node-uuid'
 import moment from 'moment'
-import tz from 'moment-timezone'
+import { tz } from 'moment-timezone'
 
 import Config from '../../../utilities/Config'
 import { getServerURL } from '../../../utilities/env'
@@ -22,11 +22,12 @@ const getFutureDate = (duration, key) => {
 }
 
 const convertUTCToTimeZone = (utcDate, timeZone) => {
- return moment(new Date(utcDate)).utc().tz(timeZone).toDate()
+  let usersDate = moment(utcDate, "dddd MMMM YYYY h:mm:ss a").tz(timeZone);
+  return usersDate.format("dddd MMMM YYYY h:mm:ss a");
 }
 
 const hasLinkExpired = (linkDate) => {
-  return moment(linkDate).utc().isBefore(moment().utc())
+  return moment(linkDate).utc().isBefore(moment().utc());
 }
 
 // const getResetMailOptions = ({ email, token, expiry }, timeZone) => {
@@ -62,18 +63,19 @@ const getRegisterMailOptions = (emailVerificationObject, timeZone) => {
   const { email, emailVerificationString, emailVerificationExpiry } = emailVerificationObject
 
   //const localDate = moment(new Date(convertUTCToTimeZone(emailVerificationExpiry, timeZone ))).format("MMM Do YYYY h:mm:ss a")
-
-  const localDate = new Date(emailVerificationExpiry)
-    return {
-            from: Config.mailerReply,
-            to: email,
-            subject: "Bets Mate Registration",
-            html: `<h1> Greetings</h1>` +
-                    "Thanks for registering with Bets Mate" +
-                    "<p>Please follow this link to confirm your email address and activate your account.<p>" +
-                    `<p>The link is valid until ${localDate}</p>` +
-                    `<p><a href=${getServerURL()}/verify-email/${email}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
-            }
+  const localDate = convertUTCToTimeZone(emailVerificationExpiry, timeZone)
+  
+  let options = {
+                    from: Config.mailerReply,
+                    to: email,
+                    subject: "Bets Mate Registration",
+                    html: `<h1> Greetings</h1>` +
+                            "Thanks for registering with Bets Mate" +
+                            "<p>Please follow this link to confirm your email address and activate your account.<p>" +
+                            `<p>The link is valid until ${localDate}</p>` +
+                            `<p><a href=${getServerURL()}/verify-email/${email}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
+                    }
+  return options;
 }
 
 const getResetPasswordMailOptions = ({ email, passwordResetExpiry }, timeZone) => {

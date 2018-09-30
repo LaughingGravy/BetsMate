@@ -53,7 +53,7 @@ let authService = {
 
         return sendEmail(options)
           .then(email =>{
-            resolve(email);
+            return email;
           }) 
           .catch((error) => {
             console.log("Register Error: ", error)
@@ -449,14 +449,12 @@ function getEmailVerificationObj(provider) {
 
 function sendEmail(options) {
   return new Promise((resolve, reject) => {
-    console.log("options", options)
     const smtpTransport = createTransporter()
-    console.log("smtpTransport", smtpTransport)
 
     smtpTransport.sendMail(options, (err, resp) => {
       if (err) { reject(err) }
       if (resp) { 
-        resolve(options.emailAddress)
+        resolve(options.email)
       }
     })
   })

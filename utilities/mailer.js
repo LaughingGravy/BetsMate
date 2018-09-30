@@ -14,7 +14,7 @@ function createTransporter()
   });
 };
 
-export default createTransporter;
+export { createTransporter }
 
 // var email_smtp = nodemailer.createTransport({      
 //   host: "smtp.gmail.com",
