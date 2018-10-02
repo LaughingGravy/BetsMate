@@ -1,9 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import intl from 'react-intl-universal'
-import { Form, Label } from 'semantic-ui-react'
-
-import '../../styles/auth.css'
+import { Form } from 'semantic-ui-react'
 
 import ValidationInput from '../../common/ValidationInput'
 import { validateRegister } from './validate'

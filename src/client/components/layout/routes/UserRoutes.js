@@ -6,6 +6,7 @@ import { withUser } from '../../contexts/withUserContext'
 
 import AdministrationPage from '../../administration/AdministrationPage'
 import RegisterPage from '../../authentication/register/RegisterPage'
+import RegisterLinkSentSuccessPage from '../../authentication/register/RegisterLinkSentSuccessPage'
 import LoginPage from '../../authentication/login/LoginPage'
 import VerifyEmailPage from '../../authentication/verifyEmail/VerifyEmailPage'
 import VerifyEmailFailurePage from '../../authentication/verifyEmail/VerifyEmailFailurePage'
@@ -34,6 +35,9 @@ const UserRoutes = ({ userCtx }) => {
 
       <Route exact path="/register" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<RegisterPage match={match} />) )} />
+      
+      <Route exact path="/register/linksent" render={({match}) => (
+          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<RegisterLinkSentSuccessPage />) )} />
 
        <Route exact path="/verify-email/:email/:emailVerificationString" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailPage match={match} />) )} />

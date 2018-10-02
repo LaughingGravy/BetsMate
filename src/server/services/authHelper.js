@@ -22,8 +22,10 @@ const getFutureDate = (duration, key) => {
 }
 
 const convertUTCToTimeZone = (utcDate, timeZone) => {
-  let usersDate = moment(utcDate, "dddd MMMM YYYY h:mm:ss a").tz(timeZone);
-  return usersDate.format("dddd MMMM YYYY h:mm:ss a");
+  // let usersDate = moment(utcDate, "dddd MMMM YYYY h:mm:ss a").tz(timeZone);
+  // return usersDate.format("dddd MMMM YYYY h:mm:ss a");
+  let usersDate = moment(utcDate).utc().clone().tz(timeZone);
+  return usersDate.format("LLLL");
 }
 
 const hasLinkExpired = (linkDate) => {
@@ -62,7 +64,6 @@ const hasLinkExpired = (linkDate) => {
 const getRegisterMailOptions = (emailVerificationObject, timeZone) => {
   const { email, emailVerificationString, emailVerificationExpiry } = emailVerificationObject
 
-  //const localDate = moment(new Date(convertUTCToTimeZone(emailVerificationExpiry, timeZone ))).format("MMM Do YYYY h:mm:ss a")
   const localDate = convertUTCToTimeZone(emailVerificationExpiry, timeZone)
   
   let options = {

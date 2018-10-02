@@ -6,8 +6,10 @@ import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
 
 import { hideIfTestFails } from '../../common/ConditionalRender'
 
-const vanillaVerifyEmailFailurePage = ({error, verified, message}) => (
-  <Grid columns={1} centered>
+const vanillaVerifyEmailFailurePage = ({error, verified, message}) => {
+  console.log("error, verified, message", error, verified, message)
+  return (
+    <Grid columns={1} centered>
     <Grid.Row centered>
       <GridColumn mobile={14} tablet={8} computer={6}>
         <Message size="big" negative>
@@ -23,7 +25,8 @@ const vanillaVerifyEmailFailurePage = ({error, verified, message}) => (
       </GridColumn>
     </Grid.Row>
   </Grid>
-)
+  )
+}
 
 vanillaVerifyEmailFailurePage.PropTypes = {
   verified: PropTypes.bool.isRequired,

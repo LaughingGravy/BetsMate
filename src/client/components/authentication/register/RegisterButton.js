@@ -13,7 +13,7 @@ const RegisterButton = ({ variables: { email, password, displayName, timeZone },
   const label = "register-button-label"
 
   const onCompleted = (data) => {
-      history.push('/home');
+      history.push('/register/linksent');
   }
 
   return (

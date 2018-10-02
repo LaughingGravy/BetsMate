@@ -40,6 +40,8 @@
     "reset-password-token-error": "An error occurred when verifying the password token.",
 
     "find-user-error": "An error occurred when finding the user account.",
+    "reg-link-success-header": "Verify Email Sent",
+    "reg-link-msg-content": "An email has been sent to the address provided.<br />Please click on the link to verify the email address and complete registration.<br />Please note the link will expire in one hour.",
 
 
 
