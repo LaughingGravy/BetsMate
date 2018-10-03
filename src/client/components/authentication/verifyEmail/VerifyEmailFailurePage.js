@@ -5,8 +5,9 @@ import { compose } from 'recompose'
 import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
 
 import { hideIfTestFails } from '../../common/ConditionalRender'
+import verifyByEmail from '../../../graphql/mutations/authentication/verifyByEmail';
 
-const vanillaVerifyEmailFailurePage = (verified, message) => {
+const vanillaVerifyEmailFailurePage = ({data: { verifyByEmail: {verified, message}}}) => {
   console.log("verified, message", verified, message)
   return (
     <Grid columns={1} centered>
@@ -28,10 +29,17 @@ const vanillaVerifyEmailFailurePage = (verified, message) => {
   )
 }
 
-vanillaVerifyEmailFailurePage.PropTypes = {
-  verified: PropTypes.bool.isRequired,
-  message: PropTypes.string
-}
+// vanillaVerifyEmailFailurePage.PropTypes = {
+//   verified: PropTypes.bool.isRequired,
+//   message: PropTypes.string
+// }
+
+// vanillaVerifyEmailFailurePage.propTypes = {
+//   data: PropTypes.shape({
+//     verified: PropTypes.bool.isRequired,
+//     message: PropTypes.string
+//   })
+// }
 
 const notVerifiedAndMessageToDisplay = hideIfTestFails(vanillaVerifyEmailFailurePage, 
   props => !props.error && !props.verified && props.message

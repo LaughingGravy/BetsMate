@@ -23,9 +23,9 @@ const VerifyEmailPage = ({match}) => {
   const { email, emailVerificationString } = match.params
 
   const onCompleted = (data) => {
-    const { verified, message } = data
+    const { verified , message } = data.verifyByEmail
 
-    console.log("data", data)
+    console.log("data, verified , message", data, verified , message)
 
     if (verified)
       history.replace('/login')
