@@ -6,8 +6,8 @@ import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
 
 import { hideIfTestFails } from '../../common/ConditionalRender'
 
-const vanillaVerifyEmailFailurePage = ({error, verified, message}) => {
-  console.log("error, verified, message", error, verified, message)
+const vanillaVerifyEmailFailurePage = (verified, message) => {
+  console.log("verified, message", verified, message)
   return (
     <Grid columns={1} centered>
     <Grid.Row centered>

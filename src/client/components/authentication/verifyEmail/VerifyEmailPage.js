@@ -23,18 +23,25 @@ const VerifyEmailPage = ({match}) => {
   const { email, emailVerificationString } = match.params
 
   const onCompleted = (data) => {
-    const { verified } = data
+    const { verified, message } = data
+
+    console.log("data", data)
 
     if (verified)
       history.replace('/login')
+    else {
+      history.replace('/verify-email/failure')
+    }
   }
 
   return (   
     <Container textAlign="center">
-      <MutationOnMount variables={{ email: email, emailVerificationString: emailVerificationString }}
+      {/* <MutationOnMount variables={{ email: email, emailVerificationString: emailVerificationString }}
                         onCompleted={onCompleted} mutation={VERIFY_EMAIL} render={data => (
                           <VerifyEmailPageContent data={data} />
-                        )} />
+                        )} /> */}
+      <MutationOnMount variables={{ email: email, emailVerificationString: emailVerificationString }}
+                      onCompleted={onCompleted} mutation={VERIFY_EMAIL}  />
     </Container>      
   )
 }

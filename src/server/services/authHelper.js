@@ -22,10 +22,8 @@ const getFutureDate = (duration, key) => {
 }
 
 const convertUTCToTimeZone = (utcDate, timeZone) => {
-  // let usersDate = moment(utcDate, "dddd MMMM YYYY h:mm:ss a").tz(timeZone);
-  // return usersDate.format("dddd MMMM YYYY h:mm:ss a");
-  let usersDate = moment(utcDate).utc().clone().tz(timeZone);
-  return usersDate.format("LLLL");
+  let usersDate = moment(utcDate, "dddd MMMM YYYY h:mm:ss a").tz(timeZone);
+  return usersDate.format("dddd MMMM YYYY h:mm:ss a");
 }
 
 const hasLinkExpired = (linkDate) => {

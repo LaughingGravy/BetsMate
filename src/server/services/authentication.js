@@ -286,7 +286,8 @@ function verifyEmailAddress(email, emailVerificationString) {
         }
         else {
           console.log("user not found")
-          reject(new Error('verifiy-email-error'))
+          resolve({verified: false, message: 'verifiy-email-error'});
+          //reject(new Error('verifiy-email-error'))
         }
     })
     .catch((error) => {

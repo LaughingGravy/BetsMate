@@ -5,7 +5,6 @@ import { Redirect } from '../../../../../library/routing'
 
 import HomePage from '../../home/HomePage'
 import AboutPage from '../../about/AboutPage'
-
 import UserRoutes from './UserRoutes'
 
 const Routes = () => (
