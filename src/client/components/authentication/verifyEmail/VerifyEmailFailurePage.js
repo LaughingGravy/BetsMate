@@ -6,8 +6,8 @@ import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
 
 import { hideIfTestFails } from '../../common/ConditionalRender'
 
-const vanillaVerifyEmailFailurePage = (verified, message) => {
-  console.log("verified, message", verified, message)
+const VerifyEmailFailurePage = ({ message }) => {
+
   return (
     <Grid columns={1} centered>
     <Grid.Row centered>
@@ -28,17 +28,16 @@ const vanillaVerifyEmailFailurePage = (verified, message) => {
   )
 }
 
-vanillaVerifyEmailFailurePage.PropTypes = {
-  verified: PropTypes.bool.isRequired,
-  message: PropTypes.string
+VerifyEmailFailurePage.propTypes = {
+  message: PropTypes.string.isRequired
 }
 
-const notVerifiedAndMessageToDisplay = hideIfTestFails(vanillaVerifyEmailFailurePage, 
-  props => !props.error && !props.verified && props.message
-)
+// const notVerifiedAndMessageToDisplay = hideIfTestFails(vanillaVerifyEmailFailurePage, 
+//   props => !props.error && !props.verified && props.message
+// )
 
-const VerifyEmailFailurePage = compose(
-notVerifiedAndMessageToDisplay(vanillaVerifyEmailFailurePage)
-)(vanillaVerifyEmailFailurePage)
+// const VerifyEmailFailurePage = compose(
+// notVerifiedAndMessageToDisplay(vanillaVerifyEmailFailurePage)
+// )(vanillaVerifyEmailFailurePage)
 
 export default VerifyEmailFailurePage

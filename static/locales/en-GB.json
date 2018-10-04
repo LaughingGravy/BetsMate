@@ -3,6 +3,7 @@
     "locale-language": "English",
 
     "loading": "loading...",
+    "veryfying": "veryfying...",
     "try-refetch-query": "Try again",
     "not-found": "No record was found matching search criteria",
 

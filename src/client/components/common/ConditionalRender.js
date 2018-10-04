@@ -1,7 +1,7 @@
 import React from 'react'
 import intl from 'react-intl-universal'
 import { branch, renderComponent, renderNothing } from 'recompose';
-import { Container, Button } from 'semantic-ui-react'
+import { Container, Button, Grid, Segment, Icon } from 'semantic-ui-react'
 
 import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
 
@@ -54,6 +54,30 @@ const renderForLoading = (component) =>
 
 const LoadingDisplay = props => (
   <Container textAlign="center">{intl.get("loading")}</Container>
+)
+
+// const VerifyingDisplay = props => (
+//   <Grid textAlign="center" verticalAlign="center"> 
+//     <Grid.Row>
+//       <Icon name="cog" loading size="huge" />
+//     </Grid.Row>
+//     <Grid.Row>
+//       <Segment basic size="huge">
+//         {intl.get("veryfying")}
+//       </Segment>
+//     </Grid.Row>
+//   </Grid>
+// )
+
+const VerifyingDisplay = props => (
+  <Container textAlign="center"> 
+    <Segment basic>
+      <Icon name="sun outline" loading size="huge" />
+    </Segment>
+      <Segment basic size="huge">
+        {intl.get("veryfying")}
+      </Segment>
+  </Container>
 )
 
 const renderForNotFound = (component, queryVariableName, dataName) => 
@@ -118,4 +142,4 @@ const MutateErrorDisplay = props => (
 export { renderForAdminFailAccessError, renderIfAuthenticated, renderIfRole, renderOrIfAuthenticated, renderOrIfRole,
         renderForLoading, renderMessageForError, renderForError, renderForNotFound, renderForDataNotFound,
         LoadingDisplay, QueryErrorDisplay, MutateErrorDisplay, NotFoundDisplay, hideIfTestFails, renderOrIfPropArray,
-        errorCheck }
+        errorCheck, VerifyingDisplay }

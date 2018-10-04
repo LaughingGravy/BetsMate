@@ -23,28 +23,33 @@ class DoMutation extends React.Component {
 };
 
 const MutationOnMount = ({ variables, mutation, onCompleted, children}) => {
+
   return (
     <Mutation mutation={mutation} onCompleted={onCompleted}>
       {(mutation, { data, loading, error }) => {
-        console.log("error", error)
+
+        const operationVariables = { data: data, loading: loading, error: error }
+
         return (
         <React.Fragment>
           <EnhancedGraphQLErrorDisplay error={error} />
-          <DoMutation mutate={mutation} variables={variables} />
-          { children && children((mutation, { data, loading, error })) }
+            <DoMutation mutate={mutation} variables={variables} />
+            {React.Children.map(children, child => React.cloneElement(child, operationVariables))}
         </React.Fragment>
         )
       }}
     </Mutation>
   )
 }
-
+ 
 MutationOnMount.propTypes = {
   variables: PropTypes.object.isRequired,
   mutation: PropTypes.object.isRequired,
   onCompleted: PropTypes.func.isRequired,
-  children: PropTypes.arrayOf(PropTypes.object)
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node)
+  ])
 };
-
 
 export default MutationOnMount;
