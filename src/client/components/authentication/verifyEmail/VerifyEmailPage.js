@@ -8,7 +8,7 @@ import VerifyEmailFailurePage from './VerifyEmailFailurePage'
 import MutationOnMount from '../../common/MutationOnMount'
 import { renderForLoading, VerifyingDisplay } from '../../common/ConditionalRender'
 
-const vanillaVerifyEmailPageContent = ({loading, data}) => {
+const vanillaVerifyEmailPageContent = ({data}) => {
 
   if (!data) return null;
 
@@ -33,7 +33,6 @@ const VerifyEmailPage = ({match}) => {
   const { email, emailVerificationString } = match.params
 
   const onCompleted = (data) => {
-    const { verified } = data
 
     if (verified)
       history.replace('/verify-email/success')

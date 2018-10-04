@@ -5,9 +5,9 @@ import { compose } from 'recompose'
 import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
 
 import { hideIfTestFails } from '../../common/ConditionalRender'
+import verifyByEmail from '../../../graphql/mutations/authentication/verifyByEmail';
 
 const VerifyEmailFailurePage = ({ message }) => {
-
   return (
     <Grid columns={1} centered>
     <Grid.Row centered>
