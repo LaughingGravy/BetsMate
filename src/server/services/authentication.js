@@ -9,7 +9,7 @@ const qrCode = require('qrcode');
 
 import userService from './user'
 import Config from '../../../utilities/Config'
-import { getRegisterMailOptions, getResetPasswordMailOptions, getUTCFutureDate } from './authHelper'
+import { getRegisterMailOptions, getResetPasswordMailOptions, getUTCFutureDate, getUTCDate, isFirstUTCDateAfterSecond, convertToUTCDate } from './authHelper'
 import { createTransporter } from '../../../utilities/mailer'
 
 passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, done) => {
@@ -244,15 +244,14 @@ function register(userObject) {
   return promise;
 };
 
-function verifyEmailAddress(email, emailVerificationString) {
+function verifyEmailAddress({email, emailVerificationString}) {
   let promise = new Promise((resolve, reject) => {
-    
-    userService.FindOne({email: email})
+    userService.FindOne(email)
       .then((user) => {
         console.log("user", user)
         if (user) {
         //if (user.emailVerificationExpiry > new Date().valueOf()) {
-          if (user.emailVerificationExpiry > getUTCDate()) {
+          if (isFirstUTCDateAfterSecond(user.emailVerificationExpiry, getUTCDate())) {
             return argon2.verify(user.emailVerificationHash, emailVerificationString)
               .then((verified) => {
                 console.log('verified from argon2')
@@ -264,9 +263,15 @@ function verifyEmailAddress(email, emailVerificationString) {
                   //user.registerDate = new Date()
                   user.registerDate = getUTCDate()
                   //user.save();
-                  userService.UpdateOne(user)
-                  //return verified
-                  resolve({verified: false, message: ""})
+                  return userService.UpdateOne(user)
+                    .then(user => {
+                      resolve({verified: true, message: ""})
+                    })
+                    .catch((error) => {
+                      console.log('error verifying email address');
+                      console.log(error);
+                      reject(error);
+                    })   
                 } else {
                   resolve({verified: false, message: 'verifiy-email-error'})
                   //return {verified: false, message: 'verifiy-email-error'}
@@ -287,7 +292,6 @@ function verifyEmailAddress(email, emailVerificationString) {
         else {
           console.log("user not found")
           resolve({verified: false, message: 'verifiy-email-error'});
-          //reject(new Error('verifiy-email-error'))
         }
     })
     .catch((error) => {

@@ -23,7 +23,7 @@
     "register-page-title": "アカウント登録",
     "register-button-label": "登録",
     "verify-email-success-header": "アカウント確認済み",
-    "verifiy-email-error": "メールアドレスの確認中にエラーが発生しました.",
+    "verifiy-email-error": "アカウントの確認に失敗しました.<br />もう一度登録してください.",
     "expired-email-token-error": "電子メールの検証トークンが期限切れです.",
 
     "reset-page-title": "パスワード忘れた",

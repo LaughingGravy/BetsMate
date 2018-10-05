@@ -56,27 +56,14 @@ const LoadingDisplay = props => (
   <Container textAlign="center">{intl.get("loading")}</Container>
 )
 
-// const VerifyingDisplay = props => (
-//   <Grid textAlign="center" verticalAlign="center"> 
-//     <Grid.Row>
-//       <Icon name="cog" loading size="huge" />
-//     </Grid.Row>
-//     <Grid.Row>
-//       <Segment basic size="huge">
-//         {intl.get("veryfying")}
-//       </Segment>
-//     </Grid.Row>
-//   </Grid>
-// )
-
 const VerifyingDisplay = props => (
   <Container textAlign="center"> 
     <Segment basic>
       <Icon name="sun outline" loading size="huge" />
     </Segment>
-      <Segment basic size="huge">
-        {intl.get("veryfying")}
-      </Segment>
+    <Segment basic size="huge">
+      {intl.get("veryfying")}
+    </Segment>
   </Container>
 )
 
@@ -88,8 +75,15 @@ const renderForNotFound = (component, queryVariableName, dataName) =>
 
 const renderForDataNotFound = (component, dataName) => 
   branch(
-    props => !props.loading && !props.error && !props.data[dataName] ,
+    props => !props.loading && (!props.error || !props.data[dataName]),
     renderComponent(component)
+
+)
+
+const hideIfNoData = (dataName)  =>
+  branch(
+    props => !props.loading && (!props.data  || !props.data[dataName]),
+    renderNothing
 )
 
 const NotFoundDisplay = props => (
@@ -142,4 +136,4 @@ const MutateErrorDisplay = props => (
 export { renderForAdminFailAccessError, renderIfAuthenticated, renderIfRole, renderOrIfAuthenticated, renderOrIfRole,
         renderForLoading, renderMessageForError, renderForError, renderForNotFound, renderForDataNotFound,
         LoadingDisplay, QueryErrorDisplay, MutateErrorDisplay, NotFoundDisplay, hideIfTestFails, renderOrIfPropArray,
-        errorCheck, VerifyingDisplay }
+        errorCheck, VerifyingDisplay, hideIfNoData }

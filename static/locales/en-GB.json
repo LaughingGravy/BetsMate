@@ -29,7 +29,7 @@
     "verify-email-fail-header": "Account Verification Failure",
     "verify-email-fail-msg-content": "Your account has not been verified.",
     "email-not-verified-error": "Please verify your account.",
-    "verifiy-email-error": "An error occurred when verifying the email address.",
+    "verifiy-email-error": "Your account has failed verification.<br />Please register again.",
     "expired-email-token-error": "The email verification token has expired.",
 
     "reset-password-page-title": "Reset Password",

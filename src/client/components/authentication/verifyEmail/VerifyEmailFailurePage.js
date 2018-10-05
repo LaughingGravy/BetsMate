@@ -1,11 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import intl from 'react-intl-universal'
-import { compose } from 'recompose'
 import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
-
-import { hideIfTestFails } from '../../common/ConditionalRender'
-import verifyByEmail from '../../../graphql/mutations/authentication/verifyByEmail';
 
 const VerifyEmailFailurePage = ({ message }) => {
   return (
@@ -31,13 +27,5 @@ const VerifyEmailFailurePage = ({ message }) => {
 VerifyEmailFailurePage.propTypes = {
   message: PropTypes.string.isRequired
 }
-
-// const notVerifiedAndMessageToDisplay = hideIfTestFails(vanillaVerifyEmailFailurePage, 
-//   props => !props.error && !props.verified && props.message
-// )
-
-// const VerifyEmailFailurePage = compose(
-// notVerifiedAndMessageToDisplay(vanillaVerifyEmailFailurePage)
-// )(vanillaVerifyEmailFailurePage)
 
 export default VerifyEmailFailurePage

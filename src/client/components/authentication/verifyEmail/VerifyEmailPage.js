@@ -6,12 +6,9 @@ import VERIFY_EMAIL from '../../../graphql/mutations/authentication/verifyByEmai
 
 import VerifyEmailFailurePage from './VerifyEmailFailurePage'
 import MutationOnMount from '../../common/MutationOnMount'
-import { renderForLoading, VerifyingDisplay } from '../../common/ConditionalRender'
+import { renderForLoading, VerifyingDisplay, hideIfNoData } from '../../common/ConditionalRender'
 
 const vanillaVerifyEmailPageContent = ({data}) => {
-
-  if (!data) return null;
-
   const { message } = data.verifyByEmail
 
   return (
@@ -26,21 +23,23 @@ const vanillaVerifyEmailPageContent = ({data}) => {
 }
 
 const VerifyEmailPageContent = compose(
-  renderForLoading(VerifyingDisplay)
+  renderForLoading(VerifyingDisplay),
+  hideIfNoData("verifyByEmail")
 )(vanillaVerifyEmailPageContent)
 
 const VerifyEmailPage = ({match}) => {
   const { email, emailVerificationString } = match.params
 
   const onCompleted = (data) => {
-
+    const { verifyByEmail: { verified } } = data
+    
     if (verified)
       history.replace('/verify-email/success')
   }
 
   return (   
     <Container textAlign="center">
-      <MutationOnMount variables={{ email: email, emailVerificationString: emailVerificationString }}
+      <MutationOnMount variables={{ email: email, emailVerificationString: decodeURIComponent(emailVerificationString) }}
                         onCompleted={onCompleted} mutation={VERIFY_EMAIL}>
           <VerifyEmailPageContent />
       </MutationOnMount>

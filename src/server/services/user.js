@@ -2,6 +2,8 @@ import { createSession } from "../database/neo4jDB"
 
 let userService = {
   FindOne: (email) => {
+
+    console.log("email", email)
     let session = createSession()
     return session
       .run(

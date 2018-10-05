@@ -9,8 +9,19 @@ const getToken = () => {
   return UUID.v4()
 }
 
+const isFirstUTCDateAfterSecond = (date1, date2) => {
+  const utcDate1 = moment(date1).utc()
+  const utcDate2 = moment(date2).utc()
+
+  return utcDate1.isAfter(utcDate2)
+}
+
 const getUTCDate = () => {
   return moment().utc().toDate()
+}
+
+const convertToUTCDate = (date) => {
+  return moment(date).utc().format();
 }
 
 const getUTCFutureDate = (duration, key) => {
@@ -91,5 +102,5 @@ const getResetPasswordMailOptions = ({ email, passwordResetExpiry }, timeZone) =
           }
 }
 
-export { getToken, getUTCDate, getFutureDate, getUTCFutureDate, hasLinkExpired, convertUTCToTimeZone, 
+export { getToken, getUTCDate, getFutureDate, getUTCFutureDate, convertToUTCDate, isFirstUTCDateAfterSecond, hasLinkExpired, convertUTCToTimeZone, 
           getResetMailOptions, getRegisterMailOptions, getResetPasswordMailOptions }

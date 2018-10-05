@@ -9,7 +9,6 @@ import RegisterPage from '../../authentication/register/RegisterPage'
 import RegisterLinkSentSuccessPage from '../../authentication/register/RegisterLinkSentSuccessPage'
 import LoginPage from '../../authentication/login/LoginPage'
 import VerifyEmailPage from '../../authentication/verifyEmail/VerifyEmailPage'
-import VerifyEmailFailurePage from '../../authentication/verifyEmail/VerifyEmailFailurePage'
 import VerifyEmailSuccessPage from '../../authentication/verifyEmail/VerifyEmailSuccessPage'
 import SendPasswordResetPage from '../../authentication/sendPasswordReset/SendPasswordResetPage'
 import SendResetPasswordSuccessPage from '../../authentication/sendPasswordReset/SendResetPasswordSuccessPage'
@@ -42,9 +41,6 @@ const UserRoutes = ({ userCtx }) => {
 
        <Route exact path="/verify-email/:email/:emailVerificationString" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailPage match={match} />) )} />
-
-       <Route path="/verify-email/failure" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailFailurePage match={match} />) )} />
 
       <Route path="/verify-email/success" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailSuccessPage match={match} />) )} />

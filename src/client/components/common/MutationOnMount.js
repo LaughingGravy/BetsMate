@@ -33,8 +33,8 @@ const MutationOnMount = ({ variables, mutation, onCompleted, children}) => {
         return (
         <React.Fragment>
           <EnhancedGraphQLErrorDisplay error={error} />
-            <DoMutation mutate={mutation} variables={variables} />
-            {React.Children.map(children, child => React.cloneElement(child, operationVariables))}
+          <DoMutation mutate={mutation} variables={variables} />
+          {React.Children.map(children, child => React.cloneElement(child, operationVariables))}
         </React.Fragment>
         )
       }}
