@@ -10,7 +10,7 @@
     "/start/": "cross-env NODE_ENV=development RUN_ENGINE=false node src/server/index.js --mode development",
     "oldserver": "cross-env NODE_ENV=production RUN_ENGINE=true node src/server/index.js --mode production",
     "oldbuild": "cross-env NODE_ENV=production' webpack --mode production --config webpack/webpack.prod.config.js",
-    "clean": "rimraf entry",
+    "clean": "rimraf dist",
     "build-run": "npm run build && npm run server",
     "server-dev": "node dist/server-dev",
     "start": "run-p browser server-dev",
