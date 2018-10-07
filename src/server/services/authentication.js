@@ -248,21 +248,18 @@ function verifyEmailAddress({email, emailVerificationString}) {
   let promise = new Promise((resolve, reject) => {
     userService.FindOne(email)
       .then((user) => {
-        console.log("user", user)
         if (user) {
         //if (user.emailVerificationExpiry > new Date().valueOf()) {
           if (isFirstUTCDateAfterSecond(user.emailVerificationExpiry, getUTCDate())) {
-            return argon2.verify(user.emailVerificationHash, emailVerificationString)
+            argon2.verify(user.emailVerificationHash, emailVerificationString)
               .then((verified) => {
                 console.log('verified from argon2')
-                console.log(verified)
                 if (verified) {
                   user.emailVerificationExpiry = null;
                   user.emailVerificationHash = null;
                   user.verified = true;
-                  //user.registerDate = new Date()
-                  user.registerDate = getUTCDate()
-                  //user.save();
+                  user.registerDate = getUTCDate();
+
                   return userService.UpdateOne(user)
                     .then(user => {
                       resolve({verified: true, message: ""})
@@ -274,16 +271,15 @@ function verifyEmailAddress({email, emailVerificationString}) {
                     })   
                 } else {
                   resolve({verified: false, message: 'verifiy-email-error'})
-                  //return {verified: false, message: 'verifiy-email-error'}
                 }
               })
               .catch((error) => {
               console.log('error verifying email address');
               console.log(error);
               reject(error);
-              //return {verified: false, message: error}
               })
           } else {
+            console.log("how did we get here?")
             resolve({verified: false, message: 'expired-email-token-error'})
             //return {verified: false, message: 'expired-email-token-error'}
             //reject(new Error('expired-email-token-error'))

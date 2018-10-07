@@ -33,8 +33,10 @@ const VerifyEmailPage = ({match}) => {
   const onCompleted = (data) => {
     const { verifyByEmail: { verified } } = data
     
-    if (verified)
+    if (verified) {
+      console.log("onCompleted verified", verified)
       history.replace('/verify-email/success')
+    }
   }
 
   return (   

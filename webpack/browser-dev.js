@@ -9,7 +9,6 @@ import path from 'path';
 
 import { webpackProgress } from './common'
 
-import Config from '../utilities/Config'
 import PATHS from '../utilities/paths'
 
 import { regex, css } from './common';

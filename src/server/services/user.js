@@ -68,7 +68,7 @@ let userService = {
     let session = createSession()
     return session
       .run(
-        `UPDATE (user:User { email: "${email}" })
+        `MATCH (user:User { email: "${email}" })
           SET user.displayName =  "${displayName}",
               user.role =  "${role}",
               user.registerDate =  "${registerDate}",

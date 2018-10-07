@@ -5,86 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Chrome Debug",
-            "type": "chrome",
-            "request": "launch",
-            "webRoot": "${workspaceRoot}",
-            "url": "http://localhost:3000", 
-            "userDataDir": "${workspaceRoot}/.vscode/chrome",
-            "sourceMaps": true,
-            "smartStep": true,
-            "internalConsoleOptions": "openOnSessionStart",
-            "skipFiles": [
-                "node_modules/**"
-            ],
-            "sourceMapPathOverrides": {
-                "webpack:///*": "${webRoot}/*"
-            }
-        },
-        {
-            "name": "Launch via NPM",
             "type": "node",
             "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "npm",
-            "protocol": "inspector",
-            "stopOnEntry": true,
-            "console": "integratedTerminal",
-            "runtimeArgs": [
-                "run-script", "debugSSRBuild", "--nolazy", "--inspect-brk=3000"                       
-            ],
-            "args": [],
-            "env": {
-                "NODE_ENV": "production",
-            },
-            "skipFiles": [
-                "node_modules/**"
-            ],
-            "port": 3000
-        },
-        {
-            "name": "Launch Dev Server via NPM",
-            "type": "node",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "npm",
-            "protocol": "inspector",
-            "timeout": 30000,
-            "stopOnEntry": true,
-            "trace": "all",
-            "console": "integratedTerminal",
-            "runtimeArgs": [
-                "run-script", "server-dev", "--nolazy", "--inspect-brk=3000"                       
-            ],
-            "args": [],
-            "env": {
-                "NODE_ENV": "development",
-            },
-            "skipFiles": [
-                "node_modules/**"
-            ],
-            "port": 3000
-        },
-        {
-            "name": "Build & Launch Dev Server via NPM",
-            "type": "node",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "runtimeExecutable": "npm",
-            "protocol": "inspector",
-            "stopOnEntry": true,
-            "console": "integratedTerminal",
-            "runtimeArgs": [
-                "run-script", "build-run-dev", "--nolazy", "--inspect-brk=3000"                       
-            ],
-            "args": [],
-            "env": {
-                "NODE_ENV": "production",
-            },
-            "skipFiles": [
-                "node_modules/**"
-            ],
-            "port": 3000
+            "name": "Launch  Program",
+            "program": "${workspaceFolder}/entry/server-dev.js"
         },
         {
             "name": "Attach to Picked Process",
@@ -94,12 +18,6 @@
             "skipFiles": [
                 "node_modules/**"
             ],
-        }
-    ],
-    "compounds": [
-        {
-            "name": "Chrome Client and Server",
-            "configurations": ["Chrome Debug", "Attach to Picked Process"]
         }
     ]
 }
