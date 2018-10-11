@@ -14,6 +14,8 @@ class DoMutation extends React.Component {
   componentDidMount() {
     const { mutate, variables } = this.props;
 
+    console.log("DoMutation didmount")
+
     mutate({variables});
   };
 
@@ -23,12 +25,14 @@ class DoMutation extends React.Component {
 };
 
 const MutationOnMount = ({ variables, mutation, onCompleted, children}) => {
-
+  console.log("MutationOnMount render")
   return (
     <Mutation mutation={mutation} onCompleted={onCompleted}>
       {(mutation, { data, loading, error }) => {
 
         const operationVariables = { data: data, loading: loading, error: error }
+
+        console.log("MutationOnMount operationVariables", operationVariables)
 
         return (
         <React.Fragment>
