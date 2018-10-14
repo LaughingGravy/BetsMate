@@ -13,9 +13,7 @@ const EnhancedGraphQLErrorDisplay = compose(
 class DoMutation extends React.Component {
   componentDidMount() {
     const { mutate, variables } = this.props;
-
-    console.log("DoMutation didmount")
-
+    console.log("DoMutation mutate, variables", mutate, variables)
     mutate({variables});
   };
 
@@ -37,7 +35,7 @@ const MutationOnMount = ({ variables, mutation, onCompleted, children}) => {
         return (
         <React.Fragment>
           <EnhancedGraphQLErrorDisplay error={error} />
-          <DoMutation mutate={mutation} variables={variables} />
+          {/* <DoMutation mutate={mutation} variables={variables} /> */}
           {React.Children.map(children, child => React.cloneElement(child, operationVariables))}
         </React.Fragment>
         )
