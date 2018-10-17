@@ -2,6 +2,7 @@ import React from 'react';
 import { Mutation } from 'react-apollo'
 import PropTypes from 'prop-types'
 import { compose } from 'recompose'
+import { history } from '../../../../library/routing'
 
 import { renderMessageForError } from './ConditionalRender'
 import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
@@ -11,10 +12,14 @@ const EnhancedGraphQLErrorDisplay = compose(
 )(GraphQLErrorDisplay)
 
 class DoMutation extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     const { mutate, variables } = this.props;
-    console.log("DoMutation mutate, variables", mutate, variables)
-    mutate({variables});
+
+    mutate({variables})
   };
 
   render() {
@@ -22,20 +27,17 @@ class DoMutation extends React.Component {
   };
 };
 
-const MutationOnMount = ({ variables, mutation, onCompleted, children}) => {
-  console.log("MutationOnMount render")
+const MutationOnMount = ({ variables, mutation, onCompleted, redirectSuccessUrl, children}) => {
   return (
     <Mutation mutation={mutation} onCompleted={onCompleted}>
-      {(mutation, { data, loading, error }) => {
+      {(mutation, { data, loading, error, called }) => {
 
-        const operationVariables = { data: data, loading: loading, error: error }
-
-        console.log("MutationOnMount operationVariables", operationVariables)
+        const operationVariables = { data: data, loading: loading, error: error, called: called }
 
         return (
         <React.Fragment>
           <EnhancedGraphQLErrorDisplay error={error} />
-          {/* <DoMutation mutate={mutation} variables={variables} /> */}
+          {!loading && !called && <DoMutation mutate={mutation} variables={variables} redirectSuccessUrl={redirectSuccessUrl} {...operationVariables}/>}
           {React.Children.map(children, child => React.cloneElement(child, operationVariables))}
         </React.Fragment>
         )

@@ -4,6 +4,7 @@ import intl from 'react-intl-universal'
 import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
 
 const VerifyEmailFailurePage = ({ message }) => {
+
   return (
     <Grid columns={1} centered>
     <Grid.Row centered>

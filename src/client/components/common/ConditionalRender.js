@@ -86,6 +86,12 @@ const hideIfNoData = (dataName)  =>
     renderNothing
 )
 
+const hideIfNoProp = (propName)  =>
+  branch(
+    props => !props.loading && !props[propName],
+    renderNothing
+)
+
 const NotFoundDisplay = props => (
   <Container textAlign="center">{intl.get("not-found")}</Container>
 )
@@ -136,4 +142,4 @@ const MutateErrorDisplay = props => (
 export { renderForAdminFailAccessError, renderIfAuthenticated, renderIfRole, renderOrIfAuthenticated, renderOrIfRole,
         renderForLoading, renderMessageForError, renderForError, renderForNotFound, renderForDataNotFound,
         LoadingDisplay, QueryErrorDisplay, MutateErrorDisplay, NotFoundDisplay, hideIfTestFails, renderOrIfPropArray,
-        errorCheck, VerifyingDisplay, hideIfNoData }
+        errorCheck, VerifyingDisplay, hideIfNoData, hideIfNoProp}

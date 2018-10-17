@@ -249,45 +249,48 @@ function verifyEmailAddress({email, emailVerificationString}) {
     userService.FindOne(email)
       .then((user) => {
         if (user) {
-        //if (user.emailVerificationExpiry > new Date().valueOf()) {
-          if (isFirstUTCDateAfterSecond(user.emailVerificationExpiry, getUTCDate())) {
-            argon2.verify(user.emailVerificationHash, emailVerificationString)
-              .then((verified) => {
-                console.log('verified from argon2')
-                if (verified) {
-                  user.emailVerificationExpiry = null;
-                  user.emailVerificationHash = null;
-                  user.verified = true;
-                  user.registerDate = getUTCDate();
-
-                  return userService.UpdateOne(user)
-                    .then(user => {
-                      resolve({verified: true, message: ""})
-                    })
-                    .catch((error) => {
-                      console.log('error verifying email address');
-                      console.log(error);
-                      reject(error);
-                    })   
-                } else {
-                  resolve({verified: false, message: 'verifiy-email-error'})
-                }
-              })
-              .catch((error) => {
-              console.log('error verifying email address');
-              console.log(error);
-              reject(error);
-              })
-          } else {
-            console.log("how did we get here?")
-            resolve({verified: false, message: 'expired-email-token-error'})
-            //return {verified: false, message: 'expired-email-token-error'}
-            //reject(new Error('expired-email-token-error'))
+          if (user.verified) {
+            resolve({verified: true, message: ''})
           }
-        }
+          //if (user.emailVerificationExpiry > new Date().valueOf()) {
+            if (isFirstUTCDateAfterSecond(user.emailVerificationExpiry, getUTCDate())) {
+              argon2.verify(user.emailVerificationHash, emailVerificationString)
+                .then((verified) => {
+                  console.log('verified from argon2')
+                  if (verified) {
+                    user.emailVerificationExpiry = null;
+                    user.emailVerificationHash = null;
+                    user.verified = true;
+                    user.registerDate = getUTCDate();
+
+                    return userService.UpdateOne(user)
+                      .then(user => {
+                        resolve({verified: true, message: ""})
+                      })
+                      .catch((error) => {
+                        console.log('error verifying email address');
+                        console.log(error);
+                        reject(error);
+                      })   
+                  } else {
+                    resolve({verified: false, message: 'verifiy-email-error'})
+                  }
+                })
+                .catch((error) => {
+                console.log('error verifying email address');
+                console.log(error);
+                reject(error);
+                })
+            } else {
+              console.log("how did we get here?")
+              resolve({verified: false, message: 'expired-email-token-error'})
+              //return {verified: false, message: 'expired-email-token-error'}
+              //reject(new Error('expired-email-token-error'))
+            }
+          }
         else {
           console.log("user not found")
-          resolve({verified: false, message: 'verifiy-email-error'});
+          resolve({verified: false, message: 'verify-email-error'});
         }
     })
     .catch((error) => {
