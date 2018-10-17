@@ -1,5 +1,5 @@
 import UUID from 'node-uuid'
-import moment from 'moment'
+import moment, { ISO_8601 } from 'moment'
 import { tz } from 'moment-timezone'
 
 import Config from '../../../utilities/Config'
@@ -33,8 +33,9 @@ const getFutureDate = (duration, key) => {
 }
 
 const convertUTCToTimeZone = (utcDate, timeZone) => {
-  let usersDate = moment(utcDate, "dddd MMMM YYYY h:mm:ss a").tz(timeZone);
-  return usersDate.format("dddd MMMM YYYY h:mm:ss a");
+  //let usersDate = moment(utcDate, "dddd MMMM YYYY h:mm:ss a").tz(timeZone);
+  //return usersDate.format("dddd MMMM YYYY h:mm:ss a");
+  return moment(utcDate).tz(timeZone).toDate();
 }
 
 const hasLinkExpired = (linkDate) => {

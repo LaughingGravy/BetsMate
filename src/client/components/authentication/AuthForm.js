@@ -5,6 +5,7 @@ import { Form } from 'semantic-ui-react'
 import '../styles/auth.css'
 
 import { validateLogin } from '../authentication/login/validate'
+import { getErrObjs } from '../validation/common'
 import ValidationInput from '../common/ValidationInput'
 
 class AuthForm  extends React.Component {
@@ -14,7 +15,7 @@ class AuthForm  extends React.Component {
     this.state = { 
       email: "",
       password: "",
-      pristine: {
+      pristineFields: {
         email: true,
         password: true
       }
@@ -23,7 +24,7 @@ class AuthForm  extends React.Component {
 
   handleBlur = (name) => (e) => {
     this.setState({
-      pristine: { ...this.state.pristine, [name]: false }
+      pristine: { ...this.state.pristineFields, [name]: false }
     })
   }
 
@@ -34,40 +35,29 @@ class AuthForm  extends React.Component {
   }
 
   render() {
-    const { email, password, pristine } = this.state
+    const { email, password, pristineFields } = this.state
     const errors = validateLogin(email, password)
-    //const isFormValid = !Object.keys(errors).some(x => errors[x])
-    const isFormValid = errors && errors.length > 0
-    
+    const emailErrObjs = getErrObjs(errors, "email")
+    const passwordErrObjs = getErrObjs(errors, "password")
+    const isFormValid = !Object.keys(errors).some(x => errors[x])
+
     return (
       <Form className='segment' onSubmit={e => {
                                                   e.preventDefault;
-                                                }}>    
-        {/* <Form.Field required>
-          <Form.Input name='email' label={intl.get("email-label")} placeholder='example@domain.com' 
-                      value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')}
-                      className={shouldMarkError(errors['email'], pristine['email']) ? "error" : ""} />
-        </Form.Field> */}
-
+                                                }}>   
         <Form.Field required>
           <ValidationInput name='email' label={intl.get("email-label")} placeholder='example@domain.com' 
                       value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')}
-                      errors={errors['email']} isPristine={pristine['email']} />
+                      errors={emailErrObjs} pristine={pristineFields['email'] ? 1 : 0}  />
         </Form.Field>
 
         <Form.Field required>
           <ValidationInput name='password' type='password' label={intl.get("password-label")} placeholder={intl.get("password-placeholder")}
                       value={password} onChange={this.handleChange} onBlur={this.handleBlur('password')}
-                      errors={errors['password']} isPristine={pristine['password']} />
+                      errors={passwordErrObjs} pristine={pristineFields['password'] ? 1 : 0} />
         </Form.Field>
-
-        {/* <Form.Field required>
-          <Form.Input name='password' type='password' label={intl.get("password-label")} placeholder={intl.get("password-placeholder")}
-                      value={password} onChange={this.handleChange} onBlur={this.handleBlur('password')}
-                      className={shouldMarkError(errors['password'], pristine['password']) ? "error" : ""} />
-        </Form.Field> */}
        
-        {this.props.render(...this.state, isFormValid)}
+        {this.props.render({ variables: this.state, isFormValid: isFormValid })}
       </Form>
     )
   }

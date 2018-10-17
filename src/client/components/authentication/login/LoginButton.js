@@ -8,35 +8,41 @@ import CURRENT_USER from '../../../graphql/queries/authentication/currentUser'
 
 import MutationButton from '../../common/MutationButton'
 
-const LoginButton = ({ variables, disabled }) => {
+class LoginButton extends React.Component {
+  constructor(props) {
+     super(props);
+  }
 
-  const label = "login-button-label"
-
-  const onCompleted = (data) => {
+  onCompleted = (data) => {
     if (history.length > 0)
       history.goBack()
     else
       history.push('/home');
   }
 
-  return (
-    <Mutation mutation={LOGIN} key={variables.email} 
-      
-      onCompleted={onCompleted}
+  render() {
+    const { variables, disabled } = this.props
+    const label = "login-button-label"
 
-      refetchQueries={[ {query: CURRENT_USER}]}>
-      {(login, { loading, error }) => (
-        <MutationButton variables={variables} disabled={disabled} mutation={login} 
-                        loading={loading} error={error} label={label} />
-    )}
-    </Mutation>
-  )
+    return (
+      <Mutation mutation={LOGIN} key={variables.email} 
+        
+        onCompleted={this.onCompleted}
+
+        refetchQueries={[ {query: CURRENT_USER}]}>
+        {(login, { loading, error }) => (
+          <MutationButton variables={variables} disabled={disabled} mutation={login} 
+                          loading={loading} error={error} label={label} />
+      )}
+      </Mutation>
+    )
+  }
 }
 
 LoginButton.propTypes = {
   variables: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
+    email: PropTypes.string,
+    password: PropTypes.string,
   }).isRequired,
   disabled: PropTypes.bool.isRequired
 }
