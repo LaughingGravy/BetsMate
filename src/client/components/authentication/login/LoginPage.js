@@ -17,7 +17,7 @@ const LoginPage = () => {
         <GridColumn mobile={14} tablet={8} computer={6}>
           <Container textAlign='center'>
             <AuthForm render={props => (
-              <LoginButton variables={{ email: props.email, password: props.password }} disabled={!props.isFormValid} /> 
+              <LoginButton variables={props.variables} disabled={!props.isFormValid} /> 
               )}/>
             <LoginPageButtonGroup />
           </Container>  

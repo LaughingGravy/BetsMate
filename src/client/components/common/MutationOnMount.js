@@ -30,14 +30,14 @@ class DoMutation extends React.Component {
 const MutationOnMount = ({ variables, mutation, onCompleted, redirectSuccessUrl, children}) => {
   return (
     <Mutation mutation={mutation} onCompleted={onCompleted}>
-      {(mutation, { data, loading, error, called }) => {
+      {(mutation, { data, loading, error }) => {
 
-        const operationVariables = { data: data, loading: loading, error: error, called: called }
+        const operationVariables = { data: data, loading: loading, error: error}
 
         return (
         <React.Fragment>
           <EnhancedGraphQLErrorDisplay error={error} />
-          {!loading && !called && <DoMutation mutate={mutation} variables={variables} redirectSuccessUrl={redirectSuccessUrl} {...operationVariables}/>}
+          {<DoMutation mutate={mutation} variables={variables} redirectSuccessUrl={redirectSuccessUrl} {...operationVariables}/>}
           {React.Children.map(children, child => React.cloneElement(child, operationVariables))}
         </React.Fragment>
         )

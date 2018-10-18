@@ -24,15 +24,11 @@ class AuthForm  extends React.Component {
 
   handleBlur = (name) => (e) => {
     this.setState({
-      pristine: { ...this.state.pristineFields, [name]: false }
+      pristineFields: { ...this.state.pristineFields, [name]: false }
     })
   }
 
-  handleChange = (e, { name, value }) => {
-    this.setState({ 
-      [name]: value
-    })
-  }
+  handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
     const { email, password, pristineFields } = this.state
@@ -57,7 +53,7 @@ class AuthForm  extends React.Component {
                       errors={passwordErrObjs} pristine={pristineFields['password'] ? 1 : 0} />
         </Form.Field>
        
-        {this.props.render({ variables: this.state, isFormValid: isFormValid })}
+        {this.props.render({ variables: { email, password }, isFormValid: isFormValid })}
       </Form>
     )
   }

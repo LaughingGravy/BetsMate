@@ -15,6 +15,7 @@ import { createTransporter } from '../../../utilities/mailer'
 passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, done) => {
   return userService.FindOne({email: username}, (error, user) => {
     if (error) {
+      console.log(error)
       return done(error);
     }
     if (!user) {
@@ -23,6 +24,7 @@ passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, d
       });                         
     }                            
     if (user) {
+      console.log("passport.use user", user)
       return validateUserPassword(user.passwordHash, password)
         .then((validated) => {
           if (validated) {
@@ -65,13 +67,6 @@ let authService = {
         return error;
       })
   },
-
-  // VerifyEmailAddress: (email, emailVerificationString) => {
-  //   return verifyEmailAddress(email, emailVerificationString)
-  //     .then((verified) => {
-  //       return verified;
-  //     })
-  // },
 
   VerifyEmailAddress: (email, emailVerificationString) => {
     return verifyEmailAddress(email, emailVerificationString)
@@ -300,6 +295,7 @@ function verifyEmailAddress({email, emailVerificationString}) {
 };
 
 function login({ email, password, req }) {
+  let token = ""
   let promise = new Promise((resolve, reject) => {
     passport.authenticate('local', (user, error, info) => {
       if (error) {
@@ -314,13 +310,14 @@ function login({ email, password, req }) {
       }
       if (user) {
         if (user.verified === true) {
-          let token = generateJwt(user);
-          req.login(user, () => resolve({user: user, token: token}))
+          token = generateJwt(user);
+         // req.login(user, () => resolve({user: user, token: token}))
+          req.login(user, () => resolve({user: user}))
         } else {
           reject(new Error("email-not-verified-error"))
         }
       }
-    })({ body: { email, password } })
+    })({ body: { email, password, token } })
   });
   return promise;
 };

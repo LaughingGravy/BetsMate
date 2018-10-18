@@ -51,7 +51,8 @@ export default new GraphQLObjectType({
             },
             resolve(parentValue, { email, password }, ctx) {
                 const req = ctx.req;
-                return AuthenticationService.Login({ email, password, req });
+                console.log("login mutation req, email, password ", req, email, password )
+               return AuthenticationService.Login({ email, password, req });
             }
         },
         logout: {
@@ -59,6 +60,7 @@ export default new GraphQLObjectType({
             resolve(parentValue, args, ctx) {
                 const req = ctx.req;
                 const { user } = req;
+                console.log("user req", user, req)
                 req.logout();
                 return user;
             }

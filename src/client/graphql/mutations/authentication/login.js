@@ -4,14 +4,11 @@ export default gql`
 mutation Login($email: String, $password: String)
 {
   login (email: $email, password: $password) {
-    user {
       displayName
       email
       role
-      regDate
+      registerDate
       lastAccessDate
-    },
-    token
   }
 }
 `
