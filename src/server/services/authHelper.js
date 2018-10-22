@@ -5,10 +5,6 @@ import { tz } from 'moment-timezone'
 import Config from '../../../utilities/Config'
 import { getServerURL } from '../../../utilities/env'
 
-const getToken = () => {
-  return UUID.v4()
-}
-
 const isFirstUTCDateAfterSecond = (date1, date2) => {
   const utcDate1 = moment(date1).utc()
   const utcDate2 = moment(date2).utc()

@@ -1,5 +1,6 @@
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+import UUID from 'node-uuid'
 //const config = require('../config/config');
 const crypto = require('crypto');
 const LocalStrategy = require('passport-local').Strategy;
@@ -12,37 +13,95 @@ import Config from '../../../utilities/Config'
 import { getRegisterMailOptions, getResetPasswordMailOptions, getUTCFutureDate, getUTCDate, isFirstUTCDateAfterSecond, convertToUTCDate } from './authHelper'
 import { createTransporter } from '../../../utilities/mailer'
 
-passport.use(new LocalStrategy ({usernameField: 'email'}, (username, password, done) => {
-  return userService.FindOne({email: username}, (error, user) => {
-    if (error) {
-      console.log(error)
-      return done(error);
-    }
-    if (!user) {
-      return done(null, false, {
-        message: "credentials-error" // Don't tell the user that an email/username does / doesn't exist.
-      });                         
-    }                            
-    if (user) {
-      console.log("passport.use user", user)
-      return validateUserPassword(user.passwordHash, password)
-        .then((validated) => {
-          if (validated) {
-            return done(user);
-          } else {
-            return done(null, false, {
-              message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
-            })                            
-          }
+// an identifying token to be saved in the user session
+passport.serializeUser((user, done) => {
+  console.log("serializeUser user", user)
+  done(null, generateJwt(user))
+});
+
+// given a session token we verify it and decode it to the idr
+// finally we return the user object found using the decoded token
+// This object is placed on req.user
+passport.deserializeUser((id, done) => {
+  console.log("deserializeUser id", id)
+  if (id) {
+    jwt.verify(id, Config.secret, (error, decodedId) => {
+      if (error) {
+        done(error)
+      }
+      else {
+        userService.FindById(decodedId)
+        .then(user => {
+          done(null, user)
         })
-        .catch((error) => {
-          console.log("error");
-          console.log(error)
-          return done(error)
-        });
-    }
-  });
+        .catch(err => {
+          done(err);
+        })
+      }
+    })
+  }
+});
+
+passport.use(new LocalStrategy ({usernameField: 'email'}, (email, password, done) => {
+  console.log("passport.use")
+  //userService.FindOne(email, (error, user) => {
+  userService.FindOne(email)
+    .then(user => {
+    console.log("passport.use user", user)
+      if (!user) return done(null, false, 'boo1')
+
+      return done(null, false, 'boo2')
+    })
+    .catch(error => {
+      return done(error)
+    })
 }));
+      // validateUserPassword(user.passwordHash, password) => {
+      //   .then((validated) => {
+      //     if (validated) {
+      //       return done(user);
+      //       } 
+      //     else {
+      //         return done(null, false, {
+      //           //message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
+      //           message: "boo2"
+      //         })                            
+      //     }          
+      //   })
+      // }
+
+    //console.log("FindOne error, user", error, user)
+    // if (error) {
+    //   console.log(error)
+    //   return done(error);
+    // }
+    // if (!user) {
+    //   return done(null, false, {
+    //     //message: "credentials-error" // Don't tell the user that an email/username does / doesn't exist.
+    //     message: "boo"
+    //   });                         
+    // }                            
+    // if (user) {
+    //   console.log("passport.use user", user)
+    //   return validateUserPassword(user.passwordHash, password)
+    //     .then((validated) => {
+    //       if (validated) {
+    //         return done(user);
+    //       } else {
+    //         return done(null, false, {
+    //           //message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
+    //           message: "boo2"
+    //         })                            
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       console.log("error");
+    //       console.log(error)
+    //       return done(error)
+    //     });
+    // }
+  //});
+//}));
 
 let authService = {
   Register: ({ email, displayName, password, role }, timeZone) => {
@@ -163,7 +222,6 @@ let authService = {
       })
   },
 
-
   GetNewUser: () => {
     return getNewUser()
   }
@@ -189,8 +247,7 @@ function validateUserPassword(hash, password) {
 
 function generateJwt(user) {
   return jwt.sign({
-   // _id: user._id,
-    email: user.email,
+    id: user.id,
     exp: new Date().valueOf() + (1000 * 60 * 60 * 6) // 6 hours
   }, Config.secret);
 }
@@ -295,32 +352,50 @@ function verifyEmailAddress({email, emailVerificationString}) {
 };
 
 function login({ email, password, req }) {
-  let token = ""
-  let promise = new Promise((resolve, reject) => {
-    passport.authenticate('local', (user, error, info) => {
-      if (error) {
-        console.log('error authenticating user');
-        console.log(error);
-        reject(error)
+  return new Promise((resolve, reject) => {
+
+    passport.authenticate('local', (error, user) => {
+      if (!user) {
+        reject("boohoo")
       }
-      if (info) {
-        console.log('info from authenticate user');
-        console.log(info)
-        reject(info)
-      }
-      if (user) {
-        if (user.verified === true) {
-          token = generateJwt(user);
-         // req.login(user, () => resolve({user: user, token: token}))
-          req.login(user, () => resolve({user: user}))
-        } else {
-          reject(new Error("email-not-verified-error"))
-        }
-      }
-    })({ body: { email, password, token } })
-  });
-  return promise;
-};
+
+      req.login(user, () => resolve(user))
+    })({ body: { email, password}})
+  
+  })
+}
+
+
+//function login({ email, password, req }) {
+  //let promise = new Promise((resolve, reject) => {
+    //passport.authenticate('local', (user, error, info) => {
+  //return new Promise((resolve, reject) => {
+    //passport.authenticate('local', (error, user, info) => {
+      //passport.authenticate('local', (error, user) => {
+      //console.log("passport.authenticate user, error, info", user, error, info)
+      // console.log("passport.authenticate user, error", user, error)
+      // if (error) {
+      //   console.log('error authenticating user');
+      //   console.log(error);
+      //   reject(error)
+      // }
+      // if (info) {
+      //   console.log('info from authenticate user');
+      //   console.log(info)
+      //   reject(info)
+      // }
+  //     if (user) {
+  //       if (user.verified === true) {
+  //        // req.login(user, () => resolve({user: user, token: token}))
+  //         req.login(user, () => resolve({user: user}))
+  //       } else {
+  //         reject(new Error("email-not-verified-error"))
+  //       }
+  //     }
+  //   })({ body: { email, password } });
+  // });
+  //return promise;
+//};
 
 function getUser(email) {
   //return User.findOne({email: email})
@@ -449,6 +524,7 @@ function resetPassword(email, password) {
 
 function getNewUser() {
   return {
+    id: UUID.v4(),
     email: "",
     passwordHash: "",
     displayName: "Guest",

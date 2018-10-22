@@ -51,7 +51,7 @@ export default new GraphQLObjectType({
             },
             resolve(parentValue, { email, password }, ctx) {
                 const req = ctx.req;
-                console.log("login mutation req, email, password ", req, email, password )
+                console.log("login mutation email, password ", email, password )
                return AuthenticationService.Login({ email, password, req });
             }
         },

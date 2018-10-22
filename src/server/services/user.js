@@ -2,12 +2,31 @@ import { createSession } from "../database/neo4jDB"
 
 let userService = {
   FindOne: (email) => {
-
-    console.log("email", email)
     let session = createSession()
     return session
       .run(
         `MATCH (user:User { email: "${email}" }) 
+        RETURN user
+        LIMIT 1`
+      )
+      .then(result => {
+        session.close()    
+        if (result.records.length === 1) {
+          const record = result.records.shift()
+          return record.get('user').properties
+        }
+      })
+      .catch(error => {
+        session.close()
+        throw error
+      })
+  },
+
+  FindById: (id) => {
+    let session = createSession()
+    return session
+      .run(
+        `MATCH (user:User { id: "${id}" }) 
         RETURN user
         LIMIT 1`
       )
