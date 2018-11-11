@@ -44,7 +44,8 @@
     "reg-link-success-header": "Verify Email Sent",
     "reg-link-msg-content": "An email has been sent to the address provided.<br />Please click on the link to verify the email address and complete registration.<br />Please note the link will expire in one hour.",
 
-
+    "credentials-error": "Email/password not recognised.",
+    "role-error": "You do not have permissions to perform that task.",
 
 
 
@@ -119,7 +120,6 @@
     "duplicate-username-error": "Username is already registered.<br />Please try another.",
     "missing-credentials-error": "You must provide an email and password.",
     "missing-reg-details-error": "You must provide a username and password.",
-    "credentials-error": "Email/password not recognised.",
     "reset-token-not-found-error": "Password reset link token not found.",
     
     "reg-token-not-found-error": "Activation link token not found.",

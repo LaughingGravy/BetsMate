@@ -1,7 +1,8 @@
 
 import Config from "../../../utilities/Config"
 
-let neo4j = require('neo4j-driver').v1;
+const neo4j = require('neo4j-driver').v1;
+
 const driver = neo4j.driver(Config.bolt, neo4j.auth.basic(Config.neoUsername, Config.neoPassword));
 
 // Create a session to run Cypher statements in.

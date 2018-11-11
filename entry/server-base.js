@@ -9,7 +9,7 @@ import Helmet from 'react-helmet';
 
 import passport from 'passport'
 import session from 'express-session'
-const MongoStore = require('connect-mongo')(session)
+//const MongoStore = require('connect-mongo')(session)
 
 // HTTP & SSL servers.  We can use `config.enableSSL|disableHTTP()` to enable
 // HTTPS and disable plain HTTP respectively, so we'll use Node's core libs
@@ -40,7 +40,7 @@ import models from '../src/server/database/models'
 import schema from '../src/server/graphql/schema'
 import passportConfig from '../src/server/services/auth'
 
-import { connectMongoDB } from '../src/server/database/mongoDB'
+//import { connectMongoDB } from '../src/server/database/mongoDB'
 
 import path from 'path';
 import Config from '../utilities/Config'
@@ -52,7 +52,7 @@ const app = express()
 const router = express.Router()
 
 // Connect to the mongo database
-connectMongoDB(Config.mongoURL, Config.apolloClientOpt);
+//connectMongoDB(Config.mongoURL, Config.apolloClientOpt);
 
 // enable cors
 var corsOptions = {
@@ -71,21 +71,21 @@ app.use(bodyParser.json());
 // the cookie and modifies the request object to indicate which user made the request
 // The cookie itself only contains the id of a session; more data about the session
 // is stored inside of MongoDB.
-app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: Config.secret,
-  store: new MongoStore({
-      url: Config.mongoURL,
-      autoReconnect: true
-      })
-}));
+// app.use(session({
+//   resave: true,
+//   saveUninitialized: true,
+//   secret: Config.secret,
+//   store: new MongoStore({
+//       url: Config.mongoURL,
+//       autoReconnect: true
+//       })
+// }));
 
 // Passport is wired into express as a middleware. When a request comes in,
 // Passport will examine the request's session (as set by the above config) and
-// assign the current user to the 'req.user' object.  See also servces/auth.js
+// assign the current user to the 'req.user' object.  See also servces/auth.js 
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 //check that server is up
 router.get('/ping',(req, res) => {

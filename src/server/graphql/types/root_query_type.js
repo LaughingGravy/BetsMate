@@ -20,10 +20,16 @@ export default new GraphQLObjectType({
                 return req.user;
             }
         },
+        // countries: {
+        //     type: new GraphQLList(CountryType),
+        //     resolve(parentValue, args) {
+        //         return AdminService.allCountries()
+        //     }
+        // },
         countries: {
             type: new GraphQLList(CountryType),
-            resolve(parentValue, args) {
-                return AdminService.allCountries()
+            resolve(parentValue, args, ctx) {
+                return checkAuthAndResolve(ctx, AdminService.allCountries());
             }
         },
         countryByCode: {

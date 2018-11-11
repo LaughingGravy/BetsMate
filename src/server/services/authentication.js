@@ -10,39 +10,40 @@ const qrCode = require('qrcode');
 
 import userService from './user'
 import Config from '../../../utilities/Config'
+import AuthorizationError from '../graphql/customErrors/AuthorizationError'
 import { getRegisterMailOptions, getResetPasswordMailOptions, getUTCFutureDate, getUTCDate, isFirstUTCDateAfterSecond, convertToUTCDate } from './authHelper'
 import { createTransporter } from '../../../utilities/mailer'
 
-// an identifying token to be saved in the user session
-passport.serializeUser((user, done) => {
-  console.log("serializeUser user", user)
-  done(null, generateJwt(user))
-});
+// SerializeUser is used to provide some identifying token that can be saved
+// in the users session.  We traditionally use the 'ID' for this.
+// passport.serializeUser((user, done) => {
+//   done(null, user.id);
+// });
 
 // given a session token we verify it and decode it to the idr
 // finally we return the user object found using the decoded token
 // This object is placed on req.user
-passport.deserializeUser((id, done) => {
-  console.log("deserializeUser id", id)
-  if (id) {
-    jwt.verify(id, Config.secret, (error, decodedId) => {
-      if (error) {
-        done(error)
-      }
-      else {
-        userService.FindById(decodedId)
-        .then(user => {
-          done(null, user)
-        })
-        .catch(err => {
-          done(err);
-        })
-      }
-    })
-  }
-});
+// passport.deserializeUser((id, done) => {
+//   console.log("deserializeUser id", id)
+//   if (id) {
+//     jwt.verify(id, Config.secret, (error, decodedId) => {
+//       if (error) {
+//         done(error)
+//       }
+//       else {
+//         userService.FindById(decodedId)
+//         .then(user => {
+//           done(null, user)
+//         })
+//         .catch(err => {
+//           done(err);
+//         })
+//       }
+//     })
+//   }
+// });
 
-passport.use(new LocalStrategy ({usernameField: 'email'}, (email, password, done) => {
+passport.use(new LocalStrategy ({usernameField: 'email', session: false}, (email, password, done) => {
   console.log("passport.use")
   //userService.FindOne(email, (error, user) => {
   userService.FindOne(email)
@@ -56,6 +57,8 @@ passport.use(new LocalStrategy ({usernameField: 'email'}, (email, password, done
       return done(error)
     })
 }));
+
+
       // validateUserPassword(user.passwordHash, password) => {
       //   .then((validated) => {
       //     if (validated) {
@@ -248,6 +251,7 @@ function validateUserPassword(hash, password) {
 function generateJwt(user) {
   return jwt.sign({
     id: user.id,
+    role: user.role,
     exp: new Date().valueOf() + (1000 * 60 * 60 * 6) // 6 hours
   }, Config.secret);
 }
@@ -353,16 +357,42 @@ function verifyEmailAddress({email, emailVerificationString}) {
 
 function login({ email, password, req }) {
   return new Promise((resolve, reject) => {
+    console.log('login');
 
+    try {
+    
     passport.authenticate('local', (error, user) => {
-      if (!user) {
-        reject("boohoo")
+      if (error) {
+        console.log('error authenticating user');
+        console.log(error);
+        reject(error)
       }
 
-      req.login(user, () => resolve(user))
-    })({ body: { email, password}})
+      // if (info) {
+      //   console.log('info from authenticate user');
+      //   console.log(info)
+      //   reject(info)
+      // }
+
+      if (!user) {
+        reject(new AuthorizationError())
+      }
+
+      req.login(user, () => {
+        console.log('logged in');
+        req.headers.authorization = generateJwt(user)
+        //req.res.cookie('betsmateJwt', generateJwt(user))
+        resolve(user)
+      })
+    })({ body: { email, password}});
+
+    }
+    catch(e) {
+      console.log(e)
+      throw e
+    }
   
-  })
+  });
 }
 
 
