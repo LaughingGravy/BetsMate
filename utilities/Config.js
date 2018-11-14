@@ -47,9 +47,11 @@ if (process.env.NODE_ENV === 'development')
                 keepAlive: true
             },
 
-            this.bolt = "bolt://hobby-iiiklpkknlfngbkemhilohbl.dbs.graphenedb.com:24786"
+            //this.bolt = "bolt://hobby-iiiklpkknlfngbkemhilohbl.dbs.graphenedb.com:24786"
+            this.bolt = "bolt://hobby-fcojdebjmjfegbkefcekbebl.dbs.graphenedb.com:24786"
             this.neoUsername = "admin",
-            this.neoPassword = "b.CFFFu5eTaFox.68rQ5gRejhGzu9ZQ"
+            //this.neoPassword = "b.CFFFu5eTaFox.68rQ5gRejhGzu9ZQ"
+            this.neoPassword = "b.0K6Hf98kwdvO.hSbNF1MYYBz9X0nt"
         }
     }
 }

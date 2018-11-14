@@ -12,6 +12,21 @@ const isFirstUTCDateAfterSecond = (date1, date2) => {
   return utcDate1.isAfter(utcDate2)
 }
 
+const convertStringToDate = (date) => {
+  try {
+
+    const retDate = moment(date)
+
+    if (retDate.isValid())
+      return retDate.toDate()
+    else
+      return null
+  }
+  catch(e) {
+    return null;
+  }
+}
+
 const getUTCDate = () => {
   return moment().utc().toDate()
 }
@@ -99,5 +114,5 @@ const getResetPasswordMailOptions = ({ email, passwordResetExpiry }, timeZone) =
           }
 }
 
-export { getToken, getUTCDate, getFutureDate, getUTCFutureDate, convertToUTCDate, isFirstUTCDateAfterSecond, hasLinkExpired, convertUTCToTimeZone, 
+export { getToken, getUTCDate, getFutureDate, getUTCFutureDate, convertToUTCDate, isFirstUTCDateAfterSecond, hasLinkExpired, convertUTCToTimeZone, convertStringToDate,
           getResetMailOptions, getRegisterMailOptions, getResetPasswordMailOptions }

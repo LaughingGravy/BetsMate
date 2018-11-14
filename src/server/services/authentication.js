@@ -11,7 +11,7 @@ const qrCode = require('qrcode');
 import userService from './user'
 import Config from '../../../utilities/Config'
 import AuthorizationError from '../graphql/customErrors/AuthorizationError'
-import { getRegisterMailOptions, getResetPasswordMailOptions, getUTCFutureDate, getUTCDate, isFirstUTCDateAfterSecond, convertToUTCDate } from './authHelper'
+import { getRegisterMailOptions, getResetPasswordMailOptions, getUTCFutureDate, getUTCDate, isFirstUTCDateAfterSecond, convertStringToDate } from './authHelper'
 import { createTransporter } from '../../../utilities/mailer'
 
 // SerializeUser is used to provide some identifying token that can be saved
@@ -43,20 +43,54 @@ import { createTransporter } from '../../../utilities/mailer'
 //   }
 // });
 
-passport.use(new LocalStrategy ({usernameField: 'email', session: false}, (email, password, done) => {
-  console.log("passport.use")
-  //userService.FindOne(email, (error, user) => {
-  userService.FindOne(email)
-    .then(user => {
-    console.log("passport.use user", user)
-      if (!user) return done(null, false, 'boo1')
 
-      return done(null, false, 'boo2')
-    })
-    .catch(error => {
-      return done(error)
-    })
+passport.use(new LocalStrategy ({ usernameField: 'email' }, (email, password, done) => {
+  
+  console.log("passport.use")
+  done(null)
+  //userService.FindOne(email, (error, user) => {
+  // return userService.FindOne(email)
+  //   .then(user => {
+  //      validateUserPassword(user.passwordHash, password)
+  //       .then((validated) => {
+  //         if (validated) {
+  //           return done(user);
+  //           } 
+  //         else {
+  //             return done(null, false, {
+  //               //message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
+  //               message: "boo2"
+  //             })                            
+  //         }          
+  //       })
+  //     })
+
+  //   })
 }));
+
+//passport.use(new BasicStrategy ({ usernameField: 'email' }, (email, password, done) => {
+  
+  //console.log("passport.use")
+  //done(null)
+  //userService.FindOne(email, (error, user) => {
+  // return userService.FindOne(email)
+  //   .then(user => {
+  //      validateUserPassword(user.passwordHash, password)
+  //       .then((validated) => {
+  //         if (validated) {
+  //           return done(user);
+  //           } 
+  //         else {
+  //             return done(null, false, {
+  //               //message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
+  //               message: "boo2"
+  //             })                            
+  //         }          
+  //       })
+  //     })
+
+  //   })
+//}));
 
 
       // validateUserPassword(user.passwordHash, password) => {
@@ -105,6 +139,33 @@ passport.use(new LocalStrategy ({usernameField: 'email', session: false}, (email
     // }
   //});
 //}));
+
+async function authenticate(email, password) {
+  try {
+    const user = await userService.FindOne(email);
+
+    if (!user) {
+      return null;
+    }
+
+    if (await validateUserPassword(user.passwordHash, password)) {
+
+      // dates stored as a string in neo4j
+      user.registerDate = convertStringToDate(user.registerDate)
+      user.lastAccessDate = convertStringToDate(user.lastAccessDate)
+
+      return user;
+    }
+    else {
+      throw AuthorizationError;
+    }
+  }
+  catch(e) {
+    console.log("authetication error ", e)
+    throw e;
+  }
+}
+
 
 let authService = {
   Register: ({ email, displayName, password, role }, timeZone) => {
@@ -232,20 +293,30 @@ let authService = {
 
 export default authService
 
-function validateUserPassword(hash, password) {
-  return argon2.verify(hash, password)
-    .then((verified) => {
-      if (verified) {
-        return verified
-      } else {
-        return false;
-      }
-    })
-    .catch((error) => {
-      console.log('error')
-      console.log(error)
-      return error;
-    })
+// function validateUserPassword(hash, password) {
+//   return argon2.verify(hash, password)
+//     .then((verified) => {
+//       if (verified) {
+//         return verified
+//       } else {
+//         return false;
+//       }
+//     })
+//     .catch((error) => {
+//       console.log('error')
+//       console.log(error)
+//       return error;
+//     })
+// };
+
+async function validateUserPassword(hash, password) {
+  try {
+    return await argon2.verify(hash, password)
+  }
+  catch(e) {
+      console.log('error', e)
+      throw e;
+  }
 };
 
 function generateJwt(user) {
@@ -360,13 +431,46 @@ function login({ email, password, req }) {
     console.log('login');
 
     try {
+
+      console.log('in login try');
+
+      // passport.authenticate('basic', { session: false }, (err, user) => {
+      //   if (!user) { reject("credentials-error") }
+  
+      //   req.login(user, () => resolve(user));
+      // })({ body: { email, password } });
+
+      let method = (async () => {
+        const user = await authenticate(email, password);
+        console.log("user", user)
+
+        if (user) {
+          console.log("passes authenticate", user)
+          resolve(user)
+        }
+  
+        if (!user) {
+          console.log("fails authenticate")
+
+          reject(AuthorizationError)
+        }
+  
+      })
+
+      method.apply();
+
+      
+      
     
-    passport.authenticate('local', (error, user) => {
-      if (error) {
-        console.log('error authenticating user');
-        console.log(error);
-        reject(error)
-      }
+      //passport.authenticate('local', (err, user) => {
+
+      // resolve("boo")
+      // console.log('passport.authenticate returned');
+      // if (err) {
+      //   console.log('error authenticating user');
+      //   console.log(err);
+      //   reject(err)
+      // }
 
       // if (info) {
       //   console.log('info from authenticate user');
@@ -374,17 +478,17 @@ function login({ email, password, req }) {
       //   reject(info)
       // }
 
-      if (!user) {
-        reject(new AuthorizationError())
-      }
+      // if (!user) {
+      //   reject(AuthorizationError)
+      // }
 
-      req.login(user, () => {
-        console.log('logged in');
-        req.headers.authorization = generateJwt(user)
-        //req.res.cookie('betsmateJwt', generateJwt(user))
-        resolve(user)
-      })
-    })({ body: { email, password}});
+      // req.login(user, () => {
+      //   console.log('logged in');
+      //   req.headers.authorization = generateJwt(user)
+      //   //req.res.cookie('betsmateJwt', generateJwt(user))
+      //   resolve(user)
+      // })
+    //})({ body: { email, password}});
 
     }
     catch(e) {

@@ -14,9 +14,9 @@ class LoginButton extends React.Component {
   }
 
   onCompleted = (data) => {
-    if (history.length > 0)
-      history.goBack()
-    else
+    // if (history.length > 0)
+    //   history.goBack()
+    // else
       history.push('/home');
   }
 
