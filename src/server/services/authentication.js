@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 import UUID from 'node-uuid'
 //const config = require('../config/config');
 const crypto = require('crypto');
-const LocalStrategy = require('passport-local').Strategy;
+//const LocalStrategy = require('passport-local').Strategy;
 const argon2 = require('argon2');
 const speakeasy = require('speakeasy');
 const qrCode = require('qrcode');
@@ -14,9 +14,10 @@ import AuthorizationError from '../graphql/customErrors/AuthorizationError'
 import { getRegisterMailOptions, getResetPasswordMailOptions, getUTCFutureDate, getUTCDate, isFirstUTCDateAfterSecond, convertStringToDate } from './authHelper'
 import { createTransporter } from '../../../utilities/mailer'
 
-// SerializeUser is used to provide some identifying token that can be saved
-// in the users session.  We traditionally use the 'ID' for this.
+//SerializeUser is used to provide some identifying token that can be saved
+//in the users session.  We traditionally use the 'ID' for this.
 // passport.serializeUser((user, done) => {
+//   console.log("serializeUser")
 //   done(null, user.id);
 // });
 
@@ -44,68 +45,56 @@ import { createTransporter } from '../../../utilities/mailer'
 // });
 
 
-passport.use(new LocalStrategy ({ usernameField: 'email' }, (email, password, done) => {
+// passport.use(new LocalStrategy ({ usernameField: 'email' }, (email, password, done) => {
   
-  console.log("passport.use")
-  done(null)
-  //userService.FindOne(email, (error, user) => {
-  // return userService.FindOne(email)
-  //   .then(user => {
-  //      validateUserPassword(user.passwordHash, password)
-  //       .then((validated) => {
-  //         if (validated) {
-  //           return done(user);
-  //           } 
-  //         else {
-  //             return done(null, false, {
-  //               //message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
-  //               message: "boo2"
-  //             })                            
-  //         }          
-  //       })
-  //     })
+//   console.log("passport.use")
+//   done(null)
+//   //userService.FindOne(email, (error, user) => {
+//   // return userService.FindOne(email)
+//   //   .then(user => {
+//   //      validateUserPassword(user.passwordHash, password)
+//   //       .then((validated) => {
+//   //         if (validated) {
+//   //           return done(user);
+//   //           } 
+//   //         else {
+//   //             return done(null, false, {
+//   //               //message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
+//   //               message: "boo2"
+//   //             })                            
+//   //         }          
+//   //       })
+//   //     })
 
-  //   })
-}));
+//   //   })
+// }));
 
-//passport.use(new BasicStrategy ({ usernameField: 'email' }, (email, password, done) => {
+// passport.use(new BasicStrategy ({ usernameField: 'email' }, (email, password, done) => {
   
-  //console.log("passport.use")
-  //done(null)
-  //userService.FindOne(email, (error, user) => {
-  // return userService.FindOne(email)
-  //   .then(user => {
-  //      validateUserPassword(user.passwordHash, password)
-  //       .then((validated) => {
-  //         if (validated) {
-  //           return done(user);
-  //           } 
-  //         else {
-  //             return done(null, false, {
-  //               //message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
-  //               message: "boo2"
-  //             })                            
-  //         }          
-  //       })
-  //     })
+//   console.log("passport.use")
+//   done(null)
+//   userService.FindOne(email, (error, user) => {
+//   return userService.FindOne(email)
+//     .then(user => {
+//        validateUserPassword(user.passwordHash, password)
+//         .then((validated) => {
+//           if (validated) {
+//             return done(user);
+//             } 
+//           else {
+//               return done(null, false, {
+//                 //message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
+//                 message: "boo2"
+//               })                            
+//           }          
+//         })
+//       })
 
-  //   })
-//}));
+//     })
+// }));
 
 
-      // validateUserPassword(user.passwordHash, password) => {
-      //   .then((validated) => {
-      //     if (validated) {
-      //       return done(user);
-      //       } 
-      //     else {
-      //         return done(null, false, {
-      //           //message: "credentials-error" // Do not give password not found error. Give them the exact same message as for user not found, eg. 'Invalid login credentials'. 
-      //           message: "boo2"
-      //         })                            
-      //     }          
-      //   })
-      // }
+
 
     //console.log("FindOne error, user", error, user)
     // if (error) {
@@ -140,31 +129,53 @@ passport.use(new LocalStrategy ({ usernameField: 'email' }, (email, password, do
   //});
 //}));
 
-async function authenticate(email, password) {
-  try {
-    const user = await userService.FindOne(email);
+// function authenticate(email, password) {
+//   try {
+//     const user = await userService.FindOne(email);
 
-    if (!user) {
-      return null;
-    }
+//     if (!user) {
+//       return null;
+//     }
 
-    if (await validateUserPassword(user.passwordHash, password)) {
+//     if (validateUserPassword(user.passwordHash, password)) {
 
-      // dates stored as a string in neo4j
-      user.registerDate = convertStringToDate(user.registerDate)
-      user.lastAccessDate = convertStringToDate(user.lastAccessDate)
+//       // dates stored as a string in neo4j
+//       user.registerDate = convertStringToDate(user.registerDate)
+//       user.lastAccessDate = convertStringToDate(user.lastAccessDate)
 
-      return user;
-    }
-    else {
-      throw AuthorizationError;
-    }
-  }
-  catch(e) {
-    console.log("authetication error ", e)
-    throw e;
-  }
-}
+//       return user;
+//     }
+//     else {
+//       console.log("validateUserPassword failed ")
+//       throw AuthorizationError;
+//     }
+//   }
+//   catch(e) {
+//     console.log("authetication error ", e)
+//     throw e;
+//   }
+// }
+
+// passport.use(new LocalStrategy ({ usernameField: 'email', session: false}, (username, password, done) => {
+//   let method = (async () => {
+//     try {
+//       console.log("hip hip")
+//       const user = await authenticate(email, password);
+//     }
+//     catch(err) {
+//       done(err);
+//     }
+
+//     if (user) {
+//       console.log("passes authenticate")
+//       done(user);
+//     }
+
+//     done(null, false);
+//   })
+
+//   method.apply();
+// }));
 
 
 let authService = {
@@ -293,38 +304,26 @@ let authService = {
 
 export default authService
 
-// function validateUserPassword(hash, password) {
-//   return argon2.verify(hash, password)
-//     .then((verified) => {
-//       if (verified) {
-//         return verified
-//       } else {
-//         return false;
-//       }
-//     })
-//     .catch((error) => {
-//       console.log('error')
-//       console.log(error)
-//       return error;
-//     })
+// async function validateUserPassword(hash, password) {
+//   try {
+//     return await argon2.verify(hash, password)
+//   }
+//   catch(e) {
+//       console.log('error', e)
+//       throw e;
+//   }
 // };
-
-async function validateUserPassword(hash, password) {
-  try {
-    return await argon2.verify(hash, password)
-  }
-  catch(e) {
-      console.log('error', e)
-      throw e;
-  }
-};
 
 function generateJwt(user) {
   return jwt.sign({
-    id: user.id,
-    role: user.role,
-    exp: new Date().valueOf() + (1000 * 60 * 60 * 6) // 6 hours
-  }, Config.secret);
+      id: user.id,
+      email: user.email,
+      displayName: user.displayName,
+      role: user.role
+    }, 
+      Config.secret,
+      Config.jwt.options
+  );
 }
 
 function register(userObject) {
@@ -427,78 +426,60 @@ function verifyEmailAddress({email, emailVerificationString}) {
 };
 
 function login({ email, password, req }) {
-  return new Promise((resolve, reject) => {
+  let promise = new Promise((resolve, reject) => {
     console.log('login');
 
-    try {
-
-      console.log('in login try');
-
-      // passport.authenticate('basic', { session: false }, (err, user) => {
-      //   if (!user) { reject("credentials-error") }
-  
-      //   req.login(user, () => resolve(user));
-      // })({ body: { email, password } });
-
-      let method = (async () => {
-        const user = await authenticate(email, password);
-        console.log("user", user)
-
-        if (user) {
-          console.log("passes authenticate", user)
-          resolve(user)
-        }
-  
+    userService.FindOne(email)
+      .then(user => {
+        
         if (!user) {
-          console.log("fails authenticate")
-
-          reject(AuthorizationError)
+          throw new Error("credentials-error")
         }
-  
-      })
 
-      method.apply();
+        validateUserPassword(user.passwordHash, password) 
+          .then(validated => {
+            if (!validated) {
+              throw new Error("credentials-error")
+            }
 
-      
-      
+            // dates stored as a string in neo4j
+            user.registerDate = convertStringToDate(user.registerDate)
+            user.lastAccessDate = convertStringToDate(user.lastAccessDate)
     
-      //passport.authenticate('local', (err, user) => {
+            console.log("passes authenticate")
+            //req.headers.authorization = generateJwt(user)
+            req.res.cookie('betsmate', generateJwt(user), Config.cookieOptions)
 
-      // resolve("boo")
-      // console.log('passport.authenticate returned');
-      // if (err) {
-      //   console.log('error authenticating user');
-      //   console.log(err);
-      //   reject(err)
-      // }
-
-      // if (info) {
-      //   console.log('info from authenticate user');
-      //   console.log(info)
-      //   reject(info)
-      // }
-
-      // if (!user) {
-      //   reject(AuthorizationError)
-      // }
-
-      // req.login(user, () => {
-      //   console.log('logged in');
-      //   req.headers.authorization = generateJwt(user)
-      //   //req.res.cookie('betsmateJwt', generateJwt(user))
-      //   resolve(user)
-      // })
-    //})({ body: { email, password}});
-
-    }
-    catch(e) {
-      console.log(e)
-      throw e
-    }
-  
-  });
+            resolve(user)
+          })
+        .catch(err => {
+          console.log("FindOne error")
+          reject(err)
+        })
+      })
+    .catch(err => {
+      console.log("FindOne error")
+      reject(err)
+    })
+  })
+  return promise;
 }
 
+function validateUserPassword(hash, password) {
+  return argon2.verify(hash, password)
+    .then((verified) => {
+      if (verified) {
+        return verified
+      } else {
+        return false;
+      }
+    })
+    .catch((error) => {
+      console.log('error')
+      console.log(error)
+      return error;
+    })
+};
 
 //function login({ email, password, req }) {
   //let promise = new Promise((resolve, reject) => {

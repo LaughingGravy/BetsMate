@@ -52,6 +52,30 @@ if (process.env.NODE_ENV === 'development')
             this.neoUsername = "admin",
             //this.neoPassword = "b.CFFFu5eTaFox.68rQ5gRejhGzu9ZQ"
             this.neoPassword = "b.0K6Hf98kwdvO.hSbNF1MYYBz9X0nt"
+
+            this.jwt = {
+                secret: process.env.JWT_SECRET || this.secret,
+                options: {
+                    audience: 'http://localhost',
+                    expiresIn: '12h', // 1d
+                    issuer: 'betsmate'
+                },
+                cookie: {
+                    httpOnly: true,
+                    sameSite: true,
+                    signed: true,
+                    secure: false
+                }
+            }
+
+            // express cookie options
+            this.cookieOptions = {
+                httpOnly: true,
+                sameSite: true,
+                signed: true,
+                maxAge: 1000 * 60 * 60 * 24 * 14, // 14 daya
+                secure: false
+            }
         }
     }
 }
@@ -75,6 +99,22 @@ else
             this.bolt = "bolt://hobby-iiiklpkknlfngbkemhilohbl.dbs.graphenedb.com:24786"
             this.neoUsername = "admin"
             this.neoPassword = "b.CFFFu5eTaFox.68rQ5gRejhGzu9ZQ"
+
+            // express cookie options
+            this.jwt = {
+                secret: process.env.JWT_SECRET || this.secret,
+                options: {
+                    audience: 'http://localhost',
+                    expiresIn: '12h', // 1d
+                    issuer: 'betsmate'
+                },
+                cookie: {
+                    httpOnly: true,
+                    sameSite: true,
+                    signed: true,
+                    secure: false
+                }
+            }
         }
     }
 }

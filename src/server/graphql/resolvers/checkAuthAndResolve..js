@@ -6,7 +6,7 @@ const checkAuthAndResolve = (ctx, action) => {
   console.log("checkAuthAndResolve")
 
   const req = ctx.req;
-  const token = ctx.heaqders.authorization
+  const token = ctx.headers.authorization
 
   if (!token) {
     throw new AuthorizationError()

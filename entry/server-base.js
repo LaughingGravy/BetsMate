@@ -62,7 +62,8 @@ var corsOptions = {
 
 app.use(helmet())
 app.use(cors(corsOptions))
-app.use(cookieParser())
+//app.use(cookieParser())
+app.use(cookieParser(Config.secret))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
@@ -252,9 +253,9 @@ export function listen() {
     return servers;
   }
 
-  export default {
-    app,
-    router,
-    listen,
-    runApolloEngine
-  };
+export default {
+  app,
+  router,
+  listen,
+  runApolloEngine
+};

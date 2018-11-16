@@ -56,6 +56,8 @@ const LayoutContent = (props) =>{
     <Query query={CURRENT_USER}>
       {({ loading, error, user }) => {
 
+        console.log("LayoutContent CURRENT_USER", { loading, error, user })
+
         if (user == null) {
             user = DefaultUser
         }
