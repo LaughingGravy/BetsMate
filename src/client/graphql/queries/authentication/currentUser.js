@@ -6,8 +6,6 @@ export default gql`
             displayName
             email
             role
-            registerDate
-            lastAccessDate
         }
     }
 `;

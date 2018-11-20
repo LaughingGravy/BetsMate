@@ -14,7 +14,6 @@ import VerifyType from '../graphql/types/verify_type'
 const AdminService = require('../services/admin')
 
 import AuthenticationService from '../services/authentication'
-import { resultKeyNameFromField } from 'apollo-utilities';
 
 export default new GraphQLObjectType({
     name: 'Mutation',

@@ -315,13 +315,8 @@ export default authService
 // };
 
 function generateJwt(user) {
-  return jwt.sign({
-      id: user.id,
-      email: user.email,
-      displayName: user.displayName,
-      role: user.role
-    }, 
-      Config.secret,
+  return jwt.sign(user, 
+      Config.jwt.secret,
       Config.jwt.options
   );
 }
@@ -427,7 +422,6 @@ function verifyEmailAddress({email, emailVerificationString}) {
 
 function login({ email, password, req }) {
   let promise = new Promise((resolve, reject) => {
-    console.log('login');
 
     userService.FindOne(email)
       .then(user => {
@@ -442,15 +436,45 @@ function login({ email, password, req }) {
               throw new Error("credentials-error")
             }
 
-            // dates stored as a string in neo4j
-            user.registerDate = convertStringToDate(user.registerDate)
-            user.lastAccessDate = convertStringToDate(user.lastAccessDate)
-    
-            console.log("passes authenticate")
-            //req.headers.authorization = generateJwt(user)
-            req.res.cookie('betsmate', generateJwt(user), Config.cookieOptions)
+            user.lastAccessDate = getUTCDate()
+            
+            userService.UpdateOne(user) 
+              .then(updUserArray => {
 
-            resolve(user)
+                console.log("before")
+                let updUser = updUserArray[0]
+                console.log("after")
+
+                // dates stored as a string in neo4j
+                // console.log("before conversion")
+                // console.log("updUser.registerDate", updUser.registerDate)
+                // console.log("updUser.lastAccessDate", updUser.lastAccessDate)
+                // updUser.registerDate = convertStringToDate(updUser.registerDate)
+                // updUser.lastAccessDate = convertStringToDate(updUser.lastAccessDate)
+                // console.log("updUser.registerDate", updUser.registerDate)
+                // console.log("updUser.lastAccessDate", updUser.lastAccessDate)
+                // console.log("after conversion")
+
+                const payload = {
+                  email: updUser.email,
+                  displayName: updUser.displayName,
+                  role: updUser.role
+                }
+
+                const token = generateJwt(payload)
+
+                // console.log("authenticate login token", token)
+                // console.log("authenticate login Config.jwt.cookieName", Config.jwt.cookieName)
+                // console.log("authenticate login Config.jwt.options", Config.jwt.options)
+
+                req.res.cookie(Config.jwt.cookieName, token, Config.jwt.cookie)
+
+                resolve(payload)
+              }) 
+            .catch(err => {
+              console.log("UpdateOne error")
+              reject(err)
+            })
           })
         .catch(err => {
           console.log("FindOne error")

@@ -48,6 +48,8 @@ import PATHS from '../utilities/paths'
 
 import App from '../src/client/components/App'
 
+import { attachUserToRequest } from '../src/server/middleware/attachUserToRequest'
+
 const app = express()
 const router = express.Router()
 
@@ -67,6 +69,8 @@ app.use(cookieParser(Config.secret))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
+app.use(attachUserToRequest);
+
 // Configures express to use sessions. This places an encrypted identifier
 // on the users cookie. When a user makes a request, this middleware examines
 // the cookie and modifies the request object to indicate which user made the request
@@ -85,7 +89,7 @@ app.use(bodyParser.json());
 // Passport is wired into express as a middleware. When a request comes in,
 // Passport will examine the request's session (as set by the above config) and
 // assign the current user to the 'req.user' object.  See also servces/auth.js 
-app.use(passport.initialize());
+//app.use(passport.initialize());
 // app.use(passport.session());
 
 //check that server is up

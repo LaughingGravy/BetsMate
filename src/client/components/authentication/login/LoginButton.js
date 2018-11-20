@@ -14,7 +14,8 @@ class LoginButton extends React.Component {
   }
 
   onCompleted = (data) => {
-    console.log("data", data)
+    console.log("onCompleted", Date.now())
+    //console.log("data", data)
     
     history.push('/home');
   }

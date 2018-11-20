@@ -54,6 +54,7 @@ if (process.env.NODE_ENV === 'development')
             this.neoPassword = "b.0K6Hf98kwdvO.hSbNF1MYYBz9X0nt"
 
             this.jwt = {
+                cookieName: "betsmate",
                 secret: process.env.JWT_SECRET || this.secret,
                 options: {
                     audience: 'http://localhost',
@@ -64,17 +65,9 @@ if (process.env.NODE_ENV === 'development')
                     httpOnly: true,
                     sameSite: true,
                     signed: true,
+                    maxAge: 1000 * 60 * 60 * 24 * 14, // 14 daya
                     secure: false
                 }
-            }
-
-            // express cookie options
-            this.cookieOptions = {
-                httpOnly: true,
-                sameSite: true,
-                signed: true,
-                maxAge: 1000 * 60 * 60 * 24 * 14, // 14 daya
-                secure: false
             }
         }
     }
@@ -102,6 +95,7 @@ else
 
             // express cookie options
             this.jwt = {
+                cookieName: "betsmate",
                 secret: process.env.JWT_SECRET || this.secret,
                 options: {
                     audience: 'http://localhost',
@@ -112,6 +106,7 @@ else
                     httpOnly: true,
                     sameSite: true,
                     signed: true,
+                    maxAge: 1000 * 60 * 60 * 24 * 14, // 14 daya
                     secure: false
                 }
             }

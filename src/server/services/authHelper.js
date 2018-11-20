@@ -12,17 +12,12 @@ const isFirstUTCDateAfterSecond = (date1, date2) => {
   return utcDate1.isAfter(utcDate2)
 }
 
-const convertStringToDate = (date) => {
+const convertStringToDate = (input) => {
   try {
-
-    const retDate = moment(date)
-
-    if (retDate.isValid())
-      return retDate.toDate()
-    else
-      return null
+    return moment(input).toDate();
   }
   catch(e) {
+    console.log("convertStringToDate error", e)
     return null;
   }
 }

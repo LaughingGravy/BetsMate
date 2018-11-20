@@ -1,10 +1,9 @@
 import React from 'react'
 
 const DefaultUser = {
-    name: 'Guest', 
+    displayName: 'Guest', 
     email: '',
-    role: 'guest',
-    password: ''
+    role: 'guest'
 }
 
 const UserContext = React.createContext({
