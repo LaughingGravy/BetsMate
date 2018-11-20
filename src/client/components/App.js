@@ -23,7 +23,6 @@ class App extends React.Component{
   }
 
   setUser (user) {
-    console.log("set user", user)
     let isAutheticated = user.email.trim().length > 0
     this.setState({
       userCtx: { 

@@ -4,8 +4,6 @@ import { convertStringToDate } from '../services/authHelper'
 
 
 const attachUserToRequest = (req, res, next) => {
-  console.log("Config.jwt.cookieName", Config.jwt.cookieName)
-  console.log("req.signedCookies[betsmate]", req.signedCookies["betsmate"])
 
   if (req.signedCookies[Config.jwt.cookieName]) {
 
