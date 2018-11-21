@@ -5,36 +5,36 @@ import { Container, Button, Grid, Segment, Icon } from 'semantic-ui-react'
 
 import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
 
-const renderForAdminFailAccessError = (component, propName = "userCtx") =>
+const renderForAdminFailAccessError = (component, ctxName = "userCtx", propName = "user") =>
   branch(
-    props => (!props[propName] || !props[propName].isAuthenticated || props[propName].user.role != "admin"),
+    props => (!props[ctxName] || !props[ctxName].isAuthenticated || props[ctxName][propName].role != "admin"),
     renderComponent(component)
 )
 
-const renderIfAuthenticated = (component, propName = "userCtx", isAuthenticated = true) =>
+const renderIfAuthenticated = (component, ctxName = "userCtx", isAuthenticated = true) =>
 branch(
-  props => (props[propName] && isAuthenticated == props[propName].isAuthenticated),
+  props => (props[ctxName] && isAuthenticated == props[ctxName].isAuthenticated),
             renderComponent(component),
             renderNothing
 )
 
-const renderOrIfAuthenticated = (component, altComponent, propName = "userCtx", isAuthenticated = true) =>
+const renderOrIfAuthenticated = (component, altComponent, ctxName = "userCtx", isAuthenticated = true) =>
 branch(
-  props => (props[propName] && isAuthenticated == props[propName].isAuthenticated),
+  props => (props[propName] && isAuthenticated == props[ctxName].isAuthenticated),
             renderComponent(component),
             renderComponent(altComponent)
 )
 
-const renderIfRole = (component, propName = "userCtx", role = "admin") =>
+const renderIfRole = (component, ctxName = "userCtx", propName = "user", role = "admin") =>
 branch(
-  props => (props[propName] && props[propName].isAuthenticated && role == props[propName].role),
+  props => (props[ctxName] && props[ctxName].isAuthenticated && role == props[ctxName][propName].role),
             renderComponent(component),
             renderNothing
 )
 
-const renderOrIfRole = (component, altComponent, propName = "userCtx", role = "admin") =>
+const renderOrIfRole = (component, ctxName = "userCtx", propName = "user", role = "admin") =>
 branch(
-  props => (props[propName] && props[propName].isAuthenticated && role == props[propName].role),
+  props => (props[ctxName] && props[ctxName].isAuthenticated && role == props[ctxName][propName].role),
             renderComponent(component),
             renderComponent(altComponent)
 )

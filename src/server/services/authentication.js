@@ -230,6 +230,15 @@ let authService = {
       })
   },
 
+  Logout: ({ user, req }) => {
+    return logout({ user, req })
+            .catch((error) => {
+              console.log('error logging out user');
+              console.log(error);
+              return error
+            })
+  },
+
   GetUser: (email) => {
     return getUser(email)
       .then((result) => {
@@ -420,6 +429,17 @@ function verifyEmailAddress({email, emailVerificationString}) {
     return promise;
 };
 
+function logout({ user, req }) {
+  let promise = new Promise((resolve, reject) => {
+
+    const { email } = user;
+
+    
+
+  })
+  return promise;
+}
+
 function login({ email, password, req }) {
   let promise = new Promise((resolve, reject) => {
 
@@ -441,9 +461,7 @@ function login({ email, password, req }) {
             userService.UpdateOne(user) 
               .then(updUserArray => {
 
-                console.log("before")
                 let updUser = updUserArray[0]
-                console.log("after")
 
                 // dates stored as a string in neo4j
                 // console.log("before conversion")
@@ -462,10 +480,6 @@ function login({ email, password, req }) {
                 }
 
                 const token = generateJwt(payload)
-
-                // console.log("authenticate login token", token)
-                // console.log("authenticate login Config.jwt.cookieName", Config.jwt.cookieName)
-                // console.log("authenticate login Config.jwt.options", Config.jwt.options)
 
                 req.res.cookie(Config.jwt.cookieName, token, Config.jwt.cookie)
 
@@ -504,37 +518,6 @@ function validateUserPassword(hash, password) {
       return error;
     })
 };
-
-//function login({ email, password, req }) {
-  //let promise = new Promise((resolve, reject) => {
-    //passport.authenticate('local', (user, error, info) => {
-  //return new Promise((resolve, reject) => {
-    //passport.authenticate('local', (error, user, info) => {
-      //passport.authenticate('local', (error, user) => {
-      //console.log("passport.authenticate user, error, info", user, error, info)
-      // console.log("passport.authenticate user, error", user, error)
-      // if (error) {
-      //   console.log('error authenticating user');
-      //   console.log(error);
-      //   reject(error)
-      // }
-      // if (info) {
-      //   console.log('info from authenticate user');
-      //   console.log(info)
-      //   reject(info)
-      // }
-  //     if (user) {
-  //       if (user.verified === true) {
-  //        // req.login(user, () => resolve({user: user, token: token}))
-  //         req.login(user, () => resolve({user: user}))
-  //       } else {
-  //         reject(new Error("email-not-verified-error"))
-  //       }
-  //     }
-  //   })({ body: { email, password } });
-  // });
-  //return promise;
-//};
 
 function getUser(email) {
   //return User.findOne({email: email})

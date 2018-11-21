@@ -11,7 +11,6 @@ const attachUserToRequest = (req, res, next) => {
 
     if (token) {
       jwt.verify(token, Config.jwt.secret, (error, decodedToken) => {
-        console.log("attachUserToRequest")
         if (error) {
           console.log("attachUserToRequest error", error)
           res.clearCookie("betsmate")
@@ -25,7 +24,6 @@ const attachUserToRequest = (req, res, next) => {
         }
 
         if (decodedToken) {
-          console.log("decodedToken", decodedToken)
           let user = { 
                         email: decodedToken.email,
                         displayName: decodedToken.displayName,

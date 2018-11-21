@@ -58,8 +58,6 @@ const LayoutContent = (props) =>{
 
         let { user } = data
 
-        console.log("LayoutContent CURRENT_USER", { loading, error, data })
-
         if (user == null) {
             user = DefaultUser
         }

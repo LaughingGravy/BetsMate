@@ -13,6 +13,8 @@ const CountryType = require('./types/country_type').default
 import VerifyType from '../graphql/types/verify_type'
 const AdminService = require('../services/admin')
 
+import Config from '../../../utilities/Config'
+
 import AuthenticationService from '../services/authentication'
 
 export default new GraphQLObjectType({
@@ -60,8 +62,8 @@ export default new GraphQLObjectType({
             resolve(parentValue, args, ctx) {
                 const req = ctx.req;
                 const { user } = req;
-                console.log("user req", user, req)
-                req.logout();
+
+                req.res.clearCookie(Config.jwt.cookieName);
                 return user;
             }
         },
