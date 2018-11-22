@@ -74,7 +74,7 @@ export default new GraphQLObjectType({
                 timeZone: { type: GraphQLString }
             },
             resolve(parentValue, { email, timeZone }, ctx) {
-                return AuthService.SendPasswordReset({ email, timeZone });
+                return AuthenticationService.SendPasswordReset({ email, timeZone });
             }
         },
         verifyPasswordResetToken: {

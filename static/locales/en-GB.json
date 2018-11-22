@@ -13,7 +13,7 @@
     "register-menu-header": "Register",
     "logout-menu-header": "Logout",
     "login-menu-header": "Login",
-    "resetlink-menu-header": "Password Reset",
+    "reset-password-menu-header": "Password Reset",
     "change-password-menu-header": "Change Password",
     "sport-football-header": "Football",
 
@@ -68,7 +68,7 @@
     "password-placeholder": "Password...",
     "username-placeholder": "Username...",
 
-
+    "email-error": "An error occurred when sending the email.<br />Please try again later.",
 
     "registration-text": "Please enter your details and an account activation link will be sent on clicking upon the Register button.",
 

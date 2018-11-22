@@ -230,15 +230,6 @@ let authService = {
       })
   },
 
-  Logout: ({ user, req }) => {
-    return logout({ user, req })
-            .catch((error) => {
-              console.log('error logging out user');
-              console.log(error);
-              return error
-            })
-  },
-
   GetUser: (email) => {
     return getUser(email)
       .then((result) => {
@@ -266,12 +257,30 @@ let authService = {
   },
 
   SendPasswordReset: (email, timeZone) => {
-    return generatePasswordResetCode(email, timeZone)
-      .then((user) => {
-        console.log('code');
-        console.log(code);
-        const options = getResetPasswordMailOptions(user, timeZone)
-        return sendEmail(options)    
+    return generatePasswordResetCode(email)
+      .then(emailVerificationObject => {
+        console.log("SendPasswordReset emailVerificationObject", emailVerificationObject)
+        const options = getResetPasswordMailOptions(emailVerificationObject, timeZone);
+        
+        if (!options) { // email not found but dont tell user
+          console.log("SendPasswordReset email not found")
+          return email;
+        }
+        else {
+          return sendEmail(options)
+            .then(email =>{
+              return email;
+            }) 
+            .catch((error) => {
+              console.log("SendPasswordReset Error: ", error)
+              throw new Error ("email-error");
+            })   
+        } 
+      }) 
+      .catch((error) => {
+        console.log('Error Sending Reset Password');
+        console.log(error);
+        return error;
       })
   },
 
@@ -429,17 +438,6 @@ function verifyEmailAddress({email, emailVerificationString}) {
     return promise;
 };
 
-function logout({ user, req }) {
-  let promise = new Promise((resolve, reject) => {
-
-    const { email } = user;
-
-    
-
-  })
-  return promise;
-}
-
 function login({ email, password, req }) {
   let promise = new Promise((resolve, reject) => {
 
@@ -585,23 +583,44 @@ function verifyTwoFactorCode(token, email) {
 }
 
 function generatePasswordResetCode(email) {
-  //return User.findOne({email: email})
-  return userService.FindOne({email: email})
-    .then((user) => {
-      if (!user) {
-        throw new Error('error getting user')
-      } else {
-        let code = crypto.randomBytes(32).toString('base64')
-        return argon2.hash(code, {type: argon2.argon2id}).then((hash) => {
-          user.passwordResetHash = hash;
-          user.passwordResetExpiry = new Date().valueOf() + (1000 * 60 * 5) // 5 minutes
-          //user.save();
-          userService.UpdateOne(user)
+  let promise = new Promise((resolve, reject) => {
 
-          return user;
-        })
-      }
-    })
+    console.log("generatePasswordResetCode email", email)
+    userService.FindOne(email)
+      .then((user) => {
+        if (!user) {
+          console.log('reject')
+          resolve();
+        }
+        else {
+          let emailVerificationString = crypto.randomBytes(32).toString('base64')
+          argon2.hash(emailVerificationString, {type: argon2.argon2id}).then((hash) => {
+            user.passwordResetHash = hash;
+            user.passwordResetExpiry = new Date().valueOf() + (1000 * 60 * 5) // 5 minutes
+
+            userService.UpdateOne(user) 
+              .then(updUserArray => {
+
+              const { email, emailVerificationExpiry } = updUserArray[0]
+              const emailVerificationObj = { email, emailVerificationString, emailVerificationExpiry }
+
+              resolve(emailVerificationObj);
+            })
+            .catch((error) => {
+              console.log('update rest hash error')
+              console.log(error)
+              reject(error);
+            })
+          })
+        }
+      })
+      .catch(error => {
+        console.log('generatePasswordResetCode find one error')
+        console.log(error)
+        reject(error);
+      })
+  })
+  return promise;
 }
 
 function checkPasswordResetToken(code, email) {

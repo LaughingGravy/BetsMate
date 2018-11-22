@@ -4,7 +4,8 @@ import { Form } from 'semantic-ui-react'
 
 import '../styles/auth.css'
 
-import { validateEmail } from '../validation/email'
+import { validateLinkForm } from './sendPasswordReset/validate'
+import { getErrObjs } from '../validation/common'
 
 class ResetForm  extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class ResetForm  extends React.Component {
     this.state = { 
       email: "",
       timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      pristine: {
+      pristineFields: {
         email: true
       }
     }
@@ -21,16 +22,17 @@ class ResetForm  extends React.Component {
 
   handleBlur = (name) => (e) => {
     this.setState({
-      pristine: { ...this.state.pristine, [name]: false }
+      pristineFields: { ...this.state.pristineFields, [name]: false }
     })
   }
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
   render() {
-    const { email } = this.state
-    const error = validateEmail(email)
-    const isFormValid = !error
+    const { email, timeZone, pristineFields } = this.state
+    const errors = validateLinkForm(email)
+    const emailErrObjs = getErrObjs(errors, "email")
+    const isFormValid = !Object.keys(errors).some(x => errors[x])
 
     return (
       <Form className='segment' onSubmit={e => {
@@ -38,10 +40,11 @@ class ResetForm  extends React.Component {
                                                 }}>    
         <Form.Field required>
           <Form.Input name='email' label={intl.get("email-label")} placeholder='example@domain.com' 
-                      value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')} />
+                      value={email} onChange={this.handleChange} onBlur={this.handleBlur('email')}
+                      errors={emailErrObjs} pristine={pristineFields['email'] ? 1 : 0} />
         </Form.Field>
        
-        {this.props.render(this.state)}
+        {this.props.render({ variables: { email, timeZone }, isFormValid: isFormValid })}
       </Form>
     )
   }

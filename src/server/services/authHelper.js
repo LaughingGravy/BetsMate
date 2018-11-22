@@ -95,17 +95,19 @@ const getRegisterMailOptions = (emailVerificationObject, timeZone) => {
   return options;
 }
 
-const getResetPasswordMailOptions = ({ email, passwordResetExpiry }, timeZone) => {
-  const localDate = moment(convertUTCToTimeZone(passwordResetExpiry, timeZone )).format("dddd MMMM YYYY h:mm:ss a")
+const getResetPasswordMailOptions = (emailVerificationObject, timeZone) => {
+  const { email, emailVerificationString, emailVerificationExpiry } = emailVerificationObject
+
+  const localDate = convertUTCToTimeZone(emailVerificationExpiry, timeZone)
 
   return {
           from: Config.mailerReply,
           to: email,
           subject: "Bets Mate Password Reset",
-          html: `<h1> Greetings Bets Mate User</h1>` +
+          html: `<h1>Greetings</h1>` +
                   "<p>Here is the link to reset your password.<p>" +
                   `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=${getServerURL()}/${email}/${encodeURIComponent(resetCode)}>Click here</p>`
+                  `<p><a href=${getServerURL()}/${email}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
           }
 }
 

@@ -17,6 +17,7 @@ let userService = {
         }
       })
       .catch(error => {
+        console.log("FindOne error")
         session.close()
         throw error
       })

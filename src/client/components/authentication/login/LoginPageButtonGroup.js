@@ -9,13 +9,13 @@ const LoginPageButtonGroup = () => {
       <Grid centered>
         <Grid.Row centered columns={2} divided>
           <GridColumn textAlign='right'>
-            <NavLink to="/register/link" key="register">
+            <NavLink to="/register" key="register">
               {intl.get("register-menu-header")}
             </NavLink>
           </GridColumn>
           <GridColumn textAlign='left'>
-            <NavLink to="/reset/link" key="resetlink">
-              {intl.get("resetlink-menu-header")}
+            <NavLink to="/reset-password" key="reset-password">
+              {intl.get("reset-password-menu-header")}
             </NavLink>
           </GridColumn>
         </Grid.Row> 

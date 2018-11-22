@@ -1,6 +1,6 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Grid, Segment, Container } from 'semantic-ui-react'
+import { Grid, GridColumn, Segment, Container } from 'semantic-ui-react'
 
 import LinkForm from '../LinkForm'
 import SendResetPasswordButton from './SendResetPasswordButton'
@@ -22,8 +22,8 @@ const SendPasswordResetPage = () => (
     <Grid.Row centered>
       <GridColumn mobile={14} tablet={8} computer={6}>
         <Container textAlign='center'>
-          <LinkForm render={variables => (
-            <SendResetPasswordButton variables={variables} /> 
+          <LinkForm render={props => (
+            <SendResetPasswordButton variables={props.variables} disabled={!props.isFormValid} /> 
           )}/>
         </Container>
       </GridColumn>

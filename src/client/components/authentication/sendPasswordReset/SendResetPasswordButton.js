@@ -6,7 +6,7 @@ import { history } from '../../../../../library/routing'
 import MutationButton from '../../common/MutationButton'
 import SEND_RESET_PASSWORD from '../../../graphql/mutations/authentication/sendPasswordRest'
 
-const SendResetPasswordButton = ({ variables }) => {
+const SendResetPasswordButton = ({ variables, disabled }) => {
 
   const label = "reset-button-label"
 
@@ -19,7 +19,7 @@ const SendResetPasswordButton = ({ variables }) => {
       
       onCompleted={onCompleted}>
       {(sendResetPasswordEmail, { loading, error }) => (
-        <MutationButton variables={variables} mutation={sendResetPasswordEmail} 
+        <MutationButton variables={variables} disabled={disabled} mutation={sendResetPasswordEmail} 
                         loading={loading} error={error} label={label} />
     )}
     </Mutation>

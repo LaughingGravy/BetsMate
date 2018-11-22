@@ -8,35 +8,54 @@ import CURRENT_USER from '../../../graphql/queries/authentication/currentUser'
 
 import MutationButton from '../../common/MutationButton'
 
-class LoginButton extends React.Component {
-  constructor(props) {
-     super(props);
-  }
+// class LoginButton extends React.Component {
+//   constructor(props) {
+//      super(props);
+//   }
 
-  onCompleted = (data) => {
-    console.log("onCompleted", Date.now())
-    //console.log("data", data)
-    
+//   onCompleted = (data) => {
+//     history.push('/home');
+//   }
+
+//   render() {
+//     const { variables, disabled } = this.props
+//     const label = "login-button-label"
+
+//     return (
+//       <Mutation mutation={LOGIN} key={variables.email} 
+        
+//         onCompleted={this.onCompleted}
+
+//         refetchQueries={[ {query: CURRENT_USER}]}>
+//         {(login, { loading, error }) => (
+//           <MutationButton variables={variables} disabled={disabled} mutation={login} 
+//                           loading={loading} error={error} label={label} />
+//       )}
+//       </Mutation>
+//     )
+//   }
+// }
+
+const LoginButton = ({ variables, disabled }) => {
+
+  const label = "login-button-label"
+
+  const onCompleted = (data) => {
     history.push('/home');
   }
 
-  render() {
-    const { variables, disabled } = this.props
-    const label = "login-button-label"
+  return (
+    <Mutation mutation={LOGIN} key={variables.email} 
+      
+      onCompleted={onCompleted}
 
-    return (
-      <Mutation mutation={LOGIN} key={variables.email} 
-        
-        onCompleted={this.onCompleted}
-
-        refetchQueries={[ {query: CURRENT_USER}]}>
-        {(login, { loading, error }) => (
-          <MutationButton variables={variables} disabled={disabled} mutation={login} 
-                          loading={loading} error={error} label={label} />
-      )}
-      </Mutation>
-    )
-  }
+      refetchQueries={[ {query: CURRENT_USER}]}>
+      {(login, { loading, error }) => (
+        <MutationButton variables={variables} disabled={disabled} mutation={login} 
+                        loading={loading} error={error} label={label} />
+    )}
+    </Mutation>
+  )
 }
 
 LoginButton.propTypes = {

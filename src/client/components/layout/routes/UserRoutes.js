@@ -46,7 +46,7 @@ const UserRoutes = ({ userCtx }) => {
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyEmailSuccessPage match={match} />) )} />
 
       <Route exact path="/reset-password" render={({match}) => (
-          !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<SendPasswordResetPage match={match} />) )} />
+          isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<SendPasswordResetPage match={match} />) )} />
 
       <Route exact path="/reset-password/success" render={({match}) => (
           !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<SendResetPasswordSuccessPage match={match} />) )} /> 

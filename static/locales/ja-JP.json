@@ -13,7 +13,7 @@
     "register-menu-header": "レジスター",
     "logout-menu-header": "ログアウト",
     "login-menu-header": "ログイン",
-    "resetlink-menu-header": "パスワードのリセット",
+    "reset-password-menu-header": "パスワードのリセット",
     "change-password-menu-header": "パスワードを変更する",
     "sport-football-header": "サッカー",
 
@@ -39,7 +39,7 @@
 
     "role-error": "そのタスクを実行する権限がありません。",
 
-
+    "email-error": "電子メールの送信中にエラーが発生しました。<br />後でもう一度お試しください。",
 
 
 
