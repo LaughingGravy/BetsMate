@@ -96,6 +96,8 @@ const getRegisterMailOptions = (emailVerificationObject, timeZone) => {
 }
 
 const getResetPasswordMailOptions = (emailVerificationObject, timeZone) => {
+
+  console.log("emailVerificationObject", emailVerificationObject)
   const { email, emailVerificationString, emailVerificationExpiry } = emailVerificationObject
 
   const localDate = convertUTCToTimeZone(emailVerificationExpiry, timeZone)

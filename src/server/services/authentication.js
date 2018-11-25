@@ -256,7 +256,7 @@ let authService = {
       })
   },
 
-  SendPasswordReset: (email, timeZone) => {
+  SendPasswordReset: ({ email, timeZone }) => {
     return generatePasswordResetCode(email)
       .then(emailVerificationObject => {
         console.log("SendPasswordReset emailVerificationObject", emailVerificationObject)
@@ -603,6 +603,8 @@ function generatePasswordResetCode(email) {
 
               const { email, emailVerificationExpiry } = updUserArray[0]
               const emailVerificationObj = { email, emailVerificationString, emailVerificationExpiry }
+
+              console.log("emailVerificationExpiry emailVerificationObj", emailVerificationExpiry,emailVerificationObj)
 
               resolve(emailVerificationObj);
             })
