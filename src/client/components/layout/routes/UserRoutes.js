@@ -49,10 +49,10 @@ const UserRoutes = ({ userCtx }) => {
           isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<SendPasswordResetPage match={match} />) )} />
 
       <Route exact path="/reset-password/success" render={({match}) => (
-          !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<SendResetPasswordSuccessPage match={match} />) )} /> 
+          isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<SendResetPasswordSuccessPage match={match} />) )} /> 
 
       <Route exact path="/verify-reset-password/:email/:emailVerificationString" render={({match}) => (
-          !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<VerifyPasswordResetPage match={match} />) )} />
+          isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<VerifyPasswordResetPage match={match} />) )} />
 
       <Route exact path="/verify-reset-password/failure" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyResetFailurePage match={match} />) )} />

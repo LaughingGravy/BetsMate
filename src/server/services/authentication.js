@@ -259,7 +259,6 @@ let authService = {
   SendPasswordReset: ({ email, timeZone }) => {
     return generatePasswordResetCode(email)
       .then(emailVerificationObject => {
-        console.log("SendPasswordReset emailVerificationObject", emailVerificationObject)
         const options = getResetPasswordMailOptions(emailVerificationObject, timeZone);
         
         if (!options) { // email not found but dont tell user
@@ -284,7 +283,8 @@ let authService = {
       })
   },
 
-  CheckPasswordResetToken: (token, email) => {
+  CheckPasswordResetToken: ({token, email}) => {
+    console.log("CheckPasswordResetToken")
     return checkPasswordResetToken(token, email)
       .then((result) => {
         return result
@@ -584,8 +584,6 @@ function verifyTwoFactorCode(token, email) {
 
 function generatePasswordResetCode(email) {
   let promise = new Promise((resolve, reject) => {
-
-    console.log("generatePasswordResetCode email", email)
     userService.FindOne(email)
       .then((user) => {
         if (!user) {
@@ -601,10 +599,8 @@ function generatePasswordResetCode(email) {
             userService.UpdateOne(user) 
               .then(updUserArray => {
 
-              const { email, emailVerificationExpiry } = updUserArray[0]
-              const emailVerificationObj = { email, emailVerificationString, emailVerificationExpiry }
-
-              console.log("emailVerificationExpiry emailVerificationObj", emailVerificationExpiry,emailVerificationObj)
+              const { email, passwordResetExpiry } = updUserArray[0]
+              const emailVerificationObj = { email, emailVerificationString, passwordResetExpiry }
 
               resolve(emailVerificationObj);
             })
@@ -627,6 +623,7 @@ function generatePasswordResetCode(email) {
 
 function checkPasswordResetToken(code, email) {
   // return User.findOne({email: email})
+  console.log("code, email", code, email)
   return userService.FindOne({email: email})
     .then((user) => {
       if (!user) {

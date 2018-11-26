@@ -1,4 +1,4 @@
-
+import React from 'react'
 import intl from 'react-intl-universal'
 import { Container } from 'semantic-ui-react'
 import { history } from '../../../../../library/routing'
@@ -14,8 +14,10 @@ const VerifyPasswordResetPage = ({match}) => {
   const onCompleted = (data) => {
     const { verified } = data
 
-    if (verified)
+    if (verified) {
+      console.log("verified")
       history.replace('/change-password')
+    }
   }
 
   return (   

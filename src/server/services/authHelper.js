@@ -1,4 +1,4 @@
-import UUID from 'node-uuid'
+
 import moment, { ISO_8601 } from 'moment'
 import { tz } from 'moment-timezone'
 
@@ -96,8 +96,6 @@ const getRegisterMailOptions = (emailVerificationObject, timeZone) => {
 }
 
 const getResetPasswordMailOptions = (emailVerificationObject, timeZone) => {
-
-  console.log("emailVerificationObject", emailVerificationObject)
   const { email, emailVerificationString, emailVerificationExpiry } = emailVerificationObject
 
   const localDate = convertUTCToTimeZone(emailVerificationExpiry, timeZone)
@@ -109,7 +107,7 @@ const getResetPasswordMailOptions = (emailVerificationObject, timeZone) => {
           html: `<h1>Greetings</h1>` +
                   "<p>Here is the link to reset your password.<p>" +
                   `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=${getServerURL()}/${email}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
+                  `<p><a href=${getServerURL()}/verify-reset-password/${email}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
           }
 }
 
