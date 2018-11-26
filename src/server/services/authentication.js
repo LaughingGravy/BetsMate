@@ -622,9 +622,7 @@ function generatePasswordResetCode(email) {
 }
 
 function checkPasswordResetToken(code, email) {
-  // return User.findOne({email: email})
-  console.log("code, email", code, email)
-  return userService.FindOne({email: email})
+  return userService.FindOne(email)
     .then((user) => {
       if (!user) {
         throw new Error('error getting user')

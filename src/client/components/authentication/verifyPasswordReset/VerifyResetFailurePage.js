@@ -6,7 +6,10 @@ import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
 import { hideIfTestFails } from '../../common/ConditionalRender'
 import { compose } from 'recompose';
 
-const vanillaVerifyResetFailurePage = ({error, verified, message}) => (
+const vanillaVerifyResetFailurePage = ({error, verified, message}) => {
+
+  console.log("error, verified, message", error, verified, message)
+  return (
   <Grid columns={1} centered>
     <Grid.Row centered>
       <GridColumn mobile={14} tablet={8} computer={6}>
@@ -24,18 +27,21 @@ const vanillaVerifyResetFailurePage = ({error, verified, message}) => (
     </Grid.Row>
   </Grid>
 )
+}
 
 vanillaVerifyResetFailurePage.PropTypes = {
   verified: PropTypes.bool.isRequired,
   message: PropTypes.string
 }
 
-const notVerifiedAndMessageToDisplay = hideIfTestFails(VerifyResetFailurePage, 
-          props => !props.error && !props.verified && props.message
-)
+// const notVerifiedAndMessageToDisplay = hideIfTestFails(VerifyResetFailurePage, 
+//           props => !props.error && !props.verified && props.message
+// )
 
-const VerifyResetFailurePage = compose(
-  notVerifiedAndMessageToDisplay(vanillaVerifyResetFailurePage)
-)(vanillaVerifyResetFailurePage)
+// const VerifyResetFailurePage = compose(
+//   notVerifiedAndMessageToDisplay(vanillaVerifyResetFailurePage)
+// )(vanillaVerifyResetFailurePage)
+
+const VerifyResetFailurePage = vanillaVerifyResetFailurePage
 
 export default VerifyResetFailurePage

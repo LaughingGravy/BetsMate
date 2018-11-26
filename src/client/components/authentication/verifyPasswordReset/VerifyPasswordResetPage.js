@@ -8,8 +8,34 @@ import VERIFY_PASSWORD_TOKEN from '../../../graphql/mutations/authentication/ver
 import MutationOnMount from '../../common/MutationOnMount'
 import VerifyResetFailurePage from './VerifyResetFailurePage'
 
+const EnhancedVerifyRestFailurePage = compose(
+  hideIfNoProp("message")
+)(VerifyResetFailurePage)
+
+const vanillaVerifyResetPageContent = ({data}) => {
+  const { message } = data.verifyPasswordResetToken
+
+  return (
+    <Grid columns={1} centered>
+      <Grid.Row centered>
+        <Container textAlign="center">
+          <EnhancedVerifyRestFailurePage message={message}  /> 
+        </Container>
+      </Grid.Row>
+    </Grid>
+  )
+}
+
+const VerifyResetPageContent = compose(
+  renderForLoading(VerifyingDisplay),
+  hideIfNoData("verifyPasswordResetToken")
+)(vanillaVerifyResetPageContent)
+
+
+
+
 const VerifyPasswordResetPage = ({match}) => {
-  const { email, token } = match.params
+  const { email, emailVerificationString } = match.params
 
   const onCompleted = (data) => {
     const { verified } = data
@@ -22,11 +48,10 @@ const VerifyPasswordResetPage = ({match}) => {
 
   return (   
     <Container textAlign="center">
-      <MutationOnMount variable={{ email: email, token: token }}
-                        onCompleted={onCompleted} mutation={VERIFY_PASSWORD_TOKEN} 
-                        render={data => (
-                          <VerifyResetFailurePage verified={data.verified} message={data.message} />
-                        )} />
+      <MutationOnMount variables={{ email: email, token: emailVerificationString }}
+                        onCompleted={onCompleted} mutation={VERIFY_PASSWORD_TOKEN}>
+        <VerifyResetFailurePage />
+      </MutationOnMount>
     </Container>      
   )
 }
