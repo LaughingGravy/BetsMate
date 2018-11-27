@@ -291,15 +291,15 @@ let authService = {
       })
   },
 
-  ResetPassword: (email, password) => {
-    return resetPassword(email, password)
+  ChangePassword: (email, password) => {
+    return changePassword(email, password)
       .then((resetUser) => {
         console.log(resetUser)
         return resetUser;
       })
   },
 
-  ChangePassword: (email, password, token) => {
+  ResetPassword: (email, password, token) => {
     CheckPasswordResetToken(token, email)
       .then((result) => {
         if (result.verified) {
@@ -641,7 +641,7 @@ function checkPasswordResetToken(code, email) {
     })
 }
 
-function resetPassword(email, password) {
+function changePassword(email, password) {
   // return User.findOne({email: email})
   return userService.FindOne({email: email})
     .then((user) => {

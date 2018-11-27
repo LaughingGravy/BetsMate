@@ -1,6 +1,9 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Container } from 'semantic-ui-react'
+import { Container, Grid } from 'semantic-ui-react'
+import { compose } from 'recompose'
+
+import { hideIfNoProp, hideIfNoData, renderForLoading, VerifyingDisplay } from '../../common/ConditionalRender'
 import { history } from '../../../../../library/routing'
 
 import VERIFY_PASSWORD_TOKEN from '../../../graphql/mutations/authentication/verifyPasswordResetToken'
@@ -8,7 +11,7 @@ import VERIFY_PASSWORD_TOKEN from '../../../graphql/mutations/authentication/ver
 import MutationOnMount from '../../common/MutationOnMount'
 import VerifyResetFailurePage from './VerifyResetFailurePage'
 
-const EnhancedVerifyRestFailurePage = compose(
+const EnhancedVerifyResetFailurePage = compose(
   hideIfNoProp("message")
 )(VerifyResetFailurePage)
 
@@ -19,7 +22,7 @@ const vanillaVerifyResetPageContent = ({data}) => {
     <Grid columns={1} centered>
       <Grid.Row centered>
         <Container textAlign="center">
-          <EnhancedVerifyRestFailurePage message={message}  /> 
+          <EnhancedVerifyResetFailurePage message={message}  /> 
         </Container>
       </Grid.Row>
     </Grid>
@@ -42,7 +45,7 @@ const VerifyPasswordResetPage = ({match}) => {
 
     if (verified) {
       console.log("verified")
-      history.replace('/change-password')
+      history.replace(`/change-password/${email}/${token}`)
     }
   }
 
@@ -50,7 +53,7 @@ const VerifyPasswordResetPage = ({match}) => {
     <Container textAlign="center">
       <MutationOnMount variables={{ email: email, token: emailVerificationString }}
                         onCompleted={onCompleted} mutation={VERIFY_PASSWORD_TOKEN}>
-        <VerifyResetFailurePage />
+        <VerifyResetPageContent />
       </MutationOnMount>
     </Container>      
   )
