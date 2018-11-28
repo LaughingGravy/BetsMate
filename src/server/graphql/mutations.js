@@ -100,6 +100,19 @@ export default new GraphQLObjectType({
                 return AuthService.ChangePassword({ email, password, token });
             }
         },
+        resetPassword: {
+            type: UserType,
+            args: {
+                email: { type: GraphQLString },
+                token: { type: GraphQLString },
+                password: { type: GraphQLString }
+            },
+            resolve(parentValue, { email, password, token }, ctx) {
+                const req = ctx.req
+                const { token } = req.body
+                return AuthService.ResetPassword({ email, password, token });
+            }
+        },
 
 
         

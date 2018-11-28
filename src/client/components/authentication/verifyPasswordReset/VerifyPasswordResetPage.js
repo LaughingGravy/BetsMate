@@ -34,9 +34,6 @@ const VerifyResetPageContent = compose(
   hideIfNoData("verifyPasswordResetToken")
 )(vanillaVerifyResetPageContent)
 
-
-
-
 const VerifyPasswordResetPage = ({match}) => {
   const { email, emailVerificationString } = match.params
 
@@ -45,7 +42,7 @@ const VerifyPasswordResetPage = ({match}) => {
 
     if (verified) {
       console.log("verified")
-      history.replace(`/change-password/${email}/${token}`)
+      history.replace(`/reset/change-password${email}/${token}`)
     }
   }
 

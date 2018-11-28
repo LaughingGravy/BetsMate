@@ -283,7 +283,7 @@ let authService = {
       })
   },
 
-  CheckPasswordResetToken: ({token, email}) => {
+  CheckPasswordResetToken: ({ token, email }) => {
     console.log("CheckPasswordResetToken")
     return checkPasswordResetToken(token, email)
       .then((result) => {
@@ -300,10 +300,10 @@ let authService = {
   },
 
   ResetPassword: (email, password, token) => {
-    CheckPasswordResetToken(token, email)
+    checkPasswordResetToken(token, email)
       .then((result) => {
         if (result.verified) {
-          ResetPassword(email, password)
+          changePassword(email, password)
             .then((resetUser) => {
               if (!resetUser) {
                 console.log('error resetting user password');
