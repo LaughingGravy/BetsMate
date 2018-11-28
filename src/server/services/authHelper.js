@@ -95,10 +95,10 @@ const getRegisterMailOptions = (emailVerificationObject, timeZone) => {
   return options;
 }
 
-const getResetPasswordMailOptions = (emailVerificationObject, timeZone) => {
-  const { email, emailVerificationString, emailVerificationExpiry } = emailVerificationObject
+const getResetPasswordMailOptions = (passwordResetObject, timeZone) => {
+  const { email, passwordResetString, passwordResetExpiry } = passwordResetObject
 
-  const localDate = convertUTCToTimeZone(emailVerificationExpiry, timeZone)
+  const localDate = convertUTCToTimeZone(passwordResetExpiry, timeZone)
 
   return {
           from: Config.mailerReply,
@@ -107,7 +107,7 @@ const getResetPasswordMailOptions = (emailVerificationObject, timeZone) => {
           html: `<h1>Greetings</h1>` +
                   "<p>Here is the link to reset your password.<p>" +
                   `<p>The link is valid until ${localDate}</p>` +
-                  `<p><a href=${getServerURL()}/verify-reset-password/${email}/${encodeURIComponent(emailVerificationString)}>Click here</p>`
+                  `<p><a href=${getServerURL()}/verify-reset-password/${email}/${encodeURIComponent(passwordResetString)}>Click here</p>`
           }
 }
 

@@ -258,8 +258,8 @@ let authService = {
 
   SendPasswordReset: ({ email, timeZone }) => {
     return generatePasswordResetCode(email)
-      .then(emailVerificationObject => {
-        const options = getResetPasswordMailOptions(emailVerificationObject, timeZone);
+      .then(passwordResetObject => {
+        const options = getResetPasswordMailOptions(passwordResetObject, timeZone);
         
         if (!options) { // email not found but dont tell user
           console.log("SendPasswordReset email not found")
@@ -582,8 +582,8 @@ function generatePasswordResetCode(email) {
           resolve();
         }
         else {
-          let emailVerificationString = crypto.randomBytes(32).toString('base64')
-          argon2.hash(emailVerificationString, {type: argon2.argon2id}).then((hash) => {
+          let passwordResetString = crypto.randomBytes(32).toString('base64')
+          argon2.hash(passwordResetString, {type: argon2.argon2id}).then((hash) => {
             user.passwordResetHash = hash;
             user.passwordResetExpiry = new Date().valueOf() + (1000 * 60 * 5) // 5 minutes
 
@@ -591,9 +591,9 @@ function generatePasswordResetCode(email) {
               .then(updUserArray => {
 
               const { email, passwordResetExpiry } = updUserArray[0]
-              const emailVerificationObj = { email, emailVerificationString, passwordResetExpiry }
+              const resetPasswordObj = { email, passwordResetString, passwordResetExpiry }
 
-              resolve(emailVerificationObj);
+              resolve(resetPasswordObj);
             })
             .catch((error) => {
               console.log('update rest hash error')
@@ -612,14 +612,16 @@ function generatePasswordResetCode(email) {
   return promise;
 }
 
-function checkPasswordResetToken(code, email) {
+function checkPasswordResetToken(token, email) {
   return userService.FindOne(email)
     .then(user => {
       if (!user) {
         throw new Error('error getting user')
       } else {
+
+        console.log("user.passwordResetExpiry new Date().valueOf()", user.passwordResetExpiry, new Date().valueOf())
         if (user.passwordResetExpiry > new Date().valueOf()) {
-          return argon2.verify(user.passwordResetHash, code)
+          return argon2.verify(user.passwordResetHash, token)
             .then((verified) => {
               let message = verified ? 'verify-token-succeeded' : 'verify-password-token-error'
               return ({verified, message})
@@ -634,10 +636,10 @@ function checkPasswordResetToken(code, email) {
 
 function resetChangePassword(email, token, password) {
   let promise = new Promise((resolve, reject) => {
-    checkPasswordResetToken(email, token)
+    checkPasswordResetToken(token, email)
     .then(verifyObj => {
       if (!verifyObj.verified) {
-        return verifyObj;
+        throw new Error(verifyObj.message)
       }
 
       changePassword({ email, password })
@@ -649,6 +651,11 @@ function resetChangePassword(email, token, password) {
         console.log(error)
         reject(error);
       })
+    })
+    .catch(error => {
+      console.log('resetChangePassword -> checkPasswordResetToken error')
+      console.log(error)
+      reject(error);
     })
   })
   return promise;

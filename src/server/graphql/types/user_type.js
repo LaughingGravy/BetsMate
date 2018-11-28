@@ -20,7 +20,8 @@ export default new GraphQLObjectType({
         verified: { type: GraphQLBoolean},
         emailVerificationHash: { type: GraphQLString },
         emailVerificationExpiry: { type: GraphQLDate },
-        passwordResetHash: { type: GraphQLString }
+        passwordResetHash: { type: GraphQLString },
+        passwordResetExpiry : { type: GraphQLDate }
         // tempTwoFactorSecret: { type: GraphQLObjectType },
         // twoFactorSecret: { type: GraphQLObjectType }
     }

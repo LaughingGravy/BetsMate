@@ -47,7 +47,7 @@ let userService = {
   CreateOne: (user) => {
     const { email, displayName, role, registerDate, lastAccessDate,
             passwordHash, verified, emailVerificationHash, emailVerificationExpiry, 
-            passwordResetHash, tempTwoFactorSecret, twoFactorSecret } = user
+            passwordResetHash, passwordResetExpiry, tempTwoFactorSecret, twoFactorSecret } = user
       
     let session = createSession()
     return session
@@ -59,6 +59,7 @@ let userService = {
               user.lastAccessDate =  "${lastAccessDate}",
               user.passwordHash =  "${passwordHash}",
               user.passwordResetHash =  "${passwordResetHash}",
+              user.passwordResetExpiry =  "${passwordResetExpiry}",
               user.verified =  "${verified}",
               user.emailVerificationHash = "${emailVerificationHash}",
               user.emailVerificationExpiry = "${emailVerificationExpiry}",
@@ -83,7 +84,7 @@ let userService = {
   UpdateOne: (user) => {
     const { email, displayName, role, registerDate, lastAccessDate,
             passwordHash, verified, emailVerificationHash, emailVerificationExpiry, 
-            passwordResetHash, tempTwoFactorSecret, twoFactorSecret } = user
+            passwordResetHash, passwordResetExpiry, tempTwoFactorSecret, twoFactorSecret } = user
     
     let session = createSession()
     return session
@@ -95,6 +96,7 @@ let userService = {
               user.lastAccessDate =  "${lastAccessDate}",
               user.passwordHash =  "${passwordHash}",
               user.passwordResetHash =  "${passwordResetHash}",
+              user.passwordResetExpiry = "${passwordResetExpiry}",
               user.verified =  "${verified}",
               user.emailVerificationHash = "${emailVerificationHash}",
               user.emailVerificationExpiry = "${emailVerificationExpiry}",
