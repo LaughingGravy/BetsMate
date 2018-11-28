@@ -109,7 +109,6 @@ export default new GraphQLObjectType({
             },
             resolve(parentValue, { email, password, token }, ctx) {
                 const req = ctx.req
-                const { token } = req.body
                 return AuthService.ResetPassword({ email, password, token });
             }
         },

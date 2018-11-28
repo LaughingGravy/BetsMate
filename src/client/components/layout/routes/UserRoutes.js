@@ -60,9 +60,6 @@ const UserRoutes = ({ userCtx }) => {
       <Route exact path="/reset/change-password/:email/:emailVerificationString" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<ResetChangePasswordPage match={match} />) )} />
 
-      <Route exact path="/reset/change-password/success" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<ResetChangePassworPageSuccessPage match={match} />) )} />
-
       <Route exact path="/change-password" render={({match}) => (
           !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<ChangePasswordPage match={match} />) )} />
 

@@ -16,7 +16,7 @@ const ResetChangePasswordButton = ({ variables }) => {
   }
 
   return (
-    <Mutation mutation={CHANGE_PASSWORD} key={"RESET_CHANGE_PASSWORD"} 
+    <Mutation mutation={RESET_CHANGE_PASSWORD} key={"RESET_CHANGE_PASSWORD"} 
       
       onCompleted={onCompleted}>
       {(resetChangePassword, { loading, error }) => (
@@ -35,4 +35,4 @@ ChangePasswordButton.propTypes = {
   }).isRequired
 }
 
-export default ChangePasswordButton
+export default ResetChangePasswordButton

@@ -2,7 +2,7 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Container, Grid, GridColumn, Segment } from 'semantic-ui-react'
 
-import RestChangePasswordForm from './ResetChangePasswordForm'
+import ResetChangePasswordForm from './ResetChangePasswordForm'
 import ResetChangePasswordButton from './ResetChangePasswordButton'
 
 const ResetChangePasswordPage = (props) => (
@@ -32,7 +32,7 @@ const ResetChangePasswordPage = (props) => (
   </Grid>
 )
 
-ChangePasswordForm.propTypes = {
+ResetChangePasswordPage.propTypes = {
   email: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired
 }

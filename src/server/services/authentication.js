@@ -299,19 +299,10 @@ let authService = {
       })
   },
 
-  ResetPassword: (email, password, token) => {
-    checkPasswordResetToken(token, email)
+  ResetChangePassword: ({ email, password, token }) => {
+    return checkPasswordResetToken(email, password, token)
       .then((result) => {
-        if (result.verified) {
-          changePassword(email, password)
-            .then((resetUser) => {
-              if (!resetUser) {
-                console.log('error resetting user password');
-              } else {
-                return resetUser
-              }
-            })
-        }
+        return result
       })
   },
 
@@ -386,7 +377,7 @@ function register(userObject) {
 function verifyEmailAddress({email, emailVerificationString}) {
   let promise = new Promise((resolve, reject) => {
     userService.FindOne(email)
-      .then((user) => {
+      .then(user => {
         if (user) {
           if (user.verified) {
             resolve({verified: true, message: ''})
@@ -623,7 +614,7 @@ function generatePasswordResetCode(email) {
 
 function checkPasswordResetToken(code, email) {
   return userService.FindOne(email)
-    .then((user) => {
+    .then(user => {
       if (!user) {
         throw new Error('error getting user')
       } else {
@@ -641,10 +632,32 @@ function checkPasswordResetToken(code, email) {
     })
 }
 
-function changePassword(email, password) {
+function resetChangePassword(email, token, password) {
+  let promise = new Promise((resolve, reject) => {
+    checkPasswordResetToken(email, token)
+    .then(verifyObj => {
+      if (!verifyObj.verified) {
+        return verifyObj;
+      }
+
+      changePassword({ email, password })
+        .then(user => {
+          resolve(user);
+        })
+      .catch(error => {
+        console.log('resetChangePassword -> changePassword error')
+        console.log(error)
+        reject(error);
+      })
+    })
+  })
+  return promise;
+}
+
+function changePassword({ email, password }) {
   // return User.findOne({email: email})
   return userService.FindOne({email: email})
-    .then((user) => {
+    .then(user => {
       console.log('user')
       console.log(user)
       if (!user) {
