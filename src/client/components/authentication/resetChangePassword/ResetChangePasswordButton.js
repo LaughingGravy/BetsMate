@@ -27,7 +27,7 @@ const ResetChangePasswordButton = ({ variables }) => {
   )
 }
 
-ChangePasswordButton.propTypes = {
+ResetChangePasswordButton.propTypes = {
   variables: PropTypes.shape({
     email: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,

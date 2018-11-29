@@ -12,6 +12,7 @@ import VerifyEmailPage from '../../authentication/verifyEmail/VerifyEmailPage'
 import VerifyEmailSuccessPage from '../../authentication/verifyEmail/VerifyEmailSuccessPage'
 import SendPasswordResetPage from '../../authentication/sendPasswordReset/SendPasswordResetPage'
 import SendResetPasswordSuccessPage from '../../authentication/sendPasswordReset/SendResetPasswordSuccessPage'
+import ResetChangePasswordPage from '../../authentication/resetChangePassword/ResetChangePasswordPage'
 import VerifyPasswordResetPage from '../../authentication/verifyPasswordReset/VerifyPasswordResetPage'
 import VerifyResetFailurePage from '../../authentication/verifyPasswordReset/VerifyResetFailurePage'
 import ChangePasswordPage from '../../authentication/changePassword/ChangePasswordPage'
@@ -53,6 +54,9 @@ const UserRoutes = ({ userCtx }) => {
 
       <Route exact path="/verify-reset-password/:email/:emailVerificationString" render={({match}) => (
           isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<VerifyPasswordResetPage match={match} />) )} />
+  
+      <Route exact path="/reset/change-password/:email/:emailVerificationString" render={({match}) => (
+          isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<ResetChangePasswordPage match={match} />) )} />
 
       <Route exact path="/verify-reset-password/failure" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyResetFailurePage match={match} />) )} />

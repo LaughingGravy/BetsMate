@@ -1,11 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import intl from 'react-intl-universal'
 import { Container, Grid, GridColumn, Segment } from 'semantic-ui-react'
 
 import ResetChangePasswordForm from './ResetChangePasswordForm'
 import ResetChangePasswordButton from './ResetChangePasswordButton'
 
-const ResetChangePasswordPage = (props) => (
+const ResetChangePasswordPage = (props) => {
+  console.log("props", props)
+  return (
   <Grid columns={1} centered>
     <Grid.Row centered>
       <h3>{intl.get("change-password-page-title")}</h3>
@@ -30,11 +33,12 @@ const ResetChangePasswordPage = (props) => (
     </Grid.Row>
 
   </Grid>
-)
-
-ResetChangePasswordPage.propTypes = {
-  email: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired
+  )
 }
+
+// ResetChangePasswordPage.propTypes = {
+//   email: PropTypes.string.isRequired,
+//   token: PropTypes.string.isRequired
+// }
 
 export default ResetChangePasswordPage

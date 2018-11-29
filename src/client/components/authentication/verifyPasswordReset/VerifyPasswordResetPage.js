@@ -16,6 +16,10 @@ const EnhancedVerifyResetFailurePage = compose(
 )(VerifyResetFailurePage)
 
 const vanillaVerifyResetPageContent = ({data}) => {
+
+
+  console.log("vanillaVerifyResetPageContent data", data)
+
   const { message } = data.verifyPasswordResetToken
 
   return (
