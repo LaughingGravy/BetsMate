@@ -47,7 +47,7 @@ class ResetChangePasswordForm  extends React.Component {
 
         <Form.Field required>
           <ValidationInput name='newPasswordConfirm' type='password' label={intl.get("confirm-new-password-label")} placeholder={intl.get("password-placeholder")} 
-                      value={newPasswordConfirm} onChange={this.handleChange} nBlur={this.handleBlur('newPasswordConfirm')}
+                      value={newPasswordConfirm} onChange={this.handleChange} onBlur={this.handleBlur('newPasswordConfirm')}
                       errors={newPasswordConfirmErrObjs} pristine={pristineFields['newPasswordConfirm'] ? 1 : 0} />
         </Form.Field>
        

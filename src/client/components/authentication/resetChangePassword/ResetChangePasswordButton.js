@@ -8,11 +8,10 @@ import RESET_CHANGE_PASSWORD from '../../../graphql/mutations/authentication/res
 import MutationButton from '../../common/MutationButton'
 
 const ResetChangePasswordButton = ({ variables, disabled }) => {
-
   const label = "save-button-label"
 
   const onCompleted = (data) => {
-      history.push('/change-password/success');
+      history.push('/reset/change-password/success');
   }
 
   return (

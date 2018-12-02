@@ -650,33 +650,35 @@ function verifyPasswordResetToken(email, token) {
             argon2.verify(user.passwordResetHash, token)
               .then(verified => {
                 if (verified) {
-                  console.log("verified from argon2");
                   resolve({ verified: verified, message: "" });
                 } else {
-                  reject({ verified: verified, message: "reset-error" });
+                  resolve({ verified: verified, message: "reset-error" });
                 }
               })
               .catch(error => {
                 console.log("error verifying reset token");
                 console.log(error);
-                reject(error);
+                resolve({ verified: verified, message: "reset-error" });
               });
           } else {
+            console.log("verifyPasswordResetToken 4")
             console.log("expired");
             resolve({ verified: false, message: "expired-email-token-error" });
           }
         }
       })
       .catch(error => {
+        console.log("verifyPasswordResetToken 5")
         console.log("error finding user after reset verification");
         console.log(error);
-        reject(error);
+        resolve({ verified: false, message: "reset-error" });
       });
   })
   return promise;
 }
 
 function resetChangePassword(email, token, password) {
+  console.log("resetChangePassword", email, token, password)
   let promise = new Promise((resolve, reject) => {
     verifyPasswordResetToken(token, email)
       .then(verifyObj => {
@@ -751,15 +753,15 @@ function getNewUser() {
   };
 }
 
-function getEmailVerificationObj(provider) {
-  const { email, emailVerificationString, emailVerificationExpiry } = provider;
+// function getEmailVerificationObj(provider) {
+//   const { email, emailVerificationString, emailVerificationExpiry } = provider;
 
-  return {
-    email: email,
-    emailVerificationString: emailVerificationString,
-    emailVerificationExpiry: emailVerificationExpiry
-  };
-}
+//   return {
+//     email: email,
+//     emailVerificationString: emailVerificationString,
+//     emailVerificationExpiry: emailVerificationExpiry
+//   };
+// }
 
 function sendEmail(options) {
   return new Promise((resolve, reject) => {

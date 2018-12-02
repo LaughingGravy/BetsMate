@@ -6,8 +6,8 @@ const validateResetChangePassword = (newpassword, newpasswordConfirm) => {
     {
       key: "newpassword",
       validationObjectSet: [
-        required(password),
-        minLength(password, 8)
+        required(newpassword),
+        minLength(newpassword, 8)
       ]
     },
     {

@@ -6,9 +6,8 @@ import { Container, Grid, GridColumn, Segment } from 'semantic-ui-react'
 import ResetChangePasswordForm from './ResetChangePasswordForm'
 import ResetChangePasswordButton from './ResetChangePasswordButton'
 
-const ResetChangePasswordPage = (props) => {
-  const { match: { params }} = props;
-  const { email, passwordVerificationString } = params;
+const ResetChangePasswordPage = ({ match }) => {
+  const { email, passwordVerificationString } = match.params;
 
   return (
   <Grid columns={1} centered>
@@ -31,7 +30,7 @@ const ResetChangePasswordPage = (props) => {
               <ResetChangePasswordButton variables={{email: email, 
                                                       token: decodeURIComponent(passwordVerificationString), 
                                                       password: renderProps.password}}  
-                                         disabled={renderProps.disabled} /> 
+                                         disabled={!renderProps.isFormValid} /> 
             </Container>
           )}/>
       </GridColumn>
@@ -39,19 +38,6 @@ const ResetChangePasswordPage = (props) => {
 
   </Grid>
   )
-}
-
-SendResetPasswordButton.propTypes = {
-  variables: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    timeZone: PropTypes.string.isRequired
-  }).isRequired
-}
-
-ResetChangePasswordPage.propTypes = {
-
-  email: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired
 }
 
 export default ResetChangePasswordPage
