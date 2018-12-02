@@ -2,36 +2,56 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Form } from 'semantic-ui-react'
 
+import { validateResetChangePassword } from  './validate'
+import { getErrObjs } from '../../validation/common'
+import ValidationInput from '../../common/ValidationInput'
+
 class ResetChangePasswordForm  extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = { 
       newPassword: "",
-      newPasswordConfirm: ""
+      newPasswordConfirm: "",
+      pristineFields: {
+        newPassword: true,
+        newPasswordConfirm: true
+      }
     }
   }
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
+  handleBlur = (name) => (e) => {
+    this.setState({
+      pristineFields: { ...this.state.pristineFields, [name]: false }
+    })
+  }
+
   render() {
-    const { newPassword, newPasswordConfirm } = this.state
+    const { newPassword, newPasswordConfirm, pristineFields } = this.state
+    const errors = validateResetChangePassword(newPassword, newPasswordConfirm)
+    const newPasswordErrObjs = getErrObjs(errors, "newPassword")
+    const newPasswordConfirmErrObjs = getErrObjs(errors, "newPasswordConfirm")
+    const isFormValid = !Object.keys(errors).some(x => errors[x])
 
     return (
       <Form className='segment' onSubmit={e => {
                                                   e.preventDefault;
                                                 }}>    
         <Form.Field required>
-          <Form.Input name='newPassword' type='password' label={intl.get("new-password-label")} placeholder={intl.get("password-placeholder")}
-                      value={newPassword} onChange={this.handleChange} />
+          <ValidationInput name='newPassword' type='password' label={intl.get("new-password-label")} placeholder={intl.get("password-placeholder")}
+                      value={newPassword} onChange={this.handleChange} onBlur={this.handleBlur('newPassword')}
+                      errors={newPasswordErrObjs} pristine={pristineFields['newPassword'] ? 1 : 0} />
         </Form.Field>
 
         <Form.Field required>
-          <Form.Input name='newPasswordConfirm' type='password' label={intl.get("confirm-new-password-label")} placeholder={intl.get("password-placeholder")} 
-                      value={newPasswordConfirm} onChange={this.handleChange} />
+          <ValidationInput name='newPasswordConfirm' type='password' label={intl.get("confirm-new-password-label")} placeholder={intl.get("password-placeholder")} 
+                      value={newPasswordConfirm} onChange={this.handleChange} nBlur={this.handleBlur('newPasswordConfirm')}
+                      errors={newPasswordConfirmErrObjs} pristine={pristineFields['newPasswordConfirm'] ? 1 : 0} />
         </Form.Field>
        
-        {this.props.render({newPassword: newPassword})}
+        {this.props.render({ password: newPassword, isFormValid: isFormValid })}
       </Form>
     )
   }

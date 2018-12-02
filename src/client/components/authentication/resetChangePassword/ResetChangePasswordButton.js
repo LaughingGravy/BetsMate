@@ -7,7 +7,7 @@ import RESET_CHANGE_PASSWORD from '../../../graphql/mutations/authentication/res
 
 import MutationButton from '../../common/MutationButton'
 
-const ResetChangePasswordButton = ({ variables }) => {
+const ResetChangePasswordButton = ({ variables, disabled }) => {
 
   const label = "save-button-label"
 
@@ -20,7 +20,7 @@ const ResetChangePasswordButton = ({ variables }) => {
       
       onCompleted={onCompleted}>
       {(resetChangePassword, { loading, error }) => (
-        <MutationButton variables={variables} mutation={resetChangePassword} 
+        <MutationButton variables={variables} disabled={disabled} mutation={resetChangePassword} 
                         loading={loading} error={error} label={label} />
     )}
     </Mutation>
@@ -29,10 +29,9 @@ const ResetChangePasswordButton = ({ variables }) => {
 
 ResetChangePasswordButton.propTypes = {
   variables: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    token: PropTypes.string.isRequired,
-    newPassword: PropTypes.string.isRequired
-  }).isRequired
+    password: PropTypes.string.isRequired,
+  }).isRequired,
+  disabled: PropTypes.bool.isRequired
 }
 
 export default ResetChangePasswordButton

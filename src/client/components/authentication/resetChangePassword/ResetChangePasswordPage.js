@@ -7,7 +7,9 @@ import ResetChangePasswordForm from './ResetChangePasswordForm'
 import ResetChangePasswordButton from './ResetChangePasswordButton'
 
 const ResetChangePasswordPage = (props) => {
-  console.log("props", props)
+  const { match: { params }} = props;
+  const { email, passwordVerificationString } = params;
+
   return (
   <Grid columns={1} centered>
     <Grid.Row centered>
@@ -26,7 +28,10 @@ const ResetChangePasswordPage = (props) => {
       <GridColumn mobile={14} tablet={8} computer={6}>        
           <ResetChangePasswordForm render={renderProps => (
             <Container textAlign='center'>
-              <ResetChangePasswordButton variables={{email: props.email, token: props.token, password: renderProps.newpassword}} /> 
+              <ResetChangePasswordButton variables={{email: email, 
+                                                      token: decodeURIComponent(passwordVerificationString), 
+                                                      password: renderProps.password}}  
+                                         disabled={renderProps.disabled} /> 
             </Container>
           )}/>
       </GridColumn>
@@ -36,9 +41,17 @@ const ResetChangePasswordPage = (props) => {
   )
 }
 
-// ResetChangePasswordPage.propTypes = {
-//   email: PropTypes.string.isRequired,
-//   token: PropTypes.string.isRequired
-// }
+SendResetPasswordButton.propTypes = {
+  variables: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    timeZone: PropTypes.string.isRequired
+  }).isRequired
+}
+
+ResetChangePasswordPage.propTypes = {
+
+  email: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired
+}
 
 export default ResetChangePasswordPage

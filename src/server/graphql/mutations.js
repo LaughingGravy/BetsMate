@@ -85,7 +85,7 @@ export default new GraphQLObjectType({
             },
             resolve(parentValue, { email, token }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthenticationService.CheckPasswordResetToken({ email, token });
+                return AuthenticationService.VerifyPasswordResetToken({ email, token });
             }
         },
         changePassword: {

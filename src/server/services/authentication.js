@@ -260,7 +260,7 @@ let authService = {
   },
 
   SendPasswordReset: ({ email, timeZone }) => {
-    return generatePasswordResetCode(email)
+    return generatePasswordResetToken(email)
       .then(passwordResetObject => {
         const options = getResetPasswordMailOptions(
           passwordResetObject,
@@ -289,13 +289,6 @@ let authService = {
       });
   },
 
-  CheckPasswordResetToken: ({ token, email }) => {
-    console.log("CheckPasswordResetToken");
-    return checkPasswordResetToken(token, email).then(result => {
-      return result;
-    });
-  },
-
   ChangePassword: (email, password) => {
     return changePassword(email, password).then(resetUser => {
       console.log(resetUser);
@@ -303,9 +296,22 @@ let authService = {
     });
   },
 
-  ResetChangePassword: ({ email, password, token }) => {
-    return checkPasswordResetToken(email, password, token).then(result => {
+  VerifyPasswordResetToken: ({ email, token }) => {
+    return verifyPasswordResetToken(email, token).then(result => {
+      console.log("result", result)
       return result;
+    });
+  },
+
+  ResetChangePassword: ({email, token, password}) => {
+    return resetChangePassword(email, token, password).then(result => {
+      console.log("result", result)
+      return result;
+    })
+    .catch(error => {
+      console.log("error reset change password");
+      console.log(error);
+      return error;
     });
   },
 
@@ -403,8 +409,8 @@ function verifyEmailAddress({ email, emailVerificationString }) {
             argon2
               .verify(user.emailVerificationHash, emailVerificationString)
               .then(verified => {
-                console.log("verified from argon2");
                 if (verified) {
+                  console.log("verified from argon2");
                   user.emailVerificationExpiry = null;
                   user.emailVerificationHash = null;
                   user.verified = true;
@@ -587,7 +593,7 @@ function verifyTwoFactorCode(token, email) {
   });
 }
 
-function generatePasswordResetCode(email) {
+function generatePasswordResetToken(email) {
   let promise = new Promise((resolve, reject) => {
     userService
       .FindOne(email)
@@ -601,7 +607,7 @@ function generatePasswordResetCode(email) {
             .hash(passwordResetString, { type: argon2.argon2id })
             .then(hash => {
               user.passwordResetHash = hash;
-              user.passwordResetExpiry = new Date().valueOf() + 1000 * 60 * 10; // 10 minutes
+              user.passwordResetExpiry = getUTCFutureDate(10, "minutes"); 
 
               userService
                 .UpdateOne(user)
@@ -632,68 +638,21 @@ function generatePasswordResetCode(email) {
   return promise;
 }
 
-// function checkPasswordResetToken(token, email) {
-//   let promise = new Promise((resolve, reject) => {
-//     return userService
-//       .FindOne(email)
-//       .then(user => {
-//         if (!user) {
-//           resolve({ verified: false, message: "reset-error" });
-//         } else {
-//           if (user.passwordResetExpiry > new Date().valueOf()) {
-//             return argon2.verify(user.passwordResetHash, token)
-//               .then(verified => {
-//                 user.passwordResetExpiry = null;
-//                 user.passwordResetHash = null;
-
-//                 userService.UpdateOne(user)
-//                   .then(user => {
-//                     resolve({ verified: verified, message: "" });
-//                   })
-//                   .catch(error => {
-//                     console.log("error updating user after reset verification");
-//                     console.log(error);
-//                     reject(error);
-//                   });
-//               })
-//               .catch(error => {
-//                 console.log("error verifying reset token");
-//                 console.log(error);
-//                 reject(error);
-//               });
-//           } else {
-//             console.log("expired");
-//             resolve({ verified: false, message: "expired-email-token-error" });
-//           }
-//         }
-//       })
-//       .catch(error => {
-//         console.log("error finding user after reset verification");
-//         console.log(error);
-//         reject(error);
-//       });
-//   })
-//   return promise;
-// }
-
-function checkPasswordResetToken(token, email) {
+function verifyPasswordResetToken(email, token) {
   let promise = new Promise((resolve, reject) => {
     return userService
       .FindOne(email)
       .then(user => {
         if (!user) {
-          console.log("checkPasswordResetToken fail1")
           resolve({ verified: false, message: "reset-error" });
         } else {
-          console.log("checkPasswordResetToken passwordResetExpiry check")
-            if (user.passwordResetExpiry > new Date().valueOf()) {
-              argon2.verify(user.passwordResetHash, token)
+          if (isFirstUTCDateAfterSecond(user.passwordResetExpiry, getUTCDate())) {
+            argon2.verify(user.passwordResetHash, token)
               .then(verified => {
-                console.log("checkPasswordResetToken verified check")
                 if (verified) {
+                  console.log("verified from argon2");
                   resolve({ verified: verified, message: "" });
                 } else {
-                  console.log("checkPasswordResetToken verified reject")
                   reject({ verified: verified, message: "reset-error" });
                 }
               })
@@ -719,8 +678,9 @@ function checkPasswordResetToken(token, email) {
 
 function resetChangePassword(email, token, password) {
   let promise = new Promise((resolve, reject) => {
-    checkPasswordResetToken(token, email)
+    verifyPasswordResetToken(token, email)
       .then(verifyObj => {
+        console.log("verifyObj", verifyObj)
         if (!verifyObj.verified) {
           reject(verifyObj.message);
         }
@@ -738,11 +698,11 @@ function resetChangePassword(email, token, password) {
               userService.UpdateOne(user);
               resolve(user);
             })
-            .catch(error => {
-              console.log("resetChangePassword password hash error");
-              console.log(error);
-              reject(error);
-            });
+              .catch(error => {
+                console.log("resetChangePassword password hash error");
+                console.log(error);
+                reject(error);
+              });
           })
       })
       .catch(error => {

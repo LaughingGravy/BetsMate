@@ -39,20 +39,19 @@ const VerifyResetPageContent = compose(
 )(vanillaVerifyResetPageContent)
 
 const VerifyPasswordResetPage = ({match}) => {
-  const { email, emailVerificationString } = match.params
+  const { email, passwordVerificationString } = match.params
 
   const onCompleted = (data) => {
-    const { verified } = data
+    const { verifyPasswordResetToken: { verified } } = data
 
     if (verified) {
-      console.log("verified")
-      history.replace(`/reset/change-password${email}/${token}`)
+      history.replace(`/reset/change-password/${email}/${passwordVerificationString}`)
     }
   }
 
   return (   
     <Container textAlign="center">
-      <MutationOnMount variables={{ email: email, token: emailVerificationString }}
+      <MutationOnMount variables={{ email: email, token: decodeURIComponent(passwordVerificationString) }}
                         onCompleted={onCompleted} mutation={VERIFY_PASSWORD_TOKEN}>
         <VerifyResetPageContent />
       </MutationOnMount>

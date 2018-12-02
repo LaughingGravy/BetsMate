@@ -52,17 +52,14 @@ const UserRoutes = ({ userCtx }) => {
       <Route exact path="/reset-password/success" render={({match}) => (
           isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<SendResetPasswordSuccessPage match={match} />) )} /> 
 
-      <Route exact path="/verify-reset-password/:email/:emailVerificationString" render={({match}) => (
+      <Route exact path="/verify-reset-password/:email/:passwordVerificationString" render={({match}) => (
           isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<VerifyPasswordResetPage match={match} />) )} />
   
-      <Route exact path="/reset/change-password/:email/:emailVerificationString" render={({match}) => (
+      <Route exact path="/reset/change-password/:email/:passwordVerificationString" render={({match}) => (
           isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<ResetChangePasswordPage match={match} />) )} />
 
       <Route exact path="/verify-reset-password/failure" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<VerifyResetFailurePage match={match} />) )} />
-
-      <Route exact path="/reset/change-password/:email/:emailVerificationString" render={({match}) => (
-          isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<ResetChangePasswordPage match={match} />) )} />
 
       <Route exact path="/change-password" render={({match}) => (
           !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<ChangePasswordPage match={match} />) )} />
