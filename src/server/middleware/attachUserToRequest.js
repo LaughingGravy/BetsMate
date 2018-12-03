@@ -23,6 +23,7 @@ const attachUserToRequest = (req, res, next) => {
                     };
 
           req.user = user;
+          req.headers.authorization = user;
         }
       })
     }

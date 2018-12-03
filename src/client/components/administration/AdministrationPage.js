@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
 import { Header, Grid, GridRow, Menu } from 'semantic-ui-react'
@@ -14,10 +15,10 @@ const AdministrationPage = ( { match }) => {
 
        <GridRow centered>
         <Menu stackable pointing>
-          <MenuItem as={NavLink} to={`${match.url}/country`} key="country" activeClassName="active"
+          <Menu.Item as={NavLink} to={`${match.url}/country`} key="country" activeClassName="active"
                         compact="true">
               {intl.get("admin-country-menu-header")}
-          </MenuItem>
+          </Menu.Item>
         </Menu>
       </GridRow>
 

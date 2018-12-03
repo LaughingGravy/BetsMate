@@ -9,9 +9,7 @@ const UserType  = require('./user_type').default
 const CountryType  = require('./country_type').default
 
 const AdminService = require('../../services/admin')
-import AuthenticationService from '../../services/authentication'
-import jwt from 'jsonwebtoken'
-import Config from '../../../../utilities/Config'
+import { checkAuthAndResolve } from '../resolvers/checkAuthAndResolve..js'
 
 export default new GraphQLObjectType({
     name: 'RootQueryType',
