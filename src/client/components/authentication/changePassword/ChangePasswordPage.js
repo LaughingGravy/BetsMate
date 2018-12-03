@@ -2,7 +2,6 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Container, Grid, GridColumn, Segment } from 'semantic-ui-react'
 
-import { withUser } from '../../contexts/withUserContext'
 import ChangePasswordForm from './ChangePasswordForm'
 import ChangePasswordButton from './ChangePasswordButton'
 
@@ -33,4 +32,4 @@ const ChangePasswordPage = () => (
   </Grid>
 )
 
-export default withUser(ChangePasswordPage)
+export default ChangePasswordPage

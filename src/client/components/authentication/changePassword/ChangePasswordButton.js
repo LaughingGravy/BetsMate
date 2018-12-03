@@ -8,9 +8,6 @@ import CHANGE_PASSWORD from '../../../graphql/mutations/authentication/changePas
 import MutationButton from '../../common/MutationButton'
 
 const ChangePasswordButton = ({ variables, disabled }) => {
-
-  console.log("ChangePasswordButton variables, disabled", variables, disabled)
-
   const label = "save-button-label"
 
   const onCompleted = (data) => {

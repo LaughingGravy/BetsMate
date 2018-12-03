@@ -289,8 +289,8 @@ let authService = {
       });
   },
 
-  ChangePassword: ({ email, password, newpassword }) => {
-    return changePassword(email, password, newpassword).then(result => {
+  ChangePassword: ({ email, password, newPassword }) => {
+    return changePassword(email, password, newPassword).then(result => {
       return result;
     })
     .catch(error => {
@@ -709,7 +709,7 @@ function resetChangePassword(email, token, password) {
   return promise;
 }
 
-function changePassword(email, password, newpassword) {
+function changePassword(email, password, newPassword) {
   let promise = new Promise((resolve, reject) => {
     userService
       .FindOne(email)
@@ -724,7 +724,7 @@ function changePassword(email, password, newpassword) {
               reject(new Error("credentials-error"))
             }
 
-            argon2.hash(newpassword, { type: argon2.argon2id }).then(hash => {
+            argon2.hash(newPassword, { type: argon2.argon2id }).then(hash => {
               // Hash the password with Argon2id: https://crypto.stackexchange.com/questions/48935/why-use-argon2i-or-argon2d-if-argon2id-exists?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
               user.passwordHash = hash;
               userService.UpdateOne(user);

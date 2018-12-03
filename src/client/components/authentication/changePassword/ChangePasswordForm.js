@@ -37,7 +37,6 @@ class ChangePasswordForm  extends React.Component {
     const { password, newPassword, newPasswordConfirm, pristineFields } = this.state
     const { user: { email } } = this.props.userCtx
     const errors = validateChangePassword(password, newPassword, newPasswordConfirm)
-    console.log("errors", errors)
     const passwordErrObjs = getErrObjs(errors, "password")
     const newPasswordErrObjs = getErrObjs(errors, "newPassword")
     const newPasswordConfirmErrObjs = getErrObjs(errors, "newPasswordConfirm")

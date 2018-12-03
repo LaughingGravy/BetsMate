@@ -105,10 +105,10 @@ export default new GraphQLObjectType({
             args: {
                 email: { type: GraphQLString },
                 password: { type: GraphQLString },
-                newpassword: { type: GraphQLString }
+                newPassword: { type: GraphQLString }
             },
-            resolve(parentValue, { email, password, newpassword }, ctx) {
-                return AuthenticationService.ChangePassword({ email, password, newpassword });
+            resolve(parentValue, { email, password, newPassword }, ctx) {
+                return AuthenticationService.ChangePassword({ email, password, newPassword });
             }
         },
 
