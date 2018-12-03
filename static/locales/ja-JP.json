@@ -25,6 +25,7 @@
     "verify-email-success-header": "アカウント確認済み",
     "verifiy-email-error": "アカウントの確認に失敗しました.<br />もう一度登録してください.",
     "expired-email-token-error": "電子メールの検証トークンが期限切れです.",
+    "verification-token-error": "検証中にエラーが発生しました。<br />パスワードをもう一度リセットしてください。",
 
     "reset-page-title": "パスワード忘れた",
     "reset-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",

@@ -4,11 +4,8 @@ export default gql`
 mutation ResetChangePassword($email: String, $token: String, $password: String)
 {
   resetChangePassword (email: $email, token: $token, password: $password) {
-    displayName
-    email
-    role
-    registerDate
-    lastAccessDate
+    saved
+    message
   }
 }
 `

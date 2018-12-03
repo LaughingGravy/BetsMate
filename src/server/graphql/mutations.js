@@ -11,6 +11,7 @@ const {
 import UserType from './types/user_type'
 const CountryType = require('./types/country_type').default
 import VerifyType from '../graphql/types/verify_type'
+import SaveType from '../graphql/types/save_type'
 const AdminService = require('../services/admin')
 
 import Config from '../../../utilities/Config'
@@ -113,7 +114,7 @@ export default new GraphQLObjectType({
         //     }
         // },
         resetChangePassword: {
-            type: UserType,
+            type: SaveType,
             args: {
                 email: { type: GraphQLString },
                 token: { type: GraphQLString },

@@ -298,20 +298,17 @@ let authService = {
 
   VerifyPasswordResetToken: ({ email, token }) => {
     return verifyPasswordResetToken(email, token).then(result => {
-      console.log("result", result)
       return result;
     });
   },
 
   ResetChangePassword: ({email, token, password}) => {
     return resetChangePassword(email, token, password).then(result => {
-      console.log("result", result)
       return result;
     })
     .catch(error => {
-      console.log("error reset change password");
-      console.log(error);
-      return error;
+      console.log("reset change password error ", error);
+      throw error;
     });
   },
 
@@ -644,7 +641,7 @@ function verifyPasswordResetToken(email, token) {
       .FindOne(email)
       .then(user => {
         if (!user) {
-          resolve({ verified: false, message: "reset-error" });
+          resolve({ verified: false, message: "verification-token-error" });
         } else {
           if (isFirstUTCDateAfterSecond(user.passwordResetExpiry, getUTCDate())) {
             argon2.verify(user.passwordResetHash, token)
@@ -652,37 +649,31 @@ function verifyPasswordResetToken(email, token) {
                 if (verified) {
                   resolve({ verified: verified, message: "" });
                 } else {
-                  resolve({ verified: verified, message: "reset-error" });
+                  resolve({ verified: verified, message: "verification-token-error" });
                 }
               })
               .catch(error => {
-                console.log("error verifying reset token");
-                console.log(error);
-                resolve({ verified: verified, message: "reset-error" });
+                console.log("verifying reset token error ", error );
+                resolve({ verified: verified, message: "verification-token-error" });
               });
           } else {
-            console.log("verifyPasswordResetToken 4")
-            console.log("expired");
+            console.log("error verifying reset expired");
             resolve({ verified: false, message: "expired-email-token-error" });
           }
         }
       })
       .catch(error => {
-        console.log("verifyPasswordResetToken 5")
-        console.log("error finding user after reset verification");
-        console.log(error);
-        resolve({ verified: false, message: "reset-error" });
+        console.log("finding user after reset verification error", error);
+        resolve({ verified: false, message: "verification-token-error" });
       });
   })
   return promise;
 }
 
 function resetChangePassword(email, token, password) {
-  console.log("resetChangePassword", email, token, password)
   let promise = new Promise((resolve, reject) => {
-    verifyPasswordResetToken(token, email)
+    verifyPasswordResetToken(email, token)
       .then(verifyObj => {
-        console.log("verifyObj", verifyObj)
         if (!verifyObj.verified) {
           reject(verifyObj.message);
         }
@@ -696,20 +687,19 @@ function resetChangePassword(email, token, password) {
             argon2.hash(password, { type: argon2.argon2id }).then(hash => {
               // Hash the password with Argon2id: https://crypto.stackexchange.com/questions/48935/why-use-argon2i-or-argon2d-if-argon2id-exists?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
               user.passwordHash = hash;
-              //user.save()
               userService.UpdateOne(user);
-              resolve(user);
+
+              const retObj = { saved: true, message: ""};
+              resolve(retObj);
             })
               .catch(error => {
-                console.log("resetChangePassword password hash error");
-                console.log(error);
+                console.log("resetChangePassword password hash error ", error);
                 reject(error);
               });
           })
       })
       .catch(error => {
-        console.log("resetChangePassword -> checkPasswordResetToken error");
-        console.log(error);
+        console.log("resetChangePassword -> checkPasswordResetToken error", error);
         reject(error);
       });
   });
