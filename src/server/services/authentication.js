@@ -289,10 +289,13 @@ let authService = {
       });
   },
 
-  ChangePassword: (email, password) => {
-    return changePassword(email, password).then(resetUser => {
-      console.log(resetUser);
-      return resetUser;
+  ChangePassword: ({ email, password, newpassword }) => {
+    return changePassword(email, password, newpassword).then(result => {
+      return result;
+    })
+    .catch(error => {
+      console.log("change password error ", error);
+      throw error;
     });
   },
 
@@ -706,23 +709,46 @@ function resetChangePassword(email, token, password) {
   return promise;
 }
 
-function changePassword({ email, password }) {
-  // return User.findOne({email: email})
-  return userService.FindOne({ email: email }).then(user => {
-    console.log("user");
-    console.log(user);
-    if (!user) {
-      throw new Error("find-user-error");
-    } else {
-      return argon2.hash(password, { type: argon2.argon2id }).then(hash => {
-        // Hash the password with Argon2id: https://crypto.stackexchange.com/questions/48935/why-use-argon2i-or-argon2d-if-argon2id-exists?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-        user.passwordHash = hash;
-        //user.save()
-        userService.UpdateOne(user);
-        return user;
+function changePassword(email, password, newpassword) {
+  let promise = new Promise((resolve, reject) => {
+    userService
+      .FindOne(email)
+      .then(user => {
+        if (!user) {
+          reject(new Error("credentials-error"))
+        } else {
+
+          validateUserPassword(user.passwordHash, password)
+          .then(validated => {
+            if (!validated) {
+              reject(new Error("credentials-error"))
+            }
+
+            argon2.hash(newpassword, { type: argon2.argon2id }).then(hash => {
+              // Hash the password with Argon2id: https://crypto.stackexchange.com/questions/48935/why-use-argon2i-or-argon2d-if-argon2id-exists?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+              user.passwordHash = hash;
+              userService.UpdateOne(user);
+
+              const retObj = { saved: true, message: ""};
+              resolve(retObj);
+            })
+            .catch(error => {
+              console.log("change password hash error ", error);
+              reject(error);
+            });
+          })
+          .catch(error => {
+            console.log("change password validating password error ", error);
+            reject(error);
+          });
+        }
+      })
+      .catch(error => {
+        console.log("change password find user error ", error);
+        reject(error);
       });
-    }
-  });
+    });
+  return promise;
 }
 
 function getNewUser() {

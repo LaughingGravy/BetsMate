@@ -89,30 +89,6 @@ export default new GraphQLObjectType({
                 return AuthenticationService.VerifyPasswordResetToken({ email, token });
             }
         },
-        // changePassword: {
-        //     type: UserType,
-        //     args: {
-        //         email: { type: GraphQLString },
-        //         password: { type: GraphQLString }
-        //     },
-        //     resolve(parentValue, { email, password }, ctx) {
-        //         const req = ctx.req
-        //         const { token } = req.body
-        //         return AuthService.ChangePassword({ email, password, token });
-        //     }
-        // },
-        // resetPassword: {
-        //     type: UserType,
-        //     args: {
-        //         email: { type: GraphQLString },
-        //         token: { type: GraphQLString },
-        //         password: { type: GraphQLString }
-        //     },
-        //     resolve(parentValue, { email, password, token }, ctx) {
-        //         const req = ctx.req
-        //         return AuthService.ResetPassword({ email, password, token });
-        //     }
-        // },
         resetChangePassword: {
             type: SaveType,
             args: {
@@ -122,6 +98,17 @@ export default new GraphQLObjectType({
             },
             resolve(parentValue, { email, token, password }, ctx) {
                 return AuthenticationService.ResetChangePassword({ email, token, password });
+            }
+        },
+        changePassword: {
+            type: SaveType,
+            args: {
+                email: { type: GraphQLString },
+                password: { type: GraphQLString },
+                newpassword: { type: GraphQLString }
+            },
+            resolve(parentValue, { email, password, newpassword }, ctx) {
+                return AuthenticationService.ChangePassword({ email, password, newpassword });
             }
         },
 

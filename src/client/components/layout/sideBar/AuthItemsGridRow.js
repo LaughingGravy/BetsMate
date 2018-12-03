@@ -12,7 +12,7 @@ import { withUser } from '../../contexts/withUserContext'
 const vanillaAuthItemsGridRow = ({ onToggleSideBarVisibility }) => (
   <Grid.Row centered columns={1}>
     <Grid.Column textAlign="center">
-        <Link to="/change" key="change" onClick={onToggleSideBarVisibility}>
+        <Link to="/change-password" key="change-password" onClick={onToggleSideBarVisibility}>
           {intl.get("change-password-menu-header")}
         </Link>
       </Grid.Column>

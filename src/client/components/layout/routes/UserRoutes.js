@@ -66,6 +66,9 @@ const UserRoutes = ({ userCtx }) => {
 
       <Route exact path="/change-password" render={({match}) => (
           !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<ChangePasswordPage match={match} />) )} />
+
+      <Route exact path="/change-password/success" render={({match}) => (
+          !isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<ChangePasswordSuccessPage match={match} />) )} />
       
     </React.Fragment>
   )

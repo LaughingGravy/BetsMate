@@ -7,7 +7,9 @@ import CHANGE_PASSWORD from '../../../graphql/mutations/authentication/changePas
 
 import MutationButton from '../../common/MutationButton'
 
-const ChangePasswordButton = ({ variables }) => {
+const ChangePasswordButton = ({ variables, disabled }) => {
+
+  console.log("ChangePasswordButton variables, disabled", variables, disabled)
 
   const label = "save-button-label"
 
@@ -20,7 +22,7 @@ const ChangePasswordButton = ({ variables }) => {
       
       onCompleted={onCompleted}>
       {(changePassword, { loading, error }) => (
-        <MutationButton variables={variables} mutation={changePassword} 
+        <MutationButton variables={variables} disabled={disabled} mutation={changePassword} 
                         loading={loading} error={error} label={label} />
     )}
     </Mutation>
@@ -32,7 +34,8 @@ ChangePasswordButton.propTypes = {
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
     newPassword: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  disabled: PropTypes.bool.isRequired
 }
 
 export default ChangePasswordButton
