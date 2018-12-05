@@ -2,18 +2,13 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { NotFound } from '../../../../library/routing'
-import { withUser } from '../contexts/withUserContext'
 
 import CountryRoutes from './country/CountryRoutes'
 
-const AdminRoutes = ({ match, userCtx }) => {
-  const { isAuthenticated, user: { role } } = userCtx
-  
+const AdminRoutes = ({ match }) => {
   return (
       <Switch>
-          {/* <CountryRoutes match={match} /> */}
-           <CountryRoutes render={({match}) => (
-            !isAuthenticated || role != "admin" ? (<UserRoleNoPermissionPage /> ) : (<CountryRoutes match={match} />) )} />
+          <CountryRoutes match={match} />
 
           <Route component={NotFound} />
       </Switch> 
@@ -21,8 +16,7 @@ const AdminRoutes = ({ match, userCtx }) => {
 }
 
 AdminRoutes.propTypes = {
-  match: PropTypes.object.isRequired,
-  userCtx: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired
 };
 
-export default withUser(AdminRoutes);
+export default AdminRoutes;
