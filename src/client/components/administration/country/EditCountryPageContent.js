@@ -6,6 +6,7 @@ import { compose } from 'recompose'
 import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay, renderForNotFound, NotFoundDisplay } from '../../common/ConditionalRender'
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'
 import CountryForm from './CountryForm'
+import SaveCountryButton from './SaveCountryButton'
 
 const vanillaContent = ({ data }) => {
   const isEdit = !(data.countryByCode == null)
@@ -18,7 +19,11 @@ const vanillaContent = ({ data }) => {
   }
 
   return (
-    <CountryForm  code={countryByCode.code} countryName={countryByCode.name}  />
+    <CountryForm  code={countryByCode.code} countryName={countryByCode.name} render={renderProps => (
+      <Container textAlign="center">
+        <SaveCountryButton variables={renderProps.variables} disabled={!renderProps.isFormValid} />
+      </Container>
+    )} />
   )
 }
 

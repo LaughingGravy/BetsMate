@@ -47,15 +47,19 @@ const SaveCountryButton = ({ code, name }) => {
 
       refetchQueries={[ {query: ALL_COUNTRIES} ]}>
       {(mergeCountry, { loading, error }) => (
-          <MutationButton variables={{code: code, name: name}} mutation={mergeCountry} loading={loading} error={error} label={label} />
+          <MutationButton variables={{code: code, name: name}} mutation={mergeCountry} loading={loading}
+                          disabled={disabled} error={error} label={label} />
       )}
     </Mutation>
   )
 }
 
 SaveCountryButton.propTypes = {
-  code: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired
+  variables: PropTypes.shape({
+    code: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  disabled: PropTypes.bool.isRequired
 };
 
 export default SaveCountryButton
