@@ -8,7 +8,7 @@ import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCo
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'
 import MERGE_COUNTRY from '../../../graphql/mutations/administration/country/mergeCountry'
 
-const SaveCountryButton = ({ code, name }) => {
+const SaveCountryButton = ({ code, name , disabled }) => {
 
   const label = "save-button-label"
 

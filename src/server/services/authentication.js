@@ -594,7 +594,6 @@ function changePassword(email, password, newPassword) {
 
 function getNewUser() {
   return {
-    id: UUID.v4(),
     email: "",
     passwordHash: "",
     displayName: "Guest",

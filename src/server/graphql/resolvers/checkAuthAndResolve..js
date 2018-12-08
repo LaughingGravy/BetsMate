@@ -1,33 +1,20 @@
-import jwt from 'jsonwebtoken'
 import AuthorizationError from '../customErrors/AuthorizationError'
 
-const checkAuthAndResolve = (ctx, action) => {
-
-  console.log("checkAuthAndResolve")
-
+const checkAuthAndResolve = (ctx, action, params) => {
   const req = ctx.req;
-  const token = req.headers.authorization
+  const user = req.headers.authorization
 
-  console.log("req.user", req.user)
-  console.log("req.headers.authorization", req.headers.authorization)
-
-  if (!token) {
-    throw new AuthorizationError()
+  if (!user || user.role == "guest") {
+    throw new Error("Unauthorised Access")
   }
 
-  jwt.verify(token, Config.secret, (error, data) => {
-    if (error) {
-      throw new AuthorizationError()
-    }
-
-    try {[]
-      return action.apply(this, data)
-    }
-    catch(e) {
-      console.log(e)
-      throw e;
-    }
-  })
+  try {
+    return action(params)
+  }
+  catch(e) {
+    console.log(e)
+    throw e;
+  }
 }
 
 export { checkAuthAndResolve }

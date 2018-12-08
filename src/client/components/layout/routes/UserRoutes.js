@@ -26,9 +26,8 @@ const UserRoutes = ({ userCtx }) => {
   const { isAuthenticated, user: { role } } = userCtx
 
   return (
-    <React.Fragment>   
-
-      <Route exact path="/administration" render={({match}) => (
+    <React.Fragment>
+      <Route path="/administration" render={({match}) => (
           !isAuthenticated || role != "admin" ? (<UserRoleNoPermissionPage /> ) : (<AdministrationPage match={match} />) )} />
 
       <Route path="/login" render={({match}) => (

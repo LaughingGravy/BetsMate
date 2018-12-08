@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import { compose } from 'recompose'
+import { Container } from 'semantic-ui-react'
 
 import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay, renderForNotFound, NotFoundDisplay } from '../../common/ConditionalRender'
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'

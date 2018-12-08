@@ -13,7 +13,7 @@ const UserRoleNoPermissionPage = () => (
           </Message.Header>
           <br />
           <Message.Content>
-            {intl.getHTML("You are not authorised to view this page")}
+            {intl.getHTML("auth-page-decline-warning-msg")}
           </Message.Content>
         </Message>
       </GridColumn>

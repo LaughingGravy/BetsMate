@@ -18,6 +18,8 @@ import Config from '../../../utilities/Config'
 
 import AuthenticationService from '../services/authentication'
 
+import { checkRoleAndResolve, checkAuthAndResolve } from './resolvers/checkRoleAndResolve'
+
 export default new GraphQLObjectType({
     name: 'Mutation',
     fields: {
@@ -62,7 +64,7 @@ export default new GraphQLObjectType({
             type: UserType,
             resolve(parentValue, args, ctx) {
                 const req = ctx.req;
-                const { user } = req;
+                const user = req.headers.authorization
 
                 req.res.clearCookie(Config.jwt.cookieName);
                 return user;
@@ -108,23 +110,17 @@ export default new GraphQLObjectType({
                 newPassword: { type: GraphQLString }
             },
             resolve(parentValue, { email, password, newPassword }, ctx) {
-                return AuthenticationService.ChangePassword({ email, password, newPassword });
+                return checkAuthAndResolve(ctx, AuthenticationService.ChangePassword, { email, password, newPassword });
             }
         },
-
-
-        
-
-
-
         mergeCountry: {
             type: CountryType,
             args: {
                 code: { type: GraphQLString },
                 name: { type: GraphQLString }
             },
-            resolve(parentValue, { code, name }) {
-                return AdminService.mergeCountry({ code, name });
+            resolve(parentValue, { code, name }, ctx) {
+                return checkRoleAndResolve(ctx, AdminService.mergeCountry, { code, name }, ["admin"]);
             }
         },
         deleteCountry: {
@@ -132,8 +128,8 @@ export default new GraphQLObjectType({
             args: {
                 code: { type: GraphQLString }
             },
-            resolve(parentValue, { code }) {
-                return AdminService.deleteCountry({ code });
+            resolve(parentValue, { code }, ctx) {
+                return checkRoleAndResolve(ctx, AdminService.deleteCountry, { code }, ["admin"]);
             }
         }
     }

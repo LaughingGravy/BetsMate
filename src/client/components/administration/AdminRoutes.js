@@ -8,10 +8,9 @@ import CountryRoutes from './country/CountryRoutes'
 const AdminRoutes = ({ match }) => {
   return (
       <Switch>
-          <CountryRoutes match={match} />
-
-          <Route component={NotFound} />
-      </Switch> 
+       <CountryRoutes match={match} /> 
+        <Route component={NotFound} />
+      </Switch>
   );
 }
 

@@ -1,27 +1,19 @@
-import jwt from 'jsonwebtoken'
-import AuthorizationError from '../AuthorizationError'
 
-const checkRoleAndResolve = (ctx, minimumRole, action, ...params) => {
+const checkRoleAndResolve = (ctx, action, params, claims) => {
   const req = ctx.req;
-  const token = ctx.heaqders.authorization
+  const user = req.headers.authorization
 
-  if (!token) {
-    throw new AuthorizationError()
+  if (!user || !claims.includes(user.role)) {
+    throw new Error("Unauthorised Access")
   }
 
-  jwt.verify(token, Config.secret, (error, data) => {
-    if (error) {
-      throw new AuthorizationError()
-    }
-
-    const role = data.role
-
-    if (!isMinimumRole(minimumRole, role)) {
-      throw new RoleError()
-    } 
-
-    return action.apply(this, params)
-  })
+  try {
+    return action(params)
+  }
+  catch(e) {
+    console.log(e)
+    throw e;
+  }
 }
 
 export { checkRoleAndResolve }

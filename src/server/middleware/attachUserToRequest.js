@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 import Config from '../../../utilities/Config'
 
 const attachUserToRequest = (req, res, next) => {
-
   if (req.signedCookies[Config.jwt.cookieName]) {
 
     let token = req.signedCookies[Config.jwt.cookieName]
@@ -22,7 +21,6 @@ const attachUserToRequest = (req, res, next) => {
                         role: decodedToken.role
                     };
 
-          req.user = user;
           req.headers.authorization = user;
         }
       })

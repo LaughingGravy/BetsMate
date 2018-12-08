@@ -9,7 +9,7 @@ const UserType  = require('./user_type').default
 const CountryType  = require('./country_type').default
 
 const AdminService = require('../../services/admin')
-import { checkAuthAndResolve } from '../resolvers/checkAuthAndResolve..js'
+import { checkRoleAndResolve } from '../resolvers/checkRoleAndResolve'
 
 export default new GraphQLObjectType({
     name: 'RootQueryType',
@@ -18,19 +18,14 @@ export default new GraphQLObjectType({
             type: UserType,
             resolve(parentValue, args, ctx) {
                 const req = ctx.req;
-                return req.user;
+                return req.headers.authorization;
             }
         },
-        // countries: {
-        //     type: new GraphQLList(CountryType),
-        //     resolve(parentValue, args) {
-        //         return AdminService.allCountries()
-        //     }
-        // },
         countries: {
             type: new GraphQLList(CountryType),
             resolve(parentValue, args, ctx) {
-                return checkAuthAndResolve(ctx, AdminService.allCountries());
+                console.log("RootQueryType")
+                return checkRoleAndResolve(ctx, AdminService.allCountries, null, ["admin"]);
             }
         },
         countryByCode: {
@@ -38,8 +33,8 @@ export default new GraphQLObjectType({
             args: {
                 code: { type: GraphQLString }
             },
-            resolve(parentValue, { code }) {
-                return AdminService.getCountryByCode(code)
+            resolve(parentValue, { code }, ctx) {
+                return checkRoleAndResolve(ctx, AdminService.getCountryByCode, code, ["admin"]);
             }
         }
     }

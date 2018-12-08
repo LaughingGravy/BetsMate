@@ -73,7 +73,8 @@
 
     "registration-text": "Please enter your details and an account activation link will be sent on clicking upon the Register button.",
 
-
+    "auth-page-decline-warning-title": "Unauthorised Access",
+    "auth-page-decline-warning-msg": "You are not authorised to view this page.",
 
 
     
@@ -113,8 +114,7 @@
 
     "save-button-label": "Save",
 
-    "auth-page-decline-warning-title": "Unauthorised Access",
-    "auth-page-decline-warning-msg": "You are not authorised to view this page.",
+    
     "email-not-found-error": "Email not found.",
     "pwd-invalid-error": "Password not valid.",
     "duplicate-email-error": "Email is already registered",
