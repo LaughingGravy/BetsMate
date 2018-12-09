@@ -18,7 +18,7 @@ import Config from '../../../utilities/Config'
 
 import AuthenticationService from '../services/authentication'
 
-import { checkRoleAndResolve, checkAuthAndResolve } from './resolvers/checkRoleAndResolve'
+import { checkRoleAndResolveAsync, checkAuthAndResolveAsync } from './guards/guardResolvers'
 
 export default new GraphQLObjectType({
     name: 'Mutation',
@@ -32,9 +32,9 @@ export default new GraphQLObjectType({
                 role: { type: GraphQLString },
                 timeZone: { type: GraphQLString }
             },
-            resolve(parentValue, { email, displayName, password, role, timeZone }, ctx ) { //request is request object from express
+            async resolve(parentValue, { email, displayName, password, role, timeZone }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthenticationService.Register({ email, displayName, password, role}, timeZone);
+                return await AuthenticationService.Register({ email, displayName, password, role}, timeZone);
             }
         },
         verifyByEmail: {
@@ -43,9 +43,9 @@ export default new GraphQLObjectType({
                 email: { type: GraphQLString },
                 emailVerificationString: { type: GraphQLString }
             },
-            resolve(parentValue, { email, emailVerificationString }, ctx ) { //request is request object from express
+            async resolve(parentValue, { email, emailVerificationString }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthenticationService.VerifyEmailAddress({ email, emailVerificationString });
+                return await AuthenticationService.VerifyEmailAddressAsync({ email, emailVerificationString });
             }
         },
         login: {
@@ -54,10 +54,10 @@ export default new GraphQLObjectType({
                 email: { type: GraphQLString },
                 password: { type: GraphQLString }
             },
-            resolve(parentValue, { email, password }, ctx) {
+            async resolve(parentValue, { email, password }, ctx) {
                const req = ctx.req;
 
-               return AuthenticationService.Login({ email, password, req })
+               return await AuthenticationService.LoginAsync({ email, password, req })
             }
         },
         logout: {
@@ -76,8 +76,8 @@ export default new GraphQLObjectType({
                 email: { type: GraphQLString },
                 timeZone: { type: GraphQLString }
             },
-            resolve(parentValue, { email, timeZone }, ctx) {
-                return AuthenticationService.SendPasswordReset({ email, timeZone });
+            async resolve(parentValue, { email, timeZone }, ctx) {
+                return await AuthenticationService.SendPasswordResetAsync({ email, timeZone });
             }
         },
         verifyPasswordResetToken: {
@@ -86,9 +86,9 @@ export default new GraphQLObjectType({
                 email: { type: GraphQLString },
                 token: { type: GraphQLString }
             },
-            resolve(parentValue, { email, token }, ctx ) { //request is request object from express
+            async resolve(parentValue, { email, token }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return AuthenticationService.VerifyPasswordResetToken({ email, token });
+                return await AuthenticationService.VerifyPasswordResetTokenAsync({ email, token });
             }
         },
         resetChangePassword: {
@@ -98,8 +98,8 @@ export default new GraphQLObjectType({
                 token: { type: GraphQLString },
                 password: { type: GraphQLString }
             },
-            resolve(parentValue, { email, token, password }, ctx) {
-                return AuthenticationService.ResetChangePassword({ email, token, password });
+            async resolve(parentValue, { email, token, password }, ctx) {
+                return await AuthenticationService.ResetChangePasswordAsync({ email, token, password });
             }
         },
         changePassword: {
@@ -109,8 +109,8 @@ export default new GraphQLObjectType({
                 password: { type: GraphQLString },
                 newPassword: { type: GraphQLString }
             },
-            resolve(parentValue, { email, password, newPassword }, ctx) {
-                return checkAuthAndResolve(ctx, AuthenticationService.ChangePassword, { email, password, newPassword });
+            async resolve(parentValue, { email, password, newPassword }, ctx) {
+                return checkAuthAndResolveAsync(ctx, AuthenticationService.ChangePassword, { email, password, newPassword });
             }
         },
         mergeCountry: {
@@ -119,8 +119,8 @@ export default new GraphQLObjectType({
                 code: { type: GraphQLString },
                 name: { type: GraphQLString }
             },
-            resolve(parentValue, { code, name }, ctx) {
-                return checkRoleAndResolve(ctx, AdminService.mergeCountry, { code, name }, ["admin"]);
+            async resolve(parentValue, { code, name }, ctx) {
+                return checkRoleAndResolveAsync(ctx, AdminService.mergeCountry, { code, name }, ["admin"]);
             }
         },
         deleteCountry: {
@@ -128,8 +128,8 @@ export default new GraphQLObjectType({
             args: {
                 code: { type: GraphQLString }
             },
-            resolve(parentValue, { code }, ctx) {
-                return checkRoleAndResolve(ctx, AdminService.deleteCountry, { code }, ["admin"]);
+            async resolve(parentValue, { code }, ctx) {
+                return checkRoleAndResolveAsync(ctx, AdminService.deleteCountry, { code }, ["admin"]);
             }
         }
     }

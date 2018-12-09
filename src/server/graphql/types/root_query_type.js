@@ -9,7 +9,7 @@ const UserType  = require('./user_type').default
 const CountryType  = require('./country_type').default
 
 const AdminService = require('../../services/admin')
-import { checkRoleAndResolve } from '../resolvers/checkRoleAndResolve'
+import { checkRoleAndResolveAsync } from '../guards/guardResolvers'
 
 export default new GraphQLObjectType({
     name: 'RootQueryType',
@@ -23,9 +23,8 @@ export default new GraphQLObjectType({
         },
         countries: {
             type: new GraphQLList(CountryType),
-            resolve(parentValue, args, ctx) {
-                console.log("RootQueryType")
-                return checkRoleAndResolve(ctx, AdminService.allCountries, null, ["admin"]);
+            async resolve(parentValue, args, ctx) {
+                return await checkRoleAndResolveAsync(ctx, AdminService.allCountries, null, ["admin"]);
             }
         },
         countryByCode: {
@@ -33,8 +32,8 @@ export default new GraphQLObjectType({
             args: {
                 code: { type: GraphQLString }
             },
-            resolve(parentValue, { code }, ctx) {
-                return checkRoleAndResolve(ctx, AdminService.getCountryByCode, code, ["admin"]);
+            async resolve(parentValue, { code }, ctx) {
+                return await checkRoleAndResolveAsync(ctx, AdminService.getCountryByCode, code, ["admin"]);
             }
         }
     }
