@@ -1,4 +1,3 @@
-
 import React from 'react';
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
@@ -8,15 +7,17 @@ import { validateCountry } from './validate'
 import { getErrObjs } from '../../validation/common'
 import ValidationInput from '../../common/ValidationInput'
 
-class CountryForm  extends React.Component {
+class StadiumForm  extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = { 
-      code: props.code,
+      stadiumName: props.name,
+      city: props.city,
       countryName: props.countryName,
       pristineFields: {
-        code: true,
+        stadiumName: true,
+        city: true,
         countryName: true
       }
     }
@@ -31,9 +32,10 @@ class CountryForm  extends React.Component {
   }
 
   render() {
-    const { code, countryName, pristineFields } = this.state
-    const errors = validateCountry(code, countryName)
-    const codeErrObjs = getErrObjs(errors, "code")
+    const { stadiumName, city, countryName, pristineFields } = this.state
+    const errors = validateCountry(stadiumName, city, countryName)
+    const stadiumNameErrObjs = getErrObjs(errors, "stadiumName")
+    const cityErrObjs = getErrObjs(errors, "city")
     const countryNameErrObjs = getErrObjs(errors, "countryName")
     const isFormValid = !Object.keys(errors).some(x => errors[x])
 
@@ -42,10 +44,17 @@ class CountryForm  extends React.Component {
                                                   e.preventDefault() 
                                               }}>
         <Form.Field required>
-          <ValidationInput name='code' value={code} label={intl.get("country-code-label")} 
-                  placeholder={intl.get("country-code-placeholder")} onChange={this.handleChange}
-                  onBlur={this.handleBlur('code')}  
-                  errors={codeErrObjs} pristine={pristineFields['code'] ? 1 : 0} />
+          <ValidationInput name='stadiumName' value={stadiumName} label={intl.get("stadium-stadiumName-label")} 
+                  placeholder={intl.get("stadium-stadiumName-placeholder")} onChange={this.handleChange}
+                  onBlur={this.handleBlur('stadiumName')}  
+                  errors={stadiumNameErrObjs} pristine={pristineFields['stadiumName'] ? 1 : 0} />
+        </Form.Field>
+
+        <Form.Field required>
+          <ValidationInput name='city' value={code} label={intl.get("stadium-city-label")} 
+                  placeholder={intl.get("stadium-city-placeholder")} onChange={this.handleChange}
+                  onBlur={this.handleBlur('city')}  
+                  errors={cityErrObjs} pristine={pristineFields['city'] ? 1 : 0} />
         </Form.Field>
 
         <Form.Field required>
@@ -55,17 +64,18 @@ class CountryForm  extends React.Component {
                   errors={countryNameErrObjs} pristine={pristineFields['countryName'] ? 1 : 0} />
         </Form.Field>
 
-        {this.props.render({ variables: { id: this.props.id, code: code, name: countryName }, isFormValid: isFormValid })}
+        {this.props.render({ variables: { id: this.props.id, name: stadiumName, city: city, name: countryName }, isFormValid: isFormValid })}
 
       </Form>
     ) 
   } 
 }
 
-CountryForm.propTypes = {
+StadiumForm.propTypes = {
   id: PropTypes.string,
-  code: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  city: PropTypes.string.isRequired,
   countryName: PropTypes.string.isRequired
 };
 
-export default CountryForm
+export default StadiumForm

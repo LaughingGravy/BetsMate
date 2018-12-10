@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 import { NotFound } from '../../../../library/routing'
 
 import CountryRoutes from './country/CountryRoutes'
+import StadiumRoutes from './stadium/StadiumRoutes'
 
 const AdminRoutes = ({ match }) => {
   return (
       <Switch>
-       <CountryRoutes match={match} /> 
-        <Route component={NotFound} />
+       <CountryRoutes match={match} />
+       <StadiumRoutes match={match} /> 
+       <Route component={NotFound} />
       </Switch>
   );
 }

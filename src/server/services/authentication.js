@@ -1,6 +1,6 @@
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-import UUID from "node-uuid";
+import uuidv4 from "uuid/v4";
 //const config = require('../config/config');
 const crypto = require("crypto");
 //const LocalStrategy = require('passport-local').Strategy;
@@ -417,6 +417,7 @@ function changePassword(email, password, newPassword) {
 
 function getNewUser() {
   return {
+    id: uuidv4(),
     email: "",
     passwordHash: "",
     displayName: "Guest",

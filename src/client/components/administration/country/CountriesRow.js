@@ -12,10 +12,10 @@ class CountriesRow extends React.Component {
   }
 
   render() {
-    const { data: { code, name }, active, onClick } = this.props
+    const { data: { id, code, name }, active, onClick } = this.props
     
     return (
-      <Table.Row textAlign='center' active={active} onClick={onClick}>
+      <Table.Row textAlign='center' active={active} onClick={onClick} key={id}>
         <Table.Cell>{this.flagRenderer(code)}</Table.Cell>
         <Table.Cell>{code}</Table.Cell>
         <Table.Cell>{name}</Table.Cell>     

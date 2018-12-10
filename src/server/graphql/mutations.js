@@ -12,7 +12,7 @@ import UserType from './types/user_type'
 const CountryType = require('./types/country_type').default
 import VerifyType from '../graphql/types/verify_type'
 import SaveType from '../graphql/types/save_type'
-const AdminService = require('../services/admin')
+import CountryService from '../services/country'
 
 import Config from '../../../utilities/Config'
 
@@ -34,7 +34,7 @@ export default new GraphQLObjectType({
             },
             async resolve(parentValue, { email, displayName, password, role, timeZone }, ctx ) { //request is request object from express
                 const req = ctx.req;
-                return await AuthenticationService.Register({ email, displayName, password, role}, timeZone);
+                return await AuthenticationService.RegisterAsync({ email, displayName, password, role}, timeZone);
             }
         },
         verifyByEmail: {
@@ -113,6 +113,16 @@ export default new GraphQLObjectType({
                 return checkAuthAndResolveAsync(ctx, AuthenticationService.ChangePassword, { email, password, newPassword });
             }
         },
+        createCountry: {
+            type: CountryType,
+            args: {
+                code: { type: GraphQLString },
+                name: { type: GraphQLString }
+            },
+            async resolve(parentValue, { code, name }, ctx) {
+                return checkRoleAndResolveAsync(ctx, CountryService.createCountry, { code, name }, ["admin"]);
+            }
+        },
         mergeCountry: {
             type: CountryType,
             args: {
@@ -120,7 +130,7 @@ export default new GraphQLObjectType({
                 name: { type: GraphQLString }
             },
             async resolve(parentValue, { code, name }, ctx) {
-                return checkRoleAndResolveAsync(ctx, AdminService.mergeCountry, { code, name }, ["admin"]);
+                return checkRoleAndResolveAsync(ctx, CountryService.mergeCountry, { code, name }, ["admin"]);
             }
         },
         deleteCountry: {
@@ -129,7 +139,7 @@ export default new GraphQLObjectType({
                 code: { type: GraphQLString }
             },
             async resolve(parentValue, { code }, ctx) {
-                return checkRoleAndResolveAsync(ctx, AdminService.deleteCountry, { code }, ["admin"]);
+                return checkRoleAndResolveAsync(ctx, CountryService.deleteCountry, { code }, ["admin"]);
             }
         }
     }

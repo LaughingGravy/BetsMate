@@ -1,3 +1,5 @@
+import uuidv4 from "uuid/v4";
+
 import { createSession } from "../database/neo4jDB"
 
 function allCountries() {
@@ -39,6 +41,16 @@ function getCountryByCode(code) {
       session.close()
       throw error
     })
+}
+
+function createCountry({ code, name }){
+  const id = uuidv4();
+  let session = createSession()
+  return session
+    .run(
+      `CREATE (country:Country { id: ${id}, code: "${code}", name: "${name}" }) 
+      RETURN country`
+    )
 }
 
 function mergeCountry( { code, name }) {
@@ -85,5 +97,5 @@ function deleteCountry( { code, name }) {
     })
 }
 
-export { allCountries, getCountryByCode, mergeCountry, deleteCountry }
+export { allCountries, getCountryByCode, createCountry, mergeCountry, deleteCountry }
 

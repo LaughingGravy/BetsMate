@@ -102,15 +102,23 @@
     "country-tbl-flag-col-hdr": "Flag",
     "country-tbl-name-col-hdr": "Name",
 
+    "countries-tbl-col-header-name": "Country Name",
+    "admin-create-button-label": "Create",
+    "admin-edit-button-label": "Edit",
+    "admin-delete-button-label": "Delete",
+
     "country-code-label": "Code",
     "country-code-placeholder": "gb eng",
     "country-name-label": "Name",
     "country-name-placeholder": "England",
 
-    "countries-tbl-col-header-name": "Country Name",
-    "admin-create-button-label": "Create",
-    "admin-edit-button-label": "Edit",
-    "admin-delete-button-label": "Delete",
+    "admin-stadium-menu-header": "Stadium",
+    "stadia-page-title": "Stadia",
+    "stadium-tbl-name-col-hdr": "Name",
+    "stadium-tbl-city-col-hdr": "City",
+    "stadium-tbl-country-col-hdr": "Country",
+
+   
 
     "save-button-label": "Save",
 

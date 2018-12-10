@@ -7,8 +7,9 @@ import MutationButton from '../../common/MutationButton'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'
 import MERGE_COUNTRY from '../../../graphql/mutations/administration/country/mergeCountry'
+import CREATE_COUNTRY from '../../../graphql/mutations/administration/country/mergeCountry'
 
-const SaveCountryButton = ({ code, name , disabled }) => {
+const SaveCountryButton = ({ id, code, name , disabled }) => {
 
   const label = "save-button-label"
 
@@ -17,7 +18,7 @@ const SaveCountryButton = ({ code, name , disabled }) => {
   }
 
   return (
-    <Mutation mutation={MERGE_COUNTRY} key={code} 
+    <Mutation mutation={!id ? MERGE_COUNTRY : CREATE_COUNTRY} key={code} 
 
       onCompleted={onCompleted}
 
@@ -47,7 +48,7 @@ const SaveCountryButton = ({ code, name , disabled }) => {
 
       refetchQueries={[ {query: ALL_COUNTRIES} ]}>
       {(mergeCountry, { loading, error }) => (
-          <MutationButton variables={{code: code, name: name}} mutation={mergeCountry} loading={loading}
+          <MutationButton variables={{id: id, code: code, name: name}} mutation={mergeCountry} loading={loading}
                           disabled={disabled} error={error} label={label} />
       )}
     </Mutation>
@@ -56,6 +57,7 @@ const SaveCountryButton = ({ code, name , disabled }) => {
 
 SaveCountryButton.propTypes = {
   variables: PropTypes.shape({
+    id: PropTypes.string,
     code: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,

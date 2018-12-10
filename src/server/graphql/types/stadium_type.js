@@ -5,10 +5,11 @@ import {
 } from 'graphql'
 
 export default new GraphQLObjectType({
-  name: 'CountryType',
+  name: 'StadiumType',
   fields: {
     id: { type: GraphQLID },
-    code: { type: GraphQLString },
-    name: { type: GraphQLString }
+    name: { type: GraphQLString },
+    city: { type: GraphQLString },
+    countryCode: { type: GraphQLString }
   }
 })

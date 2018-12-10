@@ -20,6 +20,13 @@ const AdministrationPage = ( { match }) => {
               {intl.get("admin-country-menu-header")}
           </Menu.Item>
         </Menu>
+
+        <Menu stackable pointing>
+          <Menu.Item as={NavLink} to={`${match.url}/stadium`} key="stadium" activeClassName="active"
+                        compact="true">
+              {intl.get("admin-stadium-menu-header")}
+          </Menu.Item>
+        </Menu>
       </Grid.Row>
 
       <Grid.Row centered>
