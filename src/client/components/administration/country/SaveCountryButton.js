@@ -7,7 +7,7 @@ import MutationButton from '../../common/MutationButton'
 import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
 import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'
 import MERGE_COUNTRY from '../../../graphql/mutations/administration/country/mergeCountry'
-import CREATE_COUNTRY from '../../../graphql/mutations/administration/country/mergeCountry'
+import CREATE_COUNTRY from '../../../graphql/mutations/administration/country/createCountry'
 
 const SaveCountryButton = ({ id, code, name , disabled }) => {
 

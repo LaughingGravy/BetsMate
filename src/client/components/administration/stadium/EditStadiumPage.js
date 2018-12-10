@@ -2,24 +2,24 @@ import React from 'react'
 import intl from 'react-intl-universal'
 
 import { Grid, Container, GridColumn } from 'semantic-ui-react'
-import EditCountryPageContent from './EditCountryPageContent'
+import EditStadiumPageContent from './EditStadiumPageContent'
 
-const EditCountryPage = ({ match } ) => {
-  const code = match.params.code 
-  const isEdit = !(match.params.code == null)
+const EditStadiumPage = ({ match } ) => {
+  const id = match.params.id 
+  const isEdit = !(match.params.id == null)
 
   return (
     <Container>
       <Grid columns={1} centered>
         <Grid.Row centered>
-          {!isEdit && <h3>{intl.get("add-country-page-title")}</h3>}
-          {isEdit && <h3>{intl.get("edit-country-page-title")}</h3>}
+          {!isEdit && <h3>{intl.get("add-stadium-page-title")}</h3>}
+          {isEdit && <h3>{intl.get("edit-stadium-page-title")}</h3>}
         </Grid.Row>
 
         <Grid.Row centered>
           <GridColumn mobile={16} tablet={8} computer={4}>
 
-              <EditCountryPageContent code={code} />
+              <EditStadiumPageContent id={id} />
      
           </GridColumn>
         </Grid.Row>
@@ -29,4 +29,4 @@ const EditCountryPage = ({ match } ) => {
   )
 }
 
-export default EditCountryPage
+export default EditStadiumPage

@@ -110,6 +110,9 @@
     "stadium-tbl-name-col-hdr": "名前",
     "stadium-tbl-city-col-hdr": "都市",
     "stadium-tbl-country-col-hdr": "国",
+
+    "add-stadium-page-title": "スタジアムを作る",
+    "edit-stadium-page-title": "編集スタジアム",
     
     "admin-create-button-label": "新しい",
     "admin-edit-button-label": "エディト",

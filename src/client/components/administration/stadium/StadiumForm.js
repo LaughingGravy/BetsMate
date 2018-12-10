@@ -3,7 +3,7 @@ import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
 import { Form } from 'semantic-ui-react'
 
-import { validateCountry } from './validate'
+import { validateStadium } from './validate'
 import { getErrObjs } from '../../validation/common'
 import ValidationInput from '../../common/ValidationInput'
 
@@ -14,11 +14,11 @@ class StadiumForm  extends React.Component {
     this.state = { 
       stadiumName: props.name,
       city: props.city,
-      countryName: props.countryName,
+      countryId: props.countryId,
       pristineFields: {
         stadiumName: true,
         city: true,
-        countryName: true
+        countryId: true
       }
     }
   }
@@ -32,11 +32,11 @@ class StadiumForm  extends React.Component {
   }
 
   render() {
-    const { stadiumName, city, countryName, pristineFields } = this.state
-    const errors = validateCountry(stadiumName, city, countryName)
+    const { stadiumName, city, countryId, pristineFields } = this.state
+    const errors = validateStadium(stadiumName, city, countryId)
     const stadiumNameErrObjs = getErrObjs(errors, "stadiumName")
     const cityErrObjs = getErrObjs(errors, "city")
-    const countryNameErrObjs = getErrObjs(errors, "countryName")
+    const countryIdErrObjs = getErrObjs(errors, "countryId")
     const isFormValid = !Object.keys(errors).some(x => errors[x])
 
     return (

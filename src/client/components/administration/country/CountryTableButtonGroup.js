@@ -12,14 +12,14 @@ const CountryTableButtonGroup = ({ activeRows }) => {
 
   const anySelectedRows = (data) => (Object.entries(data) && Object.entries(data).some(e => e[1] == true))
 
-  const createNavigate = (e, data) => history.push('/administration/country/editcountry')
+  const createNavigate = (e, data) => history.push('/administration/country/edit')
 
   const editNavigate = (e, data) => {
     if (!anySelectedRows(data))
         return
   
       const code = getCode(data)
-      history.push(`/administration/country/editcountry/${code}`)
+      history.push(`/administration/country/edit/${code}`)
   }
 
   const getCode = (data) => {

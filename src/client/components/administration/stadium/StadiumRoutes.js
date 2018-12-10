@@ -10,8 +10,8 @@ const StadiumRoutes = ({ match }) => {
     <React.Fragment>
       <Route exact path={`${match.path}/stadium`}  render={(props) => <StadiumPage match={match} {...props}><StadiaPage {...props} /></StadiumPage>} />
       <Route path={`${match.path}/stadium/stadia`} render={(props) => <StadiumPage match={match} {...props}><StadiaPage {...props}/></StadiumPage>} />
-      <Route exact path={`${match.path}/stadium/editstadium`} render={(props) => <StadiumPage match={match} {...props}><EditStadiumPage {...props}/></StadiumPage>} /> 
-      <Route path={`${match.path}/stadium/editstadium/:id`} render={(props) => <StadiumPage match={match} {...props}><EditStadiumPage {...props}/></StadiumPage>} /> 
+      <Route exact path={`${match.path}/stadium/edit`} render={(props) => <StadiumPage match={match} {...props}><EditStadiumPage {...props}/></StadiumPage>} /> 
+      <Route path={`${match.path}/stadium/edit/:id`} render={(props) => <StadiumPage match={match} {...props}><EditStadiumPage {...props}/></StadiumPage>} /> 
     </React.Fragment>
   )
 }

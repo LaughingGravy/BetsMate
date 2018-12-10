@@ -1,7 +1,7 @@
 import { getErrorsFromValidationObjs, required, minLength } from '../../validation/common'
 
 const validateCountry= (code, countryName) => {
-  const validationObjects = [
+ const validationObjects = [
     {
       key: "code",
       validationObjectSet: [
@@ -21,4 +21,4 @@ const validateCountry= (code, countryName) => {
   return getErrorsFromValidationObjs(validationObjects)
 }
 
-export { validateCountry }
+export { validateCountry } 
