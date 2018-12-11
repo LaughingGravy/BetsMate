@@ -4,10 +4,10 @@ import { Mutation } from 'react-apollo'
 
 import { history } from '../../../../../library/routing'
 import MutationButton from '../../common/MutationButton'
-import ALL_STADIA from '../../../graphql/queries/administration/cstadium/allStadia'
+import ALL_STADIA from '../../../graphql/queries/administration/stadium/allStadia'
 import GET_STADIUM from '../../../graphql/queries/administration/stadium/getStadium'
-import MERGE_STADIUM from '../../../graphql/mutations/administration/stadium/mergeStadium'
-import CREATE_STADIUM from '../../../graphql/mutations/administration/stadium/createStadium'
+import MERGE_STADIUM from '../../../graphql/mutations/administration/stadium//mergeStadium'
+import CREATE_STADIUM from '../../../graphql/mutations/administration/stadium//createStadium'
 
 const SaveStadiumButton = ({ id, name, city , countryId, disabled }) => {
 
@@ -49,15 +49,15 @@ const SaveStadiumButton = ({ id, name, city , countryId, disabled }) => {
       }}
 
       refetchQueries={[ {query: ALL_STADIA} ]}>
-      {(mergeStadium, { loading, error }) => (
-          <MutationButton variables={{id: id, name: name, city: city, countryId}} mutation={mergeStadium} loading={loading}
+      {(mutation, { loading, error }) => (
+          <MutationButton variables={{id: id, name: name, city: city, countryId}} mutation={mutation} loading={loading}
                           disabled={disabled} error={error} label={label} />
       )}
     </Mutation>
   )
 }
 
-SaveCountryButton.propTypes = {
+SaveStadiumButton.propTypes = {
   variables: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string.isRequired,

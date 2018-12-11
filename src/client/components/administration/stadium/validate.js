@@ -26,6 +26,6 @@ const validateStadium= (stadiumName, city, countryId) => {
   ]
 
   return getErrorsFromValidationObjs(validationObjects)
-}
+} 
 
 export { validateStadium } 
