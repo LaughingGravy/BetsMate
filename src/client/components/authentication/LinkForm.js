@@ -2,7 +2,7 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Form } from 'semantic-ui-react'
 
-import '../styles/auth.css'
+import '../styles/style.css'
 
 import { validateLinkForm } from './sendPasswordReset/validate'
 import { getErrObjs } from '../validation/common'

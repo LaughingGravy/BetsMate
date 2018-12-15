@@ -6,13 +6,14 @@ import { compose } from 'recompose'
 import { Menu, Responsive } from 'semantic-ui-react'
 import intl from 'react-intl-universal';
 
+import { history } from '../../../../../library/routing'
 import { renderIfRole } from '../../common/ConditionalRender'
 import { withUser } from '../../contexts/withUserContext'
 
 const vanillaAdminMenuItem = () => (
-  <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-    <Menu.Item as={NavLink} to="/administration" key="administration" activeClassName="active">
-      {intl.get("admin-menu-header")}
+  <Responsive minWidth={Responsive.onlyTablet.minWidth} style={{"display": "flex", "flexDirection": "column", "justifyContent": "center"}}>
+    <Menu.Item key="administration" onClick={e => history.push("/administration")}>
+      <span>{intl.get("admin-menu-header")}</span>
     </Menu.Item>
   </Responsive>
 )

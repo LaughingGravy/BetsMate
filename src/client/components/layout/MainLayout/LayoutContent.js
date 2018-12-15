@@ -29,7 +29,7 @@ const vanillaLayoutContent = (props) => {
                         onToggleSideBarVisibility={onToggleSideBarVisibility} />
               {/* <SportsNavBar onToggleSideBarVisibility={onToggleSideBarVisibility} /> */}
             </Segment>
-            <Segment basic>
+            <Segment basic clearing style={{"paddingTop": "0px"}}>
                 {React.Children.map(props.children, 
                 child => React.cloneElement(child, {currentLocale: currentLocale}))}
             </Segment>                 

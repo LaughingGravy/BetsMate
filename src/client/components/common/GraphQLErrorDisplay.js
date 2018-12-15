@@ -1,7 +1,7 @@
 import React from 'react'
 import { Message } from 'semantic-ui-react'
 import intl from 'react-intl-universal'
-import css from  '../styles/auth.css'
+import css from  '../styles/style.css'
 
 const GraphQLErrorDisplay = ( { error: { graphQLErrors, networkError } } ) => {
     return (
