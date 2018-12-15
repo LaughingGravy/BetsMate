@@ -9,6 +9,7 @@ const speakeasy = require("speakeasy");
 const qrCode = require("qrcode");
 
 import userService from "./user";
+import mailService from "../../../utilities/mailer";
 import Config from "../../../utilities/Config";
 
 import {
@@ -19,7 +20,6 @@ import {
   isFirstUTCDateAfterSecond,
   convertStringToDate
 } from "./authHelper";
-import { createTransporter } from "../../../utilities/mailer";
 
 let authService = {
   RegisterAsync: async ({ email, displayName, password, role }, timeZone) => {
@@ -434,7 +434,7 @@ function getNewUser() {
 }
 
 async function sendEmailAsync(options) {
-  const smtpTransport = createTransporter();
+  const smtpTransport = mailService.CreateTransporter();
 
   try {
     return await smtpTransport.sendMail(options);

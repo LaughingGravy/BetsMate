@@ -7,10 +7,6 @@ import favicon from 'serve-favicon';
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import passport from 'passport'
-import session from 'express-session'
-//const MongoStore = require('connect-mongo')(session)
-
 // HTTP & SSL servers.  We can use `config.enableSSL|disableHTTP()` to enable
 // HTTPS and disable plain HTTP respectively, so we'll use Node's core libs
 // for building both server types.
@@ -36,15 +32,10 @@ import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 
 import { getServerURL } from '../utilities/env'
 
-import models from '../src/server/database/models'
 import schema from '../src/server/graphql/schema'
-import passportConfig from '../src/server/services/auth'
-
-//import { connectMongoDB } from '../src/server/database/mongoDB'
 
 import path from 'path';
 import Config from '../utilities/Config'
-import PATHS from '../utilities/paths'
 
 import App from '../src/client/components/App'
 
@@ -52,9 +43,6 @@ import { attachUserToRequest } from '../src/server/middleware/attachUserToReques
 
 const app = express()
 const router = express.Router()
-
-// Connect to the mongo database
-//connectMongoDB(Config.mongoURL, Config.apolloClientOpt);
 
 // enable cors
 var corsOptions = {

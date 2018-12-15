@@ -1,13 +1,9 @@
 {
-    "locale-id": "en-GB",
-    "locale-language": "English",
-
     "loading": "loading...",
     "veryfying": "veryfying...",
     "try-refetch-query": "Try again",
     "not-found": "No record was found matching search criteria",
 
-    "home-menu-header": "Home",
     "about-menu-header": "About",
     "admin-menu-header": "Administration",
     "register-menu-header": "Register",
@@ -23,12 +19,10 @@
 
     "register-page-title": "Register Account",
     "register-button-label": "Register",
-
     "verify-email-success-header": "Account Verified",
     "verify-email-msg-content": "Your account has been verified.<br />Please login in to Bets Mate.",
     "verify-email-fail-header": "Account Verification Failure",
     "verify-email-fail-msg-content": "Your account has not been verified.",
-    "email-not-verified-error": "Please verify your account.",
     "verifiy-email-error": "Your account has failed verification.<br />Please register again.",
     "expired-email-token-error": "The email verification token has expired.",
     "verification-token-error": "An error occurred during verification.<br />Please try resetting the password again.",
@@ -40,19 +34,15 @@
    
     "reset-token-expired-error": "The reset password token has expired.<br />Please make a new request.",
     "reset-password-token-error": "An error occurred when verifying the password token.",
-
-    "find-user-error": "An error occurred when finding the user account.",
     "reg-link-success-header": "Verify Email Sent",
     "reg-link-msg-content": "An email has been sent to the address provided.<br />Please click on the link to verify the email address and complete registration.<br />Please note the link will expire in one hour.",
 
     "credentials-error": "Email/password not recognised.",
     "role-error": "You do not have permissions to perform that task.",
-
-
+    "email-error": "An error occurred when sending the email.<br />Please try again later.",
 
     "login-page-title": "Login",
     "reset-page-title": "Forgot Password",
-
     "change-password-page-title": "Change Password",
     "register-link-page-title": "Registration",
 
@@ -69,28 +59,25 @@
     "password-placeholder": "Password...",
     "username-placeholder": "Username...",
 
-    "email-error": "An error occurred when sending the email.<br />Please try again later.",
-
     "registration-text": "Please enter your details and an account activation link will be sent on clicking upon the Register button.",
-
     "auth-page-decline-warning-title": "Unauthorised Access",
     "auth-page-decline-warning-msg": "You are not authorised to view this page.",
-
-
     
     "link-msg-header": "Email Link Sent",
     "reset-link-msg-content": "The reset password link has been sent successfully to your registered email address.<br />Please click on the link and follow the on screen instructions.",
-
     "reset-password-text": "Please enter a new password and re-enter it for confirmation.",
 
     "change-pwd-msg-header": "Password Changed",
     "change-pwd-msg-content": "Your password has been saved successfully.<br />Please use it next time you sign in to Bets Mate",
 
     "registration-activate-text": "Please enter a password and re-enter it for confirmation.<br />Complete registration by clicking on the Activation button.",
-
-    
+    "registration-link-text": "Please enter an email address and an account activation link will be sent on clicking upon the Send Link button.",
     "register-link-msg-content": "The account activation link has been sent successfully to the email address provided.<br />Please click on the link and follow the on screen instructions.",
-    
+
+    "admin-general-menu-header": "General",
+    "admin-football-menu-header": "Football",
+    "admin-afl-menu-header": "AFL",
+
     "admin-country-menu-header": "Country",
     "countries-menu-header": "Countries",
     "add-country-menu-header": " Create Country",
@@ -121,28 +108,7 @@
     "add-stadium-page-title": "Create Stadium",
     "edit-stadium-page-title": "Edit Stadium",
 
-   
-
     "save-button-label": "Save",
-
-    
-    "email-not-found-error": "Email not found.",
-    "pwd-invalid-error": "Password not valid.",
-    "duplicate-email-error": "Email is already registered",
-    "duplicate-username-error": "Username is already registered.<br />Please try another.",
-    "missing-credentials-error": "You must provide an email and password.",
-    "missing-reg-details-error": "You must provide a username and password.",
-    "reset-token-not-found-error": "Password reset link token not found.",
-    
-    "reg-token-not-found-error": "Activation link token not found.",
-    "reg-token-expired-error": "The activation link token has expired.<br />Please make a new request.",
-    "user_loggedin-message-error": "The page you have navigated to is only for users that have yet to log in.",
-    "user_loggedin-warning-page-title": "Already Logged In",
-    "user_not_loggedin-message-error": "The page you have navigated to is only for users that have logged in.",
-    "user_not_loggedin-warning-page-title": "Not Logged In",
-
-
-
 
     "email-format-val-msg": "Not a valid email",
     "minlength-val-msg": "Minimum number of characters",

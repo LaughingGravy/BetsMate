@@ -8,15 +8,15 @@ const {
     GraphQLFloat
 } = graphql;
 
-import UserType from './types/user_type'
-const CountryType = require('./types/country_type').default
-import VerifyType from '../graphql/types/verify_type'
-import SaveType from '../graphql/types/save_type'
-import CountryService from '../services/country'
-
 import Config from '../../../utilities/Config'
 
+import UserType from './types/user_type'
+import CountryType  from './types/country_type'
+import VerifyType from '../graphql/types/verify_type'
+import SaveType from '../graphql/types/save_type'
+
 import AuthenticationService from '../services/authentication'
+import CountryService from '../services/country'
 
 import { checkRoleAndResolveAsync, checkAuthAndResolveAsync } from './guards/guardResolvers'
 

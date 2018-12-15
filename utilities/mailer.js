@@ -2,19 +2,20 @@ const Config = require('../utilities/Config');
 const nodemailer = require('nodemailer')
 //const xoauth2 = require('xoauth2');
 
-function createTransporter()
-{
-  return nodemailer.createTransport({ 
-    host: "smtp.gmail.com",
-    auth: {
-        type: "login",
-        user: "baikinmanlovesdokinchan@gmail.com", //Config.mailerUser,
-        pass: "k0mbanwa" //Config.mailerPassword
-    }
-  });
+let mailService = {
+  CreateTransporter: () => {
+    return nodemailer.createTransport({ 
+      host: "smtp.gmail.com",
+      auth: {
+          type: "login",
+          user: "baikinmanlovesdokinchan@gmail.com", //Config.mailerUser,
+          pass: "k0mbanwa" //Config.mailerPassword
+      }
+    });
+  }
 };
 
-export { createTransporter }
+export default mailService;
 
 // var email_smtp = nodemailer.createTransport({      
 //   host: "smtp.gmail.com",

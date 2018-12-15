@@ -1,13 +1,9 @@
 {
-    "locale-id": "ja-JP",
-    "locale-language": "日本語",
-
     "loading": "読み込み中。..",
     "veryfying": "検証する",
     "try-refetch-query": "再試行する",
     "not-found": "検索条件に一致するレコードが見つかりませんでした",
 
-    "home-menu-header": "ホーム",
     "about-menu-header": "ヘルプ",
     "admin-menu-header": "アドミン",
     "register-menu-header": "レジスター",
@@ -19,45 +15,41 @@
 
     "home-page-title": "ホーム",
     "about-page-title": "アボウト",
+    "admin-page-title": "管理",
 
     "register-page-title": "アカウント登録",
     "register-button-label": "登録",
     "verify-email-success-header": "アカウント確認済み",
+    "verify-email-msg-content": "あなたのアカウントは確認済みです。<br /> Bets Mateにログインしてください.",
+    "verify-email-fail-header": "アカウント確認の失敗",
+    "verify-email-fail-msg-content": "あなたのアカウントは確認されていません.",
     "verifiy-email-error": "アカウントの確認に失敗しました.<br />もう一度登録してください.",
     "expired-email-token-error": "電子メールの検証トークンが期限切れです.",
     "verification-token-error": "検証中にエラーが発生しました。<br />パスワードをもう一度リセットしてください。",
 
-    "reset-page-title": "パスワード忘れた",
+    "reset-password-page-title": "パスワードを再設定する",
     "reset-text": "登録したBets Mateのメールアドレスを入力してください<br>新しいパスワードを設定するためのリンクが送信されると、郵送されます",
     "verify-reset-fail-header": "パスワードのリセット失敗",
     "verify-reset-fail-msg-content": "検証に失敗しました.",
-  
+
     "reset-token-expired-error": "リセットリンクトークンが期限切れです. <br />新しいリクエストをしてください.",
     "reset-password-token-error": "パスワードトークンの検証中にエラーが発生しました.",
-    "find-user-error": "ユーザーアカウントを見つけるときにエラーが発生しました.",
     "reg-link-success-header": "送信された電子メールを確認する",
     "reg-link-msg-content": "指定されたアドレスにメールが送信されました。<br />リンクをクリックして登録完了のメールアドレスを確認してください.<br />リンクは1時間以内に有効期限が切れることに注意してください。",
-
+    
+    "credentials-error": "メール/パスワードが認識されない.",
     "role-error": "そのタスクを実行する権限がありません。",
-
     "email-error": "電子メールの送信中にエラーが発生しました。<br />後でもう一度お試しください。",
 
-
-
-
-
     "login-page-title": "ログイン",
-    "admin-page-title": "アドミン",
-    
-    "reset-password-page-title": "パスワードを再設定する",
+    "reset-page-title": "パスワード忘れた",
     "change-password-page-title": "パスワードを変更する",
     "register-link-page-title": "レジスター",
-
+   
     "email-label": "Eメール",
     "password-label": "パスワード",
     "username-label": "ユーザー名",
     "login-button-label": "ログイン",
-    
     "reset-button-label": "リンクを送る",
     "confirm-password-label": "パスワードを認証する",
     "current-password-label": "現在のパスワード",
@@ -67,17 +59,12 @@
     "password-placeholder": "パスワード...",
     "username-placeholder": "ユーザー名...",
 
-
     "registration-text": "あなたの詳細を入力し、登録ボタンをクリックするとアカウントアクティベーションリンクが送信されます.",
-    "verify-email-msg-content": "あなたのアカウントは確認済みです。<br /> Bets Mateにログインしてください.",
-    "verify-email-fail-header": "アカウント確認の失敗",
-    "verify-email-fail-msg-content": "あなたのアカウントは確認されていません.",
-    "email-not-verified-error": "アカウントを確認してください.",
-
-
+    "auth-page-decline-warning-title": "不正アクセス",
+    "auth-page-decline-warning-msg": "このページを表示する権限がありません.",
+   
     "link-msg-header": "メールリンク送信済み",
     "reset-link-msg-content": "リセットされたパスワードのリンクは登録されたメールアドレスに送信されました.<br>リンクをクリックし、画面の指示に従ってください.",
-
     "reset-password-text": "新しいパスワードを入力して確認のために再入力してください.",
 
     "change-pwd-msg-header": "パスワード変更済み",
@@ -86,7 +73,11 @@
     "registration-activate-text": "確認のためにパスワードを入力して再入力してください.<br />アクティベーションボタンをクリックして登録を完了.",
     "registration-link-text": "電子メールアドレスを入力して、リンクを送信ボタンをクリックするとアカウントアクティベーションリンクが送信されます.",
     "register-link-msg-content": "アカウントアクティベーションリンクが指定されたメールアドレスに正常に送信されました.<br />リンクをクリックし、画面の指示に従ってください.",
-    
+
+    "admin-general-menu-header": "一般",
+    "admin-football-menu-header": "サッカー",
+    "admin-afl-menu-header": "パワー",
+
     "admin-country-menu-header": "国",
     "countries-menu-header": "国国",
     "add-country-menu-header": "国を作成する",
@@ -98,12 +89,15 @@
     "country-tbl-flag-col-hdr": "旗",
     "country-tbl-name-col-hdr": "名",
     
+    "countries-tbl-col-header-name": "国",
+    "admin-create-button-label": "新しい",
+    "admin-edit-button-label": "エディト",
+    "admin-delete-button-label": "抹消す",
+
     "country-code-label": "コード",
     "country-code-placeholder": "jp",
     "country-name-label": "国",
     "country-name-placeholder": "日本",
-
-    "countries-tbl-col-header-name": "国",
 
     "admin-stadium-menu-header": "スタジアム",
     "stadia-page-title": "スタジアム",
@@ -114,32 +108,7 @@
     "add-stadium-page-title": "スタジアムを作る",
     "edit-stadium-page-title": "編集スタジアム",
     
-    "admin-create-button-label": "新しい",
-    "admin-edit-button-label": "エディト",
-    "admin-delete-button-label": "抹消す",
-
     "save-button-label": "セーブ",
-
-    "auth-page-decline-warning-title": "不正アクセス",
-    "auth-page-decline-warning-msg": "このページを表示する権限がありません.",
-    "email-not-found-error": "メールが見つかりません.",
-    "pwd-invalid-error": "パスワードが無効です.",
-    "duplicate-email-error": "電子メールは既に登録されています",
-    "duplicate-username-error": "ユーザー名が既に登録されてます.<br />もう一度お試しください.",
-    "missing-credentials-error": "メールアドレスとパスワードを入力する必要があります.",
-    "credentials-error": "メール/パスワードが認識されない.",
-    "reset-token-not-found-error": "パスワードリセットリンクトークンが見つかりません.",
-
-    "reg-token-not-found-error": "アクティベーションリンクトークンが見つかりません.",
-    "reg-token-expired-error": "アクティベーションリンクトークンが期限切れです. <br />新しいリクエストをしてください.",
-    "user_loggedin-message-error": "ナビゲートしたページは、まだログインしていないユーザーのみが閲覧できます.",
-    "user_loggedin-warning-page-title": "ログイン済み",
-    "user_not_loggedin-message-error": "あなたが移動したページは、ログインしているユーザーのみです.",
-    "user_not_loggedin-warning-page-title": "ログインしていない",
-
-
-
-
 
     "email-format-val-msg": "有効なメールではありません",
     "minlength-val-msg": "最小文字数",
