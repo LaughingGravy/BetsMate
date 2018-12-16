@@ -11,8 +11,9 @@ import { renderIfRole } from '../../common/ConditionalRender'
 import { withUser } from '../../contexts/withUserContext'
 
 const vanillaAdminMenuItem = () => (
-  <Responsive minWidth={Responsive.onlyTablet.minWidth} style={{"display": "flex", "flexDirection": "column", "justifyContent": "center"}}>
-    <Menu.Item key="administration" onClick={e => history.push("/administration")}>
+  <Responsive minWidth={Responsive.onlyTablet.minWidth}
+              style={{"display": "flex", "flexDirection": "column", "justifyContent": "center"}}>
+    <Menu.Item key="administration" fluid="true" onClick={e => history.push("/administration")}>
       <span>{intl.get("admin-menu-header")}</span>
     </Menu.Item>
   </Responsive>

@@ -13,7 +13,7 @@ import AdminMenuItem from './AdminMenuItem'
 const MainBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisibility}) => {
 
   return (
-    <Menu attached secondary>
+    <Menu attached secondary fluid>
     <Menu.Menu position="left">
       <Menu.Item key="home" onClick={e => history.push("/home")}>
         <Icon name="soccer" size="large"  />

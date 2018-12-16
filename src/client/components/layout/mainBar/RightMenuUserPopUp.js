@@ -24,8 +24,6 @@ const vanillaRightMenuUnAuthItems = () => (
         </Menu>   
       </Popup>
     </Responsive>
-
-
   </React.Fragment>
 )
 
