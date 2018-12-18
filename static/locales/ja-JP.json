@@ -17,6 +17,9 @@
     "change-password-menu-header": "パスワードを変更する",
     "sport-football-header": "サッカー",
 
+    "user-settings-page-title": "アカウント設定",
+    "user-settings-page-sub-title": "アカウント設定を管理します。",
+
     "home-page-title": "ホーム",
     "about-page-title": "アボウト",
     "admin-page-title": "管理",
@@ -77,6 +80,11 @@
     "registration-activate-text": "確認のためにパスワードを入力して再入力してください.<br />アクティベーションボタンをクリックして登録を完了.",
     "registration-link-text": "電子メールアドレスを入力して、リンクを送信ボタンをクリックするとアカウントアクティベーションリンクが送信されます.",
     "register-link-msg-content": "アカウントアクティベーションリンクが指定されたメールアドレスに正常に送信されました.<br />リンクをクリックし、画面の指示に従ってください.",
+
+    "user_loggedin-message-error": "ナビゲートしたページは、まだログインしていないユーザーのみが閲覧できます.",
+    "user_loggedin-warning-page-title": "ログイン済み",
+    "user_not_loggedin-message-error": "あなたが移動したページは、ログインしているユーザーのみです.",
+    "user_not_loggedin-warning-page-title": "ログインしていない",
 
     "admin-general-menu-header": "一般",
     "admin-football-menu-header": "サッカー",

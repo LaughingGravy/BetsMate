@@ -17,6 +17,9 @@
     "change-password-menu-header": "Change Password",
     "sport-football-header": "Football",
 
+    "user-settings-page-title": "Account Settings",
+    "user-settings-page-sub-title": "Manage your account settings.",
+
 
     "home-page-title": "Home",
     "about-page-title": "About",
@@ -78,6 +81,11 @@
     "registration-activate-text": "Please enter a password and re-enter it for confirmation.<br />Complete registration by clicking on the Activation button.",
     "registration-link-text": "Please enter an email address and an account activation link will be sent on clicking upon the Send Link button.",
     "register-link-msg-content": "The account activation link has been sent successfully to the email address provided.<br />Please click on the link and follow the on screen instructions.",
+
+    "user_loggedin-message-error": "The page you have navigated to is only for users that have yet to log in.",
+    "user_loggedin-warning-page-title": "Already Logged In",
+    "user_not_loggedin-message-error": "The page you have navigated to is only for users that have logged in.",
+    "user_not_loggedin-warning-page-title": "Not Logged In",
 
     "admin-general-menu-header": "General",
     "admin-football-menu-header": "Football",
