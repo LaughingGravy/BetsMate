@@ -3,17 +3,17 @@ import { Flag } from 'semantic-ui-react'
 
 const SUPPOER_LOCALES = [
     {
-        text: <span>English <Flag name="gb"/></span>,
+        text: "English",
         value: "en-GB",
         name: "English",
-        flagid: "gb"
+        flag: "gb"
     },
     {
-        text: <span>日本語 <Flag name="jp"/></span>,
+        text: "日本語",
         value: "ja-JP",
         name: "日本語",
-        flagid: "jp"
+        flag: "jp"
     }
 ];
 
-export default SUPPOER_LOCALES
+export default SUPPOER_LOCALES;

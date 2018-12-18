@@ -4,7 +4,7 @@ import { Menu, Dropdown, Flag } from 'semantic-ui-react'
 
 const InternationalisationItem = ({ locales, onSelectLocale, defaultLocale }) => (
   <Menu.Item>
-      <Dropdown trigger={<Flag name={locales.find(locale => locale.value === defaultLocale).flagid} />}
+      <Dropdown trigger={<Flag name={locales.find(locale => locale.value === defaultLocale).flag} />}
                 options={locales} compact
                 onChange={onSelectLocale} floating
                 key="locales" value={defaultLocale} />

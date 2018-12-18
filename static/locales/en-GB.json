@@ -1,4 +1,7 @@
 {
+    "locale-id": "en-GB",
+    "locale-language": "English",
+
     "loading": "loading...",
     "veryfying": "veryfying...",
     "try-refetch-query": "Try again",
@@ -9,9 +12,11 @@
     "register-menu-header": "Register",
     "logout-menu-header": "Logout",
     "login-menu-header": "Login",
+    "user-change-settings-menu-item": "Change Settings",
     "reset-password-menu-header": "Password Reset",
     "change-password-menu-header": "Change Password",
     "sport-football-header": "Football",
+
 
     "home-page-title": "Home",
     "about-page-title": "About",
