@@ -1,6 +1,6 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Container, Grid, GridColumn } from 'semantic-ui-react'
+import { Header, Responsive, Icon, Container, Grid, GridColumn } from 'semantic-ui-react'
 
 import AuthForm from '../AuthForm'
 import LoginButton from './LoginButton'
@@ -10,7 +10,13 @@ const LoginPage = () => {
   return (
     <Grid columns={1} centered> 
       <Grid.Row centered>
-      <h3>{intl.get("login-page-title")}</h3>
+        <Header as='h3' icon>
+          <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+            <Icon name='sign in' />
+          </Responsive>
+          {intl.get("login-page-title")}
+          <Header.Subheader>{intl.getHTML("login-page-sub-header")}</Header.Subheader>
+        </Header>
       </Grid.Row>
 
       <Grid.Row centered>

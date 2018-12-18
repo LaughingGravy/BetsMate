@@ -49,6 +49,7 @@
     "email-error": "電子メールの送信中にエラーが発生しました。<br />後でもう一度お試しください。",
 
     "login-page-title": "ログイン",
+    "login-page-sub-header": "あなたのアカウントにログインしてください。",
     "reset-page-title": "パスワード忘れた",
     "change-password-page-title": "パスワードを変更する",
     "register-link-page-title": "レジスター",

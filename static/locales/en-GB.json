@@ -50,6 +50,7 @@
     "email-error": "An error occurred when sending the email.<br />Please try again later.",
 
     "login-page-title": "Login",
+    "login-page-sub-header": "Please login to your account.",
     "reset-page-title": "Forgot Password",
     "change-password-page-title": "Change Password",
     "register-link-page-title": "Registration",
