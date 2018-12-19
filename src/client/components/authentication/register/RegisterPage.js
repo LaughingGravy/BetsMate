@@ -13,7 +13,7 @@ const RegistrationPage = ({match}) => {
       <Grid.Row centered>
         <Header as='h3' icon>
           <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-            <Icon name='winner' />
+            <Icon name='signup' />
           </Responsive>
           {intl.get("register-page-title")}
           <Header.Subheader>{intl.getHTML("registration-text")}</Header.Subheader>

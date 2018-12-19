@@ -9,7 +9,7 @@ const VerifyEmailSuccessPage = () => (
         <Message size="big" positive>
           
           <Message.Header>
-            <Icon name="paper plane" size="large" />{intl.get("verify-email-success-header")}
+            <Icon name="paper plane" color="green" size="large" />{intl.get("verify-email-success-header")}
           </Message.Header>
           <br />
           <Message.Content>

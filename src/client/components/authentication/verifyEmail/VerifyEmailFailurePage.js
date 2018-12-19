@@ -12,7 +12,7 @@ const VerifyEmailFailurePage = ({ message }) => {
         <Message size="big" negative>
           
           <Message.Header>
-            <Icon name="paper plane" size="large" />{intl.get("verify-email-fail-header")}
+            <Icon name="paper plane" color="red" size="large" />{intl.get("verify-email-fail-header")}
           </Message.Header>
           <br />
           <Message.Content>

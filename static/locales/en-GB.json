@@ -24,6 +24,7 @@
     "home-page-title": "Home",
     "about-page-title": "About",
     "admin-page-title": "Administration",
+    "admin-pagesub-header": "Maintain administrative data.",
 
     "register-page-title": "Register Account",
     "register-button-label": "Register",

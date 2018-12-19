@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose'
 
-import { Menu, Responsive } from 'semantic-ui-react'
+import { Menu, Responsive, Icon } from 'semantic-ui-react'
 import intl from 'react-intl-universal';
 
 import { history } from '../../../../../library/routing'
@@ -14,7 +14,8 @@ const vanillaAdminMenuItem = () => (
   <Responsive minWidth={Responsive.onlyTablet.minWidth}
               style={{"display": "flex", "flexDirection": "column", "justifyContent": "center"}}>
     <Menu.Item key="administration" fluid="true" onClick={e => history.push("/administration")}>
-      <span>{intl.get("admin-menu-header")}</span>
+      <Icon name='university' />
+      {intl.get("admin-menu-header")}
     </Menu.Item>
   </Responsive>
 )

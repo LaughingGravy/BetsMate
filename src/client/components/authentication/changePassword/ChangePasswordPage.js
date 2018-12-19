@@ -8,7 +8,7 @@ import ChangePasswordButton from './ChangePasswordButton'
 const ChangePasswordPage = () => (
   <Grid columns={1} centered>
     <Grid.Row centered>
-    <Header as='h3' icon>
+      <Header as='h3' icon>
         <Responsive minWidth={Responsive.onlyTablet.minWidth}>
           <Icon name='spy' />
         </Responsive>

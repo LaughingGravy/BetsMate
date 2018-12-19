@@ -2,7 +2,7 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
 import { compose } from 'recompose';
-import { Menu, Button, Responsive } from 'semantic-ui-react'
+import { Menu, Button, Icon, Responsive } from 'semantic-ui-react'
 
 import { history } from '../../../../../library/routing'
 import { renderIfAuthenticated } from '../../common/ConditionalRender'
@@ -12,6 +12,7 @@ const vanillaRegisterMenuItem = () => (
   <Responsive minWidth={Responsive.onlyTablet.minWidth}>
     <Menu.Item fitted="horizontally" key="registerlink">
       <Button size="mini" basic compact secondary onClick={e => history.push("/register")}>
+        <Icon name="signup" />
         {intl.get("register-menu-header")}
       </Button>
     </Menu.Item>
@@ -32,6 +33,7 @@ const vanillaLoginMenuItem = () => (
   <Responsive minWidth={Responsive.onlyTablet.minWidth}>
     <Menu.Item fitted="horizontally" key="loginlink">
       <Button size="mini" basic compact secondary onClick={e => history.push("/login")}>
+        <Icon name="sign in" />
         {intl.get("login-menu-header")}
       </Button>
     </Menu.Item>

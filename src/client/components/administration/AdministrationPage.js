@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
-import { Header, Grid, Menu } from 'semantic-ui-react'
+import { Header, Responsive,  Icon, Grid, Menu } from 'semantic-ui-react'
 
 import AdminRoutes from './AdminRoutes'
 
@@ -10,11 +10,17 @@ const AdministrationPage = ( { match }) => {
   return (
     <Grid columns={1} centered>
       <Grid.Row centered>
-        <Header as ="h3">{intl.get("admin-page-title")}</Header>
+        <Header as='h3' icon>
+          <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+            <Icon name='university' />
+          </Responsive>
+          {intl.get("admin-page-title")}
+          <Header.Subheader>{intl.get("admin-pagesub-header")}</Header.Subheader>
+        </Header>
       </Grid.Row>
 
        <Grid.Row centered>
-        <Menu stackable pointing>
+        <Menu pointing>
           {/* <Menu.Item as={NavLink} to={`${match.url}/country`} key="country" activeClassName="active"
                         compact="true">
               {intl.get("admin-country-menu-header")}

@@ -13,7 +13,7 @@ const ResetChangePasswordPage = ({ match }) => {
     <Grid.Row centered>
       <Header as='h3' icon>
         <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-          <Icon name='emergency' />
+          <Icon name='unlock' />
         </Responsive>
         {intl.get("change-password-page-title")}
         <Header.Subheader>{intl.getHTML("reset-password-text")}</Header.Subheader>
