@@ -2,24 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 
-import { history } from '../../../../../library/routing'
-import AdminTableButtonGroup from '../controls/AdminTableButtonGroup'
+import { history } from '../../../../../../library/routing'
+import AdminTableButtonGroup from '../../controls/AdminTableButtonGroup'
 
-import DELETE_COUNTRY from '../../../graphql/mutations/administration/country/deleteCountry'
-import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
+import DELETE_COUNTRY from '../../../../graphql/mutations/administration/country/deleteCountry'
+import ALL_COUNTRIES from '../../../../graphql/queries/administration/country/allCountries'
 
 const CountryTableButtonGroup = ({ activeRows }) => {
 
   const anySelectedRows = (data) => (Object.entries(data) && Object.entries(data).some(e => e[1] == true))
 
-  const createNavigate = (e, data) => history.push('/administration/country/edit')
+  const createNavigate = (e, data) => history.push('/administration/general/country/edit')
 
   const editNavigate = (e, data) => {
     if (!anySelectedRows(data))
         return
   
       const code = getCode(data)
-      history.push(`/administration/country/edit/${code}`)
+      history.push(`/administration/general/country/edit/${code}`)
   }
 
   const getCode = (data) => {

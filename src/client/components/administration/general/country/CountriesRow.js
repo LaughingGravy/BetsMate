@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Flag } from 'semantic-ui-react'
-import { withRowSelection } from '../../common/withRowSelection'
+import { withRowSelection } from '../../../common/withRowSelection'
 
 class CountriesRow extends React.Component {
   constructor(props) {

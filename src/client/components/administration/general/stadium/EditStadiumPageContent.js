@@ -4,8 +4,8 @@ import { Query } from 'react-apollo'
 import { compose } from 'recompose'
 import { Container } from 'semantic-ui-react'
 
-import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay, renderForNotFound, NotFoundDisplay } from '../../common/ConditionalRender'
-import GET_STADIUM from '../../../graphql/queries/administration/stadium/getStadium'
+import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay, renderForNotFound, NotFoundDisplay } from '../../../common/ConditionalRender'
+import GET_STADIUM from '../../../../graphql/queries/administration/stadium/getStadium'
 import StadiumForm from './StadiumForm'
 import SaveStadiumButton from './SaveStadiumButton'
 

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 
-import { history } from '../../../../../library/routing'
-import AdminTableButtonGroup from '../controls/AdminTableButtonGroup'
+import { history } from '../../../../../../library/routing'
+import AdminTableButtonGroup from '../../controls/AdminTableButtonGroup'
 
-import DELETE_STADIUM from '../../../graphql/mutations/administration/stadium/deleteStadium'
-import ALL_STADIA from '../../../graphql/queries/administration/stadium/allStadia'
+import DELETE_STADIUM from '../../../../graphql/mutations/administration/stadium/deleteStadium'
+import ALL_STADIA from '../../../../graphql/queries/administration/stadium/allStadia'
 
 const StadiumTableButtonGroup = ({ activeRows }) => {
 

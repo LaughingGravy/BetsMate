@@ -3,13 +3,13 @@ import { Query } from 'react-apollo'
 import { Table } from 'semantic-ui-react'
 import { compose } from 'recompose'
 
-import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
-import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay} from '../../common/ConditionalRender'
+import ALL_COUNTRIES from '../../../../graphql/queries/administration/country/allCountries'
+import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay} from '../../../common/ConditionalRender'
 
 import CountriesTableHeader from './CountriesTableHeader'
 import CountriesTableFooter from './CountriesTableFooter'
 import CountriesRow from './CountriesRow'
-import { withSelectableRowsTable } from '../../common/withSelectableRowsTable'
+import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable'
 
  const vanillaCountriesTable = ({ data: { countries }, activeRows, onRowClick }) => {
   let code = ""

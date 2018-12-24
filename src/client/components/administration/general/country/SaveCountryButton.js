@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 
-import { history } from '../../../../../library/routing'
-import MutationButton from '../../common/MutationButton'
-import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
-import GET_COUNTRY_BY_CODE from '../../../graphql/queries/administration/country/getCountryByCode'
-import MERGE_COUNTRY from '../../../graphql/mutations/administration/country/mergeCountry'
-import CREATE_COUNTRY from '../../../graphql/mutations/administration/country/createCountry'
+import { history } from '../../../../../../library/routing'
+import MutationButton from '../../../common/MutationButton'
+import ALL_COUNTRIES from '../../../../graphql/queries/administration/country/allCountries'
+import GET_COUNTRY_BY_CODE from '../../../../graphql/queries/administration/country/getCountryByCode'
+import MERGE_COUNTRY from '../../../../graphql/mutations/administration/country/mergeCountry'
+import CREATE_COUNTRY from '../../../../graphql/mutations/administration/country/createCountry'
 
 const SaveCountryButton = ({ id, code, name , disabled }) => {
 
   const label = "save-button-label"
 
   const onCompleted = (data) => {
-    history.push('/administration/country/countries')
+    history.push('/administration/general/country/countries')
   }
 
   return (

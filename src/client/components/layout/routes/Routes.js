@@ -5,7 +5,7 @@ import { Redirect } from '../../../../../library/routing'
 
 import HomePage from '../../home/HomePage'
 import AboutPage from '../../about/AboutPage'
-import UserRoutes from './UserRoutes'
+import GuardedRoutes from './GuardedRoutes'
 
 const Routes = () => (
     <Switch>
@@ -13,7 +13,7 @@ const Routes = () => (
         <Route path="/home" component={HomePage} />  
         <Route path="/about" component={AboutPage} />  
 
-        <UserRoutes />
+        <GuardedRoutes />
         
         <Redirect exact from="about-us" to="about" /> 
         <Redirect to="/home" />

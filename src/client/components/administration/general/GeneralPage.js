@@ -1,18 +1,23 @@
 import React from 'react';
 import { Grid , Tab } from 'semantic-ui-react'
 
-const panes = [
-  { menuItem: 'Users', render: () => <Tab.Pane attached={false}>Users</Tab.Pane> },
-  { menuItem: 'Countries', render: () => <Tab.Pane attached={false}>Country</Tab.Pane> },
-  { menuItem: 'Stadia', render: () => <Tab.Pane attached={false}>Stadium</Tab.Pane> },
-]
+import GeneralRoutes from './GeneralRoutes'
+import CountryRoutes from './country/CountryRoutes'
+import CountryTab from './CountryTab'
 
-const GeneralPage = () => {
+const getPanes = (match) => {
+  return [
+    { menuItem: 'Countries', render: () => <CountryTab  match={match} /> },
+    { menuItem: 'Users', render: () => <Tab.Pane attached={false}>User</Tab.Pane> }
+  ]
+}
+
+const GeneralPage = ({match}) => {
+  console.log("GeneralPage match", match)
   return (
     <Grid columns={1} centered>
-      <Grid.Row centered>
-        <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
-      </Grid.Row>
+        <Tab menu={{ secondary: true, pointing: true }} panes={getPanes(match)} />
+        <GeneralRoutes match={match} />
     </Grid>
   )
 }

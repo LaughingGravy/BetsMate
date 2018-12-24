@@ -8,7 +8,7 @@ import {
 const UserType  = require('./user_type').default
 const CountryType  = require('./country_type').default
 
-const CountryService = require('../../services/country')
+import CountryService from '../../services/country'
 import { checkRoleAndResolveAsync } from '../guards/guardResolvers'
 
 export default new GraphQLObjectType({
@@ -24,7 +24,7 @@ export default new GraphQLObjectType({
         countries: {
             type: new GraphQLList(CountryType),
             async resolve(parentValue, args, ctx) {
-                return await checkRoleAndResolveAsync(ctx, CountryService.allCountries, null, ["admin"]);
+                return await checkRoleAndResolveAsync(ctx, CountryService.AllCountries, null, ["admin"]);
             }
         },
         countryByCode: {
@@ -33,7 +33,7 @@ export default new GraphQLObjectType({
                 code: { type: GraphQLString }
             },
             async resolve(parentValue, { code }, ctx) {
-                return await checkRoleAndResolveAsync(ctx, CountryService.getCountryByCode, code, ["admin"]);
+                return await checkRoleAndResolveAsync(ctx, CountryService.GetCountryByCode, code, ["admin"]);
             }
         }
     }

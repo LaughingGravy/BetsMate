@@ -11,7 +11,7 @@ const checkAuthAndResolve = (ctx, action, params) => {
     return action(params)
   }
   catch(e) {
-    console.log(e)
+    console.log("Error checkAuthAndResolve", e)
     throw e;
   }
 }
@@ -28,7 +28,7 @@ const checkAuthAndResolveAsync = async (ctx, action, params) => {
     return await action(params)
   }
   catch(e) {
-    console.log(e)
+    console.log("Error checkAuthAndResolveAsync", e)
     throw e;
   }
 }
@@ -45,7 +45,7 @@ const checkRoleAndResolve = (ctx, action, params, claims) => {
     return action(params)
   }
   catch(e) {
-    console.log(e)
+    console.log("Error checkRoleAndResolve", e)
     throw e;
   }
 }
@@ -62,7 +62,7 @@ const checkRoleAndResolveAsync = async (ctx, action, params, claims) => {
     return await action(params)
   }
   catch(e) {
-    console.log(e)
+    console.log("Error checkRoleAndResolveAsync", e)
     throw e;
   }
 }

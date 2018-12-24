@@ -3,13 +3,13 @@ import { Query } from 'react-apollo'
 import { Table } from 'semantic-ui-react'
 import { compose } from 'recompose'
 
-import ALL_STADIA from '../../../graphql/queries/administration/stadium/allStadia'
-import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay} from '../../common/ConditionalRender'
+import ALL_STADIA from '../../../../graphql/queries/administration/stadium/allStadia'
+import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay} from '../../../common/ConditionalRender'
 
 import StadiaTableHeader from './StadiaTableHeader'
 import StadiaTableFooter from './StadiaTableFooter'
 import StadiaRow from './StadiaRow'
-import { withSelectableRowsTable } from '../../common/withSelectableRowsTable'
+import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable'
 
  const vanillaStadiaTable = ({ data: { stadia }, activeRows, onRowClick }) => {
   let code = ""

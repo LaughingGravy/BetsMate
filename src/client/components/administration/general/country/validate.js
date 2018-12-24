@@ -1,4 +1,4 @@
-import { getErrorsFromValidationObjs, required, minLength } from '../../validation/common'
+import { getErrorsFromValidationObjs, required, minLength } from '../../../validation/common'
 
 const validateCountry= (code, countryName) => {
  const validationObjects = [

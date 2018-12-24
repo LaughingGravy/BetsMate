@@ -5,8 +5,8 @@ import PropTypes from 'prop-types'
 import { Form } from 'semantic-ui-react'
 
 import { validateCountry } from './validate'
-import { getErrObjs } from '../../validation/common'
-import ValidationInput from '../../common/ValidationInput'
+import { getErrObjs } from '../../../validation/common'
+import ValidationInput from '../../../common/ValidationInput'
 
 class CountryForm  extends React.Component {
   constructor(props) {

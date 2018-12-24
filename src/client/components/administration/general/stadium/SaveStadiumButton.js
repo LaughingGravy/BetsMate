@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 
-import { history } from '../../../../../library/routing'
-import MutationButton from '../../common/MutationButton'
-import ALL_STADIA from '../../../graphql/queries/administration/stadium/allStadia'
-import GET_STADIUM from '../../../graphql/queries/administration/stadium/getStadium'
-import MERGE_STADIUM from '../../../graphql/mutations/administration/stadium//mergeStadium'
-import CREATE_STADIUM from '../../../graphql/mutations/administration/stadium//createStadium'
+import { history } from '../../../../../../library/routing'
+import MutationButton from '../../../common/MutationButton'
+import ALL_STADIA from '../../../../graphql/queries/administration/stadium/allStadia'
+import GET_STADIUM from '../../../../graphql/queries/administration/stadium/getStadium'
+import MERGE_STADIUM from '../../../../graphql/mutations/administration/stadium//mergeStadium'
+import CREATE_STADIUM from '../../../../graphql/mutations/administration/stadium//createStadium'
 
 const SaveStadiumButton = ({ id, name, city , countryId, disabled }) => {
 

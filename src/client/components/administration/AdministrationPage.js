@@ -21,17 +21,7 @@ const AdministrationPage = ( { match }) => {
 
        <Grid.Row centered>
         <Menu pointing>
-          {/* <Menu.Item as={NavLink} to={`${match.url}/country`} key="country" activeClassName="active"
-                        compact="true">
-              {intl.get("admin-country-menu-header")}
-          </Menu.Item>
-        
-          <Menu.Item as={NavLink} to={`${match.url}/stadium`} key="stadium" activeClassName="active"
-                        compact="true">
-              {intl.get("admin-stadium-menu-header")}
-          </Menu.Item> */}
-
-          <Menu.Item as={NavLink} to={`${match.url}/general`} key="general" activeClassName="active"
+          <Menu.Item as={NavLink} to={`${match.url}/general/country`} key="general" activeClassName="active"
                         compact="true">
               {intl.get("admin-general-menu-header")}
           </Menu.Item>

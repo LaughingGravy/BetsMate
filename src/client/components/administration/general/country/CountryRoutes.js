@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import CountryPage from './CountryPage'
 import CountriesPage from './CountriesPage'
@@ -15,5 +16,9 @@ const CountryRoutes = ({ match }) => {
     </React.Fragment>
   )
 }
+
+CountryRoutes.propTypes = {
+  match: PropTypes.object.isRequired
+};
 
 export default CountryRoutes;

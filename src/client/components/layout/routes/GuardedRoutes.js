@@ -17,13 +17,12 @@ import VerifyPasswordResetPage from '../../authentication/verifyPasswordReset/Ve
 import VerifyResetFailurePage from '../../authentication/verifyPasswordReset/VerifyResetFailurePage'
 import ChangePasswordPage from '../../authentication/changePassword/ChangePasswordPage'
 import ChangePasswordSuccessPage from '../../authentication/changePassword/ChangePasswordSuccessPage'
-import UserSettingsPage from '../../user/UserSettingsPage'
 
 import UserLoggedInWarningPage from '../../authentication/warnings/UserLoggedInWarningPage'
 import UserNotAuthenticatedWarningPage from '../../authentication/warnings/UserNotAuthenticatedWarningPage'
 import UserRoleNoPermissionPage from '../../authentication/warnings/UserRoleNoPermissionPage'
 
-const UserRoutes = ({ userCtx }) => {
+const GuardedRoutes = ({ userCtx }) => {
   const { isAuthenticated, user: { role } } = userCtx
 
   return (
@@ -70,15 +69,12 @@ const UserRoutes = ({ userCtx }) => {
       <Route exact path="/change-password/success" render={({match}) => (
           !isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<ChangePasswordSuccessPage match={match} />) )} />
 
-      <Route exact path="/user/settings" render={({match}) => (
-          !isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<UserSettingsPage match={match} />) )} />
-      
     </React.Fragment>
   )
 }
 
-UserRoutes.propTypes = {
+GuardedRoutes.propTypes = {
     userCtx: PropTypes.object.isRequired
   };
 
-export default withUser(UserRoutes)
+export default withUser(GuardedRoutes)
