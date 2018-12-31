@@ -2,12 +2,11 @@ import gql from 'graphql-tag'
 
 export default gql`
 query {
-    stadium {
+    stadia {
         id,
         name,
         city,
         country {
-          id
           code
           name
         }

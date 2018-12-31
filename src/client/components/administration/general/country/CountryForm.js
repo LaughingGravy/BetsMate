@@ -55,7 +55,7 @@ class CountryForm  extends React.Component {
                   errors={countryNameErrObjs} pristine={pristineFields['countryName'] ? 1 : 0} />
         </Form.Field>
 
-        {this.props.render({ variables: { id: this.props.id, code: code, name: countryName }, isFormValid: isFormValid })}
+        {this.props.render({ variables: { code: code, name: countryName }, isFormValid: isFormValid })}
 
       </Form>
     ) 

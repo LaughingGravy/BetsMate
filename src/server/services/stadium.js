@@ -33,10 +33,8 @@ let stadiumService = {
       )
       .then(result => {
         session.close()    
-        if (result.records.length === 1) {
-          const record = result.records.shift()
-          return record.get('stadium').properties
-        }
+        const record = result.records.shift()
+        return record.get('stadium').properties
       })
       .catch(error => {
         session.close()
@@ -49,9 +47,21 @@ let stadiumService = {
     let session = createSession()
     return session
       .run(
-        `CREATE (stadium:Stadium { id: ${id}, name: "${name}", city: "${city}", , countryCode: "${countryCode}" }) 
-        RETURN stadium`
+        `MATCH (c:Country {code: "${countryCode}" })
+         CREATE (s:Stadium { id: "${id}", name: "${name}", city: "${city}" })-[:LOCATED_IN]->(c)
+         WITH ({id: s.id, name: s.name, city: s.city, country:PROPERTIES(c)}) as stadium
+         RETURN stadium
+         `
       )
+      .then(result => {
+        session.close()    
+        const record = result.records.shift()
+        return record.get("stadium")
+      })
+      .catch(error => {
+        session.close()
+        throw error
+      })
   },
 
   MergeStadium: ( { id, name, city, countryCode }) => {

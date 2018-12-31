@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tab } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 
 import CountryRoutes from './country/CountryRoutes';
 
@@ -10,5 +11,9 @@ const CountryTab = ({match}) => {
     </Tab.Pane>
   )
 }
+
+CountryTab.propTypes = {
+  match: PropTypes.object.isRequired
+};
 
 export default CountryTab;

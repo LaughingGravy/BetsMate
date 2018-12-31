@@ -1,4 +1,3 @@
-import uuidv4 from "uuid/v4";
 
 import { createSession } from "../database/neo4jDB"
 
@@ -45,13 +44,21 @@ let countryService = {
   },
 
   CreateCountry: ({ code, name }) => {
-    const id = uuidv4();
     let session = createSession()
     return session
       .run(
-        `CREATE (country:Country { id: ${id}, code: "${code}", name: "${name}" }) 
+        `CREATE (country:Country { code: "${code}", name: "${name}" }) 
         RETURN country`
       )
+      .then(result => {
+        session.close();
+        const record = result.records.shift()
+        return record.get("country").properties
+      })
+      .catch(error => {
+        session.close();
+        throw error;
+      })
   },
 
   MergeCountry: ( { code, name }) => {

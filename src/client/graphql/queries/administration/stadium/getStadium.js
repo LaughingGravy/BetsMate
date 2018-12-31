@@ -7,7 +7,6 @@ query GetStadium($id: String) {
       name,
       city,
       country {
-        id
         code
         name
       }

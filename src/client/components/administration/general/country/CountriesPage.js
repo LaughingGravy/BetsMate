@@ -24,4 +24,4 @@ const CountriesPage = () => {
     )
 }
 
-export default CountriesPage
+export default CountriesPage;

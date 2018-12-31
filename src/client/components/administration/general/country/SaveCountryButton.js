@@ -9,7 +9,8 @@ import GET_COUNTRY_BY_CODE from '../../../../graphql/queries/administration/coun
 import MERGE_COUNTRY from '../../../../graphql/mutations/administration/country/mergeCountry'
 import CREATE_COUNTRY from '../../../../graphql/mutations/administration/country/createCountry'
 
-const SaveCountryButton = ({ id, code, name , disabled }) => {
+const SaveCountryButton = ({ variables , disabled }) => {
+  const { code, name } = variables
 
   const label = "save-button-label"
 
@@ -17,19 +18,23 @@ const SaveCountryButton = ({ id, code, name , disabled }) => {
     history.push('/administration/general/country/countries')
   }
 
+  //need to know if this is an update or an insert
+
   return (
-    <Mutation mutation={!id ? MERGE_COUNTRY : CREATE_COUNTRY} key={code} 
+    <Mutation mutation={!code ? CREATE_COUNTRY : MERGE_COUNTRY } key={code} 
 
       onCompleted={onCompleted}
 
       update={(store) => {
         
-        const getCountryByCodeData = store.readQuery({
+        let getCountryByCodeData = store.readQuery({
           query: GET_COUNTRY_BY_CODE, 
           variables: {
             code: code
           }}
         )
+
+        console.log("getCountryByCodeData", getCountryByCodeData)
 
         if (getCountryByCodeData) {
           const { countryByCode } = getCountryByCodeData
@@ -48,7 +53,7 @@ const SaveCountryButton = ({ id, code, name , disabled }) => {
 
       refetchQueries={[ {query: ALL_COUNTRIES} ]}>
       {(mergeCountry, { loading, error }) => (
-          <MutationButton variables={{id: id, code: code, name: name}} mutation={mergeCountry} loading={loading}
+          <MutationButton variables={{code: code, name: name}} mutation={mergeCountry} loading={loading}
                           disabled={disabled} error={error} label={label} />
       )}
     </Mutation>

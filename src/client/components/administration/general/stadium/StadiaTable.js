@@ -12,7 +12,8 @@ import StadiaRow from './StadiaRow'
 import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable'
 
  const vanillaStadiaTable = ({ data: { stadia }, activeRows, onRowClick }) => {
-  let code = ""
+  let id = 0;
+  
   if (Object.entries(activeRows) && Object.entries(activeRows).some(e => e[1] == true))
     id = Object.entries(activeRows).shift()[0]
 
