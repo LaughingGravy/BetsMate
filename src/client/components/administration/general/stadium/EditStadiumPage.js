@@ -18,9 +18,7 @@ const EditStadiumPage = ({ match } ) => {
 
         <Grid.Row centered>
           <GridColumn mobile={16} tablet={8} computer={4}>
-
-              <EditStadiumPageContent stadiumId={stadiumId} />
-     
+            <EditStadiumPageContent stadiumId={stadiumId} />
           </GridColumn>
         </Grid.Row>
 

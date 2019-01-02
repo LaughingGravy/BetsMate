@@ -6,7 +6,8 @@ import { Form } from 'semantic-ui-react'
 import { validateStadium } from './validate'
 import { getErrObjs } from '../../../validation/common'
 import ValidationInput from '../../../common/controls/ValidationInput'
-import ValidationDropdown from '../../../common/controls/ValidationDropdown';
+import CountriesDropdown from './CountriesDropdown'
+//import ValidationDropdown from '../../../common/controls/ValidationDropdown';
 
 class StadiumForm  extends React.Component {
   constructor(props) {
@@ -59,11 +60,18 @@ class StadiumForm  extends React.Component {
         </Form.Field>
 
         <Form.Field required>
+          <CountriesDropdown name='country' value={country.code} label={intl.get("stadium-country-label")} 
+                placeholder={intl.get("stadium-country-placeholder")} onChange={this.handleChange} 
+                onBlur={this.handleBlur('country')} 
+                errors={countryErrObjs} pristine={pristineFields['country'] ? 1 : 0} />
+        </Form.Field> 
+
+       {/* <Form.Field required>
           <ValidationDropdown name='country' value={country.code} label={intl.get("stadium-country-label")} 
                   placeholder={intl.get("stadium-country-placeholder")} onChange={this.handleChange} 
                   onBlur={this.handleBlur('country')} 
                   errors={countryErrObjs} pristine={pristineFields['country'] ? 1 : 0} />
-        </Form.Field> 
+        </Form.Field>  */}
 
         {this.props.render({ variables: { stadiumId: this.props.stadiumId, name: stadiumName, city, country}, isFormValid })}
 
