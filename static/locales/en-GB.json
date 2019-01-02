@@ -123,6 +123,13 @@
     "add-stadium-page-title": "Create Stadium",
     "edit-stadium-page-title": "Edit Stadium",
 
+    "stadium-name-label": "Name",
+    "stadium-name-placeholder": "Wembley",
+    "stadium-city-label": "City",
+    "stadium-city-placeholder": "London",
+    "stadium-country-placeholder": "Select Country...",
+    "stadium-country-label": "Country",
+
     "save-button-label": "Save",
 
     "email-format-val-msg": "Not a valid email",

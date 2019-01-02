@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 
 import { history } from '../../../../../library/routing'
-import MutationButton from '../../common/MutationButton'
+import MutationButton from '../../common/controls/MutationButton'
 import SEND_RESET_PASSWORD from '../../../graphql/mutations/authentication/sendPasswordReset'
 
 const SendResetPasswordButton = ({ variables, disabled }) => {

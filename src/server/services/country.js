@@ -85,12 +85,12 @@ let countryService = {
       })
   },
 
-  DeleteCountry: ({ code, name }) => {
+  DeleteCountry: ({ code }) => {
     let session = createSession()
     return session
       .run(
         `MATCH (country:Country { code: "${code}" }) 
-        DELETE country
+        DETACH DELETE country
         RETURN country`
       )
       .then(result => {

@@ -5,26 +5,26 @@ import { compose } from 'recompose'
 import { Container } from 'semantic-ui-react'
 
 import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay, renderForNotFound, NotFoundDisplay } from '../../../common/ConditionalRender'
-import GET_STADIUM from '../../../../graphql/queries/administration/stadium/getStadium'
+import STADIUM_BY_ID from '../../../../graphql/queries/administration/stadium/getStadiumById'
 import StadiumForm from './StadiumForm'
 import SaveStadiumButton from './SaveStadiumButton'
 
 const vanillaContent = ({ data }) => {
   const isEdit = !(data.getStadium == null)
 
-  let stadium = { id: "", name: "", city: "", countryId: "" }
+  let stadium = { stadiumId: "", name: "", city: "", country: {code: "", name: ""} }
 
   if (isEdit) {
-    stadium.id = data.getStadium.id
-    stadium.name = data.getStadium.name
-    stadium.city = data.getStadium.city
-    stadium.countryId = data.getStadium.countryId
+    stadium.stadiumId = data.stadiumById.stadiumId
+    stadium.name = data.stadiumById.name
+    stadium.city = data.stadiumById.city
+    stadium.country = data.stadiumById.country
   }
 
   return (
     <StadiumForm  {...stadium} render={renderProps => (
       <Container textAlign="center">
-        <SaveStadiumButton variables={renderProps.variables} disabled={!renderProps.isFormValid} />
+        <SaveStadiumButton variables={renderProps.variables} isEdit={isEdit} disabled={!renderProps.isFormValid} />
       </Container>
     )} />
   )
@@ -37,19 +37,19 @@ vanillaContent.propTypes = {
 const EnhancedContent = compose(
   renderForLoading(LoadingDisplay),
   renderForError(QueryErrorDisplay),
-  renderForNotFound(NotFoundDisplay, "id", "getStadium")
+  renderForNotFound(NotFoundDisplay, "stadiumId", "getStadium")
 )(vanillaContent)
 
-const EditStadiumPageContent = ({ id }) => {
+const EditStadiumPageContent = ({ stadiumId }) => {
   return (
-  <Query query={GET_STADIUM} variables={{ id }}>
+  <Query query={STADIUM_BY_ID} variables={{ stadiumId }}>
     {EnhancedContent}
   </Query>
   )
 }
 
 EditStadiumPageContent.propTypes = {
-  id: PropTypes.string
+  stadiumId: PropTypes.string
 };
 
 export default EditStadiumPageContent

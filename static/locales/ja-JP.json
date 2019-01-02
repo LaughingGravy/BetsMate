@@ -121,6 +121,13 @@
 
     "add-stadium-page-title": "スタジアムを作る",
     "edit-stadium-page-title": "編集スタジアム",
+
+    "stadium-name-label": "名前",
+    "stadium-name-placeholder": "ウェンブリー",
+    "stadium-city-label": "都市",
+    "stadium-city-placeholder": "ロンドン",
+    "stadium-country-placeholder": "国を選択...",
+    "stadium-country-label": "国",
     
     "save-button-label": "セーブ",
 

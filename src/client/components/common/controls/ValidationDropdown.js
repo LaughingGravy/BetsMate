@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Responsive, Form, Label } from 'semantic-ui-react'
 
-import ValidationErrorPopup from '../common/ValidationErrorPopup'
+import ValidationErrorPopup from './ValidationErrorPopup'
 
-const ValidationInput = (props) => {
+const ValidationDropdown = ({errors, pristine, placeholder, onChange, options, value}) => {
   let objs = []
 
-  if (props.errors)
-    objs = props.errors.objs
+  if (errors)
+    objs = errors.objs
 
   let isError = false
   // let errMessages = ""
@@ -17,30 +17,24 @@ const ValidationInput = (props) => {
   if (objs && objs.length > 0) {
     isError = true
     firstErrMessage = objs[0].msg
-
-    // objs.map(error => {
-    // errMessages = errMessages.concat(error.msg, "\n\r")
-    // })
-
-    // errMessages = errMessages.substring(0, errMessages.length - "\n\r".length)
   }
 
-  const shouldDisplayError = !props.pristine && isError 
+  const shouldDisplayError = !pristine && isError 
 
   return (
     <React.Fragment>
-      {!shouldDisplayError && <Form.Input {...props} />}
+      {!shouldDisplayError && <Form.Dropdown placeholder={placeholder} search fluid selection options={options} value={value} {...props} />}
 
       {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
-        <Form.Input error {...props} icon>
+        <Form.Dropdown error {...props} icon>
           <input />
           <ValidationErrorPopup message={firstErrMessage} />
-        </Form.Input>  
+        </Form.Dropdown>  
       </Responsive>}
 
       {shouldDisplayError && <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>         
       <React.Fragment>
-        <Form.Input error {...props} />
+        <Form.Dropdown error {...props} />
         <Label size="mini" basic color="red" basic pointing>{firstErrMessage}</Label>
         </React.Fragment>
       </Responsive>}
@@ -48,16 +42,23 @@ const ValidationInput = (props) => {
   )
 }
 
-ValidationInput.propTypes = {
+ValidationDropdown.propTypes = {
   errors: PropTypes.shape({
     objs: PropTypes.arrayOf(PropTypes.shape({
       test: PropTypes.func.isRequired,
       msg: PropTypes.string.isRequired
     }))
   }),
-  pristine: PropTypes.number.isRequired
+  pristine: PropTypes.number.isRequired,
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  displayProperty: PropTypes.string.isRequired,
+  valueProperty: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]),
+  placeholder: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
-export default ValidationInput
-
-
+export default ValidationDropdown

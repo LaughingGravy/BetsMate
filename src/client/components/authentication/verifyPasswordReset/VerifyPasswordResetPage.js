@@ -8,7 +8,7 @@ import { history } from '../../../../../library/routing'
 
 import VERIFY_PASSWORD_TOKEN from '../../../graphql/mutations/authentication/verifyPasswordResetToken'
 
-import MutationOnMount from '../../common/MutationOnMount'
+import MutationOnMount from '../../common/controls/MutationOnMount'
 import VerifyResetFailurePage from './VerifyResetFailurePage'
 
 const EnhancedVerifyResetFailurePage = compose(

@@ -22,7 +22,7 @@ const vanillaContent = ({ data }) => {
   return (
     <CountryForm  code={countryByCode.code} countryName={countryByCode.name} render={renderProps => (
       <Container textAlign="center">
-        <SaveCountryButton variables={renderProps.variables} disabled={!renderProps.isFormValid} />
+        <SaveCountryButton variables={renderProps.variables} isEdit={isEdit} disabled={!renderProps.isFormValid} />
       </Container>
     )} />
   )

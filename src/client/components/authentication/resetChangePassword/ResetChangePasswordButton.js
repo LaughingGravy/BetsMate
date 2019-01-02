@@ -5,7 +5,7 @@ import { Mutation } from 'react-apollo'
 import { history } from '../../../../../library/routing'
 import RESET_CHANGE_PASSWORD from '../../../graphql/mutations/authentication/resetChangePassword'
 
-import MutationButton from '../../common/MutationButton'
+import MutationButton from '../../common/controls/MutationButton'
 
 const ResetChangePasswordButton = ({ variables, disabled }) => {
   const label = "save-button-label"

@@ -5,7 +5,7 @@ import { Form } from 'semantic-ui-react'
 
 import { validateChangePassword } from  './validate'
 import { getErrObjs } from '../../validation/common'
-import ValidationInput from '../../common/ValidationInput'
+import ValidationInput from '../../common/controls/ValidationInput'
 
 import { withUser } from '../../contexts/withUserContext'
 

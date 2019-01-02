@@ -9,7 +9,7 @@ import CountryType from './country_type';
 export default new GraphQLObjectType({
   name: 'StadiumType',
   fields: {
-    id: { type: GraphQLID },
+    stadiumId: { type: GraphQLID },
     name: { type: GraphQLString },
     city: { type: GraphQLString },
     country: {type: CountryType}

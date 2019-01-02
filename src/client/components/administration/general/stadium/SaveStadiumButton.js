@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 
 import { history } from '../../../../../../library/routing'
-import MutationButton from '../../../common/MutationButton'
+import MutationButton from '../../../common/controls/MutationButton'
 import ALL_STADIA from '../../../../graphql/queries/administration/stadium/allStadia'
-import GET_STADIUM from '../../../../graphql/queries/administration/stadium/getStadium'
+import GET_STADIUM from '../../../../graphql/queries/administration/stadium/getStadiumById'
 import MERGE_STADIUM from '../../../../graphql/mutations/administration/stadium//mergeStadium'
 import CREATE_STADIUM from '../../../../graphql/mutations/administration/stadium//createStadium'
 
-const SaveStadiumButton = ({ id, name, city , countryId, disabled }) => {
-
+const SaveStadiumButton = ({ variables, isEdit, disabled }) => {
+  const { stadiumId, name, city, country } = variables
   const label = "save-button-label"
 
   const onCompleted = (data) => {
@@ -18,30 +18,30 @@ const SaveStadiumButton = ({ id, name, city , countryId, disabled }) => {
   }
 
   return (
-    <Mutation mutation={!id ? MERGE_STADIUM : CREATE_STADIUM} key={id} 
+    <Mutation mutation={isEdit? MERGE_STADIUM : CREATE_STADIUM} key={stadiumId} 
 
       onCompleted={onCompleted}
 
       update={(store) => {
+        if (!isEdit) return;
         
         const getStadiumData = store.readQuery({
           query: GET_STADIUM, 
           variables: {
-            id: id
+            stadiumId: stadiumId
           }}
         )
 
         if (getStadiumData) {
           const { getStadium } = getStadiumData
-          getStadium.code = id
           getStadium.name = name
           getStadium.code = city
-          getStadium.name = countryId
+          getStadium.country = country
           
           store.writeQuery({
             query: GET_STADIUM, 
             variables: {
-              id: id
+              stadiumId: stadiumId
             },
             data: {getStadium: getStadium}
           })
@@ -50,7 +50,7 @@ const SaveStadiumButton = ({ id, name, city , countryId, disabled }) => {
 
       refetchQueries={[ {query: ALL_STADIA} ]}>
       {(mutation, { loading, error }) => (
-          <MutationButton variables={{id: id, name: name, city: city, countryId}} mutation={mutation} loading={loading}
+          <MutationButton variables={{stadiumId, name, city, country}} mutation={mutation} loading={loading}
                           disabled={disabled} error={error} label={label} />
       )}
     </Mutation>
@@ -59,11 +59,15 @@ const SaveStadiumButton = ({ id, name, city , countryId, disabled }) => {
 
 SaveStadiumButton.propTypes = {
   variables: PropTypes.shape({
-    id: PropTypes.string,
+    stadiumId: PropTypes.string,
     name: PropTypes.string.isRequired,
     city: PropTypes.string.isRequired,
-    countryId: PropTypes.string.isRequired,
+    country: PropTypes.shape({
+        code: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired
+    }).isRequired
   }).isRequired,
+  isEdit: PropTypes.bool.isRequired,
   disabled: PropTypes.bool.isRequired
 };
 

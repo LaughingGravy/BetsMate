@@ -6,7 +6,7 @@ import { Form } from 'semantic-ui-react'
 
 import { validateCountry } from './validate'
 import { getErrObjs } from '../../../validation/common'
-import ValidationInput from '../../../common/ValidationInput'
+import ValidationInput from '../../../common/controls/ValidationInput'
 
 class CountryForm  extends React.Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class CountryForm  extends React.Component {
                   errors={countryNameErrObjs} pristine={pristineFields['countryName'] ? 1 : 0} />
         </Form.Field>
 
-        {this.props.render({ variables: { code: code, name: countryName }, isFormValid: isFormValid })}
+        {this.props.render({ variables: { code: code, name: countryName }, isFormValid })}
 
       </Form>
     ) 

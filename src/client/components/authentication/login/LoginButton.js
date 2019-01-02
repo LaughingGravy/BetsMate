@@ -6,7 +6,7 @@ import { history } from '../../../../../library/routing'
 import LOGIN from '../../../graphql/mutations/authentication/login'
 import CURRENT_USER from '../../../graphql/queries/authentication/currentUser'
 
-import MutationButton from '../../common/MutationButton'
+import MutationButton from '../../common/controls/MutationButton'
 
 // class LoginButton extends React.Component {
 //   constructor(props) {

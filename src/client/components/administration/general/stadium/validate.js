@@ -1,6 +1,6 @@
 import { getErrorsFromValidationObjs, required, minLength } from '../../../validation/common'
 
-const validateStadium= (stadiumName, city, countryId) => {
+const validateStadium= (stadiumName, city, country) => {
  const validationObjects = [
     {
       key: "stadiumName",
@@ -17,10 +17,9 @@ const validateStadium= (stadiumName, city, countryId) => {
       ]
     },
     {
-      key: "countryId",
+      key: "country",
       validationObjectSet: [
-        required(countryId),
-        minLength(countryId, 50)
+        required(country.name)
       ]
     }
   ]

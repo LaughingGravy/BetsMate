@@ -6,7 +6,7 @@ import { history } from '../../../../../library/routing'
 import REGISTER from '../../../graphql/mutations/authentication/register'
 import CURRENT_USER from '../../../graphql/queries/authentication/currentUser'
 
-import MutationButton from '../../common/MutationButton'
+import MutationButton from '../../common/controls/MutationButton'
 
 const RegisterButton = ({ variables: { email, password, displayName, timeZone }, disabled, role }) => {
 

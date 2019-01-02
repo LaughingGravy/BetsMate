@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { compose } from 'recompose';
 import { Container, Button } from 'semantic-ui-react'
 
-import GraphQLErrorDisplay from '../../common/GraphQLErrorDisplay'
+import GraphQLErrorDisplay from '../../common/controls/GraphQLErrorDisplay'
 import { renderMessageForError } from '../../common/ConditionalRender'
 
 const EnhancedGraphQLErrorDisplay = compose(

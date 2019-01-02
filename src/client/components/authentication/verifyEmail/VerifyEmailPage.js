@@ -5,7 +5,7 @@ import { history } from '../../../../../library/routing'
 import VERIFY_EMAIL from '../../../graphql/mutations/authentication/verifyByEmail'
 
 import VerifyEmailFailurePage from './VerifyEmailFailurePage'
-import MutationOnMount from '../../common/MutationOnMount'
+import MutationOnMount from '../../common/controls/MutationOnMount'
 import { renderForLoading, VerifyingDisplay, hideIfNoData, hideIfNoProp } from '../../common/ConditionalRender'
 
 const EnhancedVerifyEmailFailurePage = compose(

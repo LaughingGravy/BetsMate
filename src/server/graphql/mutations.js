@@ -10,12 +10,14 @@ const {
 
 import Config from '../../../utilities/Config'
 
-import UserType from './types/user_type'
-import VerifyType from '../graphql/types/verify_type'
-import SaveType from '../graphql/types/save_type'
+import UserType from './types/objectTypes/user_type'
+import VerifyType from '../graphql/types/objectTypes/verify_type'
+import SaveType from '../graphql/types/objectTypes/save_type'
 
-import CountryType  from './types/country_type'
-import StadiumType  from './types/stadium_type'
+import CountryType  from './types/objectTypes/country_type'
+import StadiumType  from './types/objectTypes/stadium_type'
+
+import CountryInputType from './types/inputTypes/country_input_type'
 
 import AuthenticationService from '../services/authentication'
 import CountryService from '../services/country'
@@ -150,11 +152,32 @@ export default new GraphQLObjectType({
             args: {
                 name: { type: GraphQLString },
                 city: { type: GraphQLString },
-                countryCode: { type: GraphQLString }
+                country: { type: CountryInputType }
             },
-            async resolve(parentValue, { name, city, countryCode }, ctx) {
-                return checkRoleAndResolveAsync(ctx, StadiumService.CreateStadium, { name, city, countryCode }, ["admin"]);
+            async resolve(parentValue, { name, city, country }, ctx) {
+                return checkRoleAndResolveAsync(ctx, StadiumService.CreateStadium, { name, city, country }, ["admin"]);
             }
         },
+        mergeStadium: {
+            type: StadiumType,
+            args: {
+                stadiumId: { type: GraphQLString },
+                name: { type: GraphQLString },
+                city: { type: GraphQLString },
+                country: { type: CountryInputType }
+            },
+            async resolve(parentValue, { stadiumId, name, city, country }, ctx) {
+                return checkRoleAndResolveAsync(ctx, StadiumService.MergeStadium, { stadiumId, name, city, country }, ["admin"]);
+            }
+        },
+        deleteStadium: {
+            type: StadiumType,
+            args: {
+                stadiumId: { type: GraphQLString }
+            },
+            async resolve(parentValue, { stadiumId }, ctx) {
+                return checkRoleAndResolveAsync(ctx, StadiumService.DeleteStadium, { stadiumId }, ["admin"]);
+            }
+        }
     }
 });

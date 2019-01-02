@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 export default gql`
 query {
     stadia {
-        id,
+        stadiumId,
         name,
         city,
         country {

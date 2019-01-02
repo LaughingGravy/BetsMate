@@ -5,8 +5,8 @@ import { Grid, Container, GridColumn } from 'semantic-ui-react'
 import EditStadiumPageContent from './EditStadiumPageContent'
 
 const EditStadiumPage = ({ match } ) => {
-  const id = match.params.id 
-  const isEdit = !(match.params.id == null)
+  const stadiumId = match.params.stadiumId 
+  const isEdit = !(match.params.stadiumId == null)
 
   return (
     <Container>
@@ -19,7 +19,7 @@ const EditStadiumPage = ({ match } ) => {
         <Grid.Row centered>
           <GridColumn mobile={16} tablet={8} computer={4}>
 
-              <EditStadiumPageContent id={id} />
+              <EditStadiumPageContent stadiumId={stadiumId} />
      
           </GridColumn>
         </Grid.Row>

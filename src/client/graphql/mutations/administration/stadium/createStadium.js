@@ -4,7 +4,7 @@ export default gql`
 mutation CreateStadium($name: String, $city: String, $countryCode: String)
 {
   createStadium (name: $name, city: $city, countryCode: $countryCode) {
-    id
+    stadiumId
     name
     city
     country {

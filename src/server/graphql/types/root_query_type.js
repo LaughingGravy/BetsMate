@@ -5,9 +5,9 @@ import {
     GraphQLList
 } from 'graphql';
 
-const UserType  = require('./user_type').default
-const CountryType  = require('./country_type').default
-import StadiumType  from './stadium_type'
+import UserType  from './objectTypes/user_type'
+import CountryType  from './objectTypes/country_type'
+import StadiumType  from './objectTypes/stadium_type'
 
 import CountryService from '../../services/country'
 import StadiumService from '../../services/stadium'
@@ -42,6 +42,15 @@ export default new GraphQLObjectType({
             type: new GraphQLList(StadiumType),
             async resolve(parentValue, args, ctx) {
                 return await checkRoleAndResolveAsync(ctx, StadiumService.AllStadia, null, ["admin"]);
+            }
+        },
+        stadiumById: {
+            type: StadiumType,
+            args: {
+                stadiumId: { type: GraphQLString }
+            },
+            async resolve(parentValue, { stadiumId }, ctx) {
+                return await checkRoleAndResolveAsync(ctx, StadiumService.GetStadiumById, stadiumId, ["admin"]);
             }
         },
     }

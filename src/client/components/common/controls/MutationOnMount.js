@@ -2,10 +2,10 @@ import React from 'react';
 import { Mutation } from 'react-apollo'
 import PropTypes from 'prop-types'
 import { compose } from 'recompose'
-import { history } from '../../../../library/routing'
+import { history } from '../../../../../library/routing'
 
-import { renderMessageForError } from './ConditionalRender'
-import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
+import { renderMessageForError } from '../ConditionalRender'
+import GraphQLErrorDisplay from './GraphQLErrorDisplay'
 
 const EnhancedGraphQLErrorDisplay = compose(
   renderMessageForError(GraphQLErrorDisplay)

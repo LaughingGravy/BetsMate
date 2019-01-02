@@ -15,7 +15,7 @@ import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable
   let id = 0;
   
   if (Object.entries(activeRows) && Object.entries(activeRows).some(e => e[1] == true))
-    id = Object.entries(activeRows).shift()[0]
+    stadiumId = Object.entries(activeRows).shift()[0]
 
   return (
     <Table celled selectable stackable>
@@ -28,8 +28,8 @@ import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable
           const isActive = activeRows[s.id]
           
           return(<StadiaRow active={isActive} 
-                                key={s.id}
-                                id={s.id}
+                                key={s.stadiumId}
+                                id={s.stadiumId}
                                 data={s}
                                 onRowClick={onRowClick}
                                 />      

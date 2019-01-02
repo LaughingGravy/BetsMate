@@ -12,14 +12,14 @@ const StadiumTableButtonGroup = ({ activeRows }) => {
 
   const anySelectedRows = (data) => (Object.entries(data) && Object.entries(data).some(e => e[1] == true))
 
-  const createNavigate = (e, data) => history.push('/administration/stadium/edit')
+  const createNavigate = (e, data) => history.push('/administration/general/stadium/edit')
 
   const editNavigate = (e, data) => {
     if (!anySelectedRows(data))
         return
   
-      const id = getId(data)
-      history.push(`/administration/stadium/edit/${id}`)
+      const stadiumId = getId(data)
+      history.push(`/administration/general/stadium/edit/${stadiumId}`)
   }
 
   const getId = (data) => {
@@ -29,15 +29,15 @@ const StadiumTableButtonGroup = ({ activeRows }) => {
     return Object.entries(data).shift()[0]
   }
 
-  const id = getId(activeRows)
+  const stadiumId = getId(activeRows)
 
   return (
     <Mutation mutation={DELETE_STADIUM} 
-              key={id} 
+              key={stadiumId} 
 
               refetchQueries={[ {query: ALL_STADIA} ]}> 
         {(deleteStadium, { loading, error }) => (
-          <AdminTableButtonGroup variables={{id: id}} mutation={deleteStadium} loading={loading} error={error} 
+          <AdminTableButtonGroup variables={{stadiumId: stadiumId}} mutation={deleteStadium} loading={loading} error={error} 
                                 createNavigate={createNavigate} 
                                 editNavigate={editNavigate} 
                                 activeRows={activeRows} />

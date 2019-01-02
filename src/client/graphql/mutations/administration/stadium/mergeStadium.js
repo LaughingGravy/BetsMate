@@ -1,14 +1,13 @@
 import gql from 'graphql-tag';
 
 export default gql`
-mutation MergeStadium($id: String, $name: String, $city: String, $countryId: String)
+mutation MergeStadium($stadiumId: String, $name: String, $city: String, $countryCode: String)
 {
-  mergeStadium (id: $id, name: $name, city: $city, countryId: $countryId) {
-    id
+  mergeStadium (stadiumId: $stadiumId, name: $name, city: $city, countryCode: $countryCode) {
+    code
     name
     city
     country {
-      id
       code
       name
     }

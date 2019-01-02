@@ -1,10 +1,10 @@
 import gql from 'graphql-tag';
 
 export default gql`
-mutation DeleteStadium($id: String)
+mutation DeleteStadium($stadiumId: String)
 {
-  deleteStadium (id: $id) {
-    id
+  deleteStadium (stadiumId: $stadiumId) {
+    stadiumId
     name
   }
 }

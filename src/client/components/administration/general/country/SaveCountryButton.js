@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { Mutation } from 'react-apollo'
 
 import { history } from '../../../../../../library/routing'
-import MutationButton from '../../../common/MutationButton'
+import MutationButton from '../../../common/controls/MutationButton'
 import ALL_COUNTRIES from '../../../../graphql/queries/administration/country/allCountries'
 import GET_COUNTRY_BY_CODE from '../../../../graphql/queries/administration/country/getCountryByCode'
 import MERGE_COUNTRY from '../../../../graphql/mutations/administration/country/mergeCountry'
 import CREATE_COUNTRY from '../../../../graphql/mutations/administration/country/createCountry'
 
-const SaveCountryButton = ({ variables , disabled }) => {
+const SaveCountryButton = ({ variables , isEdit, disabled }) => {
   const { code, name } = variables
 
   const label = "save-button-label"
@@ -18,23 +18,21 @@ const SaveCountryButton = ({ variables , disabled }) => {
     history.push('/administration/general/country/countries')
   }
 
-  //need to know if this is an update or an insert
-
   return (
-    <Mutation mutation={!code ? CREATE_COUNTRY : MERGE_COUNTRY } key={code} 
+    <Mutation mutation={isEdit? MERGE_COUNTRY : CREATE_COUNTRY } key={code} 
 
       onCompleted={onCompleted}
 
       update={(store) => {
+
+        if (!isEdit) return;
         
         let getCountryByCodeData = store.readQuery({
-          query: GET_COUNTRY_BY_CODE, 
+          query: GET_COUNTRY_BY_CODE,
           variables: {
             code: code
           }}
         )
-
-        console.log("getCountryByCodeData", getCountryByCodeData)
 
         if (getCountryByCodeData) {
           const { countryByCode } = getCountryByCodeData
@@ -53,7 +51,7 @@ const SaveCountryButton = ({ variables , disabled }) => {
 
       refetchQueries={[ {query: ALL_COUNTRIES} ]}>
       {(mergeCountry, { loading, error }) => (
-          <MutationButton variables={{code: code, name: name}} mutation={mergeCountry} loading={loading}
+          <MutationButton variables={variables} mutation={mergeCountry} loading={loading}
                           disabled={disabled} error={error} label={label} />
       )}
     </Mutation>
@@ -62,10 +60,10 @@ const SaveCountryButton = ({ variables , disabled }) => {
 
 SaveCountryButton.propTypes = {
   variables: PropTypes.shape({
-    id: PropTypes.string,
-    code: PropTypes.string.isRequired,
+    code: PropTypes.string,
     name: PropTypes.string.isRequired,
   }).isRequired,
+  isEdit: PropTypes.bool.isRequired,
   disabled: PropTypes.bool.isRequired
 };
 

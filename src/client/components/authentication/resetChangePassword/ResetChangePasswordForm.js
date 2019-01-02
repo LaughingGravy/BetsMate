@@ -4,7 +4,7 @@ import { Form } from 'semantic-ui-react'
 
 import { validateResetChangePassword } from  './validate'
 import { getErrObjs } from '../../validation/common'
-import ValidationInput from '../../common/ValidationInput'
+import ValidationInput from '../../common/controls/ValidationInput'
 
 class ResetChangePasswordForm  extends React.Component {
   constructor(props) {

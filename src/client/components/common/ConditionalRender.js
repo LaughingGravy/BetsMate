@@ -3,7 +3,7 @@ import intl from 'react-intl-universal'
 import { branch, renderComponent, renderNothing } from 'recompose';
 import { Container, Button, Grid, Segment, Icon } from 'semantic-ui-react'
 
-import GraphQLErrorDisplay from '../common/GraphQLErrorDisplay'
+import GraphQLErrorDisplay from './controls/GraphQLErrorDisplay'
 
 const renderForAdminFailAccessError = (component, ctxName = "userCtx", propName = "user") =>
   branch(
