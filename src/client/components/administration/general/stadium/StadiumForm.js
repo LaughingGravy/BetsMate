@@ -41,37 +41,33 @@ class StadiumForm  extends React.Component {
     const countryErrObjs = getErrObjs(errors, "country")
     const isFormValid = !Object.keys(errors).some(x => errors[x])
 
+    const displayProperty = "name"
+    const valueProperty = "code"
+
     return (
       <Form className='segment' onSubmit={e => {                      
                                                   e.preventDefault() 
                                               }}>
         <Form.Field required>
-          <ValidationInput name='stadiumName' value={stadiumName} label={intl.get("stadium-name-label")} 
+          <ValidationInput name='stadiumName' key="StadiumName" value={stadiumName} label={intl.get("stadium-name-label")} 
                   placeholder={intl.get("stadium-name-placeholder")} onChange={this.handleChange}
                   onBlur={this.handleBlur('stadiumName')}  
                   errors={stadiumNameErrObjs} pristine={pristineFields['stadiumName'] ? 1 : 0} />
         </Form.Field>
 
         <Form.Field required>
-          <ValidationInput name='city' value={city} label={intl.get("stadium-city-label")} 
+          <ValidationInput name='city' key="StadiumCity" value={city} label={intl.get("stadium-city-label")} 
                   placeholder={intl.get("stadium-city-placeholder")} onChange={this.handleChange}
                   onBlur={this.handleBlur('city')}  
                   errors={cityErrObjs} pristine={pristineFields['city'] ? 1 : 0} />
         </Form.Field>
 
         <Form.Field required>
-          <CountriesDropdown name='country' value={country.code} label={intl.get("stadium-country-label")} 
+          <CountriesDropdown name='country' key="StadiumCountries" value={country.code} label={intl.get("stadium-country-label")} 
                 placeholder={intl.get("stadium-country-placeholder")} onChange={this.handleChange} 
-                onBlur={this.handleBlur('country')} 
+                onBlur={this.handleBlur('country')} displayProperty={displayProperty} valueProperty={valueProperty}
                 errors={countryErrObjs} pristine={pristineFields['country'] ? 1 : 0} />
         </Form.Field> 
-
-       {/* <Form.Field required>
-          <ValidationDropdown name='country' value={country.code} label={intl.get("stadium-country-label")} 
-                  placeholder={intl.get("stadium-country-placeholder")} onChange={this.handleChange} 
-                  onBlur={this.handleBlur('country')} 
-                  errors={countryErrObjs} pristine={pristineFields['country'] ? 1 : 0} />
-        </Form.Field>  */}
 
         {this.props.render({ variables: { stadiumId: this.props.stadiumId, name: stadiumName, city, country}, isFormValid })}
 

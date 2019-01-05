@@ -1,10 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Responsive, Form, Label } from 'semantic-ui-react'
+import { compose } from 'recompose'
 
+import { renderAltIfNoPropValue } from '../../common/ConditionalRender'
 import ValidationErrorPopup from './ValidationErrorPopup'
 
-const ValidationDropdown = ({errors, pristine, placeholder, onChange, options, value}) => {
+const DropdownWithValue = ({placeholder, options, defaultValue, search }) => {
+  <Form.Dropdown placeholder={placeholder} search={search} fluid selection options={options} value={defaultValue} />
+}
+
+const DropdownWithoutValue = ({placeholder, options, search }) => {
+  return (
+    <Form.Dropdown placeholder={placeholder} search={search} fluid selection options={options} />
+  )
+}
+
+const EnhancedDropdown = compose(
+  renderAltIfNoPropValue(DropdownWithValue, DropdownWithoutValue, "defaultValue")
+)(DropdownWithValue)
+
+const ValidationDropdown = (props) => {
+  const { errors, pristine, placeholder, onChange, displayProperty, valueProperty, options, defaultValue, search={search} } = props
   let objs = []
 
   if (errors)
@@ -23,7 +40,7 @@ const ValidationDropdown = ({errors, pristine, placeholder, onChange, options, v
 
   return (
     <React.Fragment>
-      {!shouldDisplayError && <Form.Dropdown placeholder={placeholder} search fluid selection options={options} value={value} {...props} />}
+      {!shouldDisplayError && <EnhancedDropdown placeholder={placeholder} search={search} fluid selection options={options} defaultValue={defaultValue} />}
 
       {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
         <Form.Dropdown error {...props} icon>
@@ -53,12 +70,12 @@ ValidationDropdown.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object).isRequired,
   displayProperty: PropTypes.string.isRequired,
   valueProperty: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([
+  defaultValue: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string
   ]),
   placeholder: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func
 }
 
 export default ValidationDropdown

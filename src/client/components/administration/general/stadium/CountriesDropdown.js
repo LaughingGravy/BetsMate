@@ -1,6 +1,7 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 import { compose } from 'recompose'
+import { Flag } from 'semantic-ui-react'
 
 import { renderForLoading, renderForError, LoadingDisplay, QueryErrorDisplay } from '../../../common/ConditionalRender'
 
@@ -8,12 +9,9 @@ import ALL_COUNTRIES from '../../../../graphql/queries/administration/country/al
 
 import ValidationDropdown from '../../../common/controls/ValidationDropdown'
 
-const vanillaValidationDropdown  = ({errors, pristine, placeholder, data: { countries }}, value ) => {
-  const displayProperty = "name"
-  const valueProperty = "code"
+const vanillaValidationDropdown  = (props) => {
   return (
-    <ValidationDropdown displayProperty={displayProperty} valueProperty={valueProperty} options={countries} 
-                        errors={errors} pristine={pristine} placeholder={placeholder} value={value} />
+    <ValidationDropdown {...props} />
   )
 }
 
@@ -23,11 +21,31 @@ const EnhancedValidationDropdown = compose(
 )(vanillaValidationDropdown)
 
 const CountriesDropdown = (props) => {
+
+  const getOptions = (data) => {
+    if (!data || !data.countries) return [];
+
+    const { countries } = data
+
+    const options = countries.map(item => ({key: `${item.code}`, value: `${item.code}`, searchtext: `${item.name}`, text: <span><Flag name={item.code} />{item.name}</span>}))
+    //const options = countries.map(item => ({key: `${item.code}`, value: `${item.code}`, text: `${item.name}`}))
+    
+    return options;
+  }
+
+  const searchQuery = (options, query) => {
+    const re = new RegExp(query.toLowerCase())
+    return options.filter(opt => re.test(opt.searchtext.toLowerCase()))
+  }
+
   return (
     <Query query={ALL_COUNTRIES}>
     {({ loading, error, data }) => { 
+
+      const options = getOptions(data)
+
       return (
-        <EnhancedValidationDropdown {...props} data={data} loading={loading} error={error} />
+        <EnhancedValidationDropdown {...props} options={options} search={searchQuery} loading={loading} error={error} />
       )
     }}
     </Query>
