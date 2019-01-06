@@ -5,9 +5,8 @@ import { Form } from 'semantic-ui-react'
 
 import { validateStadium } from './validate'
 import { getErrObjs } from '../../../validation/common'
-import ValidationInput from '../../../common/controls/ValidationInput'
-import CountriesDropdown from './CountriesDropdown'
-//import ValidationDropdown from '../../../common/controls/ValidationDropdown';
+import ValidationInput from '../../../common/controls/baseValidatedControls/ValidationInput'
+import CountriesDropdown from '../../../common/controls/CountriesDropdown'
 
 class StadiumForm  extends React.Component {
   constructor(props) {
@@ -25,7 +24,7 @@ class StadiumForm  extends React.Component {
     }
   }
 
-  handleChange = (e, { name, value }) => this.setState({ [name]: value })
+  handleChange = (e, { name, value }) => { this.setState({ [name]: value }) }
 
   handleBlur = (name) => (e) => {
     this.setState({
@@ -33,16 +32,36 @@ class StadiumForm  extends React.Component {
     })
   }
 
+  onSelectChange = (e, data) => {
+    const {value, options, name } = data
+    let countryName = ""
+
+    console.log("onSelectChange data", data)
+
+    if (value != "")
+      countryName = options.find(c => c.value === value).searchtext
+  
+    this.setState({
+      pristineFields: { ...this.state.pristineFields, [name]: false },
+      country: { name: countryName, code: value }
+    })
+  }
+
+  onCloseClick = (e, data) => {
+    this.setState({
+      pristineFields: { ...this.state.pristineFields, [name]: false },
+      country: { name: "", code: "" }
+    })
+  }
+
   render() {
     const { stadiumName, city, country, pristineFields } = this.state
+
     const errors = validateStadium(stadiumName, city, country)
     const stadiumNameErrObjs = getErrObjs(errors, "stadiumName")
     const cityErrObjs = getErrObjs(errors, "city")
     const countryErrObjs = getErrObjs(errors, "country")
     const isFormValid = !Object.keys(errors).some(x => errors[x])
-
-    const displayProperty = "name"
-    const valueProperty = "code"
 
     return (
       <Form className='segment' onSubmit={e => {                      
@@ -64,8 +83,8 @@ class StadiumForm  extends React.Component {
 
         <Form.Field required>
           <CountriesDropdown name='country' key="StadiumCountries" value={country.code} label={intl.get("stadium-country-label")} 
-                placeholder={intl.get("stadium-country-placeholder")} onChange={this.handleChange} 
-                onBlur={this.handleBlur('country')} displayProperty={displayProperty} valueProperty={valueProperty}
+                placeholder={intl.get("stadium-country-placeholder")} onChange={this.onSelectChange} 
+                onBlur={this.handleBlur('country')} onCloseClick={this.onCloseClick}
                 errors={countryErrObjs} pristine={pristineFields['country'] ? 1 : 0} />
         </Form.Field> 
 

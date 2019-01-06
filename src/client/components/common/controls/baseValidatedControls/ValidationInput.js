@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Responsive, Form, Label } from 'semantic-ui-react'
 
-import ValidationErrorPopup from './ValidationErrorPopup'
+import ValidationErrorPopup from '../ValidationErrorPopup'
 
 const ValidationInput = (props) => {
   let objs = []

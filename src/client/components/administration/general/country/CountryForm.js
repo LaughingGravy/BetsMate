@@ -6,7 +6,7 @@ import { Form } from 'semantic-ui-react'
 
 import { validateCountry } from './validate'
 import { getErrObjs } from '../../../validation/common'
-import ValidationInput from '../../../common/controls/ValidationInput'
+import ValidationInput from '../../../common/controls/baseValidatedControls/ValidationInput'
 
 class CountryForm  extends React.Component {
   constructor(props) {

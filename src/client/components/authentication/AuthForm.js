@@ -6,7 +6,7 @@ import '../styles/style.css'
 
 import { validateLogin } from '../authentication/login/validate'
 import { getErrObjs } from '../validation/common'
-import ValidationInput from '../common/controls/ValidationInput'
+import ValidationInput from '../common/controls/baseValidatedControls/ValidationInput'
 
 class AuthForm  extends React.Component {
   constructor(props) {

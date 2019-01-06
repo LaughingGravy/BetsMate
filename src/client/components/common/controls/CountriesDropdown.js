@@ -3,11 +3,11 @@ import { Query } from 'react-apollo'
 import { compose } from 'recompose'
 import { Flag } from 'semantic-ui-react'
 
-import { renderForLoading, renderForError, LoadingDisplay, QueryErrorDisplay } from '../../../common/ConditionalRender'
+import { renderForLoading, renderForError, LoadingDisplay, QueryErrorDisplay } from '../ConditionalRender'
 
-import ALL_COUNTRIES from '../../../../graphql/queries/administration/country/allCountries'
+import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
 
-import ValidationDropdown from '../../../common/controls/ValidationDropdown'
+import ValidationDropdown from '../../../common/controls/validatedControls/ValidationDropdown'
 
 const vanillaValidationDropdown  = (props) => {
   return (
@@ -28,7 +28,6 @@ const CountriesDropdown = (props) => {
     const { countries } = data
 
     const options = countries.map(item => ({key: `${item.code}`, value: `${item.code}`, searchtext: `${item.name}`, text: <span><Flag name={item.code} />{item.name}</span>}))
-    //const options = countries.map(item => ({key: `${item.code}`, value: `${item.code}`, text: `${item.name}`}))
     
     return options;
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Form } from 'semantic-ui-react'
 
-import ValidationInput from '../../common/controls/ValidationInput'
+import ValidationInput from '../../common/controls/baseValidatedControls/ValidationInput'
 import { validateRegister } from './validate'
 import { getErrObjs } from '../../validation/common'
 
