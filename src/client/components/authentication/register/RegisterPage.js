@@ -1,6 +1,6 @@
 import React from 'react';
 import intl from 'react-intl-universal'
-import { Responsive, Grid, GridColumn, Header, Icon, Container } from 'semantic-ui-react'
+import { Responsive, Grid, Header, Icon, Container } from 'semantic-ui-react'
 
 import RegisterForm from './RegisterForm'
 import RegisterButton from './RegisterButton'
@@ -21,13 +21,13 @@ const RegistrationPage = ({match}) => {
       </Grid.Row>
 
       <Grid.Row centered>
-        <GridColumn mobile={14} tablet={8} computer={6}>
+        <Grid.Column mobile={16} tablet={10} computer={8}> 
             <RegisterForm token={token} render={props => (
               <Container textAlign="center">
                 <RegisterButton variables={{ email: props.email, displayName: props.displayName, password: props.password, timeZone: props.timeZone }} disabled={!props.isFormValid} /> 
               </Container>
             )}/> 
-        </GridColumn>
+        </Grid.Column>
       </Grid.Row>
 
     </Grid>      

@@ -1,6 +1,6 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Header, Responsive, Icon, Container, Grid, GridColumn } from 'semantic-ui-react'
+import { Header, Responsive, Icon, Container, Grid } from 'semantic-ui-react'
 
 import ResetChangePasswordForm from './ResetChangePasswordForm'
 import ResetChangePasswordButton from './ResetChangePasswordButton'
@@ -21,16 +21,16 @@ const ResetChangePasswordPage = ({ match }) => {
     </Grid.Row>
 
     <Grid.Row centered>
-      <GridColumn mobile={14} tablet={8} computer={6}>        
-          <ResetChangePasswordForm render={renderProps => (
-            <Container textAlign='center'>
-              <ResetChangePasswordButton variables={{email: email, 
-                                                      token: decodeURIComponent(passwordVerificationString), 
-                                                      password: renderProps.password}}  
-                                         disabled={!renderProps.isFormValid} /> 
-            </Container>
-          )}/>
-      </GridColumn>
+      <Grid.Column mobile={16} tablet={10} computer={8}>      
+        <ResetChangePasswordForm render={renderProps => (
+          <Container textAlign='center'>
+            <ResetChangePasswordButton variables={{email: email, 
+                                                    token: decodeURIComponent(passwordVerificationString), 
+                                                    password: renderProps.password}}  
+                                        disabled={!renderProps.isFormValid} /> 
+          </Container>
+        )}/>
+      </Grid.Column>
     </Grid.Row>
 
   </Grid>

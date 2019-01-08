@@ -32,23 +32,23 @@ const ValidationDropdown = (props) => {
                                                 search={search} options={options} defaultValue={defaultValue}/>
                               </Container>}
 
-      {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+      {/* {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
         <Form.Select name={name} key={key} fluid selection clearable
                                               placeholder={placeholder} onChange={onChange} onBlur={onBlur}
                                               search={search} options={options} defaultValue={defaultValue}>
           <input />
           <ValidationErrorPopup message={firstErrMessage} />
         </Form.Select>  
-      </Responsive>}
+      </Responsive>} */}
 
-      {shouldDisplayError && <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>         
+      {/* {shouldDisplayError && <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>         
       <React.Fragment>
       <Form.Dropdown name={name} key={key} fluid selection clearable
                                               placeholder={placeholder} onChange={onChange} onBlur={onBlur}
                                               search={search} options={options} defaultValue={defaultValue} />
         <Label size="mini" basic color="red" basic pointing>{firstErrMessage}</Label>
         </React.Fragment>
-      </Responsive>}
+      </Responsive>} */}
     </React.Fragment>
   )
 }

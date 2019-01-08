@@ -9,8 +9,7 @@ const iconStyle = {
 }
 
 const containerStyle = {
-  position: 'relative',
-  display: "inline-block"
+  position: 'relative'
 }
 
 export { iconStyle, containerStyle }

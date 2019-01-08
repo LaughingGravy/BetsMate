@@ -1,7 +1,7 @@
 import React from 'react'
 import intl from 'react-intl-universal'
 
-import { Grid, Container, GridColumn } from 'semantic-ui-react'
+import { Grid, Container } from 'semantic-ui-react'
 import EditStadiumPageContent from './EditStadiumPageContent'
 
 const EditStadiumPage = ({ match } ) => {
@@ -17,9 +17,9 @@ const EditStadiumPage = ({ match } ) => {
         </Grid.Row>
 
         <Grid.Row centered>
-          <GridColumn mobile={16} tablet={8} computer={4}>
+        <Grid.Column mobile={16} tablet={10} computer={8}> 
             <EditStadiumPageContent stadiumId={stadiumId} />
-          </GridColumn>
+          </Grid.Column>
         </Grid.Row>
 
       </Grid>

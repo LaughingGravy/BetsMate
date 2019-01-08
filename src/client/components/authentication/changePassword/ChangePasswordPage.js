@@ -1,6 +1,6 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Responsive, Icon, Header, Container, Grid, GridColumn, Segment } from 'semantic-ui-react'
+import { Responsive, Icon, Header, Container, Grid } from 'semantic-ui-react'
 
 import ChangePasswordForm from './ChangePasswordForm'
 import ChangePasswordButton from './ChangePasswordButton'
@@ -17,22 +17,15 @@ const ChangePasswordPage = () => (
       </Header>
     </Grid.Row>
 
-    {/* <Grid.Row centered>
-      <GridColumn mobile={14} tablet={8} computer={6}>
-        <Segment compact basic textAlign="left" text="true">
-          {intl.getHTML("reset-password-text")}
-        </Segment>
-      </GridColumn>
-    </Grid.Row> */}
 
     <Grid.Row centered>
-      <GridColumn mobile={14} tablet={8} computer={6}>        
+      <Grid.Column mobile={16} tablet={10} computer={8}>      
           <ChangePasswordForm render={renderProps => (
             <Container textAlign='center'>
               <ChangePasswordButton variables={renderProps.variables} disabled={!renderProps.isFormValid} /> 
             </Container>
           )}/>
-      </GridColumn>
+      </Grid.Column>
     </Grid.Row>
 
   </Grid>

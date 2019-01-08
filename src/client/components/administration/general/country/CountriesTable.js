@@ -17,8 +17,7 @@ import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable
     code = Object.entries(activeRows).shift()[0]
 
   return (
-    <Table celled selectable stackable>
-      
+    <Table celled selectable>
       <CountriesTableHeader />
 
       <Table.Body>
@@ -38,7 +37,6 @@ import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable
       </Table.Body>
 
       <CountriesTableFooter activeRows={activeRows} />
-      
     </Table>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Header, Responsive, Icon, Container, Grid, GridColumn } from 'semantic-ui-react'
+import { Header, Responsive, Icon, Container, Grid } from 'semantic-ui-react'
 
 import AuthForm from '../AuthForm'
 import LoginButton from './LoginButton'
@@ -20,14 +20,14 @@ const LoginPage = () => {
       </Grid.Row>
 
       <Grid.Row centered>
-        <GridColumn mobile={14} tablet={8} computer={6}>
+        <Grid.Column mobile={16} tablet={10} computer={8}> 
           <Container textAlign='center'>
             <AuthForm render={props => (
               <LoginButton variables={props.variables} disabled={!props.isFormValid} /> 
               )}/>
             <LoginPageButtonGroup />
           </Container>  
-        </GridColumn>
+        </Grid.Column>
       </Grid.Row>
     </Grid>     
   )

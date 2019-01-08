@@ -7,7 +7,7 @@ import { renderForLoading, renderForError, LoadingDisplay, QueryErrorDisplay } f
 
 import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
 
-import ValidationDropdown from '../../../common/controls/validatedControls/ValidationDropdown'
+import ValidationDropdown from '../../common/controls/baseValidatedControls/ValidationDropdown'
 
 const vanillaValidationDropdown  = (props) => {
   return (
