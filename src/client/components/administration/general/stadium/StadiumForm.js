@@ -36,7 +36,7 @@ class StadiumForm  extends React.Component {
     const {value, options, name } = data
     let countryName = ""
 
-    console.log("onSelectChange data", data)
+    console.log("onSelectChange value", value)
 
     if (value != "")
       countryName = options.find(c => c.value === value).searchtext
@@ -62,6 +62,8 @@ class StadiumForm  extends React.Component {
     const cityErrObjs = getErrObjs(errors, "city")
     const countryErrObjs = getErrObjs(errors, "country")
     const isFormValid = !Object.keys(errors).some(x => errors[x])
+
+    console.log("country", country)
 
     return (
       <Form className='segment' onSubmit={e => {                      

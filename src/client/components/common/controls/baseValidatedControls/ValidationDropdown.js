@@ -6,7 +6,12 @@ import { containerStyle, iconStyle, dropdownStyle } from './ValidationDropdownCs
 import ValidationErrorPopup from '../ValidationErrorPopup'
 
 const ValidationDropdown = (props) => {
-  const { errors, pristine, placeholder, label, onChange, onBlur, onCloseClick, name, key, options, defaultValue, search={search} } = props
+  const { errors, pristine, placeholder, label, onChange, onBlur, onCloseClick, name, key, options, value, defaultValue, search={search} } = props
+  
+  console.log("ValidationDropdown value defaultValue", value, defaultValue)
+
+  const selectValue = value
+  
   let objs = []
 
   if (errors)
@@ -25,30 +30,31 @@ const ValidationDropdown = (props) => {
 
   return (
     <React.Fragment>
-      {!shouldDisplayError && <Container style={containerStyle} fluid>
+      {!shouldDisplayError && <Container style={containerStyle} fluid> 
                                 <Icon link style={iconStyle} name="close" onClick={onCloseClick} />
-                                <Form.Dropdown name={name} key={key} fluid selection label={label}
+                                <Form.Dropdown name={name} key={key} fluid selection label={label} 
                                                 placeholder={placeholder} onChange={onChange} onBlur={onBlur}
-                                                search={search} options={options} defaultValue={defaultValue}/>
+                                                search={search} options={options} 
+                                                value={value} defaultValue={defaultValue}/>
                               </Container>}
 
-      {/* {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
-        <Form.Select name={name} key={key} fluid selection clearable
+      {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
+        <Form.Dropdown name={name} key={key} fluid selection value={value} defaultValue={defaultValue}
                                               placeholder={placeholder} onChange={onChange} onBlur={onBlur}
-                                              search={search} options={options} defaultValue={defaultValue}>
+                                              search={search} options={options} >
           <input />
           <ValidationErrorPopup message={firstErrMessage} />
-        </Form.Select>  
-      </Responsive>} */}
+        </Form.Dropdown>  
+      </Responsive>}
 
-      {/* {shouldDisplayError && <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>         
+      {shouldDisplayError && <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>         
       <React.Fragment>
-      <Form.Dropdown name={name} key={key} fluid selection clearable
+      <Form.Dropdown name={name} key={key} fluid selection value={value} defaultValue={defaultValue} 
                                               placeholder={placeholder} onChange={onChange} onBlur={onBlur}
-                                              search={search} options={options} defaultValue={defaultValue} />
+                                              search={search} options={options} />
         <Label size="mini" basic color="red" basic pointing>{firstErrMessage}</Label>
         </React.Fragment>
-      </Responsive>} */}
+      </Responsive>}
     </React.Fragment>
   )
 }
