@@ -63,8 +63,6 @@ class StadiumForm  extends React.Component {
     const countryErrObjs = getErrObjs(errors, "country")
     const isFormValid = !Object.keys(errors).some(x => errors[x])
 
-    console.log("country", country)
-
     return (
       <Form className='segment' onSubmit={e => {                      
                                                   e.preventDefault() 

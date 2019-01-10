@@ -21,7 +21,7 @@ class ValidationErrorPopup extends React.PureComponent {
     const { message } = this.props
     return (
       <Popup
-        trigger={<Icon link name="info" color="red" size="small" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} />}
+        trigger={<Icon link name="info" style={this.props.style} color="red" size="small" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} />}
         position="right center" on="hover">
         <Popup.Content>
           {message}

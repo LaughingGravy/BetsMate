@@ -2,7 +2,6 @@ import { getErrorsFromValidationObjs, required, minLength } from '../../../valid
 
 const validateStadium= (stadiumName, city, country) => {
 
-  console.log("validateStadium country", country)
  const validationObjects = [
     {
       key: "stadiumName",
