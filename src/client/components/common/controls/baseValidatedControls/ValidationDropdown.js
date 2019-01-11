@@ -26,13 +26,13 @@ const ValidationDropdown = (props) => {
   return (
     <React.Fragment>
       {!shouldDisplayError && 
-        <Container style={containerStyle} fluid> 
+          <div style={containerStyle}>
                   <Icon link style={closeIconStyle} name="close" onClick={onCloseClick} />
                   <Form.Dropdown name={name} key={key} fluid selection label={label} 
                                   placeholder={placeholder} onChange={onChange} onBlur={onBlur}
                                   search={search} options={options} 
                                   value={value} defaultValue={defaultValue}/>
-        </Container>}
+          </div>}
 
       {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
         <Container style={containerStyle} fluid> 
@@ -45,10 +45,10 @@ const ValidationDropdown = (props) => {
         </Container>
       </Responsive>}
 
-      {shouldDisplayError && <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>         
-        <Form.Dropdown name={name} key={key} fluid selection value={value} defaultValue={defaultValue} 
-                                              placeholder={placeholder} onChange={onChange} onBlur={onBlur}
-                                              search={search} options={options} />
+      {shouldDisplayError && <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>       
+        <Form.Dropdown name={name} key={key} fluid selection label={label} 
+                        value={value} defaultValue={defaultValue} placeholder={placeholder} 
+                        onChange={onChange} onBlur={onBlur} search={search} options={options} />
         <Label size="mini" basic color="red" basic pointing>{firstErrMessage}</Label>
       </Responsive>}
     </React.Fragment>

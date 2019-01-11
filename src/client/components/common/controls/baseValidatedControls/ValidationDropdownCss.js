@@ -18,7 +18,9 @@ const errorIconStyle = {
 }
 
 const containerStyle = {
-  position: 'relative'
+  position: 'relative',
+  leftMargin: 'auto!importnat',
+  rightMargin: 'auto!mportant'
 }
 
-export { closeIconStyle, errorIconStyle, containerStyle, }
+export { closeIconStyle, errorIconStyle, containerStyle }
