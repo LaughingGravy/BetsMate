@@ -26,7 +26,7 @@ export function withTableSort(WrappedComponent) {
       return data;
     }
 
-    handleSort = (clickedColumn) => {
+    handleSort = (clickedColumn) => () => {
       const { column, data, isAsc } = this.state
 
       console.log("clickedColumn", clickedColumn)
