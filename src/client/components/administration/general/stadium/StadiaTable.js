@@ -9,7 +9,7 @@ import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay} fr
 import StadiaTableHeader from './StadiaTableHeader'
 import StadiaTableFooter from './StadiaTableFooter'
 import StadiaRow from './StadiaRow'
-import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable'
+import { withSelectableRowsTable } from '../../../common/tableHocs/withSelectableRowsTable'
 
  const vanillaStadiaTable = ({ data: { stadia }, activeRows, onRowClick }) => {
   let stadiumId = 0;

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function withSelectableRowsTable(WrappedComponent) {
+export function withTableSort(WrappedComponent) {
   return class extends React.Component {
     constructor(props) {
       super(props);
@@ -8,28 +8,33 @@ export function withSelectableRowsTable(WrappedComponent) {
       this.state = {
         column: null,
         data: props.data,
-        direction: null,
+        isAsc: true,
       }
     }
 
     sort = (data, colName, isAsc) => {
-      return data.sort((a, b) => {
-        if (isAsc) {
-          return a[colName] < b[colName]
-        }
-        else {
-          return a[colName] < b[colName]
-        }
-      })
+      let sortData = data[Object.keys(data)[0]]
+
+      sortData.sort((current, next) => {
+        const result = current[colName].toUpperCase().localeCompare(next[colName].toUpperCase()); 
+
+        return isAsc ? result : result * (-1);
+      });
+
+      data[Object.keys(data)[0]] = sortData;
+
+      return data;
     }
 
-    handleSort = clickedColumn => () => {
+    handleSort = (clickedColumn) => {
       const { column, data, isAsc } = this.state
+
+      console.log("clickedColumn", clickedColumn)
   
       if (column !== clickedColumn) {
         this.setState({
           column: clickedColumn,
-          data: data.sort(data, clickedColumn, isAsc),
+          data: this.sort(data, clickedColumn, isAsc),
           isAsc: true,
         })
   
@@ -37,13 +42,12 @@ export function withSelectableRowsTable(WrappedComponent) {
       }
   
       this.setState({
-        data: data.sort(data, clickedColumn, !isAsc),
+        data: this.sort(data, clickedColumn, !isAsc),
         isAsc: !isAsc,
       })
     }
   
     render() {
-      const { activeRows } = this.state
 
       return (
         <WrappedComponent {...this.props} onHeaderClick={this.handleSort} />

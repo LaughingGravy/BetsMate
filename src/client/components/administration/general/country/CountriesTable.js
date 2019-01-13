@@ -9,9 +9,10 @@ import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay} fr
 import CountriesTableHeader from './CountriesTableHeader'
 import CountriesTableFooter from './CountriesTableFooter'
 import CountriesRow from './CountriesRow'
-import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable'
+import { withSelectableRowsTable } from '../../../common/tableHocs/withSelectableRowsTable'
+import { withTableSort } from '../../../common/tableHocs/withTableSort'
 
- const vanillaCountriesTable = ({ data: { countries }, activeRows, onRowClick }) => {
+ const vanillaCountriesTable = ({ data: { countries }, activeRows, onHeaderClick, onRowClick }) => {
   let code = ""
   if (Object.entries(activeRows) && Object.entries(activeRows).some(e => e[1] == true))
     code = Object.entries(activeRows).shift()[0]
@@ -19,7 +20,7 @@ import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable
   return (
     <Table celled selectable striped sortable fixed style={{"margin": "auto"}}>
 
-      <CountriesTableHeader /> 
+      <CountriesTableHeader onHeaderClick={onHeaderClick} /> 
 
       <Table.Body>
         {
@@ -45,7 +46,7 @@ import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable
 const EnhancedCountriesTable = compose(
   renderForLoading(LoadingDisplay),
   renderForError(QueryErrorDisplay)
-)(withSelectableRowsTable(vanillaCountriesTable))
+)(withTableSort(withSelectableRowsTable(vanillaCountriesTable)))
 
 const CountriesTable = () => {
   return (
