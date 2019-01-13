@@ -16,7 +16,7 @@ class StadiaRow extends React.Component {
       <Table.Row textAlign='center' active={active} onClick={onClick} key={stadiumId}>
         <Table.Cell>{name}</Table.Cell>
         <Table.Cell>{city}</Table.Cell> 
-        <Table.Cell>{this.countryRenderer(country)}</Table.Cell>  
+        <Table.Cell textAlign="left">{this.countryRenderer(country)}</Table.Cell>  
       </Table.Row>
     )
   }

@@ -12,20 +12,20 @@ import StadiaRow from './StadiaRow'
 import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable'
 
  const vanillaStadiaTable = ({ data: { stadia }, activeRows, onRowClick }) => {
-  let id = 0;
+  let stadiumId = 0;
   
   if (Object.entries(activeRows) && Object.entries(activeRows).some(e => e[1] == true))
     stadiumId = Object.entries(activeRows).shift()[0]
 
   return (
-    <Table celled selectable stackable>
+    <Table celled selectable striped sortable fixed style={{"margin": "auto"}}>
       
       <StadiaTableHeader />
 
       <Table.Body>
         {
           stadia.map(s => {
-          const isActive = activeRows[s.id]
+          const isActive = activeRows[s.stadiumId]
           
           return(<StadiaRow active={isActive} 
                                 key={s.stadiumId}

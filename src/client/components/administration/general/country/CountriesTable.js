@@ -17,8 +17,9 @@ import { withSelectableRowsTable } from '../../../common/withSelectableRowsTable
     code = Object.entries(activeRows).shift()[0]
 
   return (
-    <Table celled selectable>
-      <CountriesTableHeader />
+    <Table celled selectable striped sortable fixed style={{"margin": "auto"}}>
+
+      <CountriesTableHeader /> 
 
       <Table.Body>
         {

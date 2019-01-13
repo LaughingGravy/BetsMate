@@ -15,9 +15,7 @@ const StadiaPage = () => {
         </Grid.Row>
         
         <Grid.Row centered>
-          <Container>
             <StadiaTable  />
-          </Container>
         </Grid.Row>
 
       </Grid>

@@ -8,7 +8,7 @@ let stadiumService = {
     return session
       .run(
         `MATCH (s:Stadium)-[r:LOCATED_IN]->(c:Country)
-        WITH ({id: s.stadiumId, name: s.name, city: s.city, country:PROPERTIES(c)}) as stadium
+        WITH ({stadiumId: s.stadiumId, name: s.name, city: s.city, country:PROPERTIES(c)}) as stadium
         RETURN stadium
         ORDER BY stadium.country.name, stadium.name`
       )
@@ -66,7 +66,7 @@ let stadiumService = {
       })
   },
 
-  MergeStadium: ( { id, name, city, country }) => {
+  MergeStadium: ( { stadiumId, name, city, country }) => {
     let session = createSession()
     return session
       .run(

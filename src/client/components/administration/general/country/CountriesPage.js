@@ -13,10 +13,8 @@ const CountriesPage = () => {
               <Header as='h3' textAlign="center">{intl.get("countries-page-title")}</Header>
             </Grid.Row>
             
-            <Grid.Row centered>
-              <Container>
-                <CountriesTable  />
-              </Container>
+            <Grid.Row centered> 
+              <CountriesTable  />
             </Grid.Row>
 
           </Grid>

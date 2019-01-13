@@ -11,20 +11,19 @@ const EnhancedGraphQLErrorDisplay = compose(
   renderMessageForError(GraphQLErrorDisplay)
 )(GraphQLErrorDisplay)
 
-const ButtonGroup = ({ activeRows, variables, mutation, loading, createNavigate, editNavigate }) => {
+const ButtonGroup = ({ activeRows, variables, mutation, loading, createNavigate }) => {
   const anySelectedRows = (Object.entries(activeRows) && Object.entries(activeRows).some(e => e[1] == true))
 
   return (
     <Button.Group>
       <Button secondary onClick={(e) => createNavigate(e, activeRows)}>{intl.get("admin-create-button-label")}</Button>
-      <Button secondary disabled={!anySelectedRows} onClick={(e) => editNavigate(e, activeRows)}>{intl.get("admin-edit-button-label")}</Button>
       <Button secondary disabled={!anySelectedRows} onClick={e => { 
                                                                     e.preventDefault();
                                                                     mutation({variables})
                                                                   }}
-              loading={loading}>
-              {intl.get("admin-delete-button-label")}
-      </Button>  
+            loading={loading}>
+          {intl.get("admin-delete-button-label")}
+        </Button>  
     </Button.Group>
   )
 }
@@ -34,28 +33,26 @@ ButtonGroup.propTypes = {
   variables: PropTypes.object.isRequired,
   mutation: PropTypes.func.isRequired,
   createNavigate: PropTypes.func.isRequired,
-  editNavigate: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired
 };
 
-const AdminTableButtonGroup = ({ variables, mutation, loading, error, createNavigate, editNavigate, activeRows }) => {
+const AdminTableNoEditButtonGroup = ({ variables, mutation, loading, error, createNavigate, activeRows }) => {
   return (
     <Container textAlign="center">
       <EnhancedGraphQLErrorDisplay error={error} />
       <ButtonGroup  variables={variables} mutation={mutation} loading={loading} 
-                    createNavigate={createNavigate} editNavigate={editNavigate} activeRows={activeRows} />
+                    createNavigate={createNavigate} activeRows={activeRows} />
     </Container>
   )
 }
 
-AdminTableButtonGroup.propTypes = {
+AdminTableNoEditButtonGroup.propTypes = {
   activeRows: PropTypes.object.isRequired,
   variables: PropTypes.object.isRequired,
   mutation: PropTypes.func.isRequired,
   createNavigate: PropTypes.func.isRequired,
-  editNavigate: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.object
 };
 
-export default AdminTableButtonGroup
+export default AdminTableNoEditButtonGroup

@@ -10,7 +10,7 @@ import StadiumForm from './StadiumForm'
 import SaveStadiumButton from './SaveStadiumButton'
 
 const vanillaContent = ({ data }) => {
-  const isEdit = !(data.getStadium == null)
+  const isEdit = !(data.stadiumById == null)
 
   let stadium = { stadiumId: "", name: "", city: "", country: {code: "", name: ""} }
 
@@ -37,10 +37,12 @@ vanillaContent.propTypes = {
 const EnhancedContent = compose(
   renderForLoading(LoadingDisplay),
   renderForError(QueryErrorDisplay),
-  renderForNotFound(NotFoundDisplay, "stadiumId", "getStadium")
+  renderForNotFound(NotFoundDisplay, "stadiumId", "stadiumById")
 )(vanillaContent)
 
+
 const EditStadiumPageContent = ({ stadiumId }) => {
+  console.log("stadiumId", stadiumId)
   return (
   <Query query={STADIUM_BY_ID} variables={{ stadiumId }}>
     {EnhancedContent}
