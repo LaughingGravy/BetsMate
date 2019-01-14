@@ -8,17 +8,52 @@ export function withTableSort(WrappedComponent) {
       this.state = {
         column: null,
         data: props.data,
-        isAsc: true,
+        direction: null,
       }
     }
 
-    sort = (data, colName, isAsc) => {
+    sortByObjectProperty = (data, colName, direction) => {
+      const colNameArray = colName.split(".");
+      const objectPropertyName = colNameArray[0]
+      const propertyName = colNameArray[1]
+
       let sortData = data[Object.keys(data)[0]]
 
-      sortData.sort((current, next) => {
-        const result = current[colName].toUpperCase().localeCompare(next[colName].toUpperCase()); 
+      const isNumber = !isNaN(parseFloat(sortData[0][objectPropertyName][propertyName])) && isFinite(sortData[0][objectPropertyName][propertyName])
 
-        return isAsc ? result : result * (-1);
+      sortData.sort((current, next) => {
+        let result = null
+
+        if (isNumber) { 
+          result = current[objectPropertyName][propertyName] - next[objectPropertyName][propertyName];
+        } else {
+          result = current[objectPropertyName][propertyName].toUpperCase()
+                          .localeCompare(next[objectPropertyName][propertyName].toUpperCase()); // string
+        }
+
+        return direction === 'ascending' ? result : result * (-1);
+      });
+
+      data[Object.keys(data)[0]] = sortData;
+
+      return data;
+    }
+
+    sortByProperty = (data, colName, direction) => {
+      let sortData = data[Object.keys(data)[0]]
+
+      const isNumber = !isNaN(parseFloat(sortData[0][colName])) && isFinite(sortData[0][colName])
+
+      sortData.sort((current, next) => {
+        let result = null
+
+        if (isNumber) { 
+          result = current[colName] - next[colName];
+        } else {
+          result = current[colName].toUpperCase().localeCompare(next[colName].toUpperCase()); // string
+        }
+
+        return direction === 'ascending' ? result : result * (-1);
       });
 
       data[Object.keys(data)[0]] = sortData;
@@ -27,30 +62,35 @@ export function withTableSort(WrappedComponent) {
     }
 
     handleSort = (clickedColumn) => () => {
-      const { column, data, isAsc } = this.state
+      const { column, data, direction } = this.state
 
-      console.log("clickedColumn", clickedColumn)
+      const isObjectProperty = clickedColumn.includes(".") //eg country.name
   
       if (column !== clickedColumn) {
         this.setState({
           column: clickedColumn,
-          data: this.sort(data, clickedColumn, isAsc),
-          isAsc: true,
+          direction: 'ascending',
+          data: isObjectProperty ? this.sortByObjectProperty(data, clickedColumn, 'ascending') 
+                                      : this.sortByProperty(data, clickedColumn, 'ascending')
         })
   
         return
       }
+
+      const nextDirection = direction === 'ascending' ? 'descending' : 'ascending'
   
       this.setState({
-        data: this.sort(data, clickedColumn, !isAsc),
-        isAsc: !isAsc,
+        data: isObjectProperty ? this.sortByObjectProperty(data, clickedColumn, nextDirection)  
+                                    : this.sortByProperty(data, clickedColumn, nextDirection),
+        direction: nextDirection
       })
     }
   
     render() {
+      const { column, direction } = this.state
 
       return (
-        <WrappedComponent {...this.props} onHeaderClick={this.handleSort} />
+        <WrappedComponent {...this.props} sortColumn={column} sortDirection={direction} onHeaderClick={this.handleSort} />
       )
     }
   }

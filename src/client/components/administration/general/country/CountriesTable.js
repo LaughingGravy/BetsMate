@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import { Table } from 'semantic-ui-react'
 import { compose } from 'recompose'
@@ -12,7 +13,7 @@ import CountriesRow from './CountriesRow'
 import { withSelectableRowsTable } from '../../../common/tableHocs/withSelectableRowsTable'
 import { withTableSort } from '../../../common/tableHocs/withTableSort'
 
- const vanillaCountriesTable = ({ data: { countries }, activeRows, onHeaderClick, onRowClick }) => {
+ const vanillaCountriesTable = ({ data: { countries }, activeRows, onRowClick, onHeaderClick, sortColumn, sortDirection }) => {
   let code = ""
   if (Object.entries(activeRows) && Object.entries(activeRows).some(e => e[1] == true))
     code = Object.entries(activeRows).shift()[0]
@@ -20,7 +21,7 @@ import { withTableSort } from '../../../common/tableHocs/withTableSort'
   return (
     <Table celled selectable striped sortable fixed style={{"margin": "auto"}}>
 
-      <CountriesTableHeader onHeaderClick={onHeaderClick} /> 
+      <CountriesTableHeader onHeaderClick={onHeaderClick} sortColumn={sortColumn} sortDirection={sortDirection} /> 
 
       <Table.Body>
         {
@@ -42,6 +43,17 @@ import { withTableSort } from '../../../common/tableHocs/withTableSort'
     </Table>
   )
 }
+
+vanillaCountriesTable.propTypes = {
+  data: PropTypes.object,
+  activeRows: PropTypes.object,
+  onRowClick: PropTypes.func.isRequired,
+  onHeaderClick: PropTypes.func.isRequired,
+  sortColumn: PropTypes.string,
+  sortDirection: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.object
+};
 
 const EnhancedCountriesTable = compose(
   renderForLoading(LoadingDisplay),

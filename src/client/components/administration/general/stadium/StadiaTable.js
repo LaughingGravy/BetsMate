@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Query } from 'react-apollo'
 import { Table } from 'semantic-ui-react'
 import { compose } from 'recompose'
@@ -10,8 +11,9 @@ import StadiaTableHeader from './StadiaTableHeader'
 import StadiaTableFooter from './StadiaTableFooter'
 import StadiaRow from './StadiaRow'
 import { withSelectableRowsTable } from '../../../common/tableHocs/withSelectableRowsTable'
+import { withTableSort } from '../../../common/tableHocs/withTableSort'
 
- const vanillaStadiaTable = ({ data: { stadia }, activeRows, onRowClick }) => {
+ const vanillaStadiaTable = ({ data: { stadia }, activeRows, onRowClick, onHeaderClick, sortColumn, sortDirection }) => {
   let stadiumId = 0;
   
   if (Object.entries(activeRows) && Object.entries(activeRows).some(e => e[1] == true))
@@ -20,7 +22,7 @@ import { withSelectableRowsTable } from '../../../common/tableHocs/withSelectabl
   return (
     <Table celled selectable striped sortable fixed style={{"margin": "auto"}}>
       
-      <StadiaTableHeader />
+      <StadiaTableHeader onHeaderClick={onHeaderClick} sortColumn={sortColumn} sortDirection={sortDirection} />
 
       <Table.Body>
         {
@@ -44,10 +46,21 @@ import { withSelectableRowsTable } from '../../../common/tableHocs/withSelectabl
   )
 }
 
+vanillaStadiaTable.propTypes = {
+  data: PropTypes.object,
+  activeRows: PropTypes.object,
+  onRowClick: PropTypes.func.isRequired,
+  onHeaderClick: PropTypes.func.isRequired,
+  sortColumn: PropTypes.string,
+  sortDirection: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.object
+};
+
 const EnhancedStadiaTable = compose(
   renderForLoading(LoadingDisplay),
   renderForError(QueryErrorDisplay)
-)(withSelectableRowsTable(vanillaStadiaTable))
+)(withTableSort(withSelectableRowsTable(vanillaStadiaTable)))
 
 const StadiaTable = () => {
   return (
