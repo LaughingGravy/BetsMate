@@ -46,7 +46,7 @@ const ValidationDropdown = (props) => {
       </Responsive>}
 
       {shouldDisplayError && <Responsive maxWidth={Responsive.onlyTablet.maxWidth}>       
-        <Form.Dropdown name={name} key={key} fluid selection label={label} 
+        <Form.Dropdown name={name} key={key} fluid selection label={label} error
                         value={value} defaultValue={defaultValue} placeholder={placeholder} 
                         onChange={onChange} onBlur={onBlur} search={search} options={options} />
         <Label size="mini" basic color="red" basic pointing>{firstErrMessage}</Label>

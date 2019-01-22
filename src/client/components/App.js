@@ -5,6 +5,9 @@ import { Segment } from 'semantic-ui-react'
 import Layout from './layout/MainLayout/Layout'
 import Routes from './layout/routes/Routes'
 
+import './styles/style.css'
+//import '../../../static/semantic.min.css'
+
 import { UserContext, DefaultUser } from './contexts/userContext'
 
 class App extends React.Component{

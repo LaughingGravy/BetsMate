@@ -14,7 +14,8 @@ const Html = ({ helmet, scripts, window, css, children }) => (
       {helmet.meta.toComponent()}
       {helmet.base.toString() ? helmet.base.toComponent() : <base href="/" />}
       <link rel="stylesheet" href={css} />
-      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link>
+      <link rel="stylesheet" href="./semantic.min.css"></link> 
+      {/* <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"></link> */}
       {helmet.link.toComponent()}
       {helmet.style.toComponent()}
       {helmet.script.toComponent()}

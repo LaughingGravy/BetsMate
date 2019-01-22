@@ -1,7 +1,7 @@
 import React from 'react'
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
-import { Menu, Dropdown, Responsive } from 'semantic-ui-react'
+import { Menu, Dropdown, Responsive, Image } from 'semantic-ui-react'
 import { compose } from 'recompose';
 
 import { history } from '../../../../../library/routing'
@@ -9,6 +9,10 @@ import { renderIfAuthenticated } from '../../common/ConditionalRender'
 import { withUser } from '../../contexts/withUserContext';
 
 import LogoutPlainButton from '../../authentication/logout/LogoutPlainButton'
+
+import { FlipSVGIcon, ICONS } from '../../../../../static/icons'
+
+const person = <FlipSVGIcon path={ICONS.PERSON} width="180%" height="180%" />
 
 const OPTIONS = [
   {
@@ -49,7 +53,7 @@ const vanillaUserMenuItem = ({userCtx}) => {
           className='icon'
           labeled
           basic
-          icon='user'
+          icon={person}
           floating
           text={menuItemText}>
           <Dropdown.Menu>    
