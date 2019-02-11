@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import intl from 'react-intl-universal'
-import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
+import { Grid, GridColumn, Message } from 'semantic-ui-react'
+
+import { SVG, ICONS } from '../../../../../static/svgHelper'
 
 const VerifyEmailFailurePage = ({ message }) => {
 
@@ -12,7 +14,7 @@ const VerifyEmailFailurePage = ({ message }) => {
         <Message size="big" negative>
           
           <Message.Header>
-            <Icon name="paper plane" color="red" size="large" />{intl.get("verify-email-fail-header")}
+            <SVG fill="orange" path={ICONS.WARNING.path} viewBox={ICONS.WARNING.viewBox} width="48" height="48" /> {intl.get("verify-email-fail-header")}
           </Message.Header>
           <br />
           <Message.Content>

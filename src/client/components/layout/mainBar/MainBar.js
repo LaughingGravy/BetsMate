@@ -4,20 +4,21 @@ import { Menu, Icon } from 'semantic-ui-react'
 
 import { history } from '../../../../../library/routing'
 import InternationalisationItem from './InternationalisationItem'
-// import RightMenuUnAuthItems from './RightMenuUnAuthItems'
-// import RightMenuLogoutItem from './RightMenuLogoutItem'
+
 import RightMenuItems from './RightMenuItems'
 import SideBarMenuItem from './SideBarMenuItem'
 import AdminMenuItem from './AdminMenuItem'
+
+import { SVG, ICONS } from '../../../../../static/svgHelper'
 
 const MainBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisibility}) => {
 
   return (
     <Menu attached secondary fluid>
     <Menu.Menu position="left">
-      <Menu.Item key="home" onClick={e => history.push("/home")}>
-        <Icon name="soccer" size="large"  />
-        <span>Bets Mate</span>
+      <Menu.Item key="home" onClick={e => history.push("/home")} style={{"display": "flex", "alignContent": "flexStart"}}>
+          <SVG role="img" path={ICONS.FOOTBALL.path} viewBox={ICONS.FOOTBALL.viewBox} width="32" height="32" />
+          <span> Bets Mate</span>
       </Menu.Item> 
 
       <AdminMenuItem />

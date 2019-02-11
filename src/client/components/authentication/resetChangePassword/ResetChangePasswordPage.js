@@ -1,9 +1,11 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Header, Responsive, Icon, Container, Grid } from 'semantic-ui-react'
+import { Header, Responsive, Container, Grid } from 'semantic-ui-react'
 
 import ResetChangePasswordForm from './ResetChangePasswordForm'
 import ResetChangePasswordButton from './ResetChangePasswordButton'
+
+import { SVG, ICONS } from '../../../../../static/svgHelper'
 
 const ResetChangePasswordPage = ({ match }) => {
   const { email, passwordVerificationString } = match.params;
@@ -13,7 +15,7 @@ const ResetChangePasswordPage = ({ match }) => {
     <Grid.Row centered>
       <Header as='h3' icon>
         <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-          <Icon name='unlock' />
+          <SVG path={ICONS.FIRSTAID.path} viewBox={ICONS.FIRSTAID.viewBox} width="48" height="48" />
         </Responsive>
         {intl.get("change-password-page-title")}
         <Header.Subheader>{intl.getHTML("reset-password-text")}</Header.Subheader>

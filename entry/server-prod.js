@@ -11,8 +11,8 @@ import Config from '../utilities/Config';
 import PATHS from '../utilities/paths'
 import { logServerStarted } from '../library/console';
 
-import enGB from '../dist/public/locales/en-GB.json';
-import jaJP from '../dist/public/locales/ja-JP.json';
+import enGB from '../dist/public/assets/locales/en-GB.json';
+import jaJP from '../dist/public/assets/locales/ja-JP.json';
 
 // Extend the server base
 import server, { createReactHandler, addLocalesRoutes, addFavicon } from './server-base';

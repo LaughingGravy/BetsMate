@@ -4,13 +4,16 @@ import chalk from 'chalk';
 import path from 'path';
 
 // Plugins
-import CleanWebpackPlugin from 'clean-webpack-plugin'
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+//import ImageminPlugin from 'imagemin-webpack-plugin'
+import ImageminPlugin from "imagemin-webpack"
+import imageminGifsicle from "imagemin-gifsicle"
+import imageminJpegtran from "imagemin-jpegtran"
+import imageminOptipng from "imagemin-optipng"
+import imageminSvgo from "imagemin-svgo"
+
+import TerserPlugin from 'terser-webpack-plugin'
 // Compression plugin for generating `.gz` static files
 import BrotliGzipPlugin from 'brotli-gzip-webpack-plugin'
-
-// Plugin for computing chunk hash
-import WebpackChunkHash from 'webpack-chunk-hash';
 
 import ManifestPlugin from 'webpack-manifest-plugin'
 // Chunk Manifest plugin for generating a chunk asset manifest
@@ -26,20 +29,7 @@ import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import { regex, css, webpackProgress } from './common';
 import PATHS from '../utilities/paths';
 
-// Extend the `browser.js` config
-export default new WebpackConfig().extend({
-    '[root]/browser.js': config => {
-      // Optimise images
-      config.module.rules.find(l => l.test.toString() === regex.images.toString())
-        .use.push({
-          loader: 'image-webpack-loader',
-          // workaround for https://github.com/tcoopman/image-webpack-loader/issues/88
-          options: {},
-        });
-  
-      return config;
-    },
-  }).merge({
+export default new WebpackConfig().extend('[root]/browser.js').merge({
     mode: 'production',
 
     output: {
@@ -52,7 +42,7 @@ export default new WebpackConfig().extend({
 
     module: {
         rules: [
-            css.prodRules
+              css.prodRules,
         ]
     },
 
@@ -79,18 +69,18 @@ export default new WebpackConfig().extend({
         new BrotliGzipPlugin({
             asset: '[path].br[query]',
             algorithm: 'brotli',
-            test: /\.(js|css|html|svg)$/,
-            //threshold: 10240,
-            minRatio: 0.99
+            test: /\.(svg|json|js|css|html)$/i,
+            threshold: 10240,
+            minRatio: 0.8,
+            quality: 11
         }),
 
-        //Compress assets into .gz files
         new BrotliGzipPlugin({
             asset: '[path].gz[query]',
             algorithm: 'gzip',
-            test: /\.(js|css|html|svg)$/,
-            //threshold: 10240,
-            minRatio: 0.99
+            test: /\.(svg|js|css|html)$/i,
+            threshold: 10240,
+            minRatio: 0.8
         }),
 
         new MiniCssExtractPlugin({
@@ -124,14 +114,42 @@ export default new WebpackConfig().extend({
         // Enable scope hoisting to speed up JS loading
         new webpack.optimize.ModuleConcatenationPlugin(),
 
-        // Copy files from `PATHS.static` to `dist/public`.  No transformations
-        // will be performed on the files-- they'll be copied as-is
+        //Copy files from `PATHS.static` to `dist/public`.  No transformations
+        //will be performed on the files-- they'll be copied as-is
         new CopyWebpackPlugin([
             {
                 from: PATHS.static,
+                to: path.join(PATHS.public, 'assets'),
                 force: true, // This flag forces overwrites between versions
             },
         ]),
+        new ImageminPlugin({
+            bail: false, // Ignore errors on corrupted images
+            cache: true,
+            name: 'assets/img/[name]-[hash].[ext]',
+            imageminOptions: {
+              // Lossless optimization with custom option
+              // Feel free to experement with options for better result for you
+              plugins: [
+                imageminGifsicle({
+                  interlaced: true
+                }),
+                imageminJpegtran({
+                  progressive: true
+                }),
+                imageminOptipng({
+                  optimizationLevel: 5
+                }),
+                imageminSvgo({
+                  removeViewBox: true,
+                  removeXMLProcInst: true,
+                  removeUselessDefs: true,
+                  removeXMLNS: true,
+                  minifyStyles: true
+                })
+              ]
+            }
+          })
     ],
 
     optimization: {
@@ -157,17 +175,17 @@ export default new WebpackConfig().extend({
           },
         },
         minimizer: [
-            new UglifyJsPlugin({
-              cache: true,
-              parallel: false,
-              sourceMap: false, // set to true if you want JS source maps
-              exclude: [/\.min\.js$/gi], // skip pre-minified libs
+            new TerserPlugin({
+                cache: true,
+                parallel: false,
+                sourceMap: false,
+                exclude: [/\.min\.js$/gi], // skip pre-minified libs
             }),
             new OptimizeCSSAssetsPlugin({
                 cssProcessor: require('cssnano'),
                 cssProcessorOptions: { discardComments: { removeAll: true } },
                 canPrint: true
-            })
+            }),
         ],
         runtimeChunk: {
             name: "manifest",

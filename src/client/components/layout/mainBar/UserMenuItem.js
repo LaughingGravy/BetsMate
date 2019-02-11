@@ -1,7 +1,7 @@
 import React from 'react'
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
-import { Menu, Dropdown, Responsive, Image } from 'semantic-ui-react'
+import { Menu, Dropdown, Responsive } from 'semantic-ui-react'
 import { compose } from 'recompose';
 
 import { history } from '../../../../../library/routing'
@@ -10,20 +10,18 @@ import { withUser } from '../../contexts/withUserContext';
 
 import LogoutPlainButton from '../../authentication/logout/LogoutPlainButton'
 
-import { FlipSVGIcon, ICONS } from '../../../../../static/icons'
-
-const person = <FlipSVGIcon path={ICONS.PERSON} width="180%" height="180%" />
+import { SVG, SVGIcon, ICONS } from '../../../../../static/svgHelper'
 
 const OPTIONS = [
   {
     key: "settings",
-    icon: "settings",
     value: "settings",
+    icon: <SVG path={ICONS.SETTINGS.path} width="18" height="18" viewBox={ICONS.SETTINGS.viewBox} />,
     text: "user-change-settings-menu-item"
   },
   {
     key: "changepassword",
-    icon: "spy",
+    icon: <SVG path={ICONS.SPY.path} width="18" height="18" viewBox={ICONS.SPY.viewBox} />,
     value: "changepassword",
     text: "change-password-menu-header"
   }
@@ -46,20 +44,20 @@ const vanillaUserMenuItem = ({userCtx}) => {
   }
 
   return (
-    <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+    <Responsive minWidth={Responsive.onlyTablet.minWidth} style={{"display": "flex", "alignContent": "flexStart"}}>
       <Menu.Item>
         <Dropdown
           button
           className='icon'
           labeled
           basic
-          icon={person}
+          icon={<SVGIcon path={ICONS.PERSON.path} width="32" height="32" viewBox={ICONS.PERSON.viewBox} />}
           floating
           text={menuItemText}>
           <Dropdown.Menu>    
-            {OPTIONS.map(opt => <Dropdown.Item text={intl.get(opt.text)} icon={opt.icon} value={opt.value} key={opt.key} onClick={onClick} />)}    
+            {OPTIONS.map(opt => <Dropdown.Item text={intl.get(opt.text)} value={opt.value} icon={opt.icon} key={opt.key} onClick={onClick} />)}     
             <Dropdown.Divider />
-            <Dropdown.Item style={{"textAlign": "center"}}><LogoutPlainButton /></Dropdown.Item>
+            <Dropdown.Item><LogoutPlainButton /></Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Item>

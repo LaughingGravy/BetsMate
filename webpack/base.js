@@ -44,10 +44,19 @@ export default new WebpackConfig().merge({
                 {
                   loader: 'image-webpack-loader',
                   query: {
-                    name: 'assets/img/[name].[hash].[ext]',
+                    name: '/assets/img/[name].[hash].[ext]',
                   },
                 }
             ],
+          },
+
+          {
+            test: regex.json,
+            loader: 'json-loader',
+            type: 'javascript/auto',
+            query: {
+              name: '/static/locales/[name].[hash].[ext]',
+            },
           },
 
           // GraphQL queries
@@ -72,43 +81,43 @@ export default new WebpackConfig().merge({
     //     filename: '[name].js',
     // },
 
-    plugins: [
-        // Options that our module loaders will pull from
-        new webpack.LoaderOptionsPlugin({
+    // plugins: [
+    //     // Options that our module loaders will pull from
+    //     new webpack.LoaderOptionsPlugin({
     
-          // Switch loaders to `minimize mode` where possible
-          minimize: true,
+    //       // Switch loaders to `minimize mode` where possible
+    //       minimize: true,
     
-          // Turn off `debug mode` where possible
-          debug: false,
-          options: {
-              // The 'context' that our loaders will use as the root folder
-              context: PATHS.src,
+    //       // Turn off `debug mode` where possible
+    //       debug: false,
+    //       options: {
+    //           // The 'context' that our loaders will use as the root folder
+    //           context: PATHS.src,
 
-                // image-webpack-loader image crunching options
-                imageWebpackLoader: {
-                    bypassOnDebug: true,
-                    mozjpeg: {
-                        progressive: true,
-                        quality: 65
-                    },
-                    // optipng.enabled: false will disable optipng
-                    optipng: {
-                        enabled: false,
-                    },
-                    pngquant: {
-                        quality: '65-90',
-                        speed: 4
-                    },
-                    gifsicle: {
-                        interlaced: false,
-                    },
-                    // the webp option will enable WEBP
-                    webp: {
-                        quality: 75
-                    }
-                }
-            }
-        }),
-    ],
+    //             // image-webpack-loader image crunching options
+    //             imageWebpackLoader: {
+    //                 bypassOnDebug: true,
+    //                 mozjpeg: {
+    //                     progressive: true,
+    //                     quality: 65
+    //                 },
+    //                 // optipng.enabled: false will disable optipng
+    //                 optipng: {
+    //                     enabled: false,
+    //                 },
+    //                 pngquant: {
+    //                     quality: '65-90',
+    //                     speed: 4
+    //                 },
+    //                 gifsicle: {
+    //                     interlaced: false,
+    //                 },
+    //                 // the webp option will enable WEBP
+    //                 webp: {
+    //                     quality: 75
+    //                 }
+    //             }
+    //         }
+    //     }),
+    // ],
 })

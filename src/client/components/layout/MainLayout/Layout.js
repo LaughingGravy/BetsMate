@@ -31,6 +31,7 @@ class Layout extends React.Component {
     }
 
     onSelectLocale(e, data) {
+        console.log("onSelectLocale", data)
         let lang = data.value;
         let pathname = history.location["pathname"];
         this.setState({currentLocale: data.value}); 

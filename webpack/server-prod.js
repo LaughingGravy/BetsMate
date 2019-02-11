@@ -7,20 +7,20 @@ import Config from '../utilities/Config'
 import { webpackProgress } from './common'
 import PATHS from '../utilities/paths'
 
-export default new WebpackConfig().extend({
-    '[root]/server.js': conf => {
-      // Optimise images
-        conf.module.rules.find(l => l.test.toString() === /\.(jpe?g|png|gif|svg)$/i.toString())
-            .use.push({
-            // `image-webpack-loader` is used on the server build even with `emitFile`
-            // on `fileLoader` disabled so that the correct hash can be generated.
-            loader: 'image-webpack-loader',
-            // workaround for https://github.com/tcoopman/image-webpack-loader/issues/88
-            options: {},
-            });
-        return conf;
-    },
-}).merge({
+// export default new WebpackConfig().extend({
+//     '[root]/server.js': conf => {
+//       // Optimise images
+//         conf.module.rules.find(l => l.test.toString() === /\.(jpe?g|png|gif|svg)$/i.toString())
+//             .use.push({
+//             // `image-webpack-loader` is used on the server build even with `emitFile`
+//             // on `fileLoader` disabled so that the correct hash can be generated.
+//             loader: 'image-webpack-loader',
+//             // workaround for https://github.com/tcoopman/image-webpack-loader/issues/88
+//             options: {},
+//             });
+//         return conf;
+//     },
+export default new WebpackConfig().extend('[root]/server.js').merge({
     mode: 'none', // optimizations when set to production cause errors - we will set appropriate optimizations 
     stats: 'minimal',
 

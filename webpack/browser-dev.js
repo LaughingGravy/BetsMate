@@ -81,6 +81,7 @@ export default new WebpackConfig().extend({
         new CopyWebpackPlugin([
             {
                 from: PATHS.static,
+                to: path.join(PATHS.distDev, 'assets'),
                 force: true, // This flag forces overwrites between versions
             },
         ]),

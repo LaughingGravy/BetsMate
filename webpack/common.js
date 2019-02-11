@@ -1,19 +1,16 @@
-import PATHS from '../utilities/paths';
-
 // Show a nice little progress bar (for Webpack)
 import ProgressBarPlugin from 'progress-bar-webpack-plugin';
 
 // css extractor
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
-//import ExtractTextPlugin from 'extract-text-webpack-plugin'
-
 import chalk from 'chalk';
 
 // RegExp for file types
 export const regex = {
-    fonts: /\.(svg|woff|woff2|(o|t)tf|eot)$/i,
-    images: /\.(jpe?g|png|gif|svg)$/i
+    fonts: /\.(woff|woff2|(o|t)tf|eot)$/i,
+    images: /\.(jpe?g|png|gif|svg)$/i,
+    json: /\.json$/i
   };
 
 export const css = {

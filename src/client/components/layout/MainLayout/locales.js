@@ -1,12 +1,9 @@
-import React from 'react';
-import { Flag } from 'semantic-ui-react'
-
 const SUPPOER_LOCALES = [
     {
         text: "English",
         value: "en-GB",
         name: "English",
-        flag: "gb"
+        flag: "gb-eng"
     },
     {
         text: "日本語",

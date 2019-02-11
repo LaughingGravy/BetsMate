@@ -1,9 +1,11 @@
 import React from 'react';
 import intl from 'react-intl-universal'
-import { Responsive, Grid, Header, Icon, Container } from 'semantic-ui-react'
+import { Responsive, Grid, Header, Container } from 'semantic-ui-react'
 
 import RegisterForm from './RegisterForm'
 import RegisterButton from './RegisterButton'
+
+import { SVG, ICONS } from '../../../../../static/svgHelper'
 
 const RegistrationPage = ({match}) => {
   const { token } = match.params
@@ -13,7 +15,7 @@ const RegistrationPage = ({match}) => {
       <Grid.Row centered>
         <Header as='h3' icon>
           <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-            <Icon name='signup' />
+            <SVG path={ICONS.REGISTER.path} viewBox={ICONS.REGISTER.viewBox} width="48" height="48" />
           </Responsive>
           {intl.get("register-page-title")}
           <Header.Subheader>{intl.getHTML("registration-text")}</Header.Subheader>

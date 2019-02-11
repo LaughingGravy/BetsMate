@@ -2,7 +2,9 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import intl from 'react-intl-universal'
 import PropTypes from 'prop-types'
-import { Header, Responsive,  Icon, Grid, Menu } from 'semantic-ui-react'
+import { Header, Responsive, Grid, Menu } from 'semantic-ui-react'
+
+import { SVG, ICONS } from '../../../../static/svgHelper'
 
 import AdminRoutes from './AdminRoutes'
 
@@ -12,7 +14,7 @@ const AdministrationPage = ( { match }) => {
       <Grid.Row centered>
         <Header as='h3' icon>
           <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-            <Icon name='university' />
+            <SVG path={ICONS.ADMIN.path} width="48" height="48" viewBox={ICONS.ADMIN.viewBox}/>
           </Responsive>
           {intl.get("admin-page-title")}
           <Header.Subheader>{intl.get("admin-pagesub-header")}</Header.Subheader>

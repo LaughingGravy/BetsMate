@@ -103,7 +103,7 @@ export default new WebpackConfig().extend({
     externals: nodeModules({
         whitelist: [
             regex.fonts,
-            regex.images,
+            regex.images
         ],
     })
 })

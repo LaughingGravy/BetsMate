@@ -1,5 +1,4 @@
 import React from 'react'
-import intl from 'react-intl-universal'
 import { Container, Grid } from 'semantic-ui-react'
 import { compose } from 'recompose'
 

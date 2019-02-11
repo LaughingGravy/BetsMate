@@ -1,0 +1,139 @@
+{
+    "locale-id": "en-GB",
+    "locale-language": "English",
+
+    "loading": "loading...",
+    "veryfying": "veryfying...",
+    "try-refetch-query": "Try again",
+    "not-found": "No record was found matching search criteria",
+
+    "about-menu-header": "About",
+    "admin-menu-header": "Administration",
+    "register-menu-header": "Register",
+    "logout-menu-header": "Logout",
+    "login-menu-header": "Login",
+    "user-change-settings-menu-item": "Change Settings",
+    "reset-password-menu-header": "Password Reset",
+    "change-password-menu-header": "Change Password",
+    "sport-football-header": "Football",
+
+    "user-settings-page-title": "Account Settings",
+    "user-settings-page-sub-title": "Manage your account settings.",
+
+
+    "home-page-title": "Home",
+    "about-page-title": "About",
+    "admin-page-title": "Administration",
+    "admin-pagesub-header": "Maintain administrative data.",
+
+    "register-page-title": "Register Account",
+    "register-button-label": "Register",
+    "verify-email-success-header": "Account Verified",
+    "verify-email-msg-content": "Your account has been verified.<br />Please login in to Bets Mate.",
+    "verify-email-fail-header": "Account Verification Failure",
+    "verify-email-fail-msg-content": "Your account has not been verified.",
+    "verifiy-email-error": "Your account has failed verification.<br />Please register again.",
+    "expired-email-token-error": "The email verification token has expired.",
+    "verification-token-error": "An error occurred during verification.<br />Please try resetting the password again.",
+
+    "reset-password-page-title": "Reset Password",
+    "reset-text": "Please enter your registered Bets Mate email address.<br />Once submitted a link to set a new password will be mailed.",
+    "verify-reset-fail-header": "Reset Password Failure",
+    "verify-reset-fail-msg-content": "The verification has failed.",
+   
+    "reset-token-expired-error": "The reset password token has expired.<br />Please make a new request.",
+    "reset-password-token-error": "An error occurred when verifying the password token.",
+    "reg-link-success-header": "Verify Email Sent",
+    "reg-link-msg-content": "An email has been sent to the address provided.<br />Please click on the link to verify the email address and complete registration.<br />Please note the link will expire in one hour.",
+
+    "credentials-error": "Email/password not recognised.",
+    "role-error": "You do not have permissions to perform that task.",
+    "email-error": "An error occurred when sending the email.<br />Please try again later.",
+
+    "login-page-title": "Login",
+    "login-page-sub-header": "Please login to your account.",
+    "reset-page-title": "Forgot Password",
+    "change-password-page-title": "Change Password",
+    "register-link-page-title": "Registration",
+
+    "email-label": "Email",
+    "password-label": "Password",
+    "username-label": "Username",
+    "login-button-label": "Login",
+    "reset-button-label": "Send Link",
+    "confirm-password-label": "Confirm Password",
+    "current-password-label": "Current Password",
+    "new-password-label": "New Password",
+    "confirm-new-password-label": "Confirm New Password",
+
+    "password-placeholder": "Password...",
+    "username-placeholder": "Username...",
+
+    "registration-text": "Please enter your details and an account activation link will be sent on clicking upon the Register button.",
+    "auth-page-decline-warning-title": "Unauthorised Access",
+    "auth-page-decline-warning-msg": "You are not authorised to view this page.",
+    
+    "link-msg-header": "Email Link Sent",
+    "reset-link-msg-content": "The reset password link has been sent successfully to your registered email address.<br />Please click on the link and follow the on screen instructions.",
+    "reset-password-text": "Please enter a new password and re-enter it for confirmation.",
+
+    "change-pwd-msg-header": "Password Changed",
+    "change-pwd-msg-content": "Your password has been saved successfully.<br />Please use it next time you sign in to Bets Mate",
+
+    "registration-activate-text": "Please enter a password and re-enter it for confirmation.<br />Complete registration by clicking on the Activation button.",
+    "registration-link-text": "Please enter an email address and an account activation link will be sent on clicking upon the Send Link button.",
+    "register-link-msg-content": "The account activation link has been sent successfully to the email address provided.<br />Please click on the link and follow the on screen instructions.",
+
+    "user_loggedin-message-error": "The page you have navigated to is only for users that have yet to log in.",
+    "user_loggedin-warning-page-title": "Already Logged In",
+    "user_not_loggedin-message-error": "The page you have navigated to is only for users that have logged in.",
+    "user_not_loggedin-warning-page-title": "Not Logged In",
+
+    "admin-general-menu-header": "General",
+    "admin-football-menu-header": "Football",
+    "admin-afl-menu-header": "AFL",
+
+    "admin-country-menu-header": "Country",
+    "countries-menu-header": "Countries",
+    "add-country-menu-header": " Create Country",
+    "add-country-page-title": "Create Country",
+    "edit-country-page-title": "Edit Country",
+    "countries-page-title": "Countries",
+
+    "country-tbl-code-col-hdr": "Code",
+    "country-tbl-flag-col-hdr": "Flag",
+    "country-tbl-name-col-hdr": "Name",
+
+    "countries-tbl-col-header-name": "Country Name",
+    "admin-create-button-label": "Create",
+    "admin-edit-button-label": "Edit",
+    "admin-delete-button-label": "Delete",
+
+    "country-code-label": "Code",
+    "country-code-placeholder": "gb eng",
+    "country-name-label": "Name",
+    "country-name-placeholder": "England",
+
+    "admin-stadium-menu-header": "Stadium",
+    "stadia-page-title": "Stadia",
+    "stadium-tbl-name-col-hdr": "Name",
+    "stadium-tbl-city-col-hdr": "City",
+    "stadium-tbl-country-col-hdr": "Country",
+
+    "add-stadium-page-title": "Create Stadium",
+    "edit-stadium-page-title": "Edit Stadium",
+
+    "stadium-name-label": "Name",
+    "stadium-name-placeholder": "Wembley",
+    "stadium-city-label": "City",
+    "stadium-city-placeholder": "London",
+    "stadium-country-placeholder": "Select Country...",
+    "stadium-country-label": "Country",
+
+    "save-button-label": "Save",
+
+    "email-format-val-msg": "Not a valid email",
+    "minlength-val-msg": "Minimum number of characters",
+    "required-val-msg": "Mandatory field",
+    "confirm-password-val-msg": "Passwords do not match"
+}

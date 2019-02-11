@@ -37,5 +37,7 @@ export default {
 
     // Public.  This is where our web server will start looking to serve
     // static files from
-    public: path.join(root, 'dist', 'public')
+    // public: path.join(root, 'dist', 'public')
+
+    public: path.resolve(root, 'dist/public')
 };

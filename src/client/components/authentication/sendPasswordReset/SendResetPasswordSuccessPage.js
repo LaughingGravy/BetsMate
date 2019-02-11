@@ -2,6 +2,8 @@ import React from 'react'
 import intl from 'react-intl-universal'
 import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
 
+import { SVG, ICONS } from '../../../../../static/svgHelper'
+
 const SendResetPasswordSuccessPage = () => (
   <Grid columns={1} centered>
     <Grid.Row centered>
@@ -9,7 +11,7 @@ const SendResetPasswordSuccessPage = () => (
         <Message size="big" positive>
           
           <Message.Header>
-            <Icon name="paper plane" size="large" />{intl.get("link-msg-header")}
+            <SVG fill="green" path={ICONS.SEND.path} viewBox={ICONS.SEND.viewBox} width="48" height="48" /> {intl.get("link-msg-header")}
           </Message.Header>
           <br />
           <Message.Content>

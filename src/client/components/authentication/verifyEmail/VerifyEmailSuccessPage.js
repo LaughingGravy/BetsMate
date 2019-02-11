@@ -1,6 +1,8 @@
 import React from 'react'
 import intl from 'react-intl-universal'
-import { Grid, GridColumn, Message, Icon } from 'semantic-ui-react'
+import { Grid, GridColumn, Message } from 'semantic-ui-react'
+
+import { SVG, ICONS } from '../../../../../static/svgHelper'
 
 const VerifyEmailSuccessPage = () => (
   <Grid columns={1} centered>
@@ -9,7 +11,7 @@ const VerifyEmailSuccessPage = () => (
         <Message size="big" positive>
           
           <Message.Header>
-            <Icon name="paper plane" color="green" size="large" />{intl.get("verify-email-success-header")}
+            <SVG fill="green" path={ICONS.SEND.path} viewBox={ICONS.SEND.viewBox} width="48" height="48" /> {intl.get("verify-email-success-header")}
           </Message.Header>
           <br />
           <Message.Content>

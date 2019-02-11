@@ -9,8 +9,8 @@ import Config from '../utilities/Config';
 import PATHS from '../utilities/paths'
 import { logServerStarted } from '../library/console';
 
-import enGB from '../dist/dev/locales/en-GB.json';
-import jaJP from '../dist/dev/locales/ja-JP.json';
+import enGB from '../dist/dev/assets/locales/en-GB.json';
+import jaJP from '../dist/dev/assets/locales/ja-JP.json';
 
 // Extend the server base
 import server, { createReactHandler, addLocalesRoutes, addFavicon } from './server-base';
@@ -34,7 +34,7 @@ const { app, router, listen, runApolloEngine } = server
 app.use(express.static(PATHS.distDev))
 app.use(compression()) 
 
-addFavicon(PATHS.distDev)
+addFavicon(path.join(PATHS.distDev, "assets"))
 addLocalesRoutes(enGB, jaJP)
 
 app.use(router)
