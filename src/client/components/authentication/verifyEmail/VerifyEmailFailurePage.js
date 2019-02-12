@@ -11,16 +11,10 @@ const VerifyEmailFailurePage = ({ message }) => {
     <Grid columns={1} centered>
     <Grid.Row centered>
       <GridColumn mobile={14} tablet={8} computer={6}>
-        <Message size="big" negative>
-          
-          <Message.Header>
-            <SVG fill="orange" path={ICONS.WARNING.path} viewBox={ICONS.WARNING.viewBox} width="48" height="48" /> {intl.get("verify-email-fail-header")}
-          </Message.Header>
-          <br />
-          <Message.Content>
-            <span>{intl.getHTML("verify-email-fail-msg-content")}<br />{intl.getHTML(message)}</span>
-          </Message.Content>
-        </Message>
+        <Message size="big" negative
+          icon={<SVG fill="orange" path={ICONS.WARNING.path} viewBox={ICONS.WARNING.viewBox} width="48" height="48" />}
+          header={intl.get("verify-email-fail-header")}
+          content={<span>{intl.getHTML("verify-email-fail-msg-content")}<br />{intl.getHTML(message)}</span>} />
       </GridColumn>
     </Grid.Row>
   </Grid>
