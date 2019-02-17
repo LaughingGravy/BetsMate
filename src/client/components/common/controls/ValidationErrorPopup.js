@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Icon, Popup } from 'semantic-ui-react'
+import { Popup } from 'semantic-ui-react'
+
+import { ICONS, SVG } from '../../../../../static/svgHelper'
 
 class ValidationErrorPopup extends React.PureComponent {
   constructor(props) {
@@ -21,7 +23,7 @@ class ValidationErrorPopup extends React.PureComponent {
     const { message } = this.props
     return (
       <Popup
-        trigger={<Icon link name="info" style={this.props.style} color="red" size="small" onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} />}
+        trigger={<div onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}><SVG width="22" height="22" fill="red" path={ICONS.INFO.path} viewBox={ICONS.INFO.viewBox} style={this.props.style} title="Information" /></div>}
         position="right center" on="hover">
         <Popup.Content>
           {message}

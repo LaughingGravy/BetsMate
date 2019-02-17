@@ -1,9 +1,18 @@
 import React from 'react'
+import { compose } from 'recompose'
 import PropTypes from 'prop-types'
-import { Responsive, Form, Label, Icon, Container } from 'semantic-ui-react'
+import { Responsive, Form, Label, Container } from 'semantic-ui-react'
 
+import { hideIfNoProp } from '../../../common/ConditionalRender'
 import { containerStyle, closeIconStyle, errorIconStyle } from './ValidationDropdownCss'
 import ValidationErrorPopup from '../ValidationErrorPopup'
+import { ICONS, SVG } from '../../../../../../static/svgHelper'
+
+const vanillaClearIcon = ({isVisible, onClick}) => <SVG width="24" height="24" path={ICONS.CLOSE.path} viewBox={ICONS.CLOSE.viewBox} style={closeIconStyle} onClick={onClick} title="Clear" />
+
+const EnhancedClearIcon = compose(
+  hideIfNoProp("isVisible")
+)(vanillaClearIcon)
 
 const ValidationDropdown = (props) => {
   const { errors, pristine, placeholder, label, onChange, onBlur, onCloseClick, name, key, options, value, defaultValue, search={search} } = props  
@@ -27,10 +36,10 @@ const ValidationDropdown = (props) => {
     <React.Fragment>
       {!shouldDisplayError && 
           <div style={containerStyle}>
-                  <Icon link style={closeIconStyle} name="close" onClick={onCloseClick} />
+                  <EnhancedClearIcon onClick={onCloseClick} isVisible={value} />
                   <Form.Dropdown name={name} key={key} fluid selection label={label} 
                                   placeholder={placeholder} onChange={onChange} onBlur={onBlur}
-                                  search={search} options={options} 
+                                  search={search} options={options}
                                   value={value} defaultValue={defaultValue}/>
           </div>}
 

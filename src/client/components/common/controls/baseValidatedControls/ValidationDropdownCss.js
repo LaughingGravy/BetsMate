@@ -2,19 +2,19 @@
 const closeIconStyle = {
   position: 'absolute',
   margin: 'auto',
-  right: '2.5em',
-  lineHeight: 1,
+  right: '1.0em',
   zIndex: 1,
-  top: '2.5em'
+  top: '2.1em',
+  cursor: 'pointer'
 }
 
 const errorIconStyle = {
   position: 'absolute',
   margin: 'auto',
-  right: '2.5em',
-  lineHeight: 1,
+  right: '1.0em',
   zIndex: 1,
-  top: '3.4em'
+  top: '2.1em',
+  cursor: 'pointer'
 }
 
 const containerStyle = {
@@ -22,5 +22,7 @@ const containerStyle = {
   leftMargin: 'auto!importnat',
   rightMargin: 'auto!mportant'
 }
+
+
 
 export { closeIconStyle, errorIconStyle, containerStyle }

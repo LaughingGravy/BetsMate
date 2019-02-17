@@ -13,12 +13,15 @@ REGISTER: { path: "M79.18 282.94a32.005 32.005 0 0 0-20.24 20.24L0 480l4.69 4.69
 FIRSTAID: { path: "M96 480h320V128h-32V80c0-26.51-21.49-48-48-48H176c-26.51 0-48 21.49-48 48v48H96v352zm96-384h128v32H192V96zm320 80v256c0 26.51-21.49 48-48 48h-16V128h16c26.51 0 48 21.49 48 48zM64 480H48c-26.51 0-48-21.49-48-48V176c0-26.51 21.49-48 48-48h16v352zm288-208v32c0 8.837-7.163 16-16 16h-48v48c0 8.837-7.163 16-16 16h-32c-8.837 0-16-7.163-16-16v-48h-48c-8.837 0-16-7.163-16-16v-32c0-8.837 7.163-16 16-16h48v-48c0-8.837 7.163-16 16-16h32c8.837 0 16 7.163 16 16v48h48c8.837 0 16 7.163 16 16z", viewBox: "0 0 512 512" },
 SEND: { path: "M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z", viewBox: "0 0 512 512" },
 WARNING: { path: "M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z", viewBox: "0 0 24 24"},
-SIDEBAR: { path: "M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z", viewBox: "0 0 24 24"}
+SIDEBAR: { path: "M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z", viewBox: "0 0 24 24"},
+CLOSE: { path: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z", viewBox: "0 0 24 24"},
+INFO: { path: "M20 424.229h20V279.771H20c-11.046 0-20-8.954-20-20V212c0-11.046 8.954-20 20-20h112c11.046 0 20 8.954 20 20v212.229h20c11.046 0 20 8.954 20 20V492c0 11.046-8.954 20-20 20H20c-11.046 0-20-8.954-20-20v-47.771c0-11.046 8.954-20 20-20zM96 0C56.235 0 24 32.235 24 72s32.235 72 72 72 72-32.235 72-72S135.764 0 96 0z", viewBox: "0 0 192 512"},
 }
 
 const SVGIcon = (props) => {
   return (
-  <i className="icon"><svg aria-hidden="true" role="img" data-Tip={props.dataTip} onClick={props.onClick} width={props.width} height={props.height} fill={props.fill} viewBox={props.viewBox}>
+  <i className="icon" onClick={props.onClick} style={props.style}><svg aria-hidden="true" role="img" width={props.width} height={props.height} fill={props.fill} viewBox={props.viewBox}>
+    <title>{props.title}</title>
     <path d={props.path}></path>
   </svg></i>
   )
@@ -26,7 +29,8 @@ const SVGIcon = (props) => {
 
 const SVG = (props) => {
   return (
-  <svg aria-hidden="true" role="img" data-Tip={props.dataTip} onClick={props.onClick} width={props.width} height={props.height} fill={props.fill} viewBox={props.viewBox}>
+  <svg aria-hidden="true" style={props.style} data-tip={props.dataTip} role="img" onClick={props.onClick} width={props.width} height={props.height} fill={props.fill} viewBox={props.viewBox}>
+    <title>{props.title}</title>
     <path d={props.path}></path>
   </svg>
   )

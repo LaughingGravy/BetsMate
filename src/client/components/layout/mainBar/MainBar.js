@@ -17,7 +17,7 @@ const MainBar = ({ locales, onSelectLocale, defaultLocale, onToggleSideBarVisibi
     <Menu attached secondary fluid>
     <Menu.Menu position="left">
       <Menu.Item key="home" onClick={e => history.push("/home")} style={{"display": "flex", "alignContent": "flexStart"}}>
-          <SVG role="img" path={ICONS.FOOTBALL.path} viewBox={ICONS.FOOTBALL.viewBox} width="32" height="32" />
+          <SVG path={ICONS.FOOTBALL.path} viewBox={ICONS.FOOTBALL.viewBox} width="32" height="32" />
           <span> Bets Mate</span>
       </Menu.Item> 
 
