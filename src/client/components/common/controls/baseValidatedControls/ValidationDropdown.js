@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Responsive, Form, Label, Container } from 'semantic-ui-react'
 
 import { hideIfNoProp } from '../../../common/ConditionalRender'
-import { containerStyle, closeIconStyle, errorIconStyle } from './ValidationDropdownCss'
+import { containerStyle, closeIconStyle, dropdownErrorIconStyle } from './ValidationCss'
 import ValidationErrorPopup from '../ValidationErrorPopup'
 import { ICONS, SVG } from '../../../../../../static/svgHelper'
 
@@ -45,7 +45,7 @@ const ValidationDropdown = (props) => {
 
       {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
         <Container style={containerStyle} fluid> 
-          <ValidationErrorPopup message={firstErrMessage} style={errorIconStyle} />
+          <ValidationErrorPopup message={firstErrMessage} style={dropdownErrorIconStyle} />
           <Form.Dropdown name={name} key={key} fluid selection label={label} error
                           placeholder={placeholder} onChange={onChange} onBlur={onBlur}
                           search={search} options={options} 

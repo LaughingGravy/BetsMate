@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Responsive, Form, Label } from 'semantic-ui-react'
 
+import { containerStyle, inputErrorIconStyle } from './ValidationCss'
+
 import ValidationErrorPopup from '../ValidationErrorPopup'
 
 const ValidationInput = (props) => {
@@ -28,7 +30,9 @@ const ValidationInput = (props) => {
       {shouldDisplayError && <Responsive minWidth={Responsive.onlyComputer.minWidth}>
         <Form.Input error {...props} icon>
           <input />
-          <ValidationErrorPopup message={firstErrMessage} />
+          <div style={containerStyle}>
+            <ValidationErrorPopup message={firstErrMessage} style={inputErrorIconStyle} />
+          </div>
         </Form.Input>  
       </Responsive>}
 

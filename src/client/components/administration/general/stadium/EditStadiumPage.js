@@ -6,7 +6,9 @@ import EditStadiumPageContent from './EditStadiumPageContent'
 
 const EditStadiumPage = ({ match } ) => {
   const stadiumId = match.params.stadiumId 
-  const isEdit = !(match.params.stadiumId == null)
+  const isEdit = !stadiumId
+
+  console.log("isEdit", isEdit)
 
   return (
     <Container>

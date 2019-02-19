@@ -8,12 +8,21 @@ const closeIconStyle = {
   cursor: 'pointer'
 }
 
-const errorIconStyle = {
+const dropdownErrorIconStyle = {
   position: 'absolute',
   margin: 'auto',
   right: '1.0em',
   zIndex: 1,
   top: '2.1em',
+  cursor: 'pointer'
+}
+
+const inputErrorIconStyle = {
+  position: 'absolute',
+  margin: 'auto',
+  right: '1.0em',
+  zIndex: 1,
+  top: '0.65em',
   cursor: 'pointer'
 }
 
@@ -25,4 +34,4 @@ const containerStyle = {
 
 
 
-export { closeIconStyle, errorIconStyle, containerStyle }
+export { closeIconStyle, dropdownErrorIconStyle, inputErrorIconStyle, containerStyle }

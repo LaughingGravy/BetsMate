@@ -1,13 +1,19 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 import { compose } from 'recompose'
-import { Flag } from 'semantic-ui-react'
+import { getFlag } from '../../../../../static/flags/flagHelper'
 
 import { renderForLoading, renderForError, LoadingDisplay, QueryErrorDisplay } from '../ConditionalRender'
 
 import ALL_COUNTRIES from '../../../graphql/queries/administration/country/allCountries'
 
 import ValidationDropdown from '../../common/controls/baseValidatedControls/ValidationDropdown'
+
+const itemContainerStyle = {
+  display: "flex",
+  position: 'relative',
+  alignItems: 'center'
+}
 
 const vanillaValidationDropdown  = (props) => {
   return (
@@ -22,12 +28,17 @@ const EnhancedValidationDropdown = compose(
 
 const CountriesDropdown = (props) => {
 
+  const flagRenderer = (code) => {
+    const filename = code.replace(" ", "-")
+    return (getFlag(filename, 24, 18))
+  }
+
   const getOptions = (data) => {
     if (!data || !data.countries) return [];
 
     const { countries } = data
 
-    const options = countries.map(item => ({key: `${item.code}`, value: `${item.code}`, searchtext: `${item.name}`, text: <span><Flag name={item.code} />{item.name}</span>}))
+    const options = countries.map(item => ({key: `${item.code}`, value: `${item.code}`, searchtext: `${item.name}`, text: <div style={itemContainerStyle}>{flagRenderer(item.code)} {item.name}</div>}))
     
     return options;
   }

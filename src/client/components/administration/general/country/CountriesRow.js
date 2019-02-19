@@ -1,6 +1,7 @@
 import React from 'react'
-import { Table, Flag } from 'semantic-ui-react'
+import { Table } from 'semantic-ui-react'
 import { withRowSelection } from '../../../common/tableHocs/withRowSelection'
+import { getFlag } from '../../../../../../static/flags/flagHelper'
 
 class CountriesRow extends React.Component {
   constructor(props) {
@@ -8,7 +9,8 @@ class CountriesRow extends React.Component {
   }
 
   flagRenderer = (code) => {
-    return (<Flag name={code} />)
+    const filename = code.replace(" ", "-")
+    return (getFlag(filename, 24, 18))
   }
 
   render() {
