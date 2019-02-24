@@ -9,7 +9,7 @@ import GET_COUNTRY_BY_CODE from '../../../../graphql/queries/administration/coun
 import MERGE_COUNTRY from '../../../../graphql/mutations/administration/country/mergeCountry'
 import CREATE_COUNTRY from '../../../../graphql/mutations/administration/country/createCountry'
 
-const SaveCountryButton = ({ variables , isEdit, disabled }) => {
+const SaveCountryButton = ({ variables, isEdit, disabled }) => {
   const { code, name } = variables
 
   const label = "save-button-label"
@@ -50,8 +50,8 @@ const SaveCountryButton = ({ variables , isEdit, disabled }) => {
       }}
 
       refetchQueries={[ {query: ALL_COUNTRIES} ]}>
-      {(mergeCountry, { loading, error }) => (
-          <MutationButton variables={variables} mutation={mergeCountry} loading={loading}
+      {(mutation, { loading, error }) => (
+          <MutationButton variables={variables} mutation={mutation} loading={loading}
                           disabled={disabled} error={error} label={label} />
       )}
     </Mutation>

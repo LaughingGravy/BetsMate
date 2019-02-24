@@ -21,6 +21,8 @@ const vanillaContent = ({ data }) => {
     stadium.country = data.stadiumById.country
   }
 
+  console.log("stadium.country", stadium.country)
+
   return (
     <StadiumForm  {...stadium} render={renderProps => (
       <Container textAlign="center">
@@ -42,7 +44,6 @@ const EnhancedContent = compose(
 
 
 const EditStadiumPageContent = ({ stadiumId }) => {
-  console.log("stadiumId", stadiumId)
   return (
   <Query query={STADIUM_BY_ID} variables={{ stadiumId }}>
     {EnhancedContent}

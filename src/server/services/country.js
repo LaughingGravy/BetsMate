@@ -62,6 +62,7 @@ let countryService = {
   },
 
   MergeCountry: ( { code, name }) => {
+    console.log("merge country")
     let session = createSession()
     return session
       // .run(

@@ -21,7 +21,7 @@ const UserRoutes = ({ userCtx }) => {
 
   return (
     <React.Fragment>
-      <Route path="/login" render={({match}) => (
+      {/* <Route path="/login" render={({match}) => (
           isAuthenticated ? (<UserLoggedInWarningPage /> ) : (<LoginPage match={match} />) )} />
 
       <Route exact path="/register/:token" render={({match}) => (
@@ -40,7 +40,7 @@ const UserRoutes = ({ userCtx }) => {
           !isAuthenticated ? (<UserNotAuthenticatedWarningPage /> ) : (<ChangePasswordPage match={match} />)  )} />
 
       <Route exact path="/administration" render={({match}) => (
-          !isAuthenticated || role != "admin" ? (<UserRoleNoPermissionPage /> ) : (<AdministrationPage match={match} />) )} />
+          !isAuthenticated || role != "admin" ? (<UserRoleNoPermissionPage /> ) : (<AdministrationPage match={match} />) )} /> */}
     </React.Fragment>
   )
 }

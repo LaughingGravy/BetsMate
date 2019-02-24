@@ -115,7 +115,7 @@ export default new GraphQLObjectType({
                 newPassword: { type: GraphQLString }
             },
             async resolve(parentValue, { email, password, newPassword }, ctx) {
-                return checkAuthAndResolveAsync(ctx, AuthenticationService.ChangePassword, { email, password, newPassword });
+                return await checkAuthAndResolveAsync(ctx, AuthenticationService.ChangePassword, { email, password, newPassword });
             }
         },
         createCountry: {
@@ -125,7 +125,7 @@ export default new GraphQLObjectType({
                 name: { type: GraphQLString }
             },
             async resolve(parentValue, { code, name }, ctx) {
-                return checkRoleAndResolveAsync(ctx, CountryService.CreateCountry, { code, name }, ["admin"]);
+                return await checkRoleAndResolveAsync(ctx, CountryService.CreateCountry, { code, name }, ["admin"]);
             }
         },
         mergeCountry: {
@@ -135,7 +135,7 @@ export default new GraphQLObjectType({
                 name: { type: GraphQLString }
             },
             async resolve(parentValue, { code, name }, ctx) {
-                return checkRoleAndResolveAsync(ctx, CountryService.MergeCountry, { code, name }, ["admin"]);
+                return await checkRoleAndResolveAsync(ctx, CountryService.MergeCountry, { code, name }, ["admin"]);
             }
         },
         deleteCountry: {
@@ -144,7 +144,7 @@ export default new GraphQLObjectType({
                 code: { type: GraphQLString }
             },
             async resolve(parentValue, { code }, ctx) {
-                return checkRoleAndResolveAsync(ctx, CountryService.DeleteCountry, { code }, ["admin"]);
+                return await checkRoleAndResolveAsync(ctx, CountryService.DeleteCountry, { code }, ["admin"]);
             }
         },
         createStadium: {
@@ -155,7 +155,7 @@ export default new GraphQLObjectType({
                 country: { type: CountryInputType }
             },
             async resolve(parentValue, { name, city, country }, ctx) {
-                return checkRoleAndResolveAsync(ctx, StadiumService.CreateStadium, { name, city, country }, ["admin"]);
+                return await checkRoleAndResolveAsync(ctx, StadiumService.CreateStadium, { name, city, country }, ["admin"]);
             }
         },
         mergeStadium: {
@@ -167,7 +167,7 @@ export default new GraphQLObjectType({
                 country: { type: CountryInputType }
             },
             async resolve(parentValue, { stadiumId, name, city, country }, ctx) {
-                return checkRoleAndResolveAsync(ctx, StadiumService.MergeStadium, { stadiumId, name, city, country }, ["admin"]);
+                return await checkRoleAndResolveAsync(ctx, StadiumService.MergeStadium, { stadiumId, name, city, country }, ["admin"]);
             }
         },
         deleteStadium: {
@@ -176,7 +176,7 @@ export default new GraphQLObjectType({
                 stadiumId: { type: GraphQLString }
             },
             async resolve(parentValue, { stadiumId }, ctx) {
-                return checkRoleAndResolveAsync(ctx, StadiumService.DeleteStadium, { stadiumId }, ["admin"]);
+                return await checkRoleAndResolveAsync(ctx, StadiumService.DeleteStadium, { stadiumId }, ["admin"]);
             }
         }
     }

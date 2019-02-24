@@ -36,8 +36,6 @@ class StadiumForm  extends React.Component {
     const {value, options, name } = data
     let countryName = ""
 
-    console.log("onSelectChange value", value)
-
     if (value != "")
       countryName = options.find(c => c.value === value).searchtext
   

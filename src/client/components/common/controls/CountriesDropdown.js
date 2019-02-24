@@ -15,6 +15,10 @@ const itemContainerStyle = {
   alignItems: 'center'
 }
 
+const flagTextStyle = {
+  marginLeft: "0.5em"
+}
+
 const vanillaValidationDropdown  = (props) => {
   return (
     <ValidationDropdown {...props} />
@@ -38,7 +42,8 @@ const CountriesDropdown = (props) => {
 
     const { countries } = data
 
-    const options = countries.map(item => ({key: `${item.code}`, value: `${item.code}`, searchtext: `${item.name}`, text: <div style={itemContainerStyle}>{flagRenderer(item.code)} {item.name}</div>}))
+    const options = countries.map(item => ({key: `${item.code}`, value: `${item.code}`, searchtext: `${item.name}`, 
+                                      text: <div style={itemContainerStyle}>{flagRenderer(item.code)}<span style={flagTextStyle}>{item.name}</span></div>}))
     
     return options;
   }

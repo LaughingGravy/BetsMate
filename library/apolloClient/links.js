@@ -1,6 +1,5 @@
 import { createHttpLink } from 'apollo-link-http'
 import { onError } from "apollo-link-error"
-import fetch from 'isomorphic-fetch'
 import { getServerURL } from '../../utilities/env'
 import Config from "../../utilities/Config";
 

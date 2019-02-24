@@ -14,7 +14,7 @@ const SaveStadiumButton = ({ variables, isEdit, disabled }) => {
   const label = "save-button-label"
 
   const onCompleted = (data) => {
-    history.push('/administration/stadium/stadia')
+    history.push('/administration/general/stadium/stadia')
   }
 
   return (
@@ -33,24 +33,26 @@ const SaveStadiumButton = ({ variables, isEdit, disabled }) => {
         )
 
         if (getStadiumData) {
-          const { getStadium } = getStadiumData
-          getStadium.name = name
-          getStadium.code = city
-          getStadium.country = country
-          
+          const { stadiumById } = getStadiumData
+
+          stadiumById.name = name
+          stadiumById.city = city
+          stadiumById.country = country
+          stadiumById.country.__typename = "CountryType"
+     
           store.writeQuery({
             query: GET_STADIUM, 
             variables: {
-              stadiumId: stadiumId
+              stadiumId: stadiumById.stadiumId
             },
-            data: {getStadium: getStadium}
+            data: {stadiumById: stadiumById}
           })
         }
       }}
 
       refetchQueries={[ {query: ALL_STADIA} ]}>
       {(mutation, { loading, error }) => (
-          <MutationButton variables={{stadiumId, name, city, country}} mutation={mutation} loading={loading}
+          <MutationButton variables={variables} mutation={mutation} loading={loading}
                           disabled={disabled} error={error} label={label} />
       )}
     </Mutation>

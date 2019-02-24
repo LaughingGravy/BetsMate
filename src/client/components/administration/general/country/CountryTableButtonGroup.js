@@ -37,7 +37,8 @@ const CountryTableButtonGroup = ({ activeRows }) => {
 
               refetchQueries={[ {query: ALL_COUNTRIES} ]}> 
         {(deleteCountry, { loading, error }) => (
-          <AdminTableButtonGroup variables={{code: code}} mutation={deleteCountry} loading={loading} error={error} 
+          <AdminTableButtonGroup variables={{code: code}} mutation={deleteCountry} 
+                                loading={loading} error={error} 
                                 createNavigate={createNavigate} 
                                 editNavigate={editNavigate} 
                                 activeRows={activeRows} />

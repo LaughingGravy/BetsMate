@@ -1,13 +1,27 @@
 import React from 'react'
-import { Table, Flag } from 'semantic-ui-react'
+import { Table } from 'semantic-ui-react'
 import { withRowSelection } from '../../../common/tableHocs/withRowSelection'
+import { getFlag } from '../../../../../../static/flags/flagHelper'
+
+const itemContainerStyle = {
+  display: "flex",
+  position: 'relative',
+  alignItems: 'center'
+}
+
+const flagTextStyle = {
+  marginLeft: "0.5em"
+}
 
 class StadiaRow extends React.Component {
   constructor(props) {
     super(props)
   }
 
-  countryRenderer = item => <span><Flag name={item.code} />{item.name}</span>
+  flagRenderer = (code) => {
+    const filename = code.replace(" ", "-")
+    return (getFlag(filename, 24, 18))
+  }
 
   render() {
     const { data: { stadiumId, name, city, country }, active, onClick } = this.props
@@ -16,7 +30,7 @@ class StadiaRow extends React.Component {
       <Table.Row textAlign='center' active={active} onClick={onClick} key={stadiumId}>
         <Table.Cell>{name}</Table.Cell>
         <Table.Cell>{city}</Table.Cell> 
-        <Table.Cell textAlign="left">{this.countryRenderer(country)}</Table.Cell>  
+        <Table.Cell textAlign="left"><div style={itemContainerStyle}>{this.flagRenderer(country.code)}<span style={flagTextStyle}></span>{country.name}</div></Table.Cell>  
       </Table.Row>
     )
   }
