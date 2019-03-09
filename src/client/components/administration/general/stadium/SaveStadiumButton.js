@@ -10,11 +10,13 @@ import MERGE_STADIUM from '../../../../graphql/mutations/administration/stadium/
 import CREATE_STADIUM from '../../../../graphql/mutations/administration/stadium//createStadium'
 
 const SaveStadiumButton = ({ variables, isEdit, disabled }) => {
-  const { stadiumId, name, city, country } = variables
+  const { stadiumId, name, city } = variables
   const label = "save-button-label"
 
+  const country = { code: variables.country.code, name: variables.country.name, __typename: "CountryType" }
+
   const onCompleted = (data) => {
-    history.push('/administration/general/stadium/stadia')
+    history.push('/administration/general/stadia')
   }
 
   return (
@@ -38,7 +40,6 @@ const SaveStadiumButton = ({ variables, isEdit, disabled }) => {
           stadiumById.name = name
           stadiumById.city = city
           stadiumById.country = country
-          stadiumById.country.__typename = "CountryType"
      
           store.writeQuery({
             query: GET_STADIUM, 

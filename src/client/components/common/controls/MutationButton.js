@@ -12,7 +12,6 @@ const EnhancedGraphQLErrorDisplay = compose(
 )(GraphQLErrorDisplay)
 
 const MutationButton = ({ variables, mutation, loading, error, label, disabled }) => {
-  console.log("MutationButton variables", variables)
   return (
     <React.Fragment>
       <EnhancedGraphQLErrorDisplay error={error} />

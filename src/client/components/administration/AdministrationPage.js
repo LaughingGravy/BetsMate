@@ -9,6 +9,36 @@ import { SVG, ICONS } from '../../../../static/svgHelper'
 import AdminRoutes from './AdminRoutes'
 
 const AdministrationPage = ( { match }) => {
+
+  const getDefaultGeneralTabRoute = () => {
+    let routePath = ""
+    let index = 0
+    const savedIndex = localStorage.getItem('generalPageTabIndex')
+
+    if (!savedIndex) {
+      index = 0
+    } else {
+      index = parseInt(savedIndex)
+    }
+
+    switch (index) {
+      case 0:
+        routePath = '/general/country'
+      break;
+
+      case 1:
+        routePath = '/general/stadium'
+      break;
+
+      case 2:
+      break;
+
+      default:
+        routePath = '/general/country'
+    }
+    return `${match.url}${routePath}`
+  }
+
   return (
     <Grid columns={1} centered>
       <Grid.Row centered>
@@ -23,7 +53,7 @@ const AdministrationPage = ( { match }) => {
 
        <Grid.Row centered>
         <Menu pointing>
-          <Menu.Item as={NavLink} to={`${match.url}/general/country`} key="general" activeClassName="active"
+          <Menu.Item as={NavLink} to={getDefaultGeneralTabRoute()} key="general" activeClassName="active"
                         compact="true">
               {intl.get("admin-general-menu-header")}
           </Menu.Item>

@@ -6,6 +6,7 @@ import { NotFound } from '../../../../../library/routing'
 import GeneralPage from './GeneralPage'
 
 const GeneralRoutes = ({ match }) => {
+
   return (
       <Switch>
        <Route path={`${match.url}/general`} render={(props) => <GeneralPage {...props} />} />

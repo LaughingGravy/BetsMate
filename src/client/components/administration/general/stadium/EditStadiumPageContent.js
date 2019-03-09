@@ -21,8 +21,6 @@ const vanillaContent = ({ data }) => {
     stadium.country = data.stadiumById.country
   }
 
-  console.log("stadium.country", stadium.country)
-
   return (
     <StadiumForm  {...stadium} render={renderProps => (
       <Container textAlign="center">

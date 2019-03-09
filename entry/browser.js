@@ -6,9 +6,6 @@ import { Router } from 'react-router-dom'
 import { ApolloProvider } from 'react-apollo';
 import { getBrowserClient } from '../library/apolloClient/apollo'
 
-// enclose app in container so can respond to hot re-loading changes
-import { Container } from 'semantic-ui-react';
-
 // root component of application
 import App from '../src/client/components/App'
 // Get the custom `history` that we'll use to feed down to our `<Router>`

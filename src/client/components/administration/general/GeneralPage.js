@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid , Tab } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
@@ -15,10 +15,19 @@ const getPanes = (match) => {
   ]
 }
 
-const GeneralPage = ({ match }) => {
+function GeneralPage({ match }) {
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
+  
+  useEffect(() => {
+    const index = localStorage.getItem('generalPageTabIndex')
 
-  const handleTabChange = (e, data) => {
-    const { activeIndex } = data
+    if (index) {
+      setActiveTabIndex(index)
+    }
+  })
+
+  const handleTabChange = (e, { activeIndex }) => {
+    localStorage.setItem('generalPageTabIndex', activeIndex)
 
     switch (activeIndex) {
       case 0:
@@ -35,13 +44,12 @@ const GeneralPage = ({ match }) => {
       default:
         history.push('/administration/general/country')
     }
-    
-
   }
 
   return (
     <Grid columns={1} centered>
-        <Tab menu={{ secondary: true, pointing: true }} panes={getPanes(match)} onTabChange={handleTabChange} />
+        <Tab menu={{ secondary: true, pointing: true }} activeIndex={activeTabIndex} 
+              panes={getPanes(match)} onTabChange={handleTabChange} />
         <GeneralRoutes match={match} />
     </Grid>
   )

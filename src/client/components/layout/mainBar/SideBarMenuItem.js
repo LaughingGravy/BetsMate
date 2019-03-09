@@ -8,7 +8,7 @@ const SideBarMenuItem = ({ onToggleSideBarVisibility }) => {
 
   return (
     <Responsive basic="true" maxWidth={Responsive.onlyMobile.maxWidth} style={{"display": "flex"}}>
-      <Menu.Item fluid onClick={onToggleSideBarVisibility}>
+      <Menu.Item fluid="true" onClick={onToggleSideBarVisibility}>
         <SVG width="24" height="24" path={ICONS.SIDEBAR.path} viewBox={ICONS.SIDEBAR.viewBox} />
       </Menu.Item> 
     </Responsive>    

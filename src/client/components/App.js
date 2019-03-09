@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { hot } from 'react-hot-loader'
+//import { hot } from 'react-hot-loader'
 import { Segment } from 'semantic-ui-react'
 import Layout from './layout/MainLayout/Layout'
 import Routes from './layout/routes/Routes'
@@ -49,5 +49,7 @@ class App extends React.Component{
   }
 };
 
-export default hot(module)(App)
+export default App
+
+//export default hot(module)(App)
 

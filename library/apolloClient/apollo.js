@@ -1,7 +1,7 @@
 import { ApolloClient } from 'apollo-client';
 import { concat } from 'apollo-link'
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { ErrorHandlerLink, getHttpLinkWithCookie, getHttpLinkWithoutCookie, createOmitTypenameLink } from './links'
+import { ErrorHandlerLink, getHttpLinkWithCookie, getHttpLinkWithoutCookie } from './links'
 
 const defaultOptions = {
     watchQuery: {
