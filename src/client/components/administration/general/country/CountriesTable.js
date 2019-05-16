@@ -5,6 +5,7 @@ import { Table } from 'semantic-ui-react'
 import { compose } from 'recompose'
 
 import ALL_COUNTRIES from '../../../../graphql/queries/administration/country/allCountries'
+import COUNTRIES_BY_NAME from '../../../../graphql/queries/administration/country/getCountriesByName'
 import { LoadingDisplay, renderForLoading, renderForError, QueryErrorDisplay} from '../../../common/ConditionalRender'
 
 import CountriesTableHeader from './CountriesTableHeader'
@@ -60,10 +61,23 @@ const EnhancedCountriesTable = compose(
   renderForError(QueryErrorDisplay)
 )(withTableSort(withSelectableRowsTable(vanillaCountriesTable)))
 
-const CountriesTable = () => {
+// const CountriesTable = () => {
+//   return (
+//     <Query query={ALL_COUNTRIES}>
+//        {({ loading, error, data }) => { 
+//          return (
+//            <EnhancedCountriesTable data={data} loading={loading} error={error} /> 
+//          )
+//        }}
+//     </Query>
+//   )
+// }
+
+
+const CountriesTable = ({variables}) => {
   return (
-    <Query query={ALL_COUNTRIES}>
-       {({ loading, error, data }) => { 
+    <Query query={COUNTRIES_BY_NAME} variables={variables} fetchPolicy="cache-and-network">
+       {({ loading, error, data, fetchMore }) => { 
          return (
            <EnhancedCountriesTable data={data} loading={loading} error={error} /> 
          )

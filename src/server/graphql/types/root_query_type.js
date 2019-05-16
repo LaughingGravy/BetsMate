@@ -1,6 +1,7 @@
 import {
     GraphQLObjectType,
     GraphQLString,
+    GraphQLInt,
     GraphQLSchema,
     GraphQLList
 } from 'graphql';
@@ -27,6 +28,18 @@ export default new GraphQLObjectType({
             type: new GraphQLList(CountryType),
             async resolve(parentValue, args, ctx) {
                 return await checkRoleAndResolveAsync(ctx, CountryService.AllCountries, null, ["admin"]);
+            }
+        },
+        countriesByName: {
+            type: CountryType,
+            args: {
+                name: { type: GraphQLString },
+                skip: { type: GraphQLInt },
+                limit: { type: GraphQLInt }
+            },
+            async resolve(parentValue, { name, skip, limit }, ctx) {
+                return await checkRoleAndResolveAsync(ctx, CountryService.GetCountryByName, 
+                                                                { name, skip, limit }, ["admin"]);
             }
         },
         countryByCode: {

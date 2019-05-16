@@ -2,6 +2,7 @@ import React from 'react';
 import intl from 'react-intl-universal'
 import { Grid, Header, Container } from 'semantic-ui-react'
 
+import CountrySearch from './CountrySearch'
 import CountriesTable from './CountriesTable'
 
 const CountriesPage = () => {
@@ -10,9 +11,13 @@ const CountriesPage = () => {
       <Container fluid>
         <Grid columns={1} centered>
 
+          {/* <Grid.Row centered>
+            <Header as='h3' textAlign="center">{intl.get("countries-page-title")}</Header> 
+          </Grid.Row>  */}
+
           <Grid.Row centered>
-            <Header as='h3' textAlign="center">{intl.get("countries-page-title")}</Header>
-          </Grid.Row>
+            <CountrySearch />
+          </Grid.Row> 
           
           <Grid.Row centered> 
             <CountriesTable  />

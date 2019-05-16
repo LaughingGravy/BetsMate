@@ -24,6 +24,7 @@ class Common {
         this.apolloClientOpt = {};
         this.isRunEngine = yn(process.env.RUN_ENGINE);
         this.apolloEngineServiceId = 'service:Betsmate:NXBwHRWuwnGryOWVgBF8lQ'; // default env variable will use ENGINE_API_KEY
+        this.defaultDebounceTimeout = 100;
     }   
 }
 

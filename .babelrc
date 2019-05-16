@@ -10,7 +10,6 @@
     "env": {
         "development": {
             "plugins": [
-                "react-hot-loader/babel",
                 ["transform-runtime",{
                     "regenerator": true
                 }],

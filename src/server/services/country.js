@@ -2,9 +2,9 @@
 import { createSession } from "../database/neo4jDB"
 
 let countryService = {
-  AllCountries: () => {
+  AllCountries: async () => {
     let session = createSession()
-    return session
+    return await session
       .run(
         `MATCH (country:Country) 
         RETURN country
@@ -22,9 +22,9 @@ let countryService = {
       })
   },
 
-  GetCountryByCode: (code) => {
+  GetCountryByCode: async (code) => {
     let session = createSession()
-    return session
+    return await session
       .run(
         `MATCH (country:Country { code: "${code}" }) 
         RETURN country
@@ -43,9 +43,34 @@ let countryService = {
       })
   },
 
-  CreateCountry: ({ code, name }) => {
+  GetCountriesByName: async ({ name, skip, limit }) => {
     let session = createSession()
-    return session
+    return await session
+      .run(
+        `MATCH (c:Country) 
+        WHERE c.name =~ "(?i)${name}.*"
+        RETURN c
+        ORDER BY c.name ASC
+        SKIP ${skip}
+        LIMIT ${limit}`
+      )
+      .then(result => {
+        session.close()    
+        if (result.records.length === 1) {
+          const record = result.records.shift()
+          return record.get('country').properties
+        }
+      })
+      .catch(error => {
+        session.close()
+        throw error
+      })
+  },
+
+
+  CreateCountry: async ({ code, name }) => {
+    let session = createSession()
+    return await session
       .run(
         `CREATE (country:Country { code: "${code}", name: "${name}" }) 
         RETURN country`
@@ -61,14 +86,10 @@ let countryService = {
       })
   },
 
-  MergeCountry: ( { code, name }) => {
+  MergeCountry: async ( { code, name }) => {
     console.log("merge country")
     let session = createSession()
-    return session
-      // .run(
-      //   `CREATE (country:Country { code: "${code}", name: "${name}" }) 
-      //   RETURN country`
-      // )
+    return await session
       .run(
         `MERGE (country:Country { code: "${code}" })
           SET country.name =  "${name}"
@@ -86,9 +107,9 @@ let countryService = {
       })
   },
 
-  DeleteCountry: ({ code }) => {
+  DeleteCountry: async ({ code }) => {
     let session = createSession()
-    return session
+    return await session
       .run(
         `MATCH (country:Country { code: "${code}" }) 
         DETACH DELETE country

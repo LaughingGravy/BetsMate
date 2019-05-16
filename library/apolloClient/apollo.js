@@ -1,7 +1,9 @@
 import { ApolloClient } from 'apollo-client';
 import { concat } from 'apollo-link'
 import { InMemoryCache } from "apollo-cache-inmemory";
+import DebounceLink from 'apollo-link-debounce';
 import { ErrorHandlerLink, getHttpLinkWithCookie, getHttpLinkWithoutCookie } from './links'
+import Config from '../../utilities/Config'
 
 const defaultOptions = {
     watchQuery: {
@@ -17,7 +19,7 @@ const defaultOptions = {
 export function getServerClient(req) {
   return new ApolloClient({
     ssrMode: true,
-    link: concat(ErrorHandlerLink, getHttpLinkWithCookie(req)),
+    link: concat(ErrorHandlerLink, new DebounceLink(Config.defaultDebounceTimeout), getHttpLinkWithCookie(req)),
     cache: new InMemoryCache({
         dataIdFromObject: object => object.id || null
       }),

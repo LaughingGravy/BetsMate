@@ -87,7 +87,7 @@ class StadiumForm  extends React.Component {
         </Form.Field> 
 
         {this.props.render({ variables: { stadiumId: this.props.stadiumId, name: stadiumName, city, 
-                                    country: {code: country.code, name: country.name}}, isFormValid })}
+                                    country: {code: country.code, name: country.name}}, isFormValid })} 
 
       </Form>
     ) 

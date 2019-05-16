@@ -6,5 +6,5 @@ query CountryByCode($code:String) {
       code,
       name
   }
-}
+} 
 `
